@@ -63,7 +63,7 @@
             <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-            <GridPane>
+            <GridPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -72,7 +72,7 @@
                 <RowConstraints percentHeight="7.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane fx:id="mResidentGridPane" style="-fx-background-color: black; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1;">
+                  <GridPane fx:id="mResidentListGridPane" style="-fx-background-color: black; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1;">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -99,225 +99,33 @@
                         <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="12.0" layoutY="12.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="335.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="335.0" layoutY="67.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="335.0" layoutY="215.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="6">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="7">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="8">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="9">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="330.0" layoutY="291.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="10">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="11">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="12">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="12">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="13">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="13">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="14">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="14">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="330.0" layoutY="447.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="15">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="15">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="16">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="16">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="17">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="17">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="18">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="18">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.rowIndex="19">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="11.0" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: f4f4f4;" text="Orga, Dominic R." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="19">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </GridPane>
                   <HBox alignment="CENTER" GridPane.rowIndex="1">
                      <children>
-                        <ImageView fx:id="back_page_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="back_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../res/ic_back_page.png" />
                            </image>
                         </ImageView>
-                        <Label text="8 of 15" textFill="#ff861b">
+                        <Label fx:id="mCurrentPageLabel" text="8" textFill="#ff861b">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="next_page_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                        <Label layoutX="301.0" layoutY="20.0" text=" of " textFill="#ff861b">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="mPageCountLabel" layoutX="311.0" layoutY="20.0" text="15" textFill="#ff861b">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="next_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNextPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../res/ic_next_page.png" />
                            </image>
