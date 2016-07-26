@@ -43,14 +43,29 @@
                   <Insets left="50.0" />
                </StackPane.margin>
             </Button>
-            <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" promptText="Search Resident: e.g. Sharifa Brazil" StackPane.alignment="CENTER_RIGHT">
-               <font>
-                  <Font name="Helvetica Neue Light" size="20.0" />
-               </font>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" StackPane.alignment="CENTER_RIGHT">
+               <children>
+                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="Search Resident: e.g. Sharifa Brazil">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="20.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="-40.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <StackPane.margin>
                   <Insets right="50.0" />
                </StackPane.margin>
-            </TextField>
+            </HBox>
          </children>
       </StackPane>
         <GridPane GridPane.rowIndex="1">

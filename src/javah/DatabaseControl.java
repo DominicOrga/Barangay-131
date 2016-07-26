@@ -12,6 +12,10 @@ import java.util.List;
 public class DatabaseControl {
     private static MysqlDataSource dataSource;
 
+    /**
+     * Bug: Apparently, using parametarized query with a data source connection to allow connection pooling converts the
+     * expected results to their corresponding column names. (e.g. 131-005 == resident_id).
+     */
     static {
         dataSource = new MysqlDataSource();
         dataSource.setURL("jdbc:mysql://localhost/BarangayDB");
@@ -21,7 +25,8 @@ public class DatabaseControl {
 
     /**
      * Return the non-archived residents IDs and Names.
-     * @return an array of lists, where List[0] contains the resident IDs, while List[1] contains the concatenated resident names.
+     * @return an array of lists, where List[0] contains the resident IDs, while List[1] contains the concatenated
+     * resident names.
      */
     public List[] getResidentsIdAndName() {
 
@@ -31,15 +36,18 @@ public class DatabaseControl {
 
         try {
             Connection dbConnection = dataSource.getConnection();
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT ?, ?, ?, ? FROM %s WHERE ? = 0 ORDER BY ?", ResidentEntry.TABLE_NAME));
 
-            preparedStatement.setString(1, ResidentEntry.COLUMN_RESIDENT_ID);
-            preparedStatement.setString(2, ResidentEntry.COLUMN_FIRST_NAME);
-            preparedStatement.setString(3, ResidentEntry.COLUMN_MIDDLE_NAME);
-            preparedStatement.setString(4, ResidentEntry.COLUMN_LAST_NAME);
-            preparedStatement.setString(5, ResidentEntry.COLUMN_IS_ARCHIVED);
-            preparedStatement.setString(6, ResidentEntry.COLUMN_LAST_NAME);
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s",
+                            ResidentEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_IS_ARCHIVED,
+                            ResidentEntry.COLUMN_LAST_NAME)
+                    );
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -49,7 +57,7 @@ public class DatabaseControl {
                 residentNameList.add(String.format("%s, %s %s.",
                         resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
                         resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME),
-                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).charAt(0)));
+                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0)));
             }
 
             returnList[0] = residentsIdList;

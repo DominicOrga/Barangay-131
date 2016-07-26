@@ -5,7 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -18,8 +21,6 @@ public class Main extends Application {
         // Initialize the primary stage containing the javah scene.
         primaryStage.setScene(mainScene);
         primaryStage.show();
-
-        System.out.println(Calendar.getInstance().get(Calendar.YEAR) - 2000);
     }
 
     public static void main(String[] args) {
