@@ -12,11 +12,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javah.CacheManager;
 import javah.DatabaseControl;
 import javah.container.Resident;
 import javah.util.ListFilter;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
@@ -58,14 +60,9 @@ public class ResidentControl {
     private DatabaseControl mDatabaseControl;
 
     /**
-     * The list containing all the non-archived resident IDs.
+     * The reference holder to the global cache manager.
      */
-    private List<String> mResidentIDsCache;
-
-    /**
-     * The list containing all the non-archived resident names in proper format.
-     */
-    private List<String> mResidentNamesCache;
+    private CacheManager mCacheManager;
 
     /**
      * A volatile copy of the mResidentIDsCache used to search for non-archived residents.
@@ -104,19 +101,13 @@ public class ResidentControl {
      */
     private int mResidentCount;
 
+    /**
+     * Called before setCacheManager()
+     */
     @FXML
     private void initialize() {
         // Initialize the db controller.
         mDatabaseControl = new DatabaseControl();
-
-        // Cache resident IDs and names from the database.
-        List[] lists = mDatabaseControl.getResidentsIdAndName();
-        mResidentIDsCache = lists[0];
-        mResidentNamesCache = lists[1];
-
-        // Create a volatile copy of the cached data.
-        mResidentIDs = mResidentIDsCache;
-        mResidentNames = mResidentNamesCache;
 
         // Initialize mResidentLabels with storage for 40 labels.
         mResidentLabels = new Label[40];
@@ -137,6 +128,20 @@ public class ResidentControl {
             label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
 
         }
+    }
+
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Make a reference holder to the global cache manager and start initializing the variables that are initially
+     * dependent on some cached data.
+     * @param cacheManager
+     */
+    public void setCacheManager(CacheManager cacheManager) {
+        mCacheManager = cacheManager;
+
+        // Create a volatile copy of the cached data.
+        mResidentIDs = mCacheManager.getResidentIDsCache();
+        mResidentNames = mCacheManager.getmResidentNamesCache();
 
         // Determine the initial number of Pages and set the default current page to 1.
         mResidentCount = mResidentIDs.size();
@@ -314,12 +319,13 @@ public class ResidentControl {
         String keywords = mSearchField.getText();
 
         if (keywords.trim().equals("")) {
-            mResidentIDs = mResidentIDsCache;
-            mResidentNames = mResidentNamesCache;
+            mResidentIDs = mCacheManager.getResidentIDsCache();
+            mResidentNames = mCacheManager.getmResidentNamesCache();
         } else {
             String[] keywordsArray = keywords.split(" ");
 
-            List[] lists = ListFilter.filterLists(mResidentIDsCache, mResidentNamesCache, keywordsArray);
+            List[] lists = ListFilter.filterLists(
+                    mCacheManager.getResidentIDsCache(), mCacheManager.getmResidentNamesCache(), keywordsArray);
 
 
             mResidentIDs = lists[0];
