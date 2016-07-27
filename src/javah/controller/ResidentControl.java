@@ -1,10 +1,7 @@
 package javah.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -14,9 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javah.DatabaseControl;
 import javah.container.Resident;
 import javah.util.ListFilter;
@@ -24,7 +19,6 @@ import javah.util.ListFilter;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 public class ResidentControl {
@@ -84,9 +78,10 @@ public class ResidentControl {
     private List<String> mResidentNames;
 
     /**
-     * The newResidentSelectedIndex of the selected resident. *Default value is -1, meaning no resident selected.
+     * The value representing which label is selected from the resident list paging.
+     * Value range is between 0 - 39.
      */
-    private int mResidentSelectedIndex = -1;
+    private int mLabelSelectedIndex;
 
     /**
      * The array containing all the labels of the resident list paging.
@@ -138,8 +133,8 @@ public class ResidentControl {
             mResidentListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
 
             // Add a label selected event listener to each label.
-            final int newResidentSelectedIndex = i;
-            label.setOnMouseClicked(event -> setResidentSelected(newResidentSelectedIndex));
+            final int labelIndex = i;
+            label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
 
         }
 
@@ -151,19 +146,35 @@ public class ResidentControl {
         mCurrentPageLabel.setText(mCurrentPage + "");
         mPageCountLabel.setText(mPageCount + "");
 
+        // Display the default data when no resident is selected.
+        setResidentSelected(-1);
         updateCurrentPage();
     }
 
-    private void setResidentSelected(int newResidentSelectedIndex) {
+    /**
+     * Update the resident selected data displayed.
+     * @param newLabelSelectedIndex is the index of the label containing the resident to be displayed. If it is equal
+     *                              to -1, then the example data is displayed.
+     */
+    private void setResidentSelected(int newLabelSelectedIndex) {
+
+        // Determine the index of the resident in place of the currently selected label.
+        int residentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
+
+        /**
+         * If a resident is selected, then display its data.
+         * If a resident is unselected or no resident is selected, then display the example data.
+         */
         Consumer<Boolean> setResidentInfoDisplayed = (isDisplayed) -> {
             if (isDisplayed) {
+
                 // Query the data of the currently selected resident.
-                Resident resident = mDatabaseControl.getResident(mResidentIDs.get(mResidentSelectedIndex));
+                Resident resident = mDatabaseControl.getResident(mResidentIDs.get(residentSelectedIndex));
 
                 mResidentPhoto.setImage(new Image(resident.getPhotoPath() != null ?
                         "file:" + resident.getPhotoPath() : "/res/ic_default_resident.png"));
 
-                mResidentName.setText(mResidentNames.get(mResidentSelectedIndex));
+                mResidentName.setText(mResidentNames.get(residentSelectedIndex));
 
                 // Format birthdate to YYYY dd, mm
                 // Set the displayed birth date.
@@ -235,36 +246,39 @@ public class ResidentControl {
             }
         };
 
-        if (mResidentSelectedIndex == -1) {
-            if (newResidentSelectedIndex != -1) {
-                mResidentLabels[newResidentSelectedIndex]
-                        .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
-                mResidentSelectedIndex = newResidentSelectedIndex;
-                setResidentInfoDisplayed.accept(true);
-            }
-
-        } else {
-            if (newResidentSelectedIndex == -1) {
-                mResidentLabels[newResidentSelectedIndex]
-                        .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
-                mResidentSelectedIndex = -1;
-                setResidentInfoDisplayed.accept(false);
-
-            } else if (mResidentSelectedIndex == newResidentSelectedIndex) {
-                mResidentLabels[newResidentSelectedIndex]
-                        .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
-                mResidentSelectedIndex = -1;
-                setResidentInfoDisplayed.accept(false);
+        // This is where the code selection and unselection view update happens.
+        if (residentSelectedIndex < mResidentIDs.size()) {
+            if (mLabelSelectedIndex == -1) {
+                if (newLabelSelectedIndex != -1) {
+                    mResidentLabels[newLabelSelectedIndex]
+                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                    mLabelSelectedIndex = newLabelSelectedIndex;
+                    setResidentInfoDisplayed.accept(true);
+                }
 
             } else {
-                mResidentLabels[mResidentSelectedIndex]
-                        .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+                if (newLabelSelectedIndex == -1) {
+                    mResidentLabels[mLabelSelectedIndex]
+                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+                    mLabelSelectedIndex = -1;
+                    setResidentInfoDisplayed.accept(false);
 
-                mResidentLabels[newResidentSelectedIndex]
-                        .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                } else if (mLabelSelectedIndex == newLabelSelectedIndex) {
+                    mResidentLabels[newLabelSelectedIndex]
+                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+                    mLabelSelectedIndex = -1;
+                    setResidentInfoDisplayed.accept(false);
 
-                mResidentSelectedIndex = newResidentSelectedIndex;
-                setResidentInfoDisplayed.accept(true);
+                } else {
+                    mResidentLabels[mLabelSelectedIndex]
+                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+
+                    mResidentLabels[newLabelSelectedIndex]
+                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+
+                    mLabelSelectedIndex = newLabelSelectedIndex;
+                    setResidentInfoDisplayed.accept(true);
+                }
             }
         }
     }
@@ -274,6 +288,9 @@ public class ResidentControl {
      * residents.
      */
     private void updateCurrentPage() {
+        // Make sure that no resident is selected when moving from one page to another.
+        setResidentSelected(-1);
+
         int firstIndex = (mCurrentPage - 1) * 40;
         int lastIndex = mCurrentPage * 40 > mResidentCount - 1 ? mResidentCount - 1 : mCurrentPage * 40;
         int currentIndex = firstIndex;
