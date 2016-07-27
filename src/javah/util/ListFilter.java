@@ -1,4 +1,4 @@
-package javah.utils;
+package javah.util;
 
 import java.util.ArrayList;
 import java.util.List;

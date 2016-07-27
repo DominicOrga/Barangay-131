@@ -3,6 +3,7 @@ package javah;
 import javah.DatabaseContract.*;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import javah.container.Resident;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,6 +73,50 @@ public class DatabaseControl {
         }
 
         return returnList;
+    }
+
+    public Resident getResident(String residentId) {
+
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s FROM %s WHERE %s = ? ORDER BY %s",
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_RESIDENT_SINCE,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.COLUMN_LAST_NAME)
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Resident resident = new Resident();
+
+                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
+                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
+                resident.setResidentSince(resultSet.getShort(ResidentEntry.COLUMN_RESIDENT_SINCE));
+                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
+                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
+
+                return resident;
+            }
+
+            dbConnection.close();
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

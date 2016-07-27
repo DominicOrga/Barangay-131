@@ -2,15 +2,17 @@ package javah.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javah.DatabaseControl;
-import javah.utils.ListFilter;
+import javah.util.ListFilter;
 
 import java.util.List;
 
@@ -55,10 +57,12 @@ public class ResidentControl {
      */
     private List<String> mResidentNames;
 
+    private int mResidentSelectedIndex = -1;
+
     /**
      * The array containing all the labels of the resident list paging.
      */
-    private Label[][] mResidentLabels;
+    private Label[] mResidentLabels;
 
     /**
      * Represents the current page of the resident list paging.
@@ -78,7 +82,7 @@ public class ResidentControl {
 
     @FXML
     private void initialize() {
-        // Initialize the db conntroller.
+        // Initialize the db controller.
         mDatabaseControl = new DatabaseControl();
 
         // Cache resident IDs and names from the database.
@@ -91,20 +95,19 @@ public class ResidentControl {
         mResidentNames = mResidentNamesCache;
 
         // Initialize mResidentLabels with storage for 40 labels.
-        mResidentLabels = new Label[20][2];
+        mResidentLabels = new Label[40];
 
-        // Populate mResidentLabels with 40 labels (2, 20) and display it in mResidentListGridPane.
-        for (int col = 0; col < 2; col++)
-            for (int row = 0; row < 20; row++) {
-                Label label = new Label();
-                label.setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
-                label.setAlignment(Pos.CENTER);
-                label.setPrefHeight(500);
-                label.setPrefWidth(1000);
+        // Populate mResidentLabels with 40 labels and display it in a matrix of 20x2 mResidentListGridPane.
+        for (int i = 0; i < 40; i++) {
+            Label label = new Label();
+            label.setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
+            label.setAlignment(Pos.CENTER);
+            label.setPrefHeight(500);
+            label.setPrefWidth(1000);
 
-                mResidentLabels[row][col] = label;
-                mResidentListGridPane.add(label, col, row);
-            }
+            mResidentLabels[i] = label;
+            mResidentListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
+        }
 
         // Determine the initial number of Pages and set the default current page to 1.
         mResidentCount = mResidentIDs.size();
@@ -126,15 +129,20 @@ public class ResidentControl {
         int lastIndex = mCurrentPage * 40 > mResidentCount - 1 ? mResidentCount - 1 : mCurrentPage * 40;
         int currentIndex = firstIndex;
 
-        for (int col = 0; col < 2; col++)
-            for (int row = 0; row < 20; row++)
-                if (currentIndex <= lastIndex) {
-                    mResidentLabels[row][col].setText(mResidentNames.get(currentIndex));
-                    currentIndex++;
-                } else
-                    mResidentLabels[row][col].setText("");
+        for (int i = 0; i < 40; i++) {
+            if (currentIndex <= lastIndex) {
+                mResidentLabels[i].setText(mResidentNames.get(currentIndex));
+                currentIndex++;
+            } else
+                mResidentLabels[i].setText("");
+        }
     }
 
+    /**
+     * Update the resident list paging to display the residents that has a match with the text in the search field.
+     * A black search field will result to displaying all the residents.
+     * @param event
+     */
     @FXML
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText();
@@ -160,7 +168,37 @@ public class ResidentControl {
         mPageCountLabel.setText(mPageCount + "");
 
         updateCurrentPage();
+    }
 
+    /**
+     * If the Enter key is pressed within the search field, then automatically click the search button.
+     * @param event
+     */
+
+    /**
+     * Move the resident list paging to the previous page when possible.
+     * @param event
+     */
+    @FXML
+    public void onBackPageButtonClicked(Event event) {
+        if (mCurrentPage > 1) {
+            mCurrentPage -= 1;
+            updateCurrentPage();
+            mCurrentPageLabel.setText(mCurrentPage + "");
+        }
+    }
+
+    /**
+     * Move the resident list paging to the next page when possible.
+     * @param event
+     */
+    @FXML
+    public void onNextPageButtonClicked(Event event) {
+        if(mCurrentPage < mPageCount) {
+            mCurrentPage += 1;
+            updateCurrentPage();
+            mCurrentPageLabel.setText(mCurrentPage + "");
+        }
     }
 
     @FXML
@@ -184,21 +222,5 @@ public class ResidentControl {
     public void onDeleteResidentButtonClicked(Event event) {
     }
 
-    @FXML
-    public void onBackPageButtonClicked(Event event) {
-        if (mCurrentPage > 1) {
-            mCurrentPage -= 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
-    }
 
-    @FXML
-    public void onNextPageButtonClicked(Event event) {
-        if(mCurrentPage < mPageCount) {
-            mCurrentPage += 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
-    }
 }
