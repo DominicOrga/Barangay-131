@@ -175,12 +175,12 @@
                               </ImageView>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/ic_edit.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="mDeleteButton" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/ic_delete.png" />
                                        </image>
@@ -190,105 +190,119 @@
                                     <Insets left="75.0" />
                                  </padding>
                               </HBox>
+                              <Label fx:id="mResidentName" text="Name">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
                            </children>
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </VBox>
-                        <TextArea fx:id="mResidentName" editable="false" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="95.0" prefWidth="425.0" style="-fx-border-color: transparent; -fx-text-fill: black;" wrapText="true">
-                           <font>
-                              <Font name="Helvetica Neue Light" size="20.0" />
-                           </font>
+                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label minWidth="-Infinity" prefWidth="150.0" text="Birthdate:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="mBirthDate" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
                            <VBox.margin>
-                              <Insets bottom="-30.0" />
+                              <Insets top="50.0" />
                            </VBox.margin>
-                        </TextArea>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
-                           <children>
-                              <Label text="Birthdate:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="mBirthDate" maxHeight="-Infinity">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
                         </HBox>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
-                              <Label text="Age: ">
+                              <Label minWidth="-Infinity" prefWidth="150.0" text="Age:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="20.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets right="5.0" />
+                                    <Insets right="20.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="mAge">
+                              <Label fx:id="mAge" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Label>
                            </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </HBox>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
-                              <Label text="Resident Since:">
-                                 <padding>
-                                    <Insets right="5.0" />
-                                 </padding>
+                              <Label minWidth="-Infinity" prefWidth="150.0" text="Resident Since:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="20.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
                               </Label>
                               <Label fx:id="mResidentSince">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Label>
                            </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </HBox>
-                        <Label fx:id="mAddress1Label" text="Address 1:">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="mAddress1Label" minWidth="-Infinity" prefWidth="150.0" text="Address 1:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
+                                 <font>
+                                    <Font name="Calibri Light" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="MOVE" />
+                                 </cursor>
+                              </TextArea>
+                           </children>
                            <VBox.margin>
-                              <Insets />
+                              <Insets top="10.0" />
                            </VBox.margin>
-                        </Label>
-                        <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="55.0" prefWidth="425.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="MOVE" />
-                           </cursor>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="273.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="mAddress2Label" minWidth="-Infinity" prefWidth="150.0" text="Address 2:" visible="false">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
+                                 <font>
+                                    <Font name="Calibri Light" size="20.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
                            <VBox.margin>
-                              <Insets left="-10.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
-                        </TextArea>
-                        <Label fx:id="mAddress2Label" text="Address 2:" visible="false">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="-10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="55.0" prefWidth="200.0" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="-10.0" />
-                           </VBox.margin>
-                        </TextArea>
+                        </HBox>
                      </children>
                      <GridPane.margin>
                         <Insets left="20.0" right="20.0" />

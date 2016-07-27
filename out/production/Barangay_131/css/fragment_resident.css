@@ -38,7 +38,7 @@
     -fx-background-color:#000000;
 }
 
-.address .text-area *.text {
+.text-area *.text {
     -fx-text-alignment: left;
 }
 
