@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/javah/CacheManager.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/CacheManager.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseContract$ResidentEntry.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseContract.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseControl.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/CacheManager.java" afterPath="$PROJECT_DIR$/src/javah/util/CacheManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/DatabaseContract.java" afterPath="$PROJECT_DIR$/src/javah/database/DatabaseContract.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/DatabaseControl.java" afterPath="$PROJECT_DIR$/src/javah/database/DatabaseControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/MainControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
@@ -77,37 +85,39 @@
       <file leaf-file-name="scene_resident.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
+            <state relative-caret-position="880">
               <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="1254">
+              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="CacheManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/CacheManager.java">
+        <entry file="file://$PROJECT_DIR$/src/javah/util/CacheManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#579#580#0" expanded="true" />
-                <element signature="e#619#620#0" expanded="true" />
-                <element signature="e#671#672#0" expanded="true" />
-                <element signature="e#713#714#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="154">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseContract.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -115,12 +125,16 @@
       <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1212">
-              <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+            <state relative-caret-position="184">
+              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
               <folding>
-                <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
               </folding>
             </state>
@@ -130,7 +144,7 @@
       <file leaf-file-name="scene_resident.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
+            <state relative-caret-position="418">
               <caret line="19" column="139" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
               <folding />
             </state>
@@ -140,11 +154,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseControl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/DatabaseControl.java">
+      <file leaf-file-name="DatabaseControl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1584">
-              <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+            <state relative-caret-position="152">
+              <caret line="80" column="65" selection-start-line="80" selection-start-column="65" selection-end-line="80" selection-end-column="65" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Project2.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Google Drive/Adamson/Courses, 2nd Semester 2015 - 2016/Database &amp; File Organization/Project2/Project2.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -185,8 +211,10 @@
         <option value="$PROJECT_DIR$/src/css/fragment_resident.css" />
         <option value="$PROJECT_DIR$/src/fxml/scene_resident.fxml" />
         <option value="$PROJECT_DIR$/src/javah/CacheManager.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/util/CacheManager.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/database/DatabaseControl.java" />
       </list>
     </option>
   </component>
@@ -234,7 +262,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -303,7 +331,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
+              <option name="myItemId" value="database" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -389,7 +417,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -453,10 +481,7 @@
       </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
-      <method>
-        <option name="Make" enabled="true" />
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method />
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
@@ -479,10 +504,7 @@
       <Profilers>
         <option name="GAPID_DISABLE_PCS" value="false" />
       </Profilers>
-      <method>
-        <option name="Make" enabled="true" />
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <module />
@@ -737,7 +759,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28540066" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28210756" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -775,7 +797,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -784,14 +806,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -804,9 +818,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4884">
           <caret line="222" column="0" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -815,9 +827,13 @@
         <state relative-caret-position="528">
           <caret line="42" column="37" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
           <folding>
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
@@ -834,11 +850,13 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1738">
           <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -862,9 +880,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3542">
           <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -873,9 +889,13 @@
         <state relative-caret-position="3014">
           <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
           <folding>
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
@@ -885,9 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -902,11 +919,13 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -930,9 +949,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2310">
           <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -941,26 +958,32 @@
         <state relative-caret-position="396">
           <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding>
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseContract.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -968,7 +991,6 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -995,9 +1017,13 @@
         <state relative-caret-position="330">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
@@ -1007,9 +1033,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,7 +1082,6 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -1066,13 +1089,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/ResidentListAdapter.java" />
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="57" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/container/Resident.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1254">
@@ -1084,23 +1100,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-990">
           <caret line="18" column="54" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/DatabaseControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1584">
-          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
+        <state relative-caret-position="880">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
@@ -1110,13 +1115,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
+        <state relative-caret-position="418">
           <caret line="19" column="139" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
           <folding />
         </state>
@@ -1129,7 +1133,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
           <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1141,37 +1144,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1254">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/util/CacheManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Google Drive/Adamson/Courses, 2nd Semester 2015 - 2016/Database &amp; File Organization/Project2/Project2.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1212">
-          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+        <state relative-caret-position="184">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
           <folding>
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/CacheManager.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#579#580#0" expanded="true" />
-            <element signature="e#619#620#0" expanded="true" />
-            <element signature="e#671#672#0" expanded="true" />
-            <element signature="e#713#714#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
+        <state relative-caret-position="152">
+          <caret line="80" column="65" selection-start-line="80" selection-start-column="65" selection-end-line="80" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

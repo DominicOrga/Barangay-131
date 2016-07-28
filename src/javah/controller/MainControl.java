@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javah.CacheManager;
+import javah.util.CacheManager;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;
@@ -75,7 +75,7 @@ public class MainControl {
     private void initialize() {
 
         mCacheManager = new CacheManager();
-        
+
         // Initialize the mRectAnimTransitioner.
         mRectAnimTransitioner = new Rectangle();
         mRectAnimTransitioner.setWidth(mMenuGridPane.getWidth());

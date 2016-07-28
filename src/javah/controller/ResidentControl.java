@@ -12,13 +12,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javah.CacheManager;
-import javah.DatabaseControl;
 import javah.container.Resident;
+import javah.util.CacheManager;
+import javah.database.DatabaseControl;
 import javah.util.ListFilter;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
@@ -101,6 +100,8 @@ public class ResidentControl {
      */
     private int mResidentCount;
 
+    private Resident mResidentSelected;
+
     /**
      * Called before setCacheManager()
      */
@@ -174,16 +175,16 @@ public class ResidentControl {
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
-                Resident resident = mDatabaseControl.getResident(mResidentIDs.get(residentSelectedIndex));
+                mResidentSelected = mDatabaseControl.getResident(mResidentIDs.get(residentSelectedIndex));
 
-                mResidentPhoto.setImage(new Image(resident.getPhotoPath() != null ?
-                        "file:" + resident.getPhotoPath() : "/res/ic_default_resident.png"));
+                mResidentPhoto.setImage(new Image(mResidentSelected.getPhotoPath() != null ?
+                        "file:" + mResidentSelected.getPhotoPath() : "/res/ic_default_resident.png"));
 
                 mResidentName.setText(mResidentNames.get(residentSelectedIndex));
 
                 // Format birthdate to YYYY dd, mm
                 // Set the displayed birth date.
-                LocalDate birthDate = resident.getBirthDate().toLocalDate();
+                LocalDate birthDate = mResidentSelected.getBirthDate().toLocalDate();
                 int birthYear = birthDate.getYear();
                 int birthDay = birthDate.getDayOfMonth();
 
@@ -216,17 +217,17 @@ public class ResidentControl {
                 mAge.setText(age + "");
 
                 // Set the displayed residency year.
-                mResidentSince.setText(resident.getResidentSince() == -1 ? "Birth" : resident.getResidentSince() + "");
+                mResidentSince.setText(mResidentSelected.getResidentSince() == -1 ? "Birth" : mResidentSelected.getResidentSince() + "");
 
 
                 // Set the displayed address 1.
-                mAddress1.setText(resident.getAddress1());
+                mAddress1.setText(mResidentSelected.getAddress1());
 
                 // Set the displayed address 2.
-                if(resident.getAddress2() != null) {
+                if(mResidentSelected.getAddress2() != null) {
                     mAddress2.setVisible(true);
                     mAddress2Label.setVisible(true);
-                    mAddress2.setText(resident.getAddress2());
+                    mAddress2.setText(mResidentSelected.getAddress2());
                 } else {
                     mAddress2.setVisible(false);
                     mAddress2Label.setVisible(false);
@@ -393,6 +394,7 @@ public class ResidentControl {
 
     @FXML
     public void onDeleteResidentButtonClicked(Event event) {
+
     }
 
 

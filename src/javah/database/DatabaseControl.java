@@ -1,6 +1,4 @@
-package javah;
-
-import javah.DatabaseContract.*;
+package javah.database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javah.container.Resident;
@@ -8,6 +6,8 @@ import javah.container.Resident;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javah.database.DatabaseContract.*;
 
 
 public class DatabaseControl {
@@ -82,15 +82,18 @@ public class DatabaseControl {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s FROM %s WHERE %s = ? ORDER BY %s",
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.COLUMN_BIRTH_DATE,
                             ResidentEntry.COLUMN_PHOTO,
                             ResidentEntry.COLUMN_RESIDENT_SINCE,
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_RESIDENT_ID,
-                            ResidentEntry.COLUMN_LAST_NAME)
+                            ResidentEntry.COLUMN_RESIDENT_ID
+                    )
             );
 
             preparedStatement.setString(1, residentId);
@@ -100,6 +103,10 @@ public class DatabaseControl {
             if (resultSet.next()) {
                 Resident resident = new Resident();
 
+                resident.setId(residentId);
+                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
+                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
+                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
                 resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
                 resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
                 resident.setResidentSince(resultSet.getShort(ResidentEntry.COLUMN_RESIDENT_SINCE));

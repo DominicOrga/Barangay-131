@@ -1,6 +1,7 @@
-package javah;
+package javah.util;
 
-import java.util.Arrays;
+import javah.database.DatabaseControl;
+
 import java.util.List;
 
 /**
