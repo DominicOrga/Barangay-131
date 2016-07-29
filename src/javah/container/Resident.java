@@ -7,7 +7,7 @@ public class Resident {
     private String mFirstName, mLastName;
     private String mMiddleName;
     private String mPhotoPath;
-    private short mResidentSince;
+    private short mYearOfResidency, mMonthOfResidency;
     private String mAddress1, mAddress2;
     private Date mBirthDate;
     private String mSignature;
@@ -60,12 +60,20 @@ public class Resident {
         return mBirthDate;
     }
 
-    public void setResidentSince(short since) {
-        mResidentSince = since;
+    public void setYearOfResidency(short year) {
+        mYearOfResidency = year;
     }
 
-    public int getResidentSince() {
-        return mResidentSince;
+    public int getYearOfResidency() {
+        return mYearOfResidency;
+    }
+
+    public void setMonthOfResidency(short month) {
+        mMonthOfResidency = month;
+    }
+
+    public int getMonthOfResidency() {
+        return mMonthOfResidency;
     }
 
     public void setAddress1(String address1) {

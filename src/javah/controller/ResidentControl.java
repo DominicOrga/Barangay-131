@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ResidentControl {
 
@@ -299,7 +300,6 @@ public class ResidentControl {
         updateCurrentPage();
     }
 
-
     /**
      * Update the resident selected data displayed.
      * @param newLabelSelectedIndex is the index of the label containing the resident to be displayed. If it is equal
@@ -315,6 +315,26 @@ public class ResidentControl {
          * If a resident is unselected or no resident is selected, then display the example data.
          */
         Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
+
+            Function<Integer, String> convertMonthIntToString = (monthValue) -> {
+                String birthMonth = "January";
+                switch(monthValue) {
+                    case 2 : birthMonth = "February"; break;
+                    case 3 : birthMonth = "March"; break;
+                    case 4 : birthMonth = "April"; break;
+                    case 5 : birthMonth = "May"; break;
+                    case 6 : birthMonth = "June"; break;
+                    case 7 : birthMonth = "July"; break;
+                    case 8 : birthMonth = "August"; break;
+                    case 9 : birthMonth = "September"; break;
+                    case 10 : birthMonth = "October"; break;
+                    case 11 : birthMonth = "November"; break;
+                    case 12 : birthMonth = "December";
+                }
+
+                return birthMonth;
+            };
+
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
@@ -330,21 +350,7 @@ public class ResidentControl {
                 LocalDate birthDate = mResidentSelected.getBirthDate().toLocalDate();
                 int birthYear = birthDate.getYear();
                 int birthDay = birthDate.getDayOfMonth();
-
-                String birthMonth = "January";
-                switch(birthDate.getMonthValue()) {
-                    case 2 : birthMonth = "February"; break;
-                    case 3 : birthMonth = "March"; break;
-                    case 4 : birthMonth = "April"; break;
-                    case 5 : birthMonth = "May"; break;
-                    case 6 : birthMonth = "June"; break;
-                    case 7 : birthMonth = "July"; break;
-                    case 8 : birthMonth = "August"; break;
-                    case 9 : birthMonth = "September"; break;
-                    case 10 : birthMonth = "October"; break;
-                    case 11 : birthMonth = "November"; break;
-                    case 12 : birthMonth = "December";
-                }
+                String birthMonth = convertMonthIntToString.apply(birthDate.getMonthValue());
 
                 mBirthDate.setText("");
                 mBirthDate.setText(String.format("%s %s, %s", birthMonth, birthDay, birthYear));
@@ -359,8 +365,11 @@ public class ResidentControl {
 
                 mAge.setText(age + "");
 
-                // Set the displayed residency year.
-                mResidentSince.setText(mResidentSelected.getResidentSince() == -1 ? "Birth" : mResidentSelected.getResidentSince() + "");
+                // Set the displayed year and month of residency.
+                mResidentSince.setText(
+                        mResidentSelected.getYearOfResidency() == -1 ?
+                                "Birth" : convertMonthIntToString.apply(mResidentSelected.getMonthOfResidency()) + " " +
+                                        mResidentSelected.getYearOfResidency());
 
 
                 // Set the displayed address 1.
@@ -380,18 +389,18 @@ public class ResidentControl {
                 mEditButton.setVisible(true);
 
             } else {
-                mDeleteButton.setVisible(false);
-                mEditButton.setVisible(false);
+                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
+                mResidentName.setText("");
+                mBirthDate.setText("");
+                mAge.setText("");
+                mResidentSince.setText("");
+
+                mAddress1.setText("");
                 mAddress2.setVisible(false);
                 mAddress2Label.setVisible(false);
 
-                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
-                mResidentName.setText("Exempli, Gratia E.G.");
-                mBirthDate.setText("MMMM DD, YYYY");
-                mAge.setText("---");
-                mResidentSince.setText("YYYY or Birth");
-
-                mAddress1.setText("Street Address, Neighborhood, City, State");
+                mDeleteButton.setVisible(false);
+                mEditButton.setVisible(false);
             }
         };
 

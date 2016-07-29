@@ -82,13 +82,14 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.COLUMN_BIRTH_DATE,
                             ResidentEntry.COLUMN_PHOTO,
-                            ResidentEntry.COLUMN_RESIDENT_SINCE,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.TABLE_NAME,
@@ -109,7 +110,8 @@ public class DatabaseModel {
                 resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
                 resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
                 resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
-                resident.setResidentSince(resultSet.getShort(ResidentEntry.COLUMN_RESIDENT_SINCE));
+                resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
+                resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
                 resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
                 resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
 
@@ -147,5 +149,4 @@ public class DatabaseModel {
             e.printStackTrace();
         }
     }
-
 }
