@@ -5,6 +5,7 @@ import javah.container.Resident;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javah.util.DatabaseContract.*;
@@ -41,7 +42,7 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
                     String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s",
-                            ResidentEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -53,7 +54,7 @@ public class DatabaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
-                residentsIdList.add(resultSet.getString(ResidentEntry.COLUMN_RESIDENT_ID));
+                residentsIdList.add(resultSet.getString(ResidentEntry.COLUMN_ID));
 
                 residentNameList.add(String.format("%s, %s %s.",
                         resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
@@ -93,7 +94,7 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_RESIDENT_ID
+                            ResidentEntry.COLUMN_ID
                     )
             );
 
@@ -121,6 +122,7 @@ public class DatabaseModel {
             dbConnection.close();
             preparedStatement.close();
             resultSet.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,7 +139,7 @@ public class DatabaseModel {
                     String.format("UPDATE %s SET %s = 1 WHERE %s = ?",
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_IS_ARCHIVED,
-                            ResidentEntry.COLUMN_RESIDENT_ID
+                            ResidentEntry.COLUMN_ID
                     )
             );
 
@@ -145,8 +147,53 @@ public class DatabaseModel {
             preparedStatement.executeUpdate();
 
             dbConnection.close();
+            preparedStatement.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String createResident(Resident resident) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Generate a unique resident id.
+            String residentId = "";
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("SELECT %s FROM %s WHERE %s LIKE '%s%%' ORDER BY %s DESC LIMIT 1",
+                    ResidentEntry.COLUMN_ID,
+                    ResidentEntry.TABLE_NAME,
+                    ResidentEntry.COLUMN_ID,
+                    Calendar.getInstance().get(Calendar.YEAR) - 2000,
+                    ResidentEntry.COLUMN_ID));
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String code = resultSet.getString(ResidentEntry.COLUMN_ID);
+                int year = Integer.parseInt(code.substring(0, 2));
+                int codeNo = Integer.parseInt(code.substring(3, 6)) + 1;
+
+                residentId = year + "-" + (codeNo < 10 ? "00" + codeNo : codeNo < 100 ? "0" + codeNo : codeNo);
+            } else {
+                int year = Calendar.getInstance().get(Calendar.YEAR) - 2000;
+                residentId = year + "-001";
+            }
+
+            statement.close();
+            resultSet.close();
+
+
+
+            dbConnection.close();
+
+            return residentId;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

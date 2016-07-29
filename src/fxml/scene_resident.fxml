@@ -270,17 +270,20 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
+                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
                                  <font>
                                     <Font name="Calibri Light" size="20.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="MOVE" />
                                  </cursor>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
                               </TextArea>
                            </children>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="50.0" />
                            </VBox.margin>
                         </HBox>
                         <HBox layoutX="10.0" layoutY="273.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
@@ -293,14 +296,14 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
+                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="450.0" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
                                  <font>
                                     <Font name="Calibri Light" size="20.0" />
                                  </font>
                               </TextArea>
                            </children>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="50.0" />
                            </VBox.margin>
                         </HBox>
                      </children>

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="500.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/form_resident_registration.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentRegistrationControl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="500.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/scene_resident_form.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.dialog.ResidentFormControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
@@ -78,6 +78,14 @@
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
+                  <Button fx:id="mUploadPhotoButton1" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadPhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
@@ -159,13 +167,13 @@
                         </FXCollections>
                      </items>
                   </ChoiceBox>
-                  <ChoiceBox fx:id="mBirthDay" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="55.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="28">
+                  <ChoiceBox fx:id="mBirthDay" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="55.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="1">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                      <items>
                         <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="28" />
+                           <String fx:value="1" />
                         </FXCollections>
                      </items>
                   </ChoiceBox>
@@ -191,7 +199,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <ChoiceBox fx:id="mResidencyYear" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="65.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #BEBEBE;" value="Birth">
+                  <ChoiceBox fx:id="mYearOfResidency" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="65.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #BEBEBE;" value="Birth">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
                            <String fx:value="Birth" />
@@ -199,6 +207,27 @@
                      </items>
                      <HBox.margin>
                         <Insets />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="mMonthOfResidency" layoutX="154.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #BEBEBE;" value="October" visible="false">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="January" />
+                           <String fx:value="February" />
+                           <String fx:value="March" />
+                           <String fx:value="April" />
+                           <String fx:value="May" />
+                           <String fx:value="June" />
+                           <String fx:value="July" />
+                           <String fx:value="August" />
+                           <String fx:value="September" />
+                           <String fx:value="October" />
+                           <String fx:value="November" />
+                           <String fx:value="December" />
+                        </FXCollections>
+                     </items>
+                     <HBox.margin>
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </ChoiceBox>
                </children>

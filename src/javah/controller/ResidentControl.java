@@ -3,6 +3,7 @@ package javah.controller;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javah.container.Resident;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
@@ -24,6 +26,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ResidentControl {
+
+    @FXML private HBox mBox;
 
     /**
      * An interface that tells the main scene to open up a manipulation resident dialog.

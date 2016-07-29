@@ -1,0 +1,10 @@
+.choice-box .arrow, .choice-box .arrow-button{
+    -fx-background-color: #FF861B;
+}
+
+
+.choice-box-popup .combo-box .list-cell .list-view {
+    -fx-max-height: 100;
+    -fx-pref-height: 100;
+    -fx-pref-width: 100;
+}
