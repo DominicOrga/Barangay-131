@@ -7,6 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javah.util.DatabaseContract.*;
+
 
 public class DatabaseModel {
     private static MysqlDataSource dataSource;
@@ -39,24 +41,24 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
                     String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s",
-                            DatabaseContract.ResidentEntry.COLUMN_RESIDENT_ID,
-                            DatabaseContract.ResidentEntry.COLUMN_FIRST_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_MIDDLE_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_LAST_NAME,
-                            DatabaseContract.ResidentEntry.TABLE_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_IS_ARCHIVED,
-                            DatabaseContract.ResidentEntry.COLUMN_LAST_NAME)
+                            ResidentEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_IS_ARCHIVED,
+                            ResidentEntry.COLUMN_LAST_NAME)
                     );
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
-                residentsIdList.add(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_RESIDENT_ID));
+                residentsIdList.add(resultSet.getString(ResidentEntry.COLUMN_RESIDENT_ID));
 
                 residentNameList.add(String.format("%s, %s %s.",
-                        resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_LAST_NAME),
-                        resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_FIRST_NAME),
-                        resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0)));
+                        resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
+                        resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME),
+                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0)));
             }
 
             returnList[0] = residentsIdList;
@@ -81,16 +83,16 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
                     String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
-                            DatabaseContract.ResidentEntry.COLUMN_FIRST_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_MIDDLE_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_LAST_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_BIRTH_DATE,
-                            DatabaseContract.ResidentEntry.COLUMN_PHOTO,
-                            DatabaseContract.ResidentEntry.COLUMN_RESIDENT_SINCE,
-                            DatabaseContract.ResidentEntry.COLUMN_ADDRESS_1,
-                            DatabaseContract.ResidentEntry.COLUMN_ADDRESS_2,
-                            DatabaseContract.ResidentEntry.TABLE_NAME,
-                            DatabaseContract.ResidentEntry.COLUMN_RESIDENT_ID
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_RESIDENT_SINCE,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_RESIDENT_ID
                     )
             );
 
@@ -102,14 +104,14 @@ public class DatabaseModel {
                 Resident resident = new Resident();
 
                 resident.setId(residentId);
-                resident.setFirstName(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_FIRST_NAME));
-                resident.setMiddleName(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_MIDDLE_NAME));
-                resident.setLastName(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_LAST_NAME));
-                resident.setBirthDate(resultSet.getDate(DatabaseContract.ResidentEntry.COLUMN_BIRTH_DATE));
-                resident.setPhotoPath(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_PHOTO));
-                resident.setResidentSince(resultSet.getShort(DatabaseContract.ResidentEntry.COLUMN_RESIDENT_SINCE));
-                resident.setAddress1(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_ADDRESS_1));
-                resident.setAddress2(resultSet.getString(DatabaseContract.ResidentEntry.COLUMN_ADDRESS_2));
+                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
+                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
+                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
+                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
+                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
+                resident.setResidentSince(resultSet.getShort(ResidentEntry.COLUMN_RESIDENT_SINCE));
+                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
+                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
 
                 return resident;
             }
@@ -122,6 +124,28 @@ public class DatabaseModel {
         }
 
         return null;
+    }
+
+    public void archiveResident(String residentId) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("UPDATE %s SET %s = 1 WHERE %s = ?",
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_IS_ARCHIVED,
+                            ResidentEntry.COLUMN_RESIDENT_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+            preparedStatement.executeUpdate();
+
+            dbConnection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

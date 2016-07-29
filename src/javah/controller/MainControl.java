@@ -6,12 +6,16 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javah.container.Resident;
+import javah.controller.dialog.ResidentDeletionControl;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 
@@ -52,8 +56,17 @@ public class MainControl {
      * The information scenes.
      */
     private Pane mResidentScene, mBarangayIdScene, mBarangayClearanceScene, mBusinessClearanceScene, mBlotterScene;
-    
+
+    /**
+     * The popup scenes.
+     */
+    private Pane mResidentDeletionScene;
+
+    /**
+     * The scene controllers.
+     */
     private ResidentControl mResidentControl;
+    private ResidentDeletionControl mResidentDeletionControl;
     /**
      * Key-value pairs to represent each menu.
      */
@@ -82,16 +95,90 @@ public class MainControl {
         mCacheModel = new CacheModel();
 
         // Initialize the mRectAnimTransitioner.
+        // *Used in updateMenuSelected() to aid in animation.
         mRectAnimTransitioner = new Rectangle();
         mRectAnimTransitioner.setWidth(mMenuGridPane.getWidth());
         mRectAnimTransitioner.setHeight(mResidentMenu.getHeight() - 1);
 
         // Initialize the information scenes.
         FXMLLoader fxmlLoader = new FXMLLoader();
-        initializeResidentScene(fxmlLoader);
+        Consumer<String> resetFXMLLoader = (location) -> {
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource(location));
+            fxmlLoader.setRoot(null);
+            fxmlLoader.setController(null);
+        };
+
+        // Initialize the Resident scene.
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/scene_resident.fxml"));
+        try {
+            mResidentScene = fxmlLoader.load();
+            mResidentControl = fxmlLoader.getController();
+
+            mResidentControl.setDatabaseModel(mDatabaseModel);
+            mResidentControl.setCacheModel(mCacheModel);
+
+            mResidentControl.setListener(new ResidentControl.OnResidentSceneListener() {
+                @Override
+                public void onNewResidentButtonClicked() {
+
+                }
+
+                @Override
+                public void onEditResidentButtonClicked(Resident resident) {
+
+                }
+
+                @Override
+                public void onDeleteResidentButtonClicked(Resident resident) {
+                    mResidentDeletionControl.setNameLabel(resident.getFirstName());
+                    showPopupScene(mResidentDeletionScene, false);
+                }
+            });
+
+            // Add the information scenes to the mMainGridPane.
+            mMainGridPane.add(mResidentScene, 1, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         // The default selected menu must be the resident menu.
         updateMenuSelected(MENU_RESIDENT);
+
+        /**
+         * Initially add the pop-ups to the mPopupStackPane. *Add, but not visible.
+         */
+        Consumer<Pane> addToPopupPane = (Pane popupPane) -> {
+            popupPane.setVisible(false);
+            mPopupStackPane.getChildren().add(popupPane);
+            mPopupStackPane.setAlignment(popupPane, Pos.CENTER);
+        };
+
+        // Initialize the resident deletion confirmation dialog.
+        resetFXMLLoader.accept("fxml/dialog/scene_resident_deletion.fxml");
+        try {
+            mResidentDeletionScene = fxmlLoader.load();
+            mResidentDeletionControl = fxmlLoader.getController();
+
+            mResidentDeletionControl.setOnClickListener(new ResidentDeletionControl.OnResidentDeletionListener() {
+                @Override
+                public void onDeleteButtonClicked() {
+                    mResidentControl.deleteSelectedResident();
+                    hidePopupScene(mResidentDeletionScene);
+                }
+
+                @Override
+                public void onCancelButtonClicked() {
+                    hidePopupScene(mResidentDeletionScene);
+                }
+            });
+
+            addToPopupPane.accept(mResidentDeletionScene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -159,8 +246,6 @@ public class MainControl {
                 case MENU_BLOTTER:
                     playMenuSlideAnimation.accept(mBlotterMenu, isSelected);
             }
-
-
         };
 
         // Update the previous menu selected to 'unselected'.
@@ -174,41 +259,23 @@ public class MainControl {
         // to 'selected'.
     }
 
-    /**
-     * Initialize the resident scene and add it to mMainGridPane(1,0).
-     * @param fxmlLoader
-     */
-    public void initializeResidentScene(FXMLLoader fxmlLoader) {
-        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/scene_resident.fxml"));
-        fxmlLoader.setRoot(null);
-        fxmlLoader.setController(null);
-
-        try {
-            mResidentScene = fxmlLoader.load();
-            mResidentControl = fxmlLoader.getController();
-            mResidentControl.setDatabaseModel(mDatabaseModel);
-            mResidentControl.setCacheModel(mCacheModel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mMainGridPane.add(mResidentScene, 1, 0);
-    }
-
-    private void clearPopupStackPane() {
+    private void hidePopupScene(Pane popupScene) {
         mMainGridPane.setEffect(null);
         mMainGridPane.setDisable(false);
 
-        mPopupStackPane.getChildren().remove(0);
+        popupScene.setVisible(false);
         mPopupStackPane.setVisible(false);
     }
 
-    private void showPopupStackPane() {
-        mMainGridPane.setEffect(new GaussianBlur());
-        mMainGridPane.setDisable(true);
+    private void showPopupScene(Pane popupScene, boolean isOtherPopupVisible) {
+        // If a pop-up is visible aside from the popupScene, then no need to re-blur the mMainGridPane.
+        if (!isOtherPopupVisible) {
+            mMainGridPane.setEffect(new GaussianBlur());
+            mMainGridPane.setDisable(true);
+        }
+
+        popupScene.setVisible(true);
         mPopupStackPane.setVisible(true);
-//        mPopupStackPane.getChildren().add(rootView);
-//        mPopupStackPane.setAlignment(rootView, Pos.CENTER);
     }
 
     @FXML

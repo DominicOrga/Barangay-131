@@ -25,6 +25,15 @@ import java.util.function.Consumer;
 public class ResidentControl {
 
     /**
+     * An interface that tells the main scene to open up a manipulation resident dialog.
+     */
+    public interface OnResidentSceneListener {
+        void onNewResidentButtonClicked();
+        void onEditResidentButtonClicked(Resident resident);
+        void onDeleteResidentButtonClicked(Resident resident);
+    }
+
+    /**
      * Used for resident list paging. *Each page contains 40 residents.
      */
     @FXML private GridPane mResidentListGridPane;
@@ -80,6 +89,12 @@ public class ResidentControl {
     private int mLabelSelectedIndex;
 
     /**
+     * The value representing the index of the selected resident.
+     * Value range is between 0 - [mResidentIDs.size() - 1].
+     */
+    private int mResidentSelectedIndex;
+
+    /**
      * The array containing all the labels of the resident list paging.
      */
     private Label[] mResidentLabels;
@@ -101,6 +116,8 @@ public class ResidentControl {
     private int mResidentCount;
 
     private Resident mResidentSelected;
+
+    private OnResidentSceneListener mListener;
 
     /**
      * Called before setCacheModel()
@@ -126,6 +143,108 @@ public class ResidentControl {
             final int labelIndex = i;
             label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
         }
+    }
+
+    @FXML
+    public void onSearchButtonClicked(Event event) {
+        String keywords = mSearchField.getText();
+
+        if (keywords.trim().equals("")) {
+            mResidentIDs = mCacheModel.getResidentIDsCache();
+            mResidentNames = mCacheModel.getmResidentNamesCache();
+        } else {
+            String[] keywordsArray = keywords.split(" ");
+
+            List[] lists = ListFilter.filterLists(
+                    mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
+
+
+            mResidentIDs = lists[0];
+            mResidentNames = lists[1];
+        }
+
+        mResidentCount = mResidentIDs.size();
+        mCurrentPage = 1;
+        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        updateCurrentPage();
+    }
+
+    /**
+     * If the Enter key is pressed within the search field, then automatically click the search button.
+     * @param event
+     */
+    @FXML
+    public void onSearchFieldKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            onSearchButtonClicked(null);
+            mCurrentPageLabel.requestFocus();
+        }
+    }
+
+    /**
+     * Move the resident list paging to the previous page when possible.
+     * @param event
+     */
+    @FXML
+    public void onBackPageButtonClicked(Event event) {
+        if (mCurrentPage > 1) {
+            mCurrentPage -= 1;
+            updateCurrentPage();
+            mCurrentPageLabel.setText(mCurrentPage + "");
+        }
+    }
+
+    /**
+     * Move the resident list paging to the next page when possible.
+     * @param event
+     */
+    @FXML
+    public void onNextPageButtonClicked(Event event) {
+        if(mCurrentPage < mPageCount) {
+            mCurrentPage += 1;
+            updateCurrentPage();
+            mCurrentPageLabel.setText(mCurrentPage + "");
+        }
+    }
+
+    /**
+     * Tell the main scene to show the resident creation dialog.
+     * @param actionEvent
+     */
+    @FXML
+    public void onNewResidentButtonClicked(ActionEvent actionEvent) {
+        mListener.onNewResidentButtonClicked();
+    }
+
+    /**
+     * Tell the main scenne to show the resident update dialog.
+     * @param event
+     */
+    @FXML
+    public void onEditResidentButtonClicked(Event event) {
+        mListener.onEditResidentButtonClicked(mResidentSelected);
+    }
+
+    /**
+     * Tell the main scene to show the resident delete confirmation dialog.
+     * @param event
+     */
+    @FXML
+    public void onDeleteResidentButtonClicked(Event event) {
+        mListener.onDeleteResidentButtonClicked(mResidentSelected);
+    }
+
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Set the main scene as the listener to this object.
+     * @param listener
+     */
+    public void setListener(OnResidentSceneListener listener) {
+        mListener = listener;
     }
 
     /**
@@ -163,6 +282,22 @@ public class ResidentControl {
         updateCurrentPage();
     }
 
+    public void deleteSelectedResident() {
+        mDatabaseModel.archiveResident(mResidentSelected.getId());
+        mResidentIDs.remove(mResidentSelectedIndex);
+        mResidentNames.remove(mResidentSelectedIndex);
+
+        mResidentCount = mResidentIDs.size();
+        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+
+        if(mPageCount < mCurrentPage) mCurrentPage--;
+
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        setResidentSelected(-1);
+        updateCurrentPage();
+    }
 
 
     /**
@@ -173,22 +308,22 @@ public class ResidentControl {
     private void setResidentSelected(int newLabelSelectedIndex) {
 
         // Determine the index of the resident in place of the currently selected label.
-        int residentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
+        mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
         /**
          * If a resident is selected, then display its data.
          * If a resident is unselected or no resident is selected, then display the example data.
          */
-        Consumer<Boolean> setResidentInfoDisplayed = (isDisplayed) -> {
+        Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
-                mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(residentSelectedIndex));
+                mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
                 mResidentPhoto.setImage(new Image(mResidentSelected.getPhotoPath() != null ?
                         "file:" + mResidentSelected.getPhotoPath() : "/res/ic_default_resident.png"));
 
-                mResidentName.setText(mResidentNames.get(residentSelectedIndex));
+                mResidentName.setText(mResidentNames.get(mResidentSelectedIndex));
 
                 // Format birthdate to YYYY dd, mm
                 // Set the displayed birth date.
@@ -263,14 +398,14 @@ public class ResidentControl {
         // This is where the code selection and unselection view update happens.
 
         // If a label is clicked without containing any resident, then ignore the event.
-        if (residentSelectedIndex < mResidentIDs.size()) {
+        if (mResidentSelectedIndex < mResidentIDs.size()) {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
                     mResidentLabels[newLabelSelectedIndex]
                             .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setResidentInfoDisplayed.accept(true);
+                    setDisplaySelectedResidentInfo.accept(true);
                 }
 
             } else {
@@ -280,7 +415,8 @@ public class ResidentControl {
                     mResidentLabels[mLabelSelectedIndex]
                             .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
                     mLabelSelectedIndex = -1;
-                    setResidentInfoDisplayed.accept(false);
+                    mResidentSelectedIndex = -1;
+                    setDisplaySelectedResidentInfo.accept(false);
 
                 // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
@@ -291,7 +427,7 @@ public class ResidentControl {
                             .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setResidentInfoDisplayed.accept(true);
+                    setDisplaySelectedResidentInfo.accept(true);
                 }
             }
         }
@@ -323,85 +459,5 @@ public class ResidentControl {
      * A black search field will result to displaying all the residents.
      * @param event
      */
-    @FXML
-    public void onSearchButtonClicked(Event event) {
-        String keywords = mSearchField.getText();
 
-        if (keywords.trim().equals("")) {
-            mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getmResidentNamesCache();
-        } else {
-            String[] keywordsArray = keywords.split(" ");
-
-            List[] lists = ListFilter.filterLists(
-                    mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
-
-
-            mResidentIDs = lists[0];
-            mResidentNames = lists[1];
-        }
-
-        mResidentCount = mResidentIDs.size();
-        mCurrentPage = 1;
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        updateCurrentPage();
-    }
-
-    /**
-     * If the Enter key is pressed within the search field, then automatically click the search button.
-     * @param event
-     */
-    @FXML
-    public void onSearchFieldKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            onSearchButtonClicked(null);
-            mCurrentPageLabel.requestFocus();
-        }
-    }
-
-    /**
-     * Move the resident list paging to the previous page when possible.
-     * @param event
-     */
-    @FXML
-    public void onBackPageButtonClicked(Event event) {
-        if (mCurrentPage > 1) {
-            mCurrentPage -= 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
-    }
-
-    /**
-     * Move the resident list paging to the next page when possible.
-     * @param event
-     */
-    @FXML
-    public void onNextPageButtonClicked(Event event) {
-        if(mCurrentPage < mPageCount) {
-            mCurrentPage += 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
-    }
-
-
-
-    @FXML
-    public void onNewResidentButtonClicked(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    public void onEditResidentButtonClicked(Event event) {
-    }
-
-    @FXML
-    public void onDeleteResidentButtonClicked(Event event) {
-
-    }
 }
