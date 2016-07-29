@@ -13,8 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javah.container.Resident;
-import javah.util.CacheManager;
-import javah.database.DatabaseControl;
+import javah.model.CacheModel;
+import javah.model.DatabaseModel;
 import javah.util.ListFilter;
 
 import java.time.LocalDate;
@@ -56,12 +56,12 @@ public class ResidentControl {
      */
     @FXML private ImageView mEditButton, mDeleteButton;
 
-    private DatabaseControl mDatabaseControl;
+    private DatabaseModel mDatabaseModel;
 
     /**
      * The reference holder to the global cache manager.
      */
-    private CacheManager mCacheManager;
+    private CacheModel mCacheModel;
 
     /**
      * A volatile copy of the mResidentIDsCache used to search for non-archived residents.
@@ -103,12 +103,10 @@ public class ResidentControl {
     private Resident mResidentSelected;
 
     /**
-     * Called before setCacheManager()
+     * Called before setCacheModel()
      */
     @FXML
     private void initialize() {
-        // Initialize the db controller.
-        mDatabaseControl = new DatabaseControl();
 
         // Initialize mResidentLabels with storage for 40 labels.
         mResidentLabels = new Label[40];
@@ -127,22 +125,30 @@ public class ResidentControl {
             // Add a label selected event listener to each label.
             final int labelIndex = i;
             label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
-
         }
     }
 
     /**
      * Called after initialize() and is called in the MainControl.
-     * Make a reference holder to the global cache manager and start initializing the variables that are initially
-     * dependent on some cached data.
-     * @param cacheManager
+     * Make a reference to the global database model.
+     * @param databaseModel
      */
-    public void setCacheManager(CacheManager cacheManager) {
-        mCacheManager = cacheManager;
+    public void setDatabaseModel(DatabaseModel databaseModel) {
+        mDatabaseModel = databaseModel;
+    }
 
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Make a reference to the global cache model and start initializing the variables that are initially
+     * dependent on some cached data.
+     * @param cacheModel
+     */
+    public void setCacheModel(CacheModel cacheModel) {
+
+        mCacheModel = cacheModel;
         // Create a volatile copy of the cached data.
-        mResidentIDs = mCacheManager.getResidentIDsCache();
-        mResidentNames = mCacheManager.getmResidentNamesCache();
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+        mResidentNames = mCacheModel.getmResidentNamesCache();
 
         // Determine the initial number of Pages and set the default current page to 1.
         mResidentCount = mResidentIDs.size();
@@ -156,6 +162,8 @@ public class ResidentControl {
         setResidentSelected(-1);
         updateCurrentPage();
     }
+
+
 
     /**
      * Update the resident selected data displayed.
@@ -175,7 +183,7 @@ public class ResidentControl {
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
-                mResidentSelected = mDatabaseControl.getResident(mResidentIDs.get(residentSelectedIndex));
+                mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(residentSelectedIndex));
 
                 mResidentPhoto.setImage(new Image(mResidentSelected.getPhotoPath() != null ?
                         "file:" + mResidentSelected.getPhotoPath() : "/res/ic_default_resident.png"));
@@ -253,7 +261,10 @@ public class ResidentControl {
         };
 
         // This is where the code selection and unselection view update happens.
+
+        // If a label is clicked without containing any resident, then ignore the event.
         if (residentSelectedIndex < mResidentIDs.size()) {
+            // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
                     mResidentLabels[newLabelSelectedIndex]
@@ -263,18 +274,15 @@ public class ResidentControl {
                 }
 
             } else {
-                if (newLabelSelectedIndex == -1) {
+                // If there is a previous selection, unselect it.
+                // Also, if the previously selected resident is selected again, then unselect it.
+                if (newLabelSelectedIndex == -1 || mLabelSelectedIndex == newLabelSelectedIndex) {
                     mResidentLabels[mLabelSelectedIndex]
                             .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
                     mLabelSelectedIndex = -1;
                     setResidentInfoDisplayed.accept(false);
 
-                } else if (mLabelSelectedIndex == newLabelSelectedIndex) {
-                    mResidentLabels[newLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
-                    mLabelSelectedIndex = -1;
-                    setResidentInfoDisplayed.accept(false);
-
+                // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
                     mResidentLabels[mLabelSelectedIndex]
                             .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
@@ -320,13 +328,13 @@ public class ResidentControl {
         String keywords = mSearchField.getText();
 
         if (keywords.trim().equals("")) {
-            mResidentIDs = mCacheManager.getResidentIDsCache();
-            mResidentNames = mCacheManager.getmResidentNamesCache();
+            mResidentIDs = mCacheModel.getResidentIDsCache();
+            mResidentNames = mCacheModel.getmResidentNamesCache();
         } else {
             String[] keywordsArray = keywords.split(" ");
 
             List[] lists = ListFilter.filterLists(
-                    mCacheManager.getResidentIDsCache(), mCacheManager.getmResidentNamesCache(), keywordsArray);
+                    mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
 
 
             mResidentIDs = lists[0];
@@ -396,6 +404,4 @@ public class ResidentControl {
     public void onDeleteResidentButtonClicked(Event event) {
 
     }
-
-
 }

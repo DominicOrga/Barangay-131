@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javah.util.CacheManager;
+import javah.model.CacheModel;
+import javah.model.DatabaseModel;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;
@@ -50,6 +52,8 @@ public class MainControl {
      * The information scenes.
      */
     private Pane mResidentScene, mBarangayIdScene, mBarangayClearanceScene, mBusinessClearanceScene, mBlotterScene;
+    
+    private ResidentControl mResidentControl;
     /**
      * Key-value pairs to represent each menu.
      */
@@ -69,12 +73,13 @@ public class MainControl {
      */
     private Rectangle mRectAnimTransitioner;
 
-    private CacheManager mCacheManager;
+    private CacheModel mCacheModel;
+    private DatabaseModel mDatabaseModel;
 
     @FXML
     private void initialize() {
-
-        mCacheManager = new CacheManager();
+        mDatabaseModel = new DatabaseModel();
+        mCacheModel = new CacheModel();
 
         // Initialize the mRectAnimTransitioner.
         mRectAnimTransitioner = new Rectangle();
@@ -85,6 +90,8 @@ public class MainControl {
         FXMLLoader fxmlLoader = new FXMLLoader();
         initializeResidentScene(fxmlLoader);
 
+        // The default selected menu must be the resident menu.
+        updateMenuSelected(MENU_RESIDENT);
     }
 
     /**
@@ -178,8 +185,9 @@ public class MainControl {
 
         try {
             mResidentScene = fxmlLoader.load();
-            ResidentControl control = fxmlLoader.getController();
-            control.setCacheManager(mCacheManager);
+            mResidentControl = fxmlLoader.getController();
+            mResidentControl.setDatabaseModel(mDatabaseModel);
+            mResidentControl.setCacheModel(mCacheModel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -193,6 +201,14 @@ public class MainControl {
 
         mPopupStackPane.getChildren().remove(0);
         mPopupStackPane.setVisible(false);
+    }
+
+    private void showPopupStackPane() {
+        mMainGridPane.setEffect(new GaussianBlur());
+        mMainGridPane.setDisable(true);
+        mPopupStackPane.setVisible(true);
+//        mPopupStackPane.getChildren().add(rootView);
+//        mPopupStackPane.setAlignment(rootView, Pos.CENTER);
     }
 
     @FXML
@@ -224,5 +240,4 @@ public class MainControl {
         if(mMenuSelected != MENU_BLOTTER)
             updateMenuSelected(MENU_BLOTTER);
     }
-
 }

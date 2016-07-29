@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/CacheManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseContract$ResidentEntry.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseContract.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/DatabaseControl.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/CacheManager.java" afterPath="$PROJECT_DIR$/src/javah/util/CacheManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/DatabaseContract.java" afterPath="$PROJECT_DIR$/src/javah/database/DatabaseContract.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/DatabaseControl.java" afterPath="$PROJECT_DIR$/src/javah/database/DatabaseControl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/fxml/dialog/scene_resident_deletion.fxml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/javah/util/OnResidentSceneListener.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/database/DatabaseContract$ResidentEntry.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/database/DatabaseContract.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/database/DatabaseControl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/util/CacheManager.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/database/DatabaseContract.java" afterPath="$PROJECT_DIR$/src/javah/model/DatabaseContract.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/database/DatabaseControl.java" afterPath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/util/CacheManager.java" afterPath="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$1.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -72,51 +76,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scene_resident.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1254">
-              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="505">
+              <caret line="209" column="35" selection-start-line="209" selection-start-column="35" selection-end-line="209" selection-end-column="35" />
+              <folding>
+                <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CacheManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/util/CacheManager.java">
+      <file leaf-file-name="CacheModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="DatabaseContract.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
+        <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseContract.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+            <state relative-caret-position="44">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -125,12 +111,12 @@
       <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+            <state relative-caret-position="506">
+              <caret line="132" column="52" selection-start-line="132" selection-start-column="52" selection-end-line="132" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
+                <element signature="e#3965#3966#0" expanded="true" />
+                <element signature="e#4011#4012#0" expanded="true" />
                 <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -141,24 +127,34 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ResidentDeletionControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="scene_resident.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
-          <provider selected="true" editor-type-id="text-editor">
+          <provider editor-type-id="text-editor">
             <state relative-caret-position="418">
               <caret line="19" column="139" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseControl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
+      <file leaf-file-name="DatabaseModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="80" column="65" selection-start-line="80" selection-start-column="65" selection-end-line="80" selection-end-column="65" />
+            <state relative-caret-position="130">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,6 +178,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -211,10 +208,17 @@
         <option value="$PROJECT_DIR$/src/css/fragment_resident.css" />
         <option value="$PROJECT_DIR$/src/fxml/scene_resident.fxml" />
         <option value="$PROJECT_DIR$/src/javah/CacheManager.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
         <option value="$PROJECT_DIR$/src/javah/util/CacheManager.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
         <option value="$PROJECT_DIR$/src/javah/database/DatabaseControl.java" />
+        <option value="$PROJECT_DIR$/src/fxml/scene_resident_deletion.fxml" />
+        <option value="$PROJECT_DIR$/src/fxml/dialog/scene_resident_deletion.fxml" />
+        <option value="$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/util/OnResidentSceneListener.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/CacheManager.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/DatabaseControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
       </list>
     </option>
   </component>
@@ -331,7 +335,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -371,11 +375,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="javah" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="container" />
+              <option name="myItemId" value="fxml" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -394,6 +394,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fxml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dialog" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -441,13 +445,17 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Dominic Orga/Documents/Idea Projects/Barangay_131/src/javah/CacheManager.java" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dominic Orga\Documents\Idea Projects\Barangay_131\src\fxml\dialog" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="javah.controller.dialog" />
       <recent name="javah.controller" />
       <recent name="javah" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Dominic Orga\Documents\Idea Projects\Barangay_131\src\css" />
       <recent name="C:\Users\Dominic Orga\Documents\Idea Projects\Barangay_131\src\fxml" />
+      <recent name="C:\Users\Dominic Orga\Documents\Idea Projects\Barangay_131\src\css" />
       <recent name="C:\Users\Dominic Orga\Documents\Idea Projects\Barangay_131\src" />
       <recent name="C:\Users\Dominic Orga\IdeaProjects\Barangay_131" />
     </key>
@@ -765,6 +773,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15104167" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -781,7 +790,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -797,7 +805,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -806,39 +814,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4884">
-          <caret line="222" column="0" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="42" column="37" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="638">
@@ -850,7 +825,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1738">
           <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
@@ -864,7 +839,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#767#768#0" expanded="false" />
+            <element signature="e#795#796#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -880,7 +859,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3542">
           <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -890,8 +871,8 @@
           <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4011#4012#0" expanded="true" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -905,6 +886,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -919,7 +903,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
@@ -933,7 +917,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="15" column="59" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#767#768#0" expanded="false" />
+            <element signature="e#795#796#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -949,7 +937,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2310">
           <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -959,8 +949,8 @@
           <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4011#4012#0" expanded="true" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -970,14 +960,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -991,6 +981,7 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -1008,7 +999,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#767#768#0" expanded="false" />
+            <element signature="e#795#796#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1018,8 +1013,8 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4011#4012#0" expanded="true" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -1033,7 +1028,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1082,6 +1079,7 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -1100,6 +1098,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-990">
           <caret line="18" column="54" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1118,17 +1119,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="139" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/javafx-src.zip!/com/sun/glass/ui/win/WinApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
@@ -1140,23 +1130,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1254">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/util/CacheManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#767#768#0" expanded="false" />
+            <element signature="e#795#796#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1168,22 +1146,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+    <entry file="file://$PROJECT_DIR$/src/fxml/dialog/scene_resident_deletion.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="25" column="38" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/util/OnResidentSceneListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fxml/scene_resident.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="139" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+        <state relative-caret-position="506">
+          <caret line="132" column="52" selection-start-line="132" selection-start-column="52" selection-end-line="132" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setCacheManager#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4011#4012#0" expanded="true" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -1193,12 +1227,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/database/DatabaseControl.java">
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="80" column="65" selection-start-line="80" selection-start-column="65" selection-end-line="80" selection-end-column="65" />
+        <state relative-caret-position="505">
+          <caret line="209" column="35" selection-start-line="209" selection-start-column="35" selection-end-line="209" selection-end-column="35" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
           </folding>
         </state>
       </provider>

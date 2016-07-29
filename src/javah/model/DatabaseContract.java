@@ -1,4 +1,4 @@
-package javah.database;
+package javah.model;
 
 public class DatabaseContract {
     public static class ResidentEntry {
