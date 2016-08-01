@@ -2,10 +2,11 @@ package javah.util;
 
 public class DatabaseContract {
 
+    public static final String COLUMN_ID = "id";
+
     public static class ResidentEntry {
         public static final String TABLE_NAME = "BarangayDB.Resident";
 
-        public static final String COLUMN_ID = "id";
         public static final String COLUMN_FIRST_NAME = "first_name";
         public static final String COLUMN_MIDDLE_NAME = "middle_name";
         public static final String COLUMN_LAST_NAME = "last_name";

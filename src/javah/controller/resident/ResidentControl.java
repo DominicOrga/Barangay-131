@@ -1,5 +1,7 @@
-package javah.controller;
+package javah.controller.resident;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,13 +23,12 @@ import javah.util.ListFilter;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ResidentControl {
-
-    @FXML private HBox mBox;
 
     /**
      * An interface that tells the main scene to open up a manipulation resident dialog.
@@ -150,6 +151,11 @@ public class ResidentControl {
         }
     }
 
+    /**
+     * Update the resident list paging to display the residents that has a match with the text in the search field.
+     * A blank search field will result to displaying all the residents.
+     * @param event
+     */
     @FXML
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText();
@@ -302,6 +308,36 @@ public class ResidentControl {
 
         setResidentSelected(-1);
         updateCurrentPage();
+    }
+
+    public void createResident(Resident resident) {
+        // Create the resident and get its corresponding unique id.
+        String residentId = mDatabaseModel.createResident(resident);
+
+        // Format the resident name to be inserted in the list.
+        String residentName = String.format("%s, %s %s.",
+                resident.getLastName(),
+                resident.getFirstName(),
+                resident.getMiddleName().toUpperCase().charAt(0));
+
+        // Add the new resident id to the resident id's list then sort it.
+        mResidentIDs.add(residentId);
+        Collections.sort(mResidentIDs);
+
+        // Get the index of the new resident id.
+        int index = mResidentIDs.indexOf(residentId);
+
+        // Use the index of the new resident id as the index of the resident name so that their position are similar.
+        mResidentNames.add(index, residentName);
+    }
+
+    public void setBlurListPaging(boolean blur) {
+        if (blur) {
+            mResidentListGridPane.setStyle("-fx-background-color: #f4f4f4;");
+        } else {
+            mResidentListGridPane.setStyle("-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;");
+
+        }
     }
 
     /**
@@ -467,10 +503,6 @@ public class ResidentControl {
         }
     }
 
-    /**
-     * Update the resident list paging to display the residents that has a match with the text in the search field.
-     * A black search field will result to displaying all the residents.
-     * @param event
-     */
+
 
 }

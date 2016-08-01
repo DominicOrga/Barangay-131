@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/scene_resident.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentControl">
+<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/scene_resident.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -52,7 +52,7 @@
                   </TextField>
                   <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../res/ic_search.png" />
+                        <Image url="@../../res/ic_search.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="-40.0" />
@@ -122,7 +122,7 @@
                      <children>
                         <ImageView fx:id="back_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../res/ic_back_page.png" />
+                              <Image url="@../../res/ic_back_page.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="mCurrentPageLabel" text="8" textFill="#ff861b">
@@ -142,7 +142,7 @@
                         </Label>
                         <ImageView fx:id="next_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNextPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../res/ic_next_page.png" />
+                              <Image url="@../../res/ic_next_page.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -167,7 +167,7 @@
                            <children>
                               <ImageView fx:id="mResidentPhoto" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../res/ic_default_resident.png" />
+                                    <Image url="@../../res/ic_default_resident.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets bottom="-20.0" />
@@ -177,12 +177,12 @@
                                  <children>
                                     <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../res/ic_edit.png" />
+                                          <Image url="@../../res/ic_edit.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fx:id="mDeleteButton" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../res/ic_delete.png" />
+                                          <Image url="@../../res/ic_delete.png" />
                                        </image>
                                     </ImageView>
                                  </children>

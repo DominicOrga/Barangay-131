@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
@@ -15,11 +14,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javah.container.Resident;
-import javah.controller.dialog.ResidentDeletionControl;
+import javah.controller.resident.ResidentDeletionControl;
+import javah.controller.resident.ResidentFormControl;
+import javah.controller.resident.ResidentControl;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 
-import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -60,13 +60,14 @@ public class MainControl {
     /**
      * The popup scenes.
      */
-    private Pane mResidentDeletionScene;
+    private Pane mResidentDeletionScene, mResidentFormScene;
 
     /**
      * The scene controllers.
      */
     private ResidentControl mResidentControl;
     private ResidentDeletionControl mResidentDeletionControl;
+    private ResidentFormControl mResidentFormControl;
     /**
      * Key-value pairs to represent each menu.
      */
@@ -89,8 +90,12 @@ public class MainControl {
     private CacheModel mCacheModel;
     private DatabaseModel mDatabaseModel;
 
+    /**
+     * Initialize the scenes, both menu and dialogs.
+     * @throws Exception
+     */
     @FXML
-    private void initialize() {
+    private void initialize() throws Exception {
         mDatabaseModel = new DatabaseModel();
         mCacheModel = new CacheModel();
 
@@ -100,8 +105,12 @@ public class MainControl {
         mRectAnimTransitioner.setWidth(mMenuGridPane.getWidth());
         mRectAnimTransitioner.setHeight(mResidentMenu.getHeight() - 1);
 
-        // Initialize the information scenes.
+        // Initialize the fxml loader to load all the scenes of the application.
         FXMLLoader fxmlLoader = new FXMLLoader();
+
+        /**
+         * Allow for easy reuse of the FXML loader to load all the scenes.
+         */
         Consumer<String> resetFXMLLoader = (location) -> {
             fxmlLoader.setLocation(getClass().getClassLoader().getResource(location));
             fxmlLoader.setRoot(null);
@@ -109,38 +118,36 @@ public class MainControl {
         };
 
         // Initialize the Resident scene.
-        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/scene_resident.fxml"));
-        try {
-            mResidentScene = fxmlLoader.load();
-            mResidentControl = fxmlLoader.getController();
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/resident/scene_resident.fxml"));
 
-            mResidentControl.setDatabaseModel(mDatabaseModel);
-            mResidentControl.setCacheModel(mCacheModel);
+        mResidentScene = fxmlLoader.load();
+        mResidentControl = fxmlLoader.getController();
 
-            mResidentControl.setListener(new ResidentControl.OnResidentSceneListener() {
-                @Override
-                public void onNewResidentButtonClicked() {
+        mResidentControl.setDatabaseModel(mDatabaseModel);
+        mResidentControl.setCacheModel(mCacheModel);
 
-                }
+        mResidentControl.setListener(new ResidentControl.OnResidentSceneListener() {
+            @Override
+            public void onNewResidentButtonClicked() {
+                mResidentControl.setBlurListPaging(true);
+                showPopupScene(mResidentFormScene, false);
+            }
 
-                @Override
-                public void onEditResidentButtonClicked(Resident resident) {
+            @Override
+            public void onEditResidentButtonClicked(Resident resident) {
 
-                }
+            }
 
-                @Override
-                public void onDeleteResidentButtonClicked(Resident resident) {
-                    mResidentDeletionControl.setNameLabel(resident.getFirstName());
-                    showPopupScene(mResidentDeletionScene, false);
-                }
-            });
+            @Override
+            public void onDeleteResidentButtonClicked(Resident resident) {
+                mResidentControl.setBlurListPaging(true);
+                mResidentDeletionControl.setNameLabel(resident.getFirstName());
+                showPopupScene(mResidentDeletionScene, false);
+            }
+        });
 
-            // Add the information scenes to the mMainGridPane.
-            mMainGridPane.add(mResidentScene, 1, 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        // Add the information scenes to the mMainGridPane.
+        mMainGridPane.add(mResidentScene, 1, 0);
 
 
         // The default selected menu must be the resident menu.
@@ -156,29 +163,50 @@ public class MainControl {
         };
 
         // Initialize the resident deletion confirmation dialog.
-        resetFXMLLoader.accept("fxml/dialog/scene_resident_deletion.fxml");
-        try {
-            mResidentDeletionScene = fxmlLoader.load();
-            mResidentDeletionControl = fxmlLoader.getController();
+        resetFXMLLoader.accept("fxml/resident/scene_resident_deletion.fxml");
+        mResidentDeletionScene = fxmlLoader.load();
+        mResidentDeletionControl = fxmlLoader.getController();
 
-            mResidentDeletionControl.setOnClickListener(new ResidentDeletionControl.OnResidentDeletionListener() {
-                @Override
-                public void onDeleteButtonClicked() {
-                    mResidentControl.deleteSelectedResident();
-                    hidePopupScene(mResidentDeletionScene);
-                }
+        mResidentDeletionControl.setListener(new ResidentDeletionControl.OnResidentDeletionListener() {
+            @Override
+            public void onDeleteButtonClicked() {
+                mResidentControl.deleteSelectedResident();
+                mResidentControl.setBlurListPaging(false);
+                hidePopupScene(mResidentDeletionScene);
+                mResidentControl.setBlurListPaging(false);
+            }
 
-                @Override
-                public void onCancelButtonClicked() {
-                    hidePopupScene(mResidentDeletionScene);
-                }
-            });
+            @Override
+            public void onCancelButtonClicked() {
+                mResidentControl.setBlurListPaging(false);
+                hidePopupScene(mResidentDeletionScene);
+                mResidentControl.setBlurListPaging(false);
+            }
+        });
 
-            addToPopupPane.accept(mResidentDeletionScene);
+        // Initialize the resident form dialog.
+        resetFXMLLoader.accept("fxml/resident/scene_resident_form.fxml");
+        mResidentFormScene = fxmlLoader.load();
+        mResidentFormControl = fxmlLoader.getController();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mResidentFormControl.setListener(new ResidentFormControl.OnResidentFormListener() {
+            @Override
+            public void onSaveButtonClicked(Resident resident) {
+                mResidentControl.createResident(resident);
+                mResidentControl.setBlurListPaging(false);
+                hidePopupScene(mResidentFormScene);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                mResidentControl.setBlurListPaging(false);
+                hidePopupScene(mResidentFormScene);
+            }
+        });
+
+        // Add the dialog scenes to mPopupStackPane.
+        addToPopupPane.accept(mResidentDeletionScene);
+        addToPopupPane.accept(mResidentFormScene);
     }
 
     /**

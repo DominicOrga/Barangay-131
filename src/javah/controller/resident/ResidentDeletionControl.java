@@ -1,4 +1,4 @@
-package javah.controller.dialog;
+package javah.controller.resident;
 
 
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ public class ResidentDeletionControl {
         void onDeleteButtonClicked();
     }
 
-    public void setOnClickListener(OnResidentDeletionListener listener) {
+    public void setListener(OnResidentDeletionListener listener) {
         mListener = listener;
     }
 
