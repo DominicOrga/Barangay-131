@@ -2,33 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/dialog/scene_resident_deletion.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/dialog/scene_resident_form.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_resident.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl$OnResidentSceneListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/ResidentControl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/dialog/ResidentDeletionControl$OnResidentDeletionListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/dialog/ResidentDeletionControl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/dialog/ResidentFormControl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/javah/controller/dialog/ResidentFormControl.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/fxml/dialog/scene_resident_deletion.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident_deletion.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/fxml/dialog/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/fxml/scene_resident.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentDeletionControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$1.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$2.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$3.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/MainControl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentControl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl$1.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/model/DatabaseModel.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/model/DatabaseModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/util/DatabaseContract$ResidentEntry.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/util/DatabaseContract$ResidentEntry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/util/DatabaseContract.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/util/DatabaseContract.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/Main.java" afterPath="$PROJECT_DIR$/src/javah/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/MainControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/css/scene_resident_form.css" afterPath="$PROJECT_DIR$/out/production/Barangay_131/css/scene_resident_form.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/resident/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/resident/scene_resident_form.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/css/scene_resident_form.css" afterPath="$PROJECT_DIR$/src/css/scene_resident_form.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" afterPath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/util/DatabaseContract.java" afterPath="$PROJECT_DIR$/src/javah/util/DatabaseContract.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,14 +76,26 @@
       <file leaf-file-name="DatabaseModel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2064">
-              <caret line="290" column="86" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
+            <state relative-caret-position="-796">
+              <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding>
                 <element signature="method#getResidentsIdAndName#0;class#DatabaseModel#0" expanded="false" />
                 <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
                 <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
                 <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
-                <element signature="method#copyFile#0;class#DatabaseModel#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Resident.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/container/Resident.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+              <folding>
+                <element signature="e#1566#1567#0" expanded="true" />
+                <element signature="e#1606#1607#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -106,8 +104,8 @@
       <file leaf-file-name="ResidentFormControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1318">
-              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+            <state relative-caret-position="275">
+              <caret line="272" column="58" selection-start-line="272" selection-start-column="58" selection-end-line="272" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#onUploadPhotoButtonClicked#0;class#ResidentFormControl#0" expanded="false" />
@@ -119,8 +117,8 @@
       <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+            <state relative-caret-position="-796">
+              <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding>
                 <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
                 <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
@@ -140,33 +138,95 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="scene_resident.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="543">
+              <caret line="25" column="14" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
+              <folding>
+                <marker date="1470059908546" expanded="true" signature="11767:11770" ph="..." />
+              </folding>
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4144">
-              <caret line="330" column="48" selection-start-line="330" selection-start-column="48" selection-end-line="330" selection-end-column="48" />
+            <state relative-caret-position="332">
+              <caret line="483" column="7" selection-start-line="479" selection-start-column="0" selection-end-line="483" selection-end-column="7" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+                <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentListGridPane#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mCurrentPageLabel#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mPageCountLabel#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mSearchField#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentPhoto#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mEditButton#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentIDs#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentNames#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentLabels#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mCurrentPage#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onNewResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onEditResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#setListener#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#setDatabaseModel#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+                <element signature="e#12069#12103#0" expanded="false" />
+                <element signature="e#14708#14780#0" expanded="false" />
+                <element signature="e#15481#15530#0" expanded="false" />
+                <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+                <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+                <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scene_resident_form.fxml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="196" column="28" selection-start-line="196" selection-start-column="28" selection-end-line="196" selection-end-column="28" />
+      <file leaf-file-name="scene_resident.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="863">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="scene_resident_form.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/css/scene_resident_form.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -214,20 +274,21 @@
         <option value="$PROJECT_DIR$/src/javah/controller/dialog/ResidentDeletionControl.java" />
         <option value="$PROJECT_DIR$/src/fxml/dialog/scene_resident_deletion.fxml" />
         <option value="$PROJECT_DIR$/src/fxml/dialog/scene_resident_registration.fxml" />
-        <option value="$PROJECT_DIR$/src/javah/container/Resident.java" />
         <option value="$PROJECT_DIR$/src/fxml/dialog/scene_resident_form.fxml" />
         <option value="$PROJECT_DIR$/src/javah/util/PreferenceContract.java" />
         <option value="$PROJECT_DIR$/src/javah/util/DatabaseContract.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_resident.fxml" />
         <option value="$PROJECT_DIR$/src/javah/controller/dialog/ResidentFormControl.java" />
-        <option value="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" />
         <option value="$PROJECT_DIR$/src/javah/Main.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" />
+        <option value="$PROJECT_DIR$/src/css/scene_resident_form.css" />
+        <option value="$PROJECT_DIR$/src/javah/container/Resident.java" />
+        <option value="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" />
         <option value="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" />
-        <option value="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" />
+        <option value="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" />
+        <option value="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" />
       </list>
     </option>
   </component>
@@ -415,6 +476,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resident" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Barangay_131" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Barangay_131" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javah" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="container" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -838,6 +921,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16614583" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -854,7 +938,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -893,7 +976,9 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-          <folding />
+          <folding>
+            <marker date="1470059908546" expanded="true" signature="11767:11770" ph="..." />
+          </folding>
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -909,7 +994,6 @@
             <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#copyFile#0;class#DatabaseModel#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -926,6 +1010,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -946,12 +1031,52 @@
         <state relative-caret-position="396">
           <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentListGridPane#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPageLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCountLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mSearchField#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentPhoto#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mEditButton#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentIDs#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentNames#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentLabels#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNewResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onEditResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setDatabaseModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12069#12103#0" expanded="false" />
+            <element signature="e#14708#14780#0" expanded="false" />
+            <element signature="e#15481#15530#0" expanded="false" />
+            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -972,7 +1097,6 @@
             <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#copyFile#0;class#DatabaseModel#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1008,12 +1132,52 @@
         <state relative-caret-position="330">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentListGridPane#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPageLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCountLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mSearchField#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentPhoto#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mEditButton#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentIDs#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentNames#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentLabels#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNewResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onEditResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setDatabaseModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12069#12103#0" expanded="false" />
+            <element signature="e#14708#14780#0" expanded="false" />
+            <element signature="e#15481#15530#0" expanded="false" />
+            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1041,7 +1205,9 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
+          <folding>
+            <marker date="1470059908546" expanded="true" signature="11767:11770" ph="..." />
+          </folding>
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
@@ -1093,13 +1259,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/util/function/BooleanSupplier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -1130,28 +1289,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/container/Resident.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="75" column="33" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
-          <folding>
-            <element signature="e#1485#1486#0" expanded="false" />
-            <element signature="e#1526#1527#0" expanded="false" />
-            <element signature="e#1566#1567#0" expanded="false" />
-            <element signature="e#1606#1607#0" expanded="false" />
-            <element signature="e#2211#2212#0" expanded="false" />
-            <element signature="e#2283#2284#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/scene_resident_form.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/util/PreferenceContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -1175,31 +1312,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="27" column="14" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident_deletion.fxml">
@@ -1213,51 +1331,50 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/scene_resident_form.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/container/Resident.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding>
+            <element signature="e#1566#1567#0" expanded="true" />
+            <element signature="e#1606#1607#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2064">
-          <caret line="290" column="86" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
+        <state relative-caret-position="-796">
+          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
           <folding>
             <element signature="method#getResidentsIdAndName#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
             <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#copyFile#0;class#DatabaseModel#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4144">
-          <caret line="330" column="48" selection-start-line="330" selection-start-column="48" selection-end-line="330" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding>
-            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
-            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1318">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+        <state relative-caret-position="275">
+          <caret line="272" column="58" selection-start-line="272" selection-start-column="58" selection-end-line="272" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#onUploadPhotoButtonClicked#0;class#ResidentFormControl#0" expanded="false" />
@@ -1267,13 +1384,101 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml">
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="196" column="28" selection-start-line="196" selection-start-column="28" selection-end-line="196" selection-end-column="28" />
+        <state relative-caret-position="161">
+          <caret line="151" column="165" selection-start-line="151" selection-start-column="165" selection-end-line="151" selection-end-column="165" />
           <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/scene_resident.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="863">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="25" column="14" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="139" />
+          <folding>
+            <marker date="1470059908546" expanded="true" signature="11767:11770" ph="..." />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-796">
+          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+          <folding>
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="483" column="7" selection-start-line="479" selection-start-column="0" selection-end-line="483" selection-end-column="7" />
+          <folding>
+            <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentListGridPane#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPageLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCountLabel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mSearchField#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentPhoto#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mEditButton#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentIDs#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentNames#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentLabels#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onNewResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onEditResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setDatabaseModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12069#12103#0" expanded="false" />
+            <element signature="e#14708#14780#0" expanded="false" />
+            <element signature="e#15481#15530#0" expanded="false" />
+            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

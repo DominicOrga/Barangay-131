@@ -192,7 +192,10 @@ public class DatabaseModel {
     }
 
     public String createResident(Resident resident) {
-        String fileCopyPath = copyFile(resident.getPhotoPath(), BINARY_PHOTO);
+
+        if(resident.getPhotoPath() != null) {
+            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
+        }
 
         try {
             Connection dbConnection = dataSource.getConnection();
@@ -201,7 +204,7 @@ public class DatabaseModel {
 
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
                             ResidentEntry.TABLE_NAME,
                             DatabaseContract.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
@@ -215,12 +218,12 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.COLUMN_IS_ARCHIVED));
 
-            statement.setString(1, resident.getId());
+            statement.setString(1, residentID);
             statement.setString(2, resident.getFirstName());
             statement.setString(3, resident.getMiddleName());
             statement.setString(4, resident.getLastName());
             statement.setDate(5, resident.getBirthDate());
-            statement.setString(6, fileCopyPath);
+            statement.setString(6, resident.getPhotoPath());
             statement.setInt(7, resident.getYearOfResidency());
             statement.setInt(8, resident.getMonthOfResidency());
             statement.setString(9, resident.getAddress1());

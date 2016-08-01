@@ -73,9 +73,6 @@ public class ResidentControl {
 
     private DatabaseModel mDatabaseModel;
 
-    /**
-     * The reference holder to the global cache manager.
-     */
     private CacheModel mCacheModel;
 
     /**
@@ -174,14 +171,7 @@ public class ResidentControl {
             mResidentNames = lists[1];
         }
 
-        mResidentCount = mResidentIDs.size();
-        mCurrentPage = 1;
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        updateCurrentPage();
+        updateListPaging(false);
     }
 
     /**
@@ -281,16 +271,7 @@ public class ResidentControl {
         mResidentNames = mCacheModel.getmResidentNamesCache();
 
         // Determine the initial number of Pages and set the default current page to 1.
-        mResidentCount = mResidentIDs.size();
-        mCurrentPage = 1;
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        // Display the default data when no resident is selected.
-        setResidentSelected(-1);
-        updateCurrentPage();
+        updateListPaging(false);
     }
 
     public void deleteSelectedResident() {
@@ -298,21 +279,13 @@ public class ResidentControl {
         mResidentIDs.remove(mResidentSelectedIndex);
         mResidentNames.remove(mResidentSelectedIndex);
 
-        mResidentCount = mResidentIDs.size();
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-
-        if(mPageCount < mCurrentPage) mCurrentPage--;
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        setResidentSelected(-1);
-        updateCurrentPage();
+        updateListPaging(true);
     }
 
     public void createResident(Resident resident) {
         // Create the resident and get its corresponding unique id.
         String residentId = mDatabaseModel.createResident(resident);
+        System.out.println("Resident id: " + residentId);
 
         // Format the resident name to be inserted in the list.
         String residentName = String.format("%s, %s %s.",
@@ -320,15 +293,17 @@ public class ResidentControl {
                 resident.getFirstName(),
                 resident.getMiddleName().toUpperCase().charAt(0));
 
-        // Add the new resident id to the resident id's list then sort it.
-        mResidentIDs.add(residentId);
-        Collections.sort(mResidentIDs);
+        // Add the resident name to the resident names list and then sort it alphabetically.
+        mResidentNames.add(residentName);
+        Collections.sort(mResidentNames, String.CASE_INSENSITIVE_ORDER);
 
-        // Get the index of the new resident id.
-        int index = mResidentIDs.indexOf(residentId);
+        // Get the index of the resident name within the list after insertion.
+        int index = mResidentNames.indexOf(residentName);
 
-        // Use the index of the new resident id as the index of the resident name so that their position are similar.
-        mResidentNames.add(index, residentName);
+        // Use the acquired index to insert the resident ID to the resident IDs list.
+        mResidentIDs.add(index, residentId);
+
+        updateListPaging(true);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -503,6 +478,21 @@ public class ResidentControl {
         }
     }
 
+    /**
+     * Updates the list paging when changes are made with the mResidentCount and mPageCount.
+     * @param stayOnPage determines whether current page should be maintained or not after the update.
+     */
+    private void updateListPaging(boolean stayOnPage) {
+        mResidentCount = mResidentIDs.size();
+        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+        mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;;
 
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        // Display the default data when no resident is selected.
+        setResidentSelected(-1);
+        updateCurrentPage();
+    }
 
 }

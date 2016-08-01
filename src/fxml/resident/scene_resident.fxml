@@ -163,6 +163,7 @@
                <children>
                   <VBox prefHeight="403.0" prefWidth="398.0">
                      <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
                         <VBox alignment="CENTER" prefHeight="147.0" prefWidth="398.0">
                            <children>
                               <ImageView fx:id="mResidentPhoto" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
