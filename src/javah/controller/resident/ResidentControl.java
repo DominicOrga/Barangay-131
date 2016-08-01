@@ -303,7 +303,19 @@ public class ResidentControl {
         // Use the acquired index to insert the resident ID to the resident IDs list.
         mResidentIDs.add(index, residentId);
 
-        updateListPaging(true);
+        // Once the resident is created, the current page must be placed where the newly created resident is inserted and
+        // must be auto selected.
+        mResidentCount = mResidentIDs.size();
+        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+        mCurrentPage = (int) Math.ceil(index / 39.0);
+
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        // Display the default data when no resident is selected.
+        updateCurrentPage();
+
+        setResidentSelected(index % 40);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -460,6 +472,7 @@ public class ResidentControl {
     /**
      * Update current page with respect to mCurrentPage. That is, the value of mCurrentPage will determine the displayed
      * residents.
+     * Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
@@ -490,8 +503,6 @@ public class ResidentControl {
         mCurrentPageLabel.setText(mCurrentPage + "");
         mPageCountLabel.setText(mPageCount + "");
 
-        // Display the default data when no resident is selected.
-        setResidentSelected(-1);
         updateCurrentPage();
     }
 

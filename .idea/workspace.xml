@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentControl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl$1.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/resident/ResidentFormControl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/model/DatabaseModel.class" afterPath="$PROJECT_DIR$/out/production/Barangay_131/javah/model/DatabaseModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/css/scene_resident_form.css" afterPath="$PROJECT_DIR$/out/production/Barangay_131/css/scene_resident_form.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/resident/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/resident/scene_resident_form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/css/scene_resident_form.css" afterPath="$PROJECT_DIR$/src/css/scene_resident_form.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/resident/scene_resident_form.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/resident/ResidentFormControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" afterPath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -156,8 +144,8 @@
       <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="483" column="7" selection-start-line="479" selection-start-column="0" selection-end-line="483" selection-end-column="7" />
+            <state relative-caret-position="-306">
+              <caret line="328" column="0" selection-start-line="328" selection-start-column="0" selection-end-line="328" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
                 <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
@@ -176,7 +164,6 @@
                 <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
                 <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
                 <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
                 <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
                 <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -194,17 +181,13 @@
                 <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
                 <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
                 <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
-                <element signature="e#12069#12103#0" expanded="false" />
-                <element signature="e#14708#14780#0" expanded="false" />
-                <element signature="e#15481#15530#0" expanded="false" />
-                <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+                <element signature="e#12597#12631#0" expanded="false" />
+                <element signature="e#15236#15308#0" expanded="false" />
+                <element signature="e#16009#16058#0" expanded="false" />
                 <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -953,7 +936,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1048,7 +1031,6 @@
             <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -1066,17 +1048,13 @@
             <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
-            <element signature="e#12069#12103#0" expanded="false" />
-            <element signature="e#14708#14780#0" expanded="false" />
-            <element signature="e#15481#15530#0" expanded="false" />
-            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12597#12631#0" expanded="false" />
+            <element signature="e#15236#15308#0" expanded="false" />
+            <element signature="e#16009#16058#0" expanded="false" />
             <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1149,7 +1127,6 @@
             <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -1167,17 +1144,13 @@
             <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
-            <element signature="e#12069#12103#0" expanded="false" />
-            <element signature="e#14708#14780#0" expanded="false" />
-            <element signature="e#15481#15530#0" expanded="false" />
-            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12597#12631#0" expanded="false" />
+            <element signature="e#15236#15308#0" expanded="false" />
+            <element signature="e#16009#16058#0" expanded="false" />
             <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1428,8 +1401,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/resident/ResidentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="483" column="7" selection-start-line="479" selection-start-column="0" selection-end-line="483" selection-end-column="7" />
+        <state relative-caret-position="-306">
+          <caret line="328" column="0" selection-start-line="328" selection-start-column="0" selection-end-line="328" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
             <element signature="class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
@@ -1448,7 +1421,6 @@
             <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
@@ -1466,17 +1438,13 @@
             <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#setResidentSelected#0;class#ResidentControl#0" expanded="false" />
-            <element signature="e#12069#12103#0" expanded="false" />
-            <element signature="e#14708#14780#0" expanded="false" />
-            <element signature="e#15481#15530#0" expanded="false" />
-            <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
+            <element signature="e#12597#12631#0" expanded="false" />
+            <element signature="e#15236#15308#0" expanded="false" />
+            <element signature="e#16009#16058#0" expanded="false" />
             <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-            <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
           </folding>
         </state>
       </provider>
