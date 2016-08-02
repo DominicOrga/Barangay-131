@@ -135,7 +135,9 @@ public class MainControl {
 
             @Override
             public void onEditResidentButtonClicked(Resident resident) {
-
+                mResidentControl.setBlurListPaging(true);
+                mResidentFormControl.setResident(resident);
+                showPopupScene(mResidentFormScene, false);
             }
 
             @Override

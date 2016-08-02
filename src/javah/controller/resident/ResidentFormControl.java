@@ -143,6 +143,7 @@ public class ResidentFormControl {
     public void onCancelButtonClicked(ActionEvent event) {
         mListener.onCancelButtonClicked();
         mResident = null;
+        resetForm();
     }
 
     /**
@@ -224,6 +225,7 @@ public class ResidentFormControl {
 
             mListener.onSaveButtonClicked(mResident);
             mResident = null;
+            resetForm();
         }
     }
 
@@ -266,10 +268,19 @@ public class ResidentFormControl {
         mResident = resident;
     }
 
+    /**
+     * Set MainControl as the listener to this form.
+     * @param listener
+     */
     public void setListener(OnResidentFormListener listener) {
         mListener = listener;
     }
 
+    /**
+     * Convert a string month to its corresponding int value.
+     * @param monthStr
+     * @return
+     */
     private int convertMonthStringToInt(String monthStr) {
         switch(monthStr) {
             case "January" : return 0;
@@ -287,5 +298,21 @@ public class ResidentFormControl {
         }
     }
 
-
+    /**
+     * Reset the form to its default values.
+     */
+    private void resetForm() {
+        mFirstName.setText("");
+        mMiddleName.setText("");
+        mLastName.setText("");
+        mAddress1.setText("");
+        mAddress2.setText("");
+        mBirthMonth.getSelectionModel().selectFirst();
+        mBirthDay.getSelectionModel().selectFirst();
+        mBirthYear.getSelectionModel().selectFirst();
+        mYearOfResidency.getSelectionModel().selectFirst();
+        mMonthOfResidency.setVisible(false);
+        mMonthOfResidency.getSelectionModel().selectFirst();
+        mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
+    }
 }

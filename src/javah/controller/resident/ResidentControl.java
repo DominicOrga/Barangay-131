@@ -492,7 +492,7 @@ public class ResidentControl {
     }
 
     /**
-     * Updates the list paging when changes are made with the mResidentCount and mPageCount.
+     * Updates the list paging, mResidentCount and mPageCount.
      * @param stayOnPage determines whether current page should be maintained or not after the update.
      */
     private void updateListPaging(boolean stayOnPage) {
