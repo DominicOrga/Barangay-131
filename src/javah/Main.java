@@ -1,10 +1,13 @@
 package javah;
 
+import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -23,6 +26,7 @@ public class Main extends Application {
         primaryStage.show();
 
         primaryStage.setMaximized(true);
+
     }
 
     public static void main(String[] args) {

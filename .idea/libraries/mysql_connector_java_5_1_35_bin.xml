@@ -3,7 +3,12 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.35-bin.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/webcam-capture-0.3.10-dist.zip!/docs/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/webcam-capture-0.3.10-dist.zip!/examples" />
+      <root url="jar://$PROJECT_DIR$/lib/webcam-capture-0.3.10-dist.zip!/src" />
+    </SOURCES>
   </library>
 </component>

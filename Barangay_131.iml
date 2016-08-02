@@ -8,5 +8,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-java-5.1.35-bin" level="project" />
+    <orderEntry type="library" name="webcam-capture-0.3.10" level="project" />
+    <orderEntry type="library" name="bridj-0.6.2" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.7.2" level="project" />
+    <orderEntry type="library" name="logback-classic-1.0.9" level="project" />
+    <orderEntry type="library" name="logback-core-1.0.9" level="project" />
+    <orderEntry type="library" name="webcam-capture-0.3.12-20160507.091613-2" level="project" />
   </component>
 </module>
