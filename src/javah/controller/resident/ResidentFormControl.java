@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javah.container.Resident;
@@ -25,6 +26,9 @@ public class ResidentFormControl {
         void onSaveButtonClicked(Resident resident);
         void onCancelButtonClicked();
     }
+
+    @FXML
+    private Pane mRootPane;
 
     @FXML
     private ImageView mResidentPhoto;
@@ -235,6 +239,9 @@ public class ResidentFormControl {
      */
     @FXML
     public void onUploadPhotoButtonClicked(ActionEvent event) {
+        // Disable the mRootPane while the upload window is displayed.
+        mRootPane.setDisable(true);
+
         if(mResident == null) mResident = new Resident();
         // Setup the file chooser dialog.
         FileChooser fileChooser = new FileChooser();
@@ -249,6 +256,9 @@ public class ResidentFormControl {
         Stage stage = new Stage();
         stage.setTitle("Choose Photo");
         File file = fileChooser.showOpenDialog(stage);
+
+        // Enable the mRootPane after the upload window is displayed.
+        mRootPane.setDisable(false);
 
         // A file is selected if its not equal to null.
         if(file != null) {

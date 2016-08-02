@@ -91,7 +91,7 @@ public class MainControl {
     private DatabaseModel mDatabaseModel;
 
     /**
-     * Initialize the scenes, both menu and dialogs.
+     * Initialize all the scenes.
      * @throws Exception
      */
     @FXML
@@ -337,4 +337,5 @@ public class MainControl {
         if(mMenuSelected != MENU_BLOTTER)
             updateMenuSelected(MENU_BLOTTER);
     }
+
 }
