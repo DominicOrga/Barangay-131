@@ -4,10 +4,10 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamUtils;
 import com.github.sarxos.webcam.util.ImageUtils;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -18,6 +18,7 @@ import javah.util.DraggableSquare;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 
 /**
@@ -26,7 +27,7 @@ import java.io.File;
 public class WebcamCaptureControl {
 
     public interface OnWebcamCaptureListener {
-        void onAcceptButtonClicked(WritableImage croppedImage);
+        void onAcceptButtonClicked(String tempPhotoPath, byte client);
         void onCancelButtonClicked();
     }
 
@@ -58,12 +59,12 @@ public class WebcamCaptureControl {
     /**
      * Temporary target file to store the captured photo.
      */
-    private File mTempFile;
+    private File mTempPhotoFile;
 
     /**
      * The file path of the temporary target file.
      */
-    private String mTempFilePath;
+    private String mTempPhotoFilePath;
 
     /**
      * The Image to be passed back to the MainControl to be stored as an asset.
@@ -77,11 +78,21 @@ public class WebcamCaptureControl {
 
     private OnWebcamCaptureListener mListener;
 
+    /**
+     * Key-value pairs used to determine the client requesting the image.
+     */
+    public static final byte CLIENT_RESIDENT_CONTROL = 0;
+
+    /**
+     * THe client requesting the image.
+     */
+    private byte mClient;
+
     @FXML
     private void initialize() {
         // Initialize the temporary target file path and target file of the capture photo.
-        mTempFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png";
-        mTempFile = new File(mTempFilePath);
+        mTempPhotoFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png";
+        mTempPhotoFile = new File(mTempPhotoFilePath);
 
         // Initialize DraggableSquare object for image cropping.
         int sides = (int) mWebcamPane.getPrefWidth() / 2;
@@ -105,6 +116,7 @@ public class WebcamCaptureControl {
      * @param mouseEvent
      */
     public void onAcceptButtonClicked(MouseEvent mouseEvent) {
+        // Crop the photo.
         WritableImage croppedImage = new WritableImage(
                 mCapturedImage.getPixelReader(),
                 (int) mDraggableSquare.getX(),
@@ -112,9 +124,18 @@ public class WebcamCaptureControl {
                 (int) mDraggableSquare.getWidth(),
                 (int) mDraggableSquare.getHeight());
 
-        mCapturedPhotoView.setImage(croppedImage);
+        // Save the photo as a temporary file.
+        RenderedImage renderedImage = SwingFXUtils.fromFXImage(croppedImage, null);
+        try {
+            ImageIO.write(
+                    renderedImage,
+                    "png",
+                    mTempPhotoFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        mListener.onAcceptButtonClicked(croppedImage);
+        mListener.onAcceptButtonClicked(mTempPhotoFilePath, mClient);
         setWebcamEnabled(false);
         resetScene();
     }
@@ -132,12 +153,12 @@ public class WebcamCaptureControl {
             mAcceptButton.setManaged(true);
 
             // Capture photo and as a temporary file. Sadly, captured photo is mirrored.
-            WebcamUtils.capture(mWebcamPanel.getWebcam(), mTempFile, ImageUtils.FORMAT_PNG);
+            WebcamUtils.capture(mWebcamPanel.getWebcam(), mTempPhotoFile, ImageUtils.FORMAT_PNG);
 
             try {
                 // Load the temporary file, that is, the image.
                 BufferedImage capturedImage;
-                capturedImage = ImageIO.read(new File(mTempFilePath));
+                capturedImage = ImageIO.read(new File(mTempPhotoFilePath));
 
                 // Initialize mCapturedImage to load the flipped image.
                 mCapturedImage = new WritableImage(capturedImage.getWidth(), capturedImage.getHeight());
@@ -224,13 +245,22 @@ public class WebcamCaptureControl {
     }
 
     /**
-     * Resets the scene.
+     * Set the requesting client in order to determine whom to return the captured image.
+     * @param client
+     */
+    public void setClient(byte client) {
+        mClient = client;
+    }
+
+    /**
+     * Reset the scene.
      */
     private void resetScene() {
         mAcceptButton.setVisible(false);
         mAcceptButton.setManaged(false);
 
         mDraggableSquare.setmVisible(false);
+        mDraggableSquare.recenter();
 
         // Set mCapturedPhotoView to the back to show the mWebcamPanel.
         mCapturedPhotoView.toBack();

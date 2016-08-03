@@ -174,9 +174,14 @@ public class MainControl {
         mWebcamCaptureControl = fxmlLoader.getController();
         mWebcamCaptureControl.setListener(new WebcamCaptureControl.OnWebcamCaptureListener() {
             @Override
-            public void onAcceptButtonClicked(WritableImage croppedImage) {
-                // Resident form pop up is still visible, so argument is true.
+            public void onAcceptButtonClicked(String tempPhotoPath, byte client) {
+                switch (client) {
+                    case WebcamCaptureControl.CLIENT_RESIDENT_CONTROL:
+                        mResidentFormControl.setPhotoPath(tempPhotoPath);
+                        break;
+                }
 
+                // Resident form pop up is still visible, so argument is true.
                 hidePopupScene(mWebcamCaptureScene, true);
             }
 
@@ -232,10 +237,12 @@ public class MainControl {
             public void onTakePhotoButtonClicked() {
                 boolean result = mWebcamCaptureControl.setWebcamEnabled(true);
 
-                if (result)
+                // Request photo from mWebcamCaptureControl.
+                if (result) {
+                    mWebcamCaptureControl.setClient(WebcamCaptureControl.CLIENT_RESIDENT_CONTROL);
                     showPopupScene(mWebcamCaptureScene, true);
-                else
-                    JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+                } else
+                    JOptionPane.showMessageDialog(null, "Another application is using the webcam.");
             }
         });
 

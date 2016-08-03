@@ -200,8 +200,7 @@ public class ResidentFormControl {
         // If all the data are all valid, then create a Resident object and pass the data to it, then send it to the
         // main control.
         if(isDataValid) {
-            if (mResident == null)
-                mResident = new Resident();
+            if (mResident == null) mResident = new Resident();
 
             mResident.setFirstName(mFirstName.getText());
             mResident.setLastName(mLastName.getText());
@@ -266,7 +265,6 @@ public class ResidentFormControl {
         // A file is selected if its not equal to null.
         if(file != null) {
             // Update the resident photo with the copied image.
-            System.out.println(file.toPath() + "");
             mResident.setPhotoPath(file.toPath() + "");
             Image image = new Image("file:" + file.toPath());
             mResidentPhoto.setImage(image);
@@ -292,6 +290,18 @@ public class ResidentFormControl {
      */
     public void setListener(OnResidentFormListener listener) {
         mListener = listener;
+    }
+
+    /**
+     * Called by webcam capture control to process photo capture request.
+     * @param photoPath
+     */
+    public void setPhotoPath(String photoPath) {
+        if(mResident == null) mResident = new Resident();
+
+        mResident.setPhotoPath(photoPath);
+        Image image = new Image("file:" + photoPath);
+        mResidentPhoto.setImage(image);
     }
 
     /**

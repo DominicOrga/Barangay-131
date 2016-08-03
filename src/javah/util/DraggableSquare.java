@@ -16,8 +16,14 @@ public class DraggableSquare extends Rectangle {
 
     private Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
 
+    private int mX, mY, mSide;
+
     public DraggableSquare(int x, int y, int side, int parentWidth, int parentHeight) {
         super(x, y, side, side);
+
+        mX = x;
+        mY = y;
+        mSide = side;
 
         this.setFill(Color.TRANSPARENT);
         this.setStroke(Color.WHITE);
@@ -119,5 +125,15 @@ public class DraggableSquare extends Rectangle {
         mResizeHandleNW.toFront();
         mResizeHandleSE.toFront();
         mMoveHandle.toFront();
+    }
+
+    /**
+     * Recenter this object in the mWebcamPane.
+     */
+    public void recenter() {
+        this.setX(mX);
+        this.setY(mY);
+        this.setWidth(mSide);
+        this.setHeight(mSide);
     }
 }
