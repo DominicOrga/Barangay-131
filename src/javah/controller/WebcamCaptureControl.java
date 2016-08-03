@@ -9,13 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
+import javah.util.DraggableSquare;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -57,9 +58,20 @@ public class WebcamCaptureControl {
      */
     private File mTempFile;
 
+    /**
+     * The file path of the temporary target file.
+     */
+    private String mTempFilePath;
+
+    /**
+     * The Image to be passed back to the MainControl to be stored as an asset.
+     */
+    private WritableImage mCapturedImage;
+
     @FXML
     private void initialize() {
-        mTempFile = new File(System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png");
+        mTempFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png";
+        mTempFile = new File(mTempFilePath);
 
         // Testing
         setWebcamEnabled(true);
@@ -87,28 +99,46 @@ public class WebcamCaptureControl {
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
 
-            // Capture photo. Sadly, captured photo is mirrored.
+            // Capture photo and as a temporary file. Sadly, captured photo is mirrored.
             WebcamUtils.capture(mWebcamPanel.getWebcam(), mTempFile, ImageUtils.FORMAT_PNG);
 
-            // Display the captured photo. As a temporary fix to the mirrored image, setting the scale of the image view
-            // to -1 provides a temporary solution.
-            mCapturedPhotoView.setImage(new Image("file:" + System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png"));
-            mCapturedPhotoView.setScaleX(-1);
-            mCapturedPhotoView.toFront();
+            try {
+                // Load the temporary file, that is, the image.
+                BufferedImage capturedImage;
+                capturedImage = ImageIO.read(new File(mTempFilePath));
 
-            // todo: flip image before saving the file.
-//            // Flip the image horizontally
-//            tx = AffineTransform.getScaleInstance(-1, 1);
-//            tx.translate(-image.getWidth(null), 0);
-//            op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-//            image = op.filter(image, null);
+                // Initialize mCapturedImage to load the flipped image.
+                mCapturedImage = new WritableImage(capturedImage.getWidth(), capturedImage.getHeight());
 
-//            BufferedImage tempImage = new BufferedImage("file:" + System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png");
+                PixelWriter pixelWriter = mCapturedImage.getPixelWriter();
 
-//            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-//            tx.translate(tempImage.getWidth(), 0);
-//            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-//            tempImage = op.filter(tempImage, null)
+                int height = capturedImage.getHeight();
+                int width = capturedImage.getWidth();
+
+                // The flipping process...
+                for (int y = 0; y < height; y++)
+                    for (int x = 0; x < width; x++)
+                        pixelWriter.setArgb(width - 1 - x, y, capturedImage.getRGB(x, y));
+
+
+                // Display the flipped captured photo.
+                mCapturedPhotoView.setImage(mCapturedImage);
+                mCapturedPhotoView.toFront();
+
+                // Initialize DraggableSquare object for image cropping.
+                int sides = (int) mWebcamPane.getWidth() / 2;
+                DraggableSquare draggableSquare = new DraggableSquare(
+                        (int) mWebcamPane.getWidth() / 2 - sides / 2,
+                        (int) mWebcamPane.getHeight() / 2 - sides / 2,
+                        sides,
+                        (int) mWebcamPane.getWidth(),
+                        (int) mWebcamPane.getHeight());
+
+                mWebcamPane.getChildren().add(draggableSquare);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             mIsPhotoCaptured = true;
         } else {

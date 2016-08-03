@@ -25,16 +25,16 @@ public class Main extends Application {
         Scene mainScene = new Scene(mainFxmlLoader.load());
 
 //        Initialize the primary stage containing the javah scene.
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
-
-        primaryStage.setMaximized(true);
-
-//        FXMLLoader testFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_webcam_capture.fxml"));
-//        Scene testScene = new Scene(testFxmlLoader.load());
-//
-//        primaryStage.setScene(testScene);
+//        primaryStage.setScene(mainScene);
 //        primaryStage.show();
+//
+//        primaryStage.setMaximized(true);
+
+        FXMLLoader testFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_webcam_capture.fxml"));
+        Scene testScene = new Scene(testFxmlLoader.load());
+
+        primaryStage.setScene(testScene);
+        primaryStage.show();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
