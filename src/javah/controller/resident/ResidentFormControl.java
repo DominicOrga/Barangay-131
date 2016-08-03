@@ -22,9 +22,12 @@ import java.util.List;
 
 public class ResidentFormControl {
 
+
+
     public interface OnResidentFormListener {
         void onSaveButtonClicked(Resident resident);
         void onCancelButtonClicked();
+        void onTakePhotoButtonClicked();
     }
 
     @FXML
@@ -268,6 +271,11 @@ public class ResidentFormControl {
             Image image = new Image("file:" + file.toPath());
             mResidentPhoto.setImage(image);
         }
+    }
+
+    @FXML
+    public void onTakePhotoButtonClicked(ActionEvent actionEvent) {
+        mListener.onTakePhotoButtonClicked();
     }
 
     /**

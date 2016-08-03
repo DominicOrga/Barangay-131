@@ -24,19 +24,21 @@ import java.io.File;
  * This class will handle the web camera photo capturing.
  */
 public class WebcamCaptureControl {
+
+    public interface OnWebcamCaptureListener {
+        void onAcceptButtonClicked(WritableImage croppedImage);
+        void onCancelButtonClicked();
+    }
+
     /**
      * The image view that will hold the captured photo.
      */
     @FXML private ImageView mCapturedPhotoView;
 
-    @FXML private ImageView mCaptureButton;
-
     /**
      * Visible only when mIsPhotoCaptured is true.
      */
     @FXML private ImageView mAcceptButton;
-
-    @FXML private Button mCancelButton;
 
     /**
      * Serves as the main scene for the mWebcamPanel.
@@ -68,25 +70,53 @@ public class WebcamCaptureControl {
      */
     private WritableImage mCapturedImage;
 
+    /**
+     * Used for cropping the image.
+     */
+    private DraggableSquare mDraggableSquare;
+
+    private OnWebcamCaptureListener mListener;
+
     @FXML
     private void initialize() {
+        // Initialize the temporary target file path and target file of the capture photo.
         mTempFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png";
         mTempFile = new File(mTempFilePath);
 
-        // Testing
-        setWebcamEnabled(true);
+        // Initialize DraggableSquare object for image cropping.
+        int sides = (int) mWebcamPane.getPrefWidth() / 2;
+        mDraggableSquare = new DraggableSquare(
+                (int) mWebcamPane.getPrefWidth() / 2 - sides / 2,
+                (int) mWebcamPane.getPrefHeight() / 2 - sides / 2,
+                sides,
+                (int) mWebcamPane.getPrefWidth(),
+                (int) mWebcamPane.getPrefHeight());
+
+        // Add the DraggableSquare object to the mWebcamPane.
+        mWebcamPane.getChildren().add(mDraggableSquare);
+
         resetScene();
-
-
     }
 
     @FXML
     /**
-     * Crop the photo, then send it to the Main control and reset the scene.
-     * Hide the scene after accomplishing this controller's task.
+     * Crop the photo, then send it to the Main control and reset the scene and stop the webcam.
+     * Hide the scene from the Main control after accomplishing this controller's task.
      * @param mouseEvent
      */
     public void onAcceptButtonClicked(MouseEvent mouseEvent) {
+        WritableImage croppedImage = new WritableImage(
+                mCapturedImage.getPixelReader(),
+                (int) mDraggableSquare.getX(),
+                (int) mDraggableSquare.getY(),
+                (int) mDraggableSquare.getWidth(),
+                (int) mDraggableSquare.getHeight());
+
+        mCapturedPhotoView.setImage(croppedImage);
+
+        mListener.onAcceptButtonClicked(croppedImage);
+        setWebcamEnabled(false);
+        resetScene();
     }
     @FXML
     /**
@@ -95,6 +125,8 @@ public class WebcamCaptureControl {
      * @param mouseEvent
      */
     public void onCaptureButtonClicked(MouseEvent mouseEvent) {
+        // If capture photo button is clicked for the first time, then take a picture.
+        // Else reset the scene to take another shot.
         if (!mIsPhotoCaptured) {
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
@@ -125,16 +157,8 @@ public class WebcamCaptureControl {
                 mCapturedPhotoView.setImage(mCapturedImage);
                 mCapturedPhotoView.toFront();
 
-                // Initialize DraggableSquare object for image cropping.
-                int sides = (int) mWebcamPane.getWidth() / 2;
-                DraggableSquare draggableSquare = new DraggableSquare(
-                        (int) mWebcamPane.getWidth() / 2 - sides / 2,
-                        (int) mWebcamPane.getHeight() / 2 - sides / 2,
-                        sides,
-                        (int) mWebcamPane.getWidth(),
-                        (int) mWebcamPane.getHeight());
-
-                mWebcamPane.getChildren().add(draggableSquare);
+                mDraggableSquare.setmVisible(true);
+                mDraggableSquare.setmToFront();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -142,20 +166,19 @@ public class WebcamCaptureControl {
 
             mIsPhotoCaptured = true;
         } else {
-            mAcceptButton.setVisible(false);
-            mAcceptButton.setManaged(false);
-            mCapturedPhotoView.toBack();
-
-            mIsPhotoCaptured = false;
+            resetScene();
         }
     }
 
     @FXML
     /**
-     * Reset the scene, then close it.
+     * Reset the scene and close the webcam, then close it.
      * @param actionEvent
      */
     public void onCancelButtonClicked(ActionEvent actionEvent) {
+        setWebcamEnabled(false);
+        resetScene();
+        mListener.onCancelButtonClicked();
     }
 
     /**
@@ -165,7 +188,6 @@ public class WebcamCaptureControl {
      */
     public boolean setWebcamEnabled(boolean enabled) {
         if (enabled) {
-
             // Try to launch the web cam. This operation will fail if the web cam is being used by another software.
             try {
                 // Get the default web cam.
@@ -183,8 +205,6 @@ public class WebcamCaptureControl {
                 // Add the web cam panel to the root pane.
                 mWebcamPane.getChildren().add(swingNode);
 
-                // todo: Display warning message.
-
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -192,14 +212,28 @@ public class WebcamCaptureControl {
             }
 
         } else
-            mWebcamPanel.stop();
+            // Stop the webcam.
+            if (mWebcamPanel != null)
+                mWebcamPanel.stop();
 
         return true;
     }
 
+    public void setListener(OnWebcamCaptureListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Resets the scene.
+     */
     private void resetScene() {
         mAcceptButton.setVisible(false);
         mAcceptButton.setManaged(false);
+
+        mDraggableSquare.setmVisible(false);
+
+        // Set mCapturedPhotoView to the back to show the mWebcamPanel.
+        mCapturedPhotoView.toBack();
 
         mIsPhotoCaptured = false;
     }

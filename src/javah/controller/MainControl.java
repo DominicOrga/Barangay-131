@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -20,6 +21,7 @@ import javah.controller.resident.ResidentControl;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 
+import javax.swing.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -61,6 +63,7 @@ public class MainControl {
      * The popup scenes.
      */
     private Pane mResidentDeletionScene, mResidentFormScene;
+    private Pane mWebcamCaptureScene;
 
     /**
      * The scene controllers.
@@ -68,6 +71,7 @@ public class MainControl {
     private ResidentControl mResidentControl;
     private ResidentDeletionControl mResidentDeletionControl;
     private ResidentFormControl mResidentFormControl;
+    private WebcamCaptureControl mWebcamCaptureControl;
     /**
      * Key-value pairs to represent each menu.
      */
@@ -164,6 +168,25 @@ public class MainControl {
             mPopupStackPane.setAlignment(popupPane, Pos.CENTER);
         };
 
+        // Initialize the webcam capture dialog.
+        resetFXMLLoader.accept("fxml/scene_webcam_capture.fxml");
+        mWebcamCaptureScene = fxmlLoader.load();
+        mWebcamCaptureControl = fxmlLoader.getController();
+        mWebcamCaptureControl.setListener(new WebcamCaptureControl.OnWebcamCaptureListener() {
+            @Override
+            public void onAcceptButtonClicked(WritableImage croppedImage) {
+                // Resident form pop up is still visible, so argument is true.
+
+                hidePopupScene(mWebcamCaptureScene, true);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                // Resident form pop up is still visible, so argument is true.
+                hidePopupScene(mWebcamCaptureScene, true);
+            }
+        });
+
         // Initialize the resident deletion confirmation dialog.
         resetFXMLLoader.accept("fxml/resident/scene_resident_deletion.fxml");
         mResidentDeletionScene = fxmlLoader.load();
@@ -174,14 +197,14 @@ public class MainControl {
             public void onDeleteButtonClicked() {
                 mResidentControl.deleteSelectedResident();
                 mResidentControl.setBlurListPaging(false);
-                hidePopupScene(mResidentDeletionScene);
+                hidePopupScene(mResidentDeletionScene, false);
                 mResidentControl.setBlurListPaging(false);
             }
 
             @Override
             public void onCancelButtonClicked() {
                 mResidentControl.setBlurListPaging(false);
-                hidePopupScene(mResidentDeletionScene);
+                hidePopupScene(mResidentDeletionScene, false);
                 mResidentControl.setBlurListPaging(false);
             }
         });
@@ -196,17 +219,28 @@ public class MainControl {
             public void onSaveButtonClicked(Resident resident) {
                 mResidentControl.createResident(resident);
                 mResidentControl.setBlurListPaging(false);
-                hidePopupScene(mResidentFormScene);
+                hidePopupScene(mResidentFormScene, false);
             }
 
             @Override
             public void onCancelButtonClicked() {
                 mResidentControl.setBlurListPaging(false);
-                hidePopupScene(mResidentFormScene);
+                hidePopupScene(mResidentFormScene, false);
+            }
+
+            @Override
+            public void onTakePhotoButtonClicked() {
+                boolean result = mWebcamCaptureControl.setWebcamEnabled(true);
+
+                if (result)
+                    showPopupScene(mWebcamCaptureScene, true);
+                else
+                    JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
             }
         });
 
         // Add the dialog scenes to mPopupStackPane.
+        addToPopupPane.accept(mWebcamCaptureScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
     }
@@ -289,12 +323,17 @@ public class MainControl {
         // to 'selected'.
     }
 
-    private void hidePopupScene(Pane popupScene) {
-        mMainGridPane.setEffect(null);
-        mMainGridPane.setDisable(false);
+    private void hidePopupScene(Pane popupScene, boolean isOtherPopupVisible) {
+        if (isOtherPopupVisible)
+            popupScene.setVisible(false);
+        else {
+            mMainGridPane.setEffect(null);
+            mMainGridPane.setDisable(false);
+            popupScene.setVisible(false);
 
-        popupScene.setVisible(false);
-        mPopupStackPane.setVisible(false);
+            mPopupStackPane.setVisible(false);
+        }
+
     }
 
     private void showPopupScene(Pane popupScene, boolean isOtherPopupVisible) {
@@ -305,6 +344,7 @@ public class MainControl {
         }
 
         popupScene.setVisible(true);
+        popupScene.toFront();
         mPopupStackPane.setVisible(true);
     }
 

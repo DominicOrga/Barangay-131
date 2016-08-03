@@ -1,7 +1,5 @@
 package javah.util;
 
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -16,6 +14,8 @@ public class DraggableSquare extends Rectangle {
 
     private double handleRadius = 10;
 
+    private Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
+
     public DraggableSquare(int x, int y, int side, int parentWidth, int parentHeight) {
         super(x, y, side, side);
 
@@ -23,26 +23,26 @@ public class DraggableSquare extends Rectangle {
         this.setStroke(Color.WHITE);
 
         // top left resize handle:
-        Circle resizeHandleNW = new Circle(handleRadius, Color.GOLD);
+        mResizeHandleNW = new Circle(handleRadius, Color.GOLD);
         // bind to top left corner of Rectangle:
-        resizeHandleNW.centerXProperty().bind(this.xProperty());
-        resizeHandleNW.centerYProperty().bind(this.yProperty());
+        mResizeHandleNW.centerXProperty().bind(this.xProperty());
+        mResizeHandleNW.centerYProperty().bind(this.yProperty());
 
         // bottom right resize handle:
-        Circle resizeHandleSE = new Circle(handleRadius, Color.GOLD);
+        mResizeHandleSE = new Circle(handleRadius, Color.GOLD);
         // bind to bottom right corner of Rectangle:
-        resizeHandleSE.centerXProperty().bind(this.xProperty().add(this.widthProperty()));
-        resizeHandleSE.centerYProperty().bind(this.yProperty().add(this.heightProperty()));
+        mResizeHandleSE.centerXProperty().bind(this.xProperty().add(this.widthProperty()));
+        mResizeHandleSE.centerYProperty().bind(this.yProperty().add(this.heightProperty()));
 
         // move handle:
-        Circle moveHandle = new Circle(handleRadius, Color.GOLD);
+        mMoveHandle = new Circle(handleRadius, Color.GOLD);
         // bind to bottom center of Rectangle:
-        moveHandle.centerXProperty().bind(this.xProperty().add(this.widthProperty().divide(2)));
-        moveHandle.centerYProperty().bind(this.yProperty().add(this.heightProperty()));
+        mMoveHandle.centerXProperty().bind(this.xProperty().add(this.widthProperty().divide(2)));
+        mMoveHandle.centerYProperty().bind(this.yProperty().add(this.heightProperty()));
 
         // force circles to live in same parent as rectangle:
         this.parentProperty().addListener((obs, oldParent, newParent) -> {
-            for (Circle c : Arrays.asList(resizeHandleNW, resizeHandleSE, moveHandle)) {
+            for (Circle c : Arrays.asList(mResizeHandleNW, mResizeHandleSE, mMoveHandle)) {
                 Pane currentParent = (Pane)c.getParent();
                 if (currentParent != null) {
                     currentParent.getChildren().remove(c);
@@ -51,7 +51,7 @@ public class DraggableSquare extends Rectangle {
             }
         });
 
-        resizeHandleNW.setOnMouseDragged(event -> {
+        mResizeHandleNW.setOnMouseDragged(event -> {
             double deltaX = event.getX() - this.getX();
             double newX = event.getX();
             double newY = this.getY() + deltaX;
@@ -66,7 +66,7 @@ public class DraggableSquare extends Rectangle {
             }
         });
 
-        resizeHandleSE.setOnMouseDragged(event -> {
+        mResizeHandleSE.setOnMouseDragged(event -> {
             double deltaX = event.getX() - (this.getX() + this.getWidth());
             double newX = this.getX() + this.getWidth() + deltaX;
             double newY = this.getY() + this.getHeight() + deltaX;
@@ -78,9 +78,7 @@ public class DraggableSquare extends Rectangle {
             }
         });
 
-        moveHandle.setOnMouseDragged(event -> {
-
-            
+        mMoveHandle.setOnMouseDragged(event -> {
             double deltaX = event.getX() - (this.getX() + this.getWidth() / 2);
             double deltaY = event.getY() - (this.getHeight() + this.getY());
 
@@ -100,5 +98,26 @@ public class DraggableSquare extends Rectangle {
             if (newY1 > handleRadius && newY2 < parentHeight - handleRadius)
                 this.setY(newY1);
         });
+    }
+
+    /**
+     * Manage visibility of the square and its handles.
+     * @param isVisible
+     */
+    public void setmVisible(boolean isVisible) {
+        this.setVisible(isVisible);
+        mResizeHandleNW.setVisible(isVisible);
+        mResizeHandleSE.setVisible(isVisible);
+        mMoveHandle.setVisible(isVisible);
+    }
+
+    /**
+     * Set the square and its handles to the front.
+     */
+    public void setmToFront() {
+        this.toFront();
+        mResizeHandleNW.toFront();
+        mResizeHandleSE.toFront();
+        mMoveHandle.toFront();
     }
 }
