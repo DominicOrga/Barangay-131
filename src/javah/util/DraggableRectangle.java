@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * The class to create a draggable square for image cropping.
  */
-public class DraggableSquare extends Rectangle {
+public class DraggableRectangle extends Rectangle {
 
     private double handleRadius = 10;
 
@@ -18,12 +18,12 @@ public class DraggableSquare extends Rectangle {
 
     private int mX, mY, mSide;
 
-    public DraggableSquare(int x, int y, int side, int boundaryWidth, int boundaryHeight) {
-        super(x, y, side, side);
+    public DraggableRectangle(int x, int y, int width, int height, int boundaryWidth, int boundaryHeight) {
+        super(x, y, width, height);
 
         mX = x;
         mY = y;
-        mSide = side;
+        mSide = width;
 
         this.setFill(Color.TRANSPARENT);
         this.setStroke(Color.WHITE);

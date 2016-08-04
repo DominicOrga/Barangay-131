@@ -328,7 +328,7 @@ public class ResidentControl {
         int index = mResidentIDs.indexOf(resident.getId());
         mResidentNames.remove(index);
         mResidentNames.add(index, String.format("%s, %s %s.",
-                resident.getLastName(), resident.getFirstName(), resident.getLastName().charAt(0)));
+                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0)));
 
         updateCurrentPage();
 

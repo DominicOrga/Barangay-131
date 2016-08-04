@@ -13,7 +13,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javah.util.DraggableSquare;
+import javah.util.DraggableRectangle;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -74,7 +74,7 @@ public class WebcamCaptureControl {
     /**
      * Used for cropping the image.
      */
-    private DraggableSquare mDraggableSquare;
+    private DraggableRectangle mDraggableRectangle;
 
     private OnWebcamCaptureListener mListener;
 
@@ -94,17 +94,18 @@ public class WebcamCaptureControl {
         mTempPhotoFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/temp.png";
         mTempPhotoFile = new File(mTempPhotoFilePath);
 
-        // Initialize DraggableSquare object for image cropping.
+        // Initialize DraggableRectangle object for image cropping.
         int sides = (int) mWebcamPane.getPrefWidth() / 2;
-        mDraggableSquare = new DraggableSquare(
+        mDraggableRectangle = new DraggableRectangle(
                 (int) mWebcamPane.getPrefWidth() / 2 - sides / 2,
                 (int) mWebcamPane.getPrefHeight() / 2 - sides / 2,
+                sides,
                 sides,
                 (int) mWebcamPane.getPrefWidth(),
                 (int) mWebcamPane.getPrefHeight());
 
-        // Add the DraggableSquare object to the mWebcamPane.
-        mWebcamPane.getChildren().add(mDraggableSquare);
+        // Add the DraggableRectangle object to the mWebcamPane.
+        mWebcamPane.getChildren().add(mDraggableRectangle);
 
         resetScene();
     }
@@ -119,10 +120,10 @@ public class WebcamCaptureControl {
         // Crop the photo.
         WritableImage croppedImage = new WritableImage(
                 mCapturedImage.getPixelReader(),
-                (int) mDraggableSquare.getX(),
-                (int) mDraggableSquare.getY(),
-                (int) mDraggableSquare.getWidth(),
-                (int) mDraggableSquare.getHeight());
+                (int) mDraggableRectangle.getX(),
+                (int) mDraggableRectangle.getY(),
+                (int) mDraggableRectangle.getWidth(),
+                (int) mDraggableRectangle.getHeight());
 
         // Save the cropped photo as a temporary file.
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(croppedImage, null);
@@ -179,8 +180,8 @@ public class WebcamCaptureControl {
                 mCapturedPhotoView.setImage(mCapturedImage);
                 mCapturedPhotoView.toFront();
 
-                mDraggableSquare.setmVisible(true);
-                mDraggableSquare.setmToFront();
+                mDraggableRectangle.setmVisible(true);
+                mDraggableRectangle.setmToFront();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -260,8 +261,8 @@ public class WebcamCaptureControl {
         mAcceptButton.setVisible(false);
         mAcceptButton.setManaged(false);
 
-        mDraggableSquare.setmVisible(false);
-        mDraggableSquare.recenter();
+        mDraggableRectangle.setmVisible(false);
+        mDraggableRectangle.recenter();
 
         // Set mCapturedPhotoView to the back to show the mWebcamPanel.
         mCapturedPhotoView.toBack();
