@@ -22,8 +22,6 @@ import java.util.List;
 
 public class ResidentFormControl {
 
-
-
     public interface OnResidentFormListener {
         void onSaveButtonClicked(Resident resident);
         void onCancelButtonClicked();
@@ -86,39 +84,36 @@ public class ResidentFormControl {
         mBirthDay.setValue(1);
 
         // Set a birth month listener to update the elements of the birth day in accordance to the selected birth month.
-        mBirthMonth.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                int monthSelected = newValue.intValue();
+        mBirthMonth.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            int monthSelected = newValue.intValue();
 
-                List<Integer> dayList = new ArrayList<>();
-                switch (monthSelected) {
-                    // January, March, May, July, August, October, December
-                    case 0: case 2: case 4: case 6: case 7: case 9: case 11:
-                        for(int i = 1; i <= 31; i++)
-                            dayList.add(i);
-                        break;
+            List<Integer> dayList1 = new ArrayList<>();
+            switch (monthSelected) {
+                // January, March, May, July, August, October, December
+                case 0: case 2: case 4: case 6: case 7: case 9: case 11:
+                    for(int i = 1; i <= 31; i++)
+                        dayList1.add(i);
+                    break;
 
-                    // April, June, September, November
-                    case 3: case 5: case 8: case 10:
-                        for(int i = 1; i <= 30; i++)
-                            dayList.add(i);
-                        break;
+                // April, June, September, November
+                case 3: case 5: case 8: case 10:
+                    for(int i = 1; i <= 30; i++)
+                        dayList1.add(i);
+                    break;
 
-                    // February (Including leap year)
-                    default:
-                        int year = Calendar.getInstance().get(Calendar.YEAR);
-                        int j = (year % 400 == 0 || year % 4 == 0 && year % 10 != 0) ? 29 : 28;
+                // February (Including leap year)
+                default:
+                    int year1 = Calendar.getInstance().get(Calendar.YEAR);
+                    int j = (year1 % 400 == 0 || year1 % 4 == 0 && year1 % 10 != 0) ? 29 : 28;
 
-                        for (int i = 1; i <= j; i++)
-                            dayList.add(i);
-                }
-
-                mBirthDay.setItems(FXCollections.observableArrayList(dayList));
-                mBirthDay.setValue(1);
-
-
+                    for (int i = 1; i <= j; i++)
+                        dayList1.add(i);
             }
+
+            mBirthDay.setItems(FXCollections.observableArrayList(dayList1));
+            mBirthDay.setValue(1);
+
+
         });
 
         // Initialize the year of residency elements.
@@ -133,14 +128,9 @@ public class ResidentFormControl {
 
         // Set a year of residency listener to determine whether its value is 'Birth' or not. If not, then display
         // the mMonthOfResidency.
-        mYearOfResidency.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (newValue.intValue() != 0)
-                    mMonthOfResidency.setVisible(true);
-                else
-                    mMonthOfResidency.setVisible(false);
-            }
+        mYearOfResidency.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue.toString());
+            mMonthOfResidency.setVisible(newValue.intValue() != 0);
         });
 
 
@@ -178,7 +168,7 @@ public class ResidentFormControl {
         }
 
         // Check address 1 input.
-        if(mAddress1.getText().matches("[a-zA-Z0-9\\.,'\\s]+")) {
+        if(mAddress1.getText().matches("[a-zA-Z0-9\\.,'\\s-\\s#\\s]+")) {
             mAddress1Error.setVisible(false);
             mAddress1.setStyle("-fx-background-color: white; -fx-border-color: #BEBEBE");
         } else {
@@ -188,7 +178,7 @@ public class ResidentFormControl {
         }
 
         // Check address 2 input.
-        if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s]+)?")) {
+        if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s]+)?")) {
             mAddress2Error.setVisible(false);
             mAddress2.setStyle("-fx-background-color: white; -fx-border-color: #BEBEBE");
         } else {
@@ -223,7 +213,7 @@ public class ResidentFormControl {
 
             // Store the year and month of residency of the resident.
             if (yearOfResidency.equals("Birth"))
-                mResident.setYearOfResidency((short) birthdate.get(Calendar.YEAR));
+                mResident.setYearOfResidency((short) -1);
             else {
                 mResident.setYearOfResidency(Short.parseShort(yearOfResidency));
                 mResident.setMonthOfResidency((short) convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
@@ -278,10 +268,37 @@ public class ResidentFormControl {
 
     /**
      * When setResident is used(), we assume that we are editing the resident.
+     * Populate the form with the resident's data.
      * @param resident
      */
     public void setResident(Resident resident) {
         mResident = resident;
+
+        if (resident.getPhotoPath() != null)
+            mResidentPhoto.setImage(new Image("file:" + resident.getPhotoPath()));
+
+        mFirstName.setText(resident.getFirstName());
+        mMiddleName.setText(resident.getMiddleName());
+        mLastName.setText(resident.getLastName());
+        mAddress1.setText(resident.getAddress1());
+
+        if (resident.getAddress2() != null)
+            mAddress2.setText(resident.getAddress2());
+
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.setTime(resident.getBirthDate());
+
+        mBirthMonth.setValue(convertMonthIntToString(birthDate.get(Calendar.MONTH)));
+        mBirthDay.setValue(birthDate.get(Calendar.DAY_OF_MONTH));
+        mBirthYear.setValue(birthDate.get(Calendar.YEAR));
+
+        if (resident.getYearOfResidency() == -1)
+            mYearOfResidency.setValue("Birth");
+        else {
+            mYearOfResidency.setValue(resident.getYearOfResidency() + "");
+            mMonthOfResidency.setValue(convertMonthIntToString(resident.getMonthOfResidency()));
+            mMonthOfResidency.setVisible(true);
+        }
     }
 
     /**
@@ -323,6 +340,23 @@ public class ResidentFormControl {
             case "October" : return 9;
             case "November" : return 10;
             default : return 11;
+        }
+    }
+
+    private String convertMonthIntToString(int monthValue) {
+        switch (monthValue) {
+            case 0 : return "January";
+            case 1 : return "February";
+            case 2 : return "March";
+            case 3 : return "April";
+            case 4 : return "May";
+            case 5 : return "June";
+            case 6 : return "July";
+            case 7 : return "August";
+            case 8 : return "September";
+            case 9 : return "October";
+            case 10 : return "November";
+            default : return "December";
         }
     }
 

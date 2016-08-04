@@ -243,6 +243,48 @@ public class DatabaseModel {
         return null;
     }
 
+    public void updateResident(Resident resident) {
+
+        if(resident.getPhotoPath() != null)
+            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
+
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("UPDATE %s SET " +
+                            "%s = ?, %s = ?, %s = ?, " +
+                            "%s = ?, %s = ?, %s = ?, " +
+                            "%s = ?, %s = ?, %s = ? " +
+                            "WHERE %s = ?",
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_FIRST_NAME, ResidentEntry.COLUMN_MIDDLE_NAME, ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_BIRTH_DATE, ResidentEntry.COLUMN_PHOTO, ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY, ResidentEntry.COLUMN_ADDRESS_1, ResidentEntry.COLUMN_ADDRESS_2,
+                            DatabaseContract.COLUMN_ID));
+
+            statement.setString(1, resident.getFirstName());
+            statement.setString(2, resident.getMiddleName());
+            statement.setString(3, resident.getLastName());
+            statement.setDate(4, resident.getBirthDate());
+            statement.setString(5, resident.getPhotoPath());
+            statement.setInt(6, resident.getYearOfResidency());
+            statement.setInt(7, resident.getMonthOfResidency());
+            statement.setString(8, resident.getAddress1());
+            statement.setString(9, resident.getAddress2());
+            statement.setString(10, resident.getId());
+//            PreparedStatement statement = dbConnection.prepareStatement("UPDATE Resident SET last_name='Orga' WHERE id='16-001'");
+
+            statement.executeUpdate();
+
+            statement.close();
+            dbConnection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Generate a unique id for the given table.
      * @param tableName

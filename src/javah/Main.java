@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -30,18 +31,19 @@ public class Main extends Application {
 
         primaryStage.setMaximized(true);
 
-//        FXMLLoader testFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_webcam_capture.fxml"));
-//        Scene testScene = new Scene(testFxmlLoader.load());
-//
-//        primaryStage.setScene(testScene);
-//        primaryStage.show();
-
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 System.exit(0);
             }
         });
+
+//        PrinterJob job = PrinterJob.createPrinterJob();
+//        if(job != null){
+//            job.showPrintDialog(primaryStage); // Window must be your main Stage
+//            job.printPage(mainScene.getRoot());
+//            job.endJob();
+//        }
     }
 
     public static void main(String[] args) {

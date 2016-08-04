@@ -18,7 +18,7 @@ public class DraggableSquare extends Rectangle {
 
     private int mX, mY, mSide;
 
-    public DraggableSquare(int x, int y, int side, int parentWidth, int parentHeight) {
+    public DraggableSquare(int x, int y, int side, int boundaryWidth, int boundaryHeight) {
         super(x, y, side, side);
 
         mX = x;
@@ -78,7 +78,7 @@ public class DraggableSquare extends Rectangle {
             double newY = this.getY() + this.getHeight() + deltaX;
 
             // Drag HandleSE if the handle is still inside the pane and the HandleSE is not touching HandleNW.
-            if (newX > this.getX() + handleRadius && newX < parentWidth - handleRadius && newY < parentHeight - handleRadius) {
+            if (newX > this.getX() + handleRadius && newX < boundaryWidth - handleRadius && newY < boundaryHeight - handleRadius) {
                 this.setWidth(this.getWidth() + deltaX);
                 this.setHeight(this.getWidth());
             }
@@ -97,11 +97,11 @@ public class DraggableSquare extends Rectangle {
             double newY2 = newY1 + this.getHeight();
 
             // Drag the square along the x-axis if it does not touch either of the edges.
-            if (newX1 > handleRadius && newX2 < parentWidth - handleRadius)
+            if (newX1 > handleRadius && newX2 < boundaryWidth - handleRadius)
                 this.setX(newX1);
 
             // Drag the square along the y-axis if it does not touch either of the edges.
-            if (newY1 > handleRadius && newY2 < parentHeight - handleRadius)
+            if (newY1 > handleRadius && newY2 < boundaryHeight - handleRadius)
                 this.setY(newY1);
         });
     }

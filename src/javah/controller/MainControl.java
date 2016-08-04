@@ -222,7 +222,13 @@ public class MainControl {
         mResidentFormControl.setListener(new ResidentFormControl.OnResidentFormListener() {
             @Override
             public void onSaveButtonClicked(Resident resident) {
-                mResidentControl.createResident(resident);
+                // If the returned resident has an ID, then simply update the resident information. Otherwise,
+                // create a new resident.
+                if (resident.getId() != null)
+                    mResidentControl.updateResident(resident);
+                else
+                    mResidentControl.createResident(resident);
+
                 mResidentControl.setBlurListPaging(false);
                 hidePopupScene(mResidentFormScene, false);
             }
@@ -250,6 +256,8 @@ public class MainControl {
         addToPopupPane.accept(mWebcamCaptureScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
+
+
     }
 
     /**

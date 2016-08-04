@@ -285,7 +285,6 @@ public class ResidentControl {
     public void createResident(Resident resident) {
         // Create the resident and get its corresponding unique id.
         String residentId = mDatabaseModel.createResident(resident);
-        System.out.println("Resident id: " + residentId);
 
         // Format the resident name to be inserted in the list.
         String residentName = String.format("%s, %s %s.",
@@ -315,7 +314,27 @@ public class ResidentControl {
         // Display the default data when no resident is selected.
         updateCurrentPage();
 
+        // Select the newly created resident.
         setResidentSelected(index % 40);
+    }
+
+    public void updateResident(Resident resident) {
+        // Make a copy of the label selected index for reselecting.
+        int labelSelectedIndex = mLabelSelectedIndex;
+
+        mDatabaseModel.updateResident(resident);
+
+        // Update the resident lists.
+        int index = mResidentIDs.indexOf(resident.getId());
+        mResidentNames.remove(index);
+        mResidentNames.add(index, String.format("%s, %s %s.",
+                resident.getLastName(), resident.getFirstName(), resident.getLastName().charAt(0)));
+
+        updateCurrentPage();
+
+        // Unselect the resident and select it again to update its displayed data.
+        setResidentSelected(mLabelSelectedIndex);
+        setResidentSelected(labelSelectedIndex);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -333,7 +352,6 @@ public class ResidentControl {
      *                              to -1, then the example data is displayed.
      */
     private void setResidentSelected(int newLabelSelectedIndex) {
-
         // Determine the index of the resident in place of the currently selected label.
         mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
@@ -346,17 +364,17 @@ public class ResidentControl {
             Function<Integer, String> convertMonthIntToString = (monthValue) -> {
                 String birthMonth = "January";
                 switch(monthValue) {
-                    case 2 : birthMonth = "February"; break;
-                    case 3 : birthMonth = "March"; break;
-                    case 4 : birthMonth = "April"; break;
-                    case 5 : birthMonth = "May"; break;
-                    case 6 : birthMonth = "June"; break;
-                    case 7 : birthMonth = "July"; break;
-                    case 8 : birthMonth = "August"; break;
-                    case 9 : birthMonth = "September"; break;
-                    case 10 : birthMonth = "October"; break;
-                    case 11 : birthMonth = "November"; break;
-                    case 12 : birthMonth = "December";
+                    case 1 : birthMonth = "February"; break;
+                    case 2 : birthMonth = "March"; break;
+                    case 3 : birthMonth = "April"; break;
+                    case 4 : birthMonth = "May"; break;
+                    case 5 : birthMonth = "June"; break;
+                    case 6 : birthMonth = "July"; break;
+                    case 7 : birthMonth = "August"; break;
+                    case 8 : birthMonth = "September"; break;
+                    case 9 : birthMonth = "October"; break;
+                    case 10 : birthMonth = "November"; break;
+                    case 11 : birthMonth = "December";
                 }
 
                 return birthMonth;

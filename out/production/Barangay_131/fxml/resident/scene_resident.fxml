@@ -161,12 +161,11 @@
                         <RowConstraints percentHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                <children>
-                  <VBox prefHeight="403.0" prefWidth="398.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="403.0" prefWidth="398.0">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" />
                         <VBox alignment="CENTER" prefHeight="147.0" prefWidth="398.0">
                            <children>
-                              <ImageView fx:id="mResidentPhoto" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="mResidentPhoto" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../res/ic_default_resident.png" />
                                  </image>

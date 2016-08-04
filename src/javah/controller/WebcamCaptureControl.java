@@ -124,7 +124,7 @@ public class WebcamCaptureControl {
                 (int) mDraggableSquare.getWidth(),
                 (int) mDraggableSquare.getHeight());
 
-        // Save the photo as a temporary file.
+        // Save the cropped photo as a temporary file.
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(croppedImage, null);
         try {
             ImageIO.write(
@@ -135,6 +135,7 @@ public class WebcamCaptureControl {
             e.printStackTrace();
         }
 
+        // Send the file path of the temporary file to the client for permanent storage.
         mListener.onAcceptButtonClicked(mTempPhotoFilePath, mClient);
         setWebcamEnabled(false);
         resetScene();
