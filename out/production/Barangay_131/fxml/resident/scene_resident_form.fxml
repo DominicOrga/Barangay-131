@@ -56,7 +56,7 @@
                         <Insets left="20.0" top="-30.0" />
                      </HBox.margin>
                      <children>
-                        <ImageView fx:id="mResidentPhoto" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="mResidentPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../res/ic_default_resident.png" />
                            </image>

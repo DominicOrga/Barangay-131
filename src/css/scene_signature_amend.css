@@ -1,0 +1,11 @@
+
+.check-box .box .mark {
+  -fx-background-image: url("/res/ic_checkbox_unmarked.png");
+  -fx-background-position: center;
+  -fx-background-repeat: stretch;
+  -fx-shape: none;
+}
+
+.check-box:selected .box .mark{
+  -fx-background-image: url("/res/ic_checkbox_marked.png");
+}

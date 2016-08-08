@@ -16,14 +16,9 @@ public class DraggableRectangle extends Rectangle {
 
     private Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
 
-    private int mX, mY, mSide;
+    public DraggableRectangle(int boundaryWidth, int boundaryHeight) {
+        super(0, 0, 50, 50);
 
-    public DraggableRectangle(int x, int y, int width, int height, int boundaryWidth, int boundaryHeight) {
-        super(x, y, width, height);
-
-        mX = x;
-        mY = y;
-        mSide = width;
 
         this.setFill(Color.TRANSPARENT);
         this.setStroke(Color.WHITE);
@@ -63,12 +58,14 @@ public class DraggableRectangle extends Rectangle {
             double newY = this.getY() + deltaX;
 
             // Drag HandleNW if the handle is still inside the pane and the HandleNW is not touching HandleSE.
-            if (newX > handleRadius && newY > handleRadius && newX <= this.getX() + this.getWidth() - handleRadius) {
+            if (newX > handleRadius && newY > handleRadius
+                    && newX < this.getX() + this.getWidth() - handleRadius
+                    && newY < this.getY() + this.getHeight() - handleRadius) {
                 this.setX(newX);
                 this.setY(newY);
 
                 this.setWidth(this.getWidth() - deltaX);
-                this.setHeight(this.getWidth());
+                this.setHeight(this.getHeight() - deltaX);
             }
         });
 
@@ -78,9 +75,10 @@ public class DraggableRectangle extends Rectangle {
             double newY = this.getY() + this.getHeight() + deltaX;
 
             // Drag HandleSE if the handle is still inside the pane and the HandleSE is not touching HandleNW.
-            if (newX > this.getX() + handleRadius && newX < boundaryWidth - handleRadius && newY < boundaryHeight - handleRadius) {
+            if ( newX < boundaryWidth - handleRadius && newY < boundaryHeight - handleRadius &&
+                    newX > this.getX() + handleRadius && newY > this.getY() + handleRadius) {
                 this.setWidth(this.getWidth() + deltaX);
-                this.setHeight(this.getWidth());
+                this.setHeight(this.getHeight() + deltaX);
             }
         });
 
@@ -110,7 +108,7 @@ public class DraggableRectangle extends Rectangle {
      * Manage visibility of the square and its handles.
      * @param isVisible
      */
-    public void setmVisible(boolean isVisible) {
+    public void setVisiblePref(boolean isVisible) {
         this.setVisible(isVisible);
         mResizeHandleNW.setVisible(isVisible);
         mResizeHandleSE.setVisible(isVisible);
@@ -120,20 +118,17 @@ public class DraggableRectangle extends Rectangle {
     /**
      * Set the square and its handles to the front.
      */
-    public void setmToFront() {
+    public void toFrontPref() {
         this.toFront();
         mResizeHandleNW.toFront();
         mResizeHandleSE.toFront();
         mMoveHandle.toFront();
     }
 
-    /**
-     * Recenter this object in the mWebcamPane.
-     */
-    public void recenter() {
-        this.setX(mX);
-        this.setY(mY);
-        this.setWidth(mSide);
-        this.setHeight(mSide);
+    public void toBackPref() {
+        this.toBack();
+        mResizeHandleNW.toBack();
+        mResizeHandleSE.toBack();
+        mMoveHandle.toBack();
     }
 }

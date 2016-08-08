@@ -63,7 +63,7 @@ public class MainControl {
      * The popup scenes.
      */
     private Pane mResidentDeletionScene, mResidentFormScene;
-    private Pane mWebcamCaptureScene;
+    private Pane mPhotoshopScene;
 
     /**
      * The scene controllers.
@@ -71,7 +71,7 @@ public class MainControl {
     private ResidentControl mResidentControl;
     private ResidentDeletionControl mResidentDeletionControl;
     private ResidentFormControl mResidentFormControl;
-    private WebcamCaptureControl mWebcamCaptureControl;
+    private PhotoshopControl mPhotoshopControl;
     /**
      * Key-value pairs to represent each menu.
      */
@@ -169,26 +169,55 @@ public class MainControl {
         };
 
         // Initialize the webcam capture dialog.
-        resetFXMLLoader.accept("fxml/scene_webcam_capture.fxml");
-        mWebcamCaptureScene = fxmlLoader.load();
-        mWebcamCaptureControl = fxmlLoader.getController();
-        mWebcamCaptureControl.setListener(new WebcamCaptureControl.OnWebcamCaptureListener() {
+//        resetFXMLLoader.accept("fxml/scene_webcam_capture.fxml");
+//        mWebcamCaptureScene = fxmlLoader.load();
+//        mWebcamCaptureControl = fxmlLoader.getController();
+//        mWebcamCaptureControl.setListener(new WebcamCaptureControl.OnWebcamCaptureListener() {
+//            @Override
+//            public void onAcceptButtonClicked(String tempPhotoPath, byte client) {
+//                switch (client) {
+//                    case WebcamCaptureControl.CLIENT_RESIDENT_CONTROL:
+//                        mResidentFormControl.setPhotoPath(tempPhotoPath);
+//                        break;
+//                }
+//
+//                // Resident form pop up is still visible, so argument is true.
+//                hidePopupScene(mWebcamCaptureScene, true);
+//            }
+//
+//            @Override
+//            public void onCancelButtonClicked() {
+//                // Resident form pop up is still visible, so argument is true.
+//                hidePopupScene(mWebcamCaptureScene, true);
+//            }
+//        });
+
+        // Initialize the photoshop dialog.
+        resetFXMLLoader.accept("fxml/scene_photoshop.fxml");
+        mPhotoshopScene = fxmlLoader.load();
+        mPhotoshopControl = fxmlLoader.getController();
+
+        mPhotoshopControl.setListener(new PhotoshopControl.OnPhotoshopListener() {
             @Override
-            public void onAcceptButtonClicked(String tempPhotoPath, byte client) {
+            public void onAcceptButtonClicked(byte client, WritableImage image) {
+                // Return the image to the requesting client.
                 switch (client) {
-                    case WebcamCaptureControl.CLIENT_RESIDENT_CONTROL:
-                        mResidentFormControl.setPhotoPath(tempPhotoPath);
+                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
+                        mResidentFormControl.setPhoto(image);
+                        hidePopupScene(mPhotoshopScene, true);
                         break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO: break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
                 }
 
-                // Resident form pop up is still visible, so argument is true.
-                hidePopupScene(mWebcamCaptureScene, true);
+                hidePopupScene(mPhotoshopScene, true);
             }
 
             @Override
             public void onCancelButtonClicked() {
-                // Resident form pop up is still visible, so argument is true.
-                hidePopupScene(mWebcamCaptureScene, true);
+                hidePopupScene(mPhotoshopScene, true);
             }
         });
 
@@ -241,19 +270,25 @@ public class MainControl {
 
             @Override
             public void onTakePhotoButtonClicked() {
-                boolean result = mWebcamCaptureControl.setWebcamEnabled(true);
+//                boolean result = mWebcamCaptureControl.setWebcamEnabled(true);
+//
+//                // Request photo from mWebcamCaptureControl.
+//                if (result) {
+//                    mWebcamCaptureControl.setClient(WebcamCaptureControl.CLIENT_RESIDENT_CONTROL);
+//                    showPopupScene(mWebcamCaptureScene, true);
+//                } else
+//                    JOptionPane.showMessageDialog(null, "Another application is using the webcam.");
+            }
 
-                // Request photo from mWebcamCaptureControl.
-                if (result) {
-                    mWebcamCaptureControl.setClient(WebcamCaptureControl.CLIENT_RESIDENT_CONTROL);
-                    showPopupScene(mWebcamCaptureScene, true);
-                } else
-                    JOptionPane.showMessageDialog(null, "Another application is using the webcam.");
+            @Override
+            public void onUploadButtonClicked() {
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+                showPopupScene(mPhotoshopScene, true);
             }
         });
 
         // Add the dialog scenes to mPopupStackPane.
-        addToPopupPane.accept(mWebcamCaptureScene);
+        addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
 

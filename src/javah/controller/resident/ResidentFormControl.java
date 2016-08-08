@@ -1,24 +1,27 @@
 package javah.controller.resident;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javah.container.Resident;
 
+import javax.imageio.ImageIO;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public class ResidentFormControl {
 
@@ -26,13 +29,14 @@ public class ResidentFormControl {
         void onSaveButtonClicked(Resident resident);
         void onCancelButtonClicked();
         void onTakePhotoButtonClicked();
+        void onUploadButtonClicked();
     }
 
     @FXML
     private Pane mRootPane;
 
     @FXML
-    private ImageView mResidentPhoto;
+    private ImageView mResidentPhotoView;
 
     @FXML
     private Label mNameError, mAddress1Error, mAddress2Error;
@@ -59,8 +63,12 @@ public class ResidentFormControl {
 
     private OnResidentFormListener mListener;
 
+    private WritableImage mResidentPhoto;
+
     @FXML
     private void initialize() {
+        System.out.println("Resident Form Control Initialized");
+
         mResident = new Resident();
 
         // Initialize birth year elements, which include the current year up to 1900.
@@ -219,6 +227,8 @@ public class ResidentFormControl {
                 mResident.setMonthOfResidency((short) convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
             }
 
+            // Store the image permanently in Barangay131/Photos and return the path.
+
             mListener.onSaveButtonClicked(mResident);
             mResident = null;
             resetForm();
@@ -231,34 +241,7 @@ public class ResidentFormControl {
      */
     @FXML
     public void onUploadPhotoButtonClicked(ActionEvent event) {
-        // Disable the mRootPane while the upload window is displayed.
-        mRootPane.setDisable(true);
-
-        if(mResident == null) mResident = new Resident();
-        // Setup the file chooser dialog.
-        FileChooser fileChooser = new FileChooser();
-
-        // Define the allowed file extensions.
-        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG Files (*.jpg)", "*.JPG");
-        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG Files (*.png)", "*.PNG");
-        FileChooser.ExtensionFilter extFilterJPEG = new FileChooser.ExtensionFilter("JPEG Files (*.jpeg)", "*.JPEG");
-        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterJPEG, extFilterPNG);
-
-        // Show the file chooser dialog.
-        Stage stage = new Stage();
-        stage.setTitle("Choose Photo");
-        File file = fileChooser.showOpenDialog(stage);
-
-        // Enable the mRootPane after the upload window is displayed.
-        mRootPane.setDisable(false);
-
-        // A file is selected if its not equal to null.
-        if(file != null) {
-            // Update the resident photo with the copied image.
-            mResident.setPhotoPath(file.toPath() + "");
-            Image image = new Image("file:" + file.toPath());
-            mResidentPhoto.setImage(image);
-        }
+       mListener.onUploadButtonClicked();
     }
 
     @FXML
@@ -272,10 +255,15 @@ public class ResidentFormControl {
      * @param resident
      */
     public void setResident(Resident resident) {
+        // Update the form UI suitable for Updating a resident.
+        mActionLabel.setText("Update Resident");
+        mActionIcon.setImage(new Image("res/ic_edit_resident.png"));
+
+        // Populate the form with the resident's data.
         mResident = resident;
 
         if (resident.getPhotoPath() != null)
-            mResidentPhoto.setImage(new Image("file:" + resident.getPhotoPath()));
+            mResidentPhotoView.setImage(new Image("file:" + resident.getPhotoPath()));
 
         mFirstName.setText(resident.getFirstName());
         mMiddleName.setText(resident.getMiddleName());
@@ -318,7 +306,16 @@ public class ResidentFormControl {
 
         mResident.setPhotoPath(photoPath);
         Image image = new Image("file:" + photoPath);
-        mResidentPhoto.setImage(image);
+        mResidentPhotoView.setImage(image);
+    }
+
+    /**
+     * Called by PhotoshopControl to pass the requested photo back to the resident form.
+     * @param residentPhoto
+     */
+    public void setPhoto(WritableImage residentPhoto) {
+        mResidentPhoto = residentPhoto;
+        mResidentPhotoView.setImage(residentPhoto);
     }
 
     /**
@@ -375,6 +372,10 @@ public class ResidentFormControl {
         mYearOfResidency.getSelectionModel().selectFirst();
         mMonthOfResidency.setVisible(false);
         mMonthOfResidency.getSelectionModel().selectFirst();
-        mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
+        mResidentPhotoView.setImage(new Image("/res/ic_default_resident.png"));
+
+        // Update the form UI back to its former glory.
+        mActionLabel.setText("New Resident");
+        mActionIcon.setImage(new Image("res/ic_new_resident.png"));
     }
 }
