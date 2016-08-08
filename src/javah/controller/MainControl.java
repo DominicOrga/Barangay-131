@@ -155,7 +155,6 @@ public class MainControl {
         // Add the information scenes to the mMainGridPane.
         mMainGridPane.add(mResidentScene, 1, 0);
 
-
         // The default selected menu must be the resident menu.
         updateMenuSelected(MENU_RESIDENT);
 
@@ -168,30 +167,6 @@ public class MainControl {
             mPopupStackPane.setAlignment(popupPane, Pos.CENTER);
         };
 
-        // Initialize the webcam capture dialog.
-//        resetFXMLLoader.accept("fxml/scene_webcam_capture.fxml");
-//        mWebcamCaptureScene = fxmlLoader.load();
-//        mWebcamCaptureControl = fxmlLoader.getController();
-//        mWebcamCaptureControl.setListener(new WebcamCaptureControl.OnWebcamCaptureListener() {
-//            @Override
-//            public void onAcceptButtonClicked(String tempPhotoPath, byte client) {
-//                switch (client) {
-//                    case WebcamCaptureControl.CLIENT_RESIDENT_CONTROL:
-//                        mResidentFormControl.setPhotoPath(tempPhotoPath);
-//                        break;
-//                }
-//
-//                // Resident form pop up is still visible, so argument is true.
-//                hidePopupScene(mWebcamCaptureScene, true);
-//            }
-//
-//            @Override
-//            public void onCancelButtonClicked() {
-//                // Resident form pop up is still visible, so argument is true.
-//                hidePopupScene(mWebcamCaptureScene, true);
-//            }
-//        });
-
         // Initialize the photoshop dialog.
         resetFXMLLoader.accept("fxml/scene_photoshop.fxml");
         mPhotoshopScene = fxmlLoader.load();
@@ -200,19 +175,19 @@ public class MainControl {
         mPhotoshopControl.setListener(new PhotoshopControl.OnPhotoshopListener() {
             @Override
             public void onAcceptButtonClicked(byte client, WritableImage image) {
+                hidePopupScene(mPhotoshopScene, true);
                 // Return the image to the requesting client.
                 switch (client) {
                     case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
-                        mResidentFormControl.setPhoto(image);
                         hidePopupScene(mPhotoshopScene, true);
+                        mResidentFormControl.setPhoto(image);
+
                         break;
                     case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO: break;
                     case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
                     case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
                 }
-
-                hidePopupScene(mPhotoshopScene, true);
             }
 
             @Override
@@ -229,15 +204,13 @@ public class MainControl {
         mResidentDeletionControl.setListener(new ResidentDeletionControl.OnResidentDeletionListener() {
             @Override
             public void onDeleteButtonClicked() {
-                mResidentControl.deleteSelectedResident();
-                mResidentControl.setBlurListPaging(false);
                 hidePopupScene(mResidentDeletionScene, false);
+                mResidentControl.deleteSelectedResident();
                 mResidentControl.setBlurListPaging(false);
             }
 
             @Override
             public void onCancelButtonClicked() {
-                mResidentControl.setBlurListPaging(false);
                 hidePopupScene(mResidentDeletionScene, false);
                 mResidentControl.setBlurListPaging(false);
             }
@@ -251,6 +224,7 @@ public class MainControl {
         mResidentFormControl.setListener(new ResidentFormControl.OnResidentFormListener() {
             @Override
             public void onSaveButtonClicked(Resident resident) {
+                hidePopupScene(mResidentFormScene, false);
                 // If the returned resident has an ID, then simply update the resident information. Otherwise,
                 // create a new resident.
                 if (resident.getId() != null)
@@ -259,31 +233,25 @@ public class MainControl {
                     mResidentControl.createResident(resident);
 
                 mResidentControl.setBlurListPaging(false);
-                hidePopupScene(mResidentFormScene, false);
+
             }
 
             @Override
             public void onCancelButtonClicked() {
-                mResidentControl.setBlurListPaging(false);
                 hidePopupScene(mResidentFormScene, false);
+                mResidentControl.setBlurListPaging(false);
             }
 
             @Override
             public void onTakePhotoButtonClicked() {
-//                boolean result = mWebcamCaptureControl.setWebcamEnabled(true);
-//
-//                // Request photo from mWebcamCaptureControl.
-//                if (result) {
-//                    mWebcamCaptureControl.setClient(WebcamCaptureControl.CLIENT_RESIDENT_CONTROL);
-//                    showPopupScene(mWebcamCaptureScene, true);
-//                } else
-//                    JOptionPane.showMessageDialog(null, "Another application is using the webcam.");
+                showPopupScene(mPhotoshopScene, true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
             }
 
             @Override
             public void onUploadButtonClicked() {
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
                 showPopupScene(mPhotoshopScene, true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
             }
         });
 

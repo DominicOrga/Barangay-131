@@ -31,7 +31,7 @@ import java.io.IOException;
 public class PhotoshopControl {
 
     static interface OnPhotoshopListener {
-        void onAcceptButtonClicked(byte client, WritableImage image);
+        void onAcceptButtonClicked(byte climDraent, WritableImage image);
         void onCancelButtonClicked();
     }
 
@@ -55,7 +55,7 @@ public class PhotoshopControl {
     private byte mClient, mRequest;
 
     // The possible requests of the clients.
-    public static byte
+    public static final byte
             REQUEST_PHOTO_CAPTURE = 0,
             REQUEST_PHOTO_UPLOAD = 1;
 
@@ -77,10 +77,16 @@ public class PhotoshopControl {
      */
     private WritableImage mModifiedImage;
 
+    /**
+     * The rectangle used for cropping the images.
+     */
     private DraggableRectangle mDraggableRectangle;
 
     private OnPhotoshopListener mListener;
 
+    /**
+     * The main window of the web cam.
+     */
     private WebcamPanel mWebcamPanel;
 
     /**
@@ -113,10 +119,11 @@ public class PhotoshopControl {
      */
     @FXML
     public void onAcceptButtonClicked(MouseEvent mouseEvent) {
+        // Remove any photo placed in mPhotoView.
+        mPhotoView.setImage(null);
 
-        switch (mClient) {
-            case CLIENT_RESIDENT_PHOTO:
-            case CLIENT_CHAIRMAN_PHOTO:
+        switch (mRequest) {
+            case REQUEST_PHOTO_UPLOAD:
                 // Crop the mUploadedImage based on the mDraggableRectangle and store it in mModified image before being
                 // sent to the client.
                 int rectWidth = (int) mDraggableRectangle.getWidth();
@@ -139,18 +146,20 @@ public class PhotoshopControl {
                         pixelWriter.setArgb(x - rectX, y - rectY,
                                 (x < uploadedImageWidth && y < uploadedImageHeight) ?
                                         pixelReader.getArgb(x, y) : new Color(0, 0, 0, 0).getRGB());
-
                 break;
 
             default:
-            WritableImage tempImage = mModifiedImage;
 
-            mModifiedImage = new WritableImage(
-                    tempImage.getPixelReader(),
-                    (int) mDraggableRectangle.getX(),
-                    (int) mDraggableRectangle.getY(),
-                    (int) mDraggableRectangle.getWidth(),
-                    (int) mDraggableRectangle.getHeight());
+                pixelReader = (mClient == CLIENT_CHAIRMAN_PHOTO || mClient == CLIENT_RESIDENT_PHOTO) ?
+                        mCapturedImage.getPixelReader() : mModifiedImage.getPixelReader();
+
+                mModifiedImage = new WritableImage(
+                        pixelReader,
+                        (int) mDraggableRectangle.getX(),
+                        (int) mDraggableRectangle.getY(),
+                        (int) mDraggableRectangle.getWidth(),
+                        (int) mDraggableRectangle.getHeight());
+
         }
 
         mListener.onAcceptButtonClicked(mClient, mModifiedImage);
@@ -176,13 +185,15 @@ public class PhotoshopControl {
             // While no image is captured by the web cam, only display the web cam capture button.
             mAcceptButton.setVisible(false);
             mAcceptButton.setManaged(false);
-            mCaptureButton.setVisible(true);
-            mCaptureButton.setManaged(true);
             mFilterSignatureBox.setVisible(false);
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
             mPhotoView.toBack();
             mDraggableRectangle.toBackPref();
+
+            // Center the mDraggableRectangle.
+            mDraggableRectangle.setX(mImagePane.getWidth() / 2 - mDraggableRectangle.getWidth() / 2);
+            mDraggableRectangle.setY(mImagePane.getHeight() / 2 - mDraggableRectangle.getHeight() / 2);
 
             mIsImageCaptured = false;
 
@@ -242,14 +253,12 @@ public class PhotoshopControl {
                                 pixelWriter.setArgb(x, y, z < 128 ? rgb.getRGB() : new Color(0, 0, 0, 0).getRGB());
                             }
 
+                        mFilterSignatureBox.setVisible(true);
                         break;
                     default:
                 }
 
-                mAcceptButton.setVisible(true);
-                mAcceptButton.setManaged(true);
                 mPhotoView.setImage(mCapturedImage);
-
                 mPhotoView.toFront();
                 mDraggableRectangle.toFrontPref();
 
@@ -260,9 +269,7 @@ public class PhotoshopControl {
             // Update the GUI after a web cam capture is made.
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
-            mCaptureButton.setVisible(true);
-            mCaptureButton.setManaged(true);
-            mFilterSignatureBox.setVisible(true);
+
 
             mPhotoView.toFront();
             mDraggableRectangle.toFrontPref();
@@ -274,6 +281,9 @@ public class PhotoshopControl {
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
+
+        // Remove any photo placed in mPhotoView.
+        mPhotoView.setImage(null);
 
         // Close the webcam panel.
         if (mWebcamPanel != null) {
@@ -303,7 +313,6 @@ public class PhotoshopControl {
         mRequest = request;
 
         if (request == REQUEST_PHOTO_UPLOAD) {
-
             // Open the dialog for photo uploading. . .
 
             // Make sure that the root pane is unclickable until the dialog is closed.
@@ -332,10 +341,8 @@ public class PhotoshopControl {
                 // The image should be resized to 640x480 while preserving ratio.
                 mUploadedImage = new Image("file:" + file.toPath(), 640, 480, true, true);
             else {
-                mListener.onCancelButtonClicked();
-                return;
+                onCancelButtonClicked(null);
             }
-
             // Loading of the proper visual of the upload scene starts. . .
 
             // Update the functionality of the scene depending whether the client is requesting a profile photo or a
@@ -436,6 +443,10 @@ public class PhotoshopControl {
                     mFilterSignatureCheckbox.setSelected(false);
             }
 
+            // Center the mDraggableRectangle.
+            mDraggableRectangle.setX(mImagePane.getWidth() / 2 - mDraggableRectangle.getWidth() / 2);
+            mDraggableRectangle.setY(mImagePane.getHeight() / 2 - mDraggableRectangle.getHeight() / 2);
+
             // Try to launch the web cam. This operation will fail if the web cam is being used by another software.
             try {
                 // Get the default web cam.
@@ -455,12 +466,14 @@ public class PhotoshopControl {
             } catch (Exception e) {
                 e.printStackTrace();
 
-                // If the webcam failed to open, then display a message.
-                mRootPane.setDisable(true);
-                JOptionPane.showConfirmDialog(null, "Another application is using the webcam.");
-                mRootPane.setDisable(false);
+                JOptionPane.showConfirmDialog(null,
+                        "Camera is open in another Application",
+                        "Warning",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.PLAIN_MESSAGE);
 
-                return;
+                // Close this dialog.
+                mListener.onCancelButtonClicked();
             }
         }
     }
@@ -468,5 +481,4 @@ public class PhotoshopControl {
     public void setListener(OnPhotoshopListener listener) {
         mListener = listener;
     }
-
 }

@@ -17,6 +17,7 @@ import javah.container.Resident;
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -225,6 +226,29 @@ public class ResidentFormControl {
             else {
                 mResident.setYearOfResidency(Short.parseShort(yearOfResidency));
                 mResident.setMonthOfResidency((short) convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
+            }
+
+            if (mResidentPhoto != null) {
+                try {
+
+                    // Save the photo in the approriate directory with a unique uuid name.
+                    String imagePath = System.getenv("PUBLIC") + "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+
+                    File file = new File(imagePath);
+                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(mResidentPhoto, null);
+                    ImageIO.write(
+                            renderedImage,
+                            "png",
+                            file);
+
+                    // Store the path of the photo to the resident to be saved in the database.
+                    mResident.setPhotoPath(imagePath);
+
+                    mResidentPhoto = null;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             // Store the image permanently in Barangay131/Photos and return the path.
