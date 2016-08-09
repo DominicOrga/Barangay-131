@@ -255,12 +255,12 @@ public class MainControl {
             }
         });
 
+        // Initialize the barangay agent setup dialog.
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
-
-
     }
 
     /**

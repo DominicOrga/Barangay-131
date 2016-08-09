@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;">
+         <children>
+            <Label text="Barangay Official" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/ic_barangay_agent.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <ScrollPane prefWidth="550.0" style="-fx-background-color: #F4F4F4;" GridPane.rowIndex="1">
+         <content>
+            <VBox alignment="CENTER" minWidth="-Infinity" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                     <children>
+                        <Label text="Chairman" textFill="WHITE">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                           <children>
+                              <ImageView fx:id="mChmPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/ic_default_resident.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </StackPane>
+                        <Label text="Attach Picture:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button fx:id="mChmUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mChmUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="mChmCaptureButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mChmCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Name:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mNameError" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mChmFirstNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mChmMiddleNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mChmLastNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                           <children>
+                              <ImageView fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/ic_trans_bg_16x9.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="mChmSignatureView" fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </StackPane>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Attach Signature:">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Button fx:id="mChmSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mChmSignatureUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="mChmSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mChmSignatureCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                     <children>
+                        <Label text="Secretary" textFill="WHITE">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Name:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mNameError1" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mSecFirstNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mSecMiddleNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mSecLastNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                           <children>
+                              <ImageView fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/ic_trans_bg_16x9.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="mSecSignatureView" fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </StackPane>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Attach Signature:">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Button fx:id="mSecUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="mTakePhotoButton11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Neue Light" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                     <children>
+                        <Label text="Treasurer" textFill="WHITE">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Name:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mNameError11" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mFirstName11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mMiddleName11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mLastName11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                     <children>
+                        <Label text="Kagawads" textFill="WHITE">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Names:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mNameError111" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mFirstName111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mMiddleName111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mLastName111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_remove_circle.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_add_circle.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mFirstName1111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mMiddleName1111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mLastName1111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_remove_circle.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_add_circle.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mFirstName11111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mMiddleName11111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mLastName11111" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_remove_circle.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_add_circle.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="mFirstName1112" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mMiddleName1112" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="mLastName1112" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_remove_circle.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_add_circle.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="530.0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</GridPane>
