@@ -14,14 +14,16 @@ public class BarangayAgentControl {
     public interface OnBarangayAgentListener {
         void onChmUploadButtonClicked();
         void onChmCaptureButtonClicked();
+        void onChmSignatureUploadButtonClicked();
+        void onChmSignatureCaptureButtonClicked();
         void onCancelButtonClicked();
     }
 
     @FXML private Pane mRootPane;
 
-    @FXML private ImageView mChmPhotoView;
+    @FXML private ImageView mChmPhotoView, mChmSignatureView;
 
-    private WritableImage mChmPhoto;
+    private WritableImage mChmPhoto, mChmSignature;
 
     private OnBarangayAgentListener mListener;
 
@@ -32,10 +34,12 @@ public class BarangayAgentControl {
 
     @FXML
     public void onChmSignatureCaptureButtonClicked(ActionEvent actionEvent) {
+        mListener.onChmSignatureCaptureButtonClicked();
     }
 
     @FXML
     public void onChmSignatureUploadButtonClicked(ActionEvent actionEvent) {
+        mListener.onChmSignatureUploadButtonClicked();
     }
 
     @FXML
@@ -78,5 +82,14 @@ public class BarangayAgentControl {
     public void setChmPhoto(WritableImage image) {
         mChmPhoto = image;
         mChmPhotoView.setImage(image);
+    }
+
+    /**
+     * Update the signature photo of the chairman from the photoshop process callback function.
+     * @param image
+     */
+    public void setChmSignature(WritableImage image) {
+        mChmSignature = image;
+        mChmSignatureView.setImage(image);
     }
 }

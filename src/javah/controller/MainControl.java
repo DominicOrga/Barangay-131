@@ -192,11 +192,13 @@ public class MainControl {
                         mResidentFormControl.setPhoto(image);
                         break;
                     case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
-                        //Re-enable the mBarangayAgentControl once the request is processed.
                         mBarangayAgentControl.setDisable(false);
                         mBarangayAgentControl.setChmPhoto(image);
                         break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE:
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setChmSignature(image);
+                        break;
                     case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
                 }
@@ -304,10 +306,25 @@ public class MainControl {
             }
 
             @Override
+            public void onChmSignatureUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onChmSignatureCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBarangayAgentScene, false);
 
-
+                // When the barangay agent form scene is displayed, then blur the list paging of the
+                // current menu selected.
                 switch (mMenuSelected) {
                     case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
                 }

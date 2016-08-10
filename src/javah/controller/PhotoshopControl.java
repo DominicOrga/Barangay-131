@@ -124,8 +124,9 @@ public class PhotoshopControl {
 
         switch (mRequest) {
             case REQUEST_PHOTO_UPLOAD:
-                // Crop the mUploadedImage based on the mDraggableRectangle and store it in mModified image before being
-                // sent to the client.
+
+                // Crop the mUploadedImage or mModified image itself based on the mDraggableRectangle and store it in
+                // mModifiedImage before being sent to the client.
                 int rectWidth = (int) mDraggableRectangle.getWidth();
                 int rectHeight = (int) mDraggableRectangle.getHeight();
                 int rectX = (int) mDraggableRectangle.getX();
@@ -133,9 +134,34 @@ public class PhotoshopControl {
                 int uploadedImageWidth = (int) mUploadedImage.getWidth();
                 int uploadedImageHeight = (int) mUploadedImage.getHeight();
 
-                PixelReader pixelReader = mUploadedImage.getPixelReader();
+                PixelReader pixelReader;
 
-                mModifiedImage = new WritableImage(rectWidth, rectHeight);
+//                if (mClient == CLIENT_CHAIRMAN_PHOTO || mClient == CLIENT_RESIDENT_PHOTO) {
+//                    // If uploaded photo is not a signature photo, then simply pass cropped the mUploadedImage to
+//                    // mModifiedImage.
+//                    mModifiedImage = new WritableImage(rectWidth, rectHeight);
+//                    pixelReader = mUploadedImage.getPixelReader();
+//                } else {
+//                    // If uploaded photo is
+//                    if (mFilterSignatureCheckbox.isSelected()) {
+//                        pixelReader = mModifiedImage.getPixelReader();
+//                        mModifiedImage = new WritableImage(rectWidth, rectHeight);
+//                    } else {
+//
+//                    }
+//                }
+
+                // If the uploaded photo is a signature and the signature filter is marked, then the image to crop is
+                // the filtered image, mModifiedImage.
+                // Else, make use of the mUploadedImage.
+                if (mFilterSignatureCheckbox.isSelected() && mFilterSignatureBox.isVisible()) {
+                    pixelReader = mModifiedImage.getPixelReader();
+                    mModifiedImage = new WritableImage(rectWidth, rectHeight);
+                } else {
+                    mModifiedImage = new WritableImage(rectWidth, rectHeight);
+                    pixelReader = mUploadedImage.getPixelReader();
+                }
+
                 PixelWriter pixelWriter = mModifiedImage.getPixelWriter();
 
                 // If ever the draggable rectangle goes out of bounds from the width and height of the uploaded image,
@@ -146,20 +172,22 @@ public class PhotoshopControl {
                         pixelWriter.setArgb(x - rectX, y - rectY,
                                 (x < uploadedImageWidth && y < uploadedImageHeight) ?
                                         pixelReader.getArgb(x, y) : new Color(0, 0, 0, 0).getRGB());
+
                 break;
 
             default:
 
-                pixelReader = (mClient == CLIENT_CHAIRMAN_PHOTO || mClient == CLIENT_RESIDENT_PHOTO) ?
+                pixelReader = !mFilterSignatureCheckbox.isSelected() ?
                         mCapturedImage.getPixelReader() : mModifiedImage.getPixelReader();
 
+                // No out of bounds will occur when cropping an image captured by the web cam, since it is a perfect fit.
+                // Thus, this simple function will suffice.
                 mModifiedImage = new WritableImage(
                         pixelReader,
                         (int) mDraggableRectangle.getX(),
                         (int) mDraggableRectangle.getY(),
                         (int) mDraggableRectangle.getWidth(),
                         (int) mDraggableRectangle.getHeight());
-
         }
 
         mListener.onAcceptButtonClicked(mClient, mModifiedImage);
@@ -188,6 +216,7 @@ public class PhotoshopControl {
             mFilterSignatureBox.setVisible(false);
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
+            mWebcamNode.toFront();
             mPhotoView.toBack();
             mDraggableRectangle.toBackPref();
 
@@ -261,6 +290,7 @@ public class PhotoshopControl {
                 mPhotoView.setImage(mCapturedImage);
                 mPhotoView.toFront();
                 mDraggableRectangle.toFrontPref();
+                mWebcamNode.toBack();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -342,7 +372,9 @@ public class PhotoshopControl {
                 mUploadedImage = new Image("file:" + file.toPath(), 640, 480, true, true);
             else {
                 onCancelButtonClicked(null);
+                return;
             }
+
             // Loading of the proper visual of the upload scene starts. . .
 
             // Update the functionality of the scene depending whether the client is requesting a profile photo or a
