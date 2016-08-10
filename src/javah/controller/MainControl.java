@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -60,18 +61,25 @@ public class MainControl {
     private Pane mResidentScene, mBarangayIdScene, mBarangayClearanceScene, mBusinessClearanceScene, mBlotterScene;
 
     /**
+     * The information scene controllers
+     */
+    private ResidentControl mResidentControl;
+
+
+    /**
      * The popup scenes.
      */
     private Pane mResidentDeletionScene, mResidentFormScene;
-    private Pane mPhotoshopScene;
+    private Pane mPhotoshopScene, mBarangayAgentScene;
 
     /**
-     * The scene controllers.
+     * The popup scene controllers.
      */
-    private ResidentControl mResidentControl;
     private ResidentDeletionControl mResidentDeletionControl;
     private ResidentFormControl mResidentFormControl;
     private PhotoshopControl mPhotoshopControl;
+    private BarangayAgentControl mBarangayAgentControl;
+
     /**
      * Key-value pairs to represent each menu.
      */
@@ -176,14 +184,18 @@ public class MainControl {
             @Override
             public void onAcceptButtonClicked(byte client, WritableImage image) {
                 hidePopupScene(mPhotoshopScene, true);
-                // Return the image to the requesting client.
+
+                // Return the image to the requesting client and re-enable their controller.
                 switch (client) {
                     case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
-                        hidePopupScene(mPhotoshopScene, true);
+                        mResidentFormControl.setDisable(false);
                         mResidentFormControl.setPhoto(image);
-
                         break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO: break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
+                        //Re-enable the mBarangayAgentControl once the request is processed.
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setChmPhoto(image);
+                        break;
                     case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
                     case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
@@ -191,8 +203,22 @@ public class MainControl {
             }
 
             @Override
-            public void onCancelButtonClicked() {
+            public void onCancelButtonClicked(byte client) {
                 hidePopupScene(mPhotoshopScene, true);
+
+                // Re-enable the controller of the client.
+                switch (client) {
+                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
+                        mResidentFormControl.setDisable(false);
+                        break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
+                        mBarangayAgentControl.setDisable(false);
+                        break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
+                }
+                mBarangayAgentControl.setDisable(false);
             }
         });
 
@@ -245,20 +271,52 @@ public class MainControl {
             @Override
             public void onTakePhotoButtonClicked() {
                 showPopupScene(mPhotoshopScene, true);
+                mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
             }
 
             @Override
             public void onUploadButtonClicked() {
                 showPopupScene(mPhotoshopScene, true);
+                mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
             }
         });
 
         // Initialize the barangay agent setup dialog.
+        resetFXMLLoader.accept("fxml/scene_barangay_agent.fxml");
+        mBarangayAgentScene = fxmlLoader.load();
+        mBarangayAgentControl = fxmlLoader.getController();
+
+        mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
+            @Override
+            public void onChmUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onChmCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBarangayAgentScene, false);
+
+
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                }
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
+        addToPopupPane.accept(mBarangayAgentScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
     }
@@ -396,4 +454,15 @@ public class MainControl {
             updateMenuSelected(MENU_BLOTTER);
     }
 
+    /**
+     * Show the barangay agent setup form.
+     * @param mouseEvent
+     */
+    public void onSettingsButtonClicked(MouseEvent mouseEvent) {
+        showPopupScene(mBarangayAgentScene, false);
+
+        switch (mMenuSelected) {
+            case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
+        }
+    }
 }

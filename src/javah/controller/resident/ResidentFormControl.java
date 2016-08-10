@@ -33,8 +33,7 @@ public class ResidentFormControl {
         void onUploadButtonClicked();
     }
 
-    @FXML
-    private Pane mRootPane;
+    @FXML Pane mRootPane;
 
     @FXML
     private ImageView mResidentPhotoView;
@@ -56,9 +55,6 @@ public class ResidentFormControl {
 
     @FXML
     private Label mActionLabel;
-
-    @FXML
-    private HBox mHeader;
 
     private Resident mResident;
 
@@ -322,15 +318,12 @@ public class ResidentFormControl {
     }
 
     /**
-     * Called by webcam capture control to process photo capture request.
-     * @param photoPath
+     * Disable or enable the BarangayAgentControl.
+     * Used when the photoshop popup scene is displayed.
+     * @param disable
      */
-    public void setPhotoPath(String photoPath) {
-        if(mResident == null) mResident = new Resident();
-
-        mResident.setPhotoPath(photoPath);
-        Image image = new Image("file:" + photoPath);
-        mResidentPhotoView.setImage(image);
+    public void setDisable(boolean disable) {
+        mRootPane.setDisable(disable);
     }
 
     /**

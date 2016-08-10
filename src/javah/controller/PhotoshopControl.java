@@ -31,8 +31,8 @@ import java.io.IOException;
 public class PhotoshopControl {
 
     static interface OnPhotoshopListener {
-        void onAcceptButtonClicked(byte climDraent, WritableImage image);
-        void onCancelButtonClicked();
+        void onAcceptButtonClicked(byte client, WritableImage image);
+        void onCancelButtonClicked(byte client);
     }
 
     @FXML private Label mActionLabel;
@@ -280,7 +280,7 @@ public class PhotoshopControl {
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-        mListener.onCancelButtonClicked();
+        mListener.onCancelButtonClicked(mClient);
 
         // Remove any photo placed in mPhotoView.
         mPhotoView.setImage(null);
@@ -473,7 +473,7 @@ public class PhotoshopControl {
                         JOptionPane.PLAIN_MESSAGE);
 
                 // Close this dialog.
-                mListener.onCancelButtonClicked();
+                mListener.onCancelButtonClicked(mClient);
             }
         }
     }

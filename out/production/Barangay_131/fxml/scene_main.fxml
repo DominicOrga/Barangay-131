@@ -133,7 +133,7 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT">
                            <children>
-                              <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="75.0" fitWidth="75.0" onMouseClicked="#onSettingsButtonClicked" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../res/ic_settings.png" />
                                  </image>
