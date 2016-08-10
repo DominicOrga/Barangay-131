@@ -22,6 +22,7 @@ import javah.util.DraggableRectangle;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +32,7 @@ import java.io.IOException;
  */
 public class PhotoshopControl {
 
-
-
-    static interface OnPhotoshopListener {
+    public interface OnPhotoshopListener {
         void onAcceptButtonClicked(byte client, WritableImage image);
         void onCancelButtonClicked(byte client);
     }
@@ -218,8 +217,11 @@ public class PhotoshopControl {
             // While no image is captured by the web cam, only display the web cam capture button.
             mAcceptButton.setVisible(false);
             mAcceptButton.setManaged(false);
-            mMirrorCamCheckbox.setVisible(true);
+            mMirrorCamBox.setVisible(true);
             mFilterSignatureBox.setVisible(false);
+
+            mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
+            mFilterSignatureCheckbox.setSelected(false);
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
             mWebcamNode.toFront();
@@ -253,6 +255,7 @@ public class PhotoshopControl {
                 // If the mirror checkbox is selected, then store the flipped copy to mCapturedImage.
                 // Else store the non flipped copy to mCapturedImage.
                 if (mMirrorCamCheckbox.isSelected()) {
+                    System.out.println("mirror selected");
                     // Initialize mModifiedImage to load the flipped image.
                     mCapturedImage = new WritableImage(tempImage.getWidth(), tempImage.getHeight());
 
@@ -263,7 +266,7 @@ public class PhotoshopControl {
                         for (int x = 0; x < width; x++)
                             pixelWriter.setArgb(width - 1 - x, y, tempImage.getRGB(x, y));
                 } else
-                    SwingFXUtils.toFXImage(tempImage, mCapturedImage);
+                    mCapturedImage = SwingFXUtils.toFXImage(tempImage, mCapturedImage);
 
                 // If the client is requesting a signature, make a filtered copy of the mCapturedImage and store it in
                 // mModifiedImage.
@@ -342,8 +345,13 @@ public class PhotoshopControl {
      */
     @FXML
     public void onFilterSignatureCheckboxClicked(ActionEvent actionEvent) {
-        mPhotoView.setImage(mFilterSignatureCheckbox.isSelected() ? mModifiedImage :
-                mRequest == REQUEST_PHOTO_UPLOAD ? mUploadedImage : mCapturedImage);
+        if (mFilterSignatureCheckbox.isSelected()) {
+            mDraggableRectangle.setStroke(javafx.scene.paint.Color.BLACK);
+            mPhotoView.setImage(mModifiedImage);
+        } else {
+            mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
+            mPhotoView.setImage(mRequest == REQUEST_PHOTO_UPLOAD ? mUploadedImage : mCapturedImage);
+        }
     }
 
     @FXML
@@ -359,6 +367,9 @@ public class PhotoshopControl {
     public void setClient(byte client, byte request) {
         mClient = client;
         mRequest = request;
+
+        // By default, the mDraggableRectangle should be white.
+        mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
 
         if (request == REQUEST_PHOTO_UPLOAD) {
             // Open the dialog for photo uploading. . .
@@ -415,7 +426,6 @@ public class PhotoshopControl {
 
                     // Make sure that the mSignatureFilterBox is shown.
                     mFilterSignatureBox.setVisible(true);
-                    // todo : set selected calls the callback function?
                     mFilterSignatureCheckbox.setSelected(false);
 
                     // Create a filtered copy of the signature, then store it to mModifiedImage.
@@ -454,7 +464,10 @@ public class PhotoshopControl {
             mCaptureButton.setManaged(false);
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
+            mMirrorCamBox.setVisible(false);
             mPhotoView.setImage(mUploadedImage);
+
+            mIsImageCaptured = false;
 
             // Center the mDraggableRectangle.
             mDraggableRectangle.setX(mImagePane.getWidth() / 2 - mDraggableRectangle.getWidth() / 2);
@@ -493,7 +506,6 @@ public class PhotoshopControl {
                     mDraggableRectangle.setWidth(384);
                     mDraggableRectangle.setHeight(216);
 
-                    // todo : set selected calls the callback function?
                     mFilterSignatureCheckbox.setSelected(false);
             }
 

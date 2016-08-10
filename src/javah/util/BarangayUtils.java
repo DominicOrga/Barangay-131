@@ -3,7 +3,7 @@ package javah.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListFilter {
+public class BarangayUtils {
 
     /**
      * Filter the lists in ascending order, priority level not ignored,with regards to the keywords.

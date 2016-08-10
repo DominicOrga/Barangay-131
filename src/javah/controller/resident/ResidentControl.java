@@ -1,11 +1,8 @@
 package javah.controller.resident;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -15,11 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javah.container.Resident;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
-import javah.util.ListFilter;
+import javah.util.BarangayUtils;
 
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -163,7 +159,7 @@ public class ResidentControl {
         } else {
             String[] keywordsArray = keywords.split(" ");
 
-            List[] lists = ListFilter.filterLists(
+            List[] lists = BarangayUtils.filterLists(
                     mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
 
 
