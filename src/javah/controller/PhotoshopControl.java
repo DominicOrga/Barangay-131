@@ -4,6 +4,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamUtils;
 import com.github.sarxos.webcam.util.ImageUtils;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,8 @@ import java.io.IOException;
  */
 public class PhotoshopControl {
 
+
+
     static interface OnPhotoshopListener {
         void onAcceptButtonClicked(byte client, WritableImage image);
         void onCancelButtonClicked(byte client);
@@ -39,10 +42,12 @@ public class PhotoshopControl {
     @FXML private Pane mRootPane;
     @FXML private ImageView mPhotoView;
     @FXML private Pane mImagePane;
-    @FXML private HBox mFilterSignatureBox;
+
     @FXML private ImageView mAcceptButton;
     @FXML private ImageView mCaptureButton;
-    @FXML private CheckBox mFilterSignatureCheckbox;
+
+    @FXML private HBox mFilterSignatureBox, mMirrorCamBox;
+    @FXML private CheckBox mFilterSignatureCheckbox, mMirrorCamCheckbox;
 
     // The possible clients requesting a photo from the PhotoshopControl.
     public static final byte
@@ -213,6 +218,7 @@ public class PhotoshopControl {
             // While no image is captured by the web cam, only display the web cam capture button.
             mAcceptButton.setVisible(false);
             mAcceptButton.setManaged(false);
+            mMirrorCamCheckbox.setVisible(true);
             mFilterSignatureBox.setVisible(false);
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
@@ -237,23 +243,30 @@ public class PhotoshopControl {
             // Store photo as a temporary file. Sadly, captured photo is mirrored.
             WebcamUtils.capture(mWebcamPanel.getWebcam(), tempFile, ImageUtils.FORMAT_PNG);
 
-            // Flip the captured image and store it to mCapturedImage.
             try {
+                // Read the captured image of the web cam.
                 BufferedImage tempImage = ImageIO.read(tempFile);
-
-                // Initialize mModifiedImage to load the flipped image.
-                mCapturedImage = new WritableImage(tempImage.getWidth(), tempImage.getHeight());
-
-                PixelWriter pixelWriter = mCapturedImage.getPixelWriter();
-
                 int height = tempImage.getHeight();
                 int width = tempImage.getWidth();
 
-                // The flipping process...
-                for (int y = 0; y < height; y++)
-                    for (int x = 0; x < width; x++)
-                        pixelWriter.setArgb(width - 1 - x, y, tempImage.getRGB(x, y));
+                // Unfortunately, the web cam captures a non-mirrored image at all times - tempImage.
+                // If the mirror checkbox is selected, then store the flipped copy to mCapturedImage.
+                // Else store the non flipped copy to mCapturedImage.
+                if (mMirrorCamCheckbox.isSelected()) {
+                    // Initialize mModifiedImage to load the flipped image.
+                    mCapturedImage = new WritableImage(tempImage.getWidth(), tempImage.getHeight());
 
+                    PixelWriter pixelWriter = mCapturedImage.getPixelWriter();
+
+                    // The flipping process...
+                    for (int y = 0; y < height; y++)
+                        for (int x = 0; x < width; x++)
+                            pixelWriter.setArgb(width - 1 - x, y, tempImage.getRGB(x, y));
+                } else
+                    SwingFXUtils.toFXImage(tempImage, mCapturedImage);
+
+                // If the client is requesting a signature, make a filtered copy of the mCapturedImage and store it in
+                // mModifiedImage.
                 switch (mClient) {
                     case CLIENT_SECRETARY_SIGNATURE:
                     case CLIENT_CHAIRMAN_SIGNATURE:
@@ -264,7 +277,7 @@ public class PhotoshopControl {
                         PixelReader pixelReader = mCapturedImage.getPixelReader();
 
                         mModifiedImage = new WritableImage(width, height);
-                        pixelWriter = mModifiedImage.getPixelWriter();
+                        PixelWriter pixelWriter = mModifiedImage.getPixelWriter();
 
                         for (int x = 0; x < width; x++)
                             for (int y = 0; y < height; y++) {
@@ -299,7 +312,7 @@ public class PhotoshopControl {
             // Update the GUI after a web cam capture is made.
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
-
+            mMirrorCamBox.setVisible(false);
 
             mPhotoView.toFront();
             mDraggableRectangle.toFrontPref();
@@ -331,6 +344,11 @@ public class PhotoshopControl {
     public void onFilterSignatureCheckboxClicked(ActionEvent actionEvent) {
         mPhotoView.setImage(mFilterSignatureCheckbox.isSelected() ? mModifiedImage :
                 mRequest == REQUEST_PHOTO_UPLOAD ? mUploadedImage : mCapturedImage);
+    }
+
+    @FXML
+    public void onMirrorCamCheckBoxClicked(ActionEvent actionEvent) {
+        mWebcamPanel.setMirrored(mMirrorCamCheckbox.isSelected());
     }
 
     /**
@@ -456,7 +474,11 @@ public class PhotoshopControl {
             mAcceptButton.setManaged(false);
             mCaptureButton.setVisible(true);
             mCaptureButton.setManaged(true);
+            mMirrorCamBox.setVisible(true);
             mFilterSignatureBox.setVisible(false);
+
+            // By defualt, the mMirrorCamCheckbox should be marked.
+            mMirrorCamCheckbox.setSelected(true);
 
             // Determine the size of the mDraggableRectangle.
             switch (client) {
