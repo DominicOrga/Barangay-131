@@ -21,6 +21,7 @@ import javah.controller.resident.ResidentFormControl;
 import javah.controller.resident.ResidentControl;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
+import javah.model.PreferenceModel;
 
 import javax.swing.*;
 import java.util.function.BiConsumer;
@@ -101,6 +102,7 @@ public class MainControl {
 
     private CacheModel mCacheModel;
     private DatabaseModel mDatabaseModel;
+    private PreferenceModel mPreferenceModel;
 
     /**
      * Initialize all the scenes.
@@ -110,6 +112,7 @@ public class MainControl {
     private void initialize() throws Exception {
         mDatabaseModel = new DatabaseModel();
         mCacheModel = new CacheModel();
+        mPreferenceModel = new PreferenceModel();
 
         // Initialize the mRectAnimTransitioner.
         // *Used in updateMenuSelected() to aid in animation.
@@ -289,6 +292,7 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/scene_barangay_agent.fxml");
         mBarangayAgentScene = fxmlLoader.load();
         mBarangayAgentControl = fxmlLoader.getController();
+        mBarangayAgentControl.setPreferenceModel(mPreferenceModel);
 
         mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
             @Override

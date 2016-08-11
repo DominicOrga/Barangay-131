@@ -14,7 +14,7 @@ import java.io.IOException;
 public class PreferenceModel {
 
     /**
-     * Its Json himself! Did I just assume its gender?
+     * Its Json himself! Wait, did I just assume its gender?
      */
     private JSONObject mJson;
 

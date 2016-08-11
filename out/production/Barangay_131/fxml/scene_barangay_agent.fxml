@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/scene_barangay_agent.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayAgentControl">
+<GridPane fx:id="mRootPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/scene_barangay_agent.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayAgentControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -42,7 +42,7 @@
             </ImageView>
          </children>
       </HBox>
-      <ScrollPane hbarPolicy="NEVER" prefWidth="550.0" style="-fx-background-color: #F4F4F4;" GridPane.rowIndex="1">
+      <ScrollPane fx:id="mScrollPane" hbarPolicy="NEVER" prefWidth="550.0" style="-fx-background-color: #F4F4F4;" GridPane.rowIndex="1">
          <content>
             <VBox alignment="CENTER" minWidth="-Infinity" prefWidth="600.0">
                <children>
@@ -461,6 +461,9 @@
                                  </HBox.margin>
                               </ImageView>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
                            <children>
@@ -503,7 +506,7 @@
                               </ImageView>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets bottom="20.0" />
                            </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
@@ -547,7 +550,7 @@
                               </ImageView>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets bottom="20.0" />
                            </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
@@ -591,11 +594,8 @@
                               </ImageView>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <padding>
                               <Insets bottom="20.0" />
-                           </padding>
+                           </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="163.0" prefHeight="29.0" prefWidth="200.0">
                            <children>
@@ -637,9 +637,9 @@
                                  </HBox.margin>
                               </ImageView>
                            </children>
-                           <padding>
+                           <VBox.margin>
                               <Insets bottom="20.0" />
-                           </padding>
+                           </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="61.0" prefHeight="29.0" prefWidth="200.0">
                            <children>
@@ -725,6 +725,9 @@
                                  </HBox.margin>
                               </ImageView>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                      <padding>
