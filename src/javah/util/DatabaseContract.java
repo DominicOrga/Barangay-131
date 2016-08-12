@@ -2,9 +2,11 @@ package javah.util;
 
 public class DatabaseContract {
 
-    public static final String COLUMN_ID = "id";
+    static class RowColumn {
+        public static final String COLUMN_ID = "id";
+    }
 
-    public static class ResidentEntry {
+    public static class ResidentEntry extends RowColumn {
         public static final String TABLE_NAME = "BarangayDB.Resident";
 
         public static final String COLUMN_FIRST_NAME = "first_name";
@@ -18,5 +20,19 @@ public class DatabaseContract {
         public static final String COLUMN_ADDRESS_2 = "address_2";
         public static final String COLUMN_BIRTH_DATE = "birth_date";
         public static final String COLUMN_SIGNATURE = "signature";
+    }
+
+    public static class BarangayIdEntry extends RowColumn {
+        public static final String TABLE_NAME = "BarangayDB.Barangay_id";
+
+        public static final String COLUMN_RESIDENT_ID = "resident_id";
+        public static final String COLUMN_RESIDENT_NAME = "resident_name";
+        public static final String COLUMN_ADDRESS = "address";
+        public static final String COLUMN_PHOTO = "photo";
+        public static final String COLUMN_RESIDENT_SIGNATURE = "resident_signature";
+        public static final String COLUMN_CHAIRMAN_NAME = "chairman_name";
+        public static final String COLUMN_CHAIRMAN_SIGNATURE = "chairman_signature";
+        public static final String COLUMN_DATE_ISSUED = "date_issued";
+        public static final String COLUMN_DATE_VALID = "date_valid";
     }
 }

@@ -108,7 +108,7 @@ public class BarangayAgentControl {
     /**
      * Determines the position of each visible kagawad holder.
      */
-    private List<Integer> mKagawadHolderPlacement = new ArrayList<>();
+    private List<Integer> mKagawadHolderPlacement;
 
     @FXML
     private void initialize() {
@@ -375,6 +375,7 @@ public class BarangayAgentControl {
      * Populate the scene with the barangay data.
      */
     public void resetScene() {
+        mKagawadHolderPlacement = new ArrayList<>();
         // Reset chairman data.
         mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, ""));
         mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, ""));
@@ -585,7 +586,6 @@ public class BarangayAgentControl {
         } else {
             // Remove the kagawad holder to be hidden from the placement ranking.
             mKagawadHolderPlacement.remove(Integer.valueOf(index));
-            System.out.println(mKagawadHolderPlacement);
             mKagawadHolderVisibility[index] = false;
 
             // Clear the data of the kagawad holder to be hidden.

@@ -162,8 +162,14 @@ public class MainControl {
             }
         });
 
+        // Initialize the Barangay ID Scene.
+        resetFXMLLoader.accept("fxml/scene_barangay_id.fxml");
+
+        mBarangayIdScene = fxmlLoader.load();
+
         // Add the information scenes to the mMainGridPane.
         mMainGridPane.add(mResidentScene, 1, 0);
+        mMainGridPane.add(mBarangayIdScene, 1, 0);
 
         // The default selected menu must be the resident menu.
         updateMenuSelected(MENU_RESIDENT);

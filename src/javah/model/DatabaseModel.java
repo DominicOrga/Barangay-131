@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javah.util.DatabaseContract;
 import javah.util.DatabaseContract.*;
@@ -79,7 +76,7 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
                     String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s",
-                            DatabaseContract.COLUMN_ID,
+                            ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -91,7 +88,7 @@ public class DatabaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
-                residentsIdList.add(resultSet.getString(DatabaseContract.COLUMN_ID));
+                residentsIdList.add(resultSet.getString(ResidentEntry.COLUMN_ID));
 
                 residentNameList.add(String.format("%s, %s %s.",
                         resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
@@ -131,7 +128,7 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.TABLE_NAME,
-                            DatabaseContract.COLUMN_ID
+                            ResidentEntry.COLUMN_ID
                     )
             );
 
@@ -153,13 +150,12 @@ public class DatabaseModel {
                 resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
                 resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
 
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
                 return resident;
             }
-
-            dbConnection.close();
-            preparedStatement.close();
-            resultSet.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,7 +172,7 @@ public class DatabaseModel {
                     String.format("UPDATE %s SET %s = 1 WHERE %s = ?",
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_IS_ARCHIVED,
-                            DatabaseContract.COLUMN_ID
+                            ResidentEntry.COLUMN_ID
                     )
             );
 
@@ -206,7 +202,7 @@ public class DatabaseModel {
                     String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
                                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
                             ResidentEntry.TABLE_NAME,
-                            DatabaseContract.COLUMN_ID,
+                            ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -261,7 +257,7 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_FIRST_NAME, ResidentEntry.COLUMN_MIDDLE_NAME, ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.COLUMN_BIRTH_DATE, ResidentEntry.COLUMN_PHOTO, ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
                             ResidentEntry.COLUMN_MONTH_OF_RESIDENCY, ResidentEntry.COLUMN_ADDRESS_1, ResidentEntry.COLUMN_ADDRESS_2,
-                            DatabaseContract.COLUMN_ID));
+                            ResidentEntry.COLUMN_ID));
 
             statement.setString(1, resident.getFirstName());
             statement.setString(2, resident.getMiddleName());
@@ -285,6 +281,33 @@ public class DatabaseModel {
         }
     }
 
+    public List<Object> getData(String table, String column) {
+        List<Object> result = null;
+
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(String.format("SELECT ? FROM %s", table));
+
+            preparedStatement.setString(1, column);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next())
+                result = Arrays.asList(resultSet.getArray(column));
+
+            dbConnection.close();
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     /**
      * Generate a unique id for the given table.
      * @param tableName
@@ -298,16 +321,16 @@ public class DatabaseModel {
             String residentId = "";
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("SELECT %s FROM %s WHERE %s LIKE '%s%%' ORDER BY %s DESC LIMIT 1",
-                            DatabaseContract.COLUMN_ID,
+                            ResidentEntry.COLUMN_ID,
                             tableName,
-                            DatabaseContract.COLUMN_ID,
+                            ResidentEntry.COLUMN_ID,
                             Calendar.getInstance().get(Calendar.YEAR) - 2000,
-                            DatabaseContract.COLUMN_ID));
+                            ResidentEntry.COLUMN_ID));
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String code = resultSet.getString(DatabaseContract.COLUMN_ID);
+                String code = resultSet.getString(ResidentEntry.COLUMN_ID);
                 int year = Integer.parseInt(code.substring(0, 2));
                 int codeNo = Integer.parseInt(code.substring(3, 6)) + 1;
 
