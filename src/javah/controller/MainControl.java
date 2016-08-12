@@ -23,7 +23,6 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
-import javax.swing.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -202,7 +201,10 @@ public class MainControl {
                         mBarangayAgentControl.setDisable(false);
                         mBarangayAgentControl.setChmSignature(image);
                         break;
-                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
+                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE:
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setSecSignature(image);
+                        break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
                 }
             }
@@ -324,7 +326,33 @@ public class MainControl {
             }
 
             @Override
+            public void onSecSignatureUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onSecSignatureCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
             public void onCancelButtonClicked() {
+                hidePopupScene(mBarangayAgentScene, false);
+
+                // When the barangay agent form scene is displayed, then blur the list paging of the
+                // current menu selected.
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                }
+            }
+
+            @Override
+            public void onSaveButtonClicked() {
+                System.out.println("Save clicked");
                 hidePopupScene(mBarangayAgentScene, false);
 
                 // When the barangay agent form scene is displayed, then blur the list paging of the
@@ -481,6 +509,8 @@ public class MainControl {
      */
     public void onSettingsButtonClicked(MouseEvent mouseEvent) {
         showPopupScene(mBarangayAgentScene, false);
+        // Initialize the data first.
+        mBarangayAgentControl.resetScene();
 
         switch (mMenuSelected) {
             case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;

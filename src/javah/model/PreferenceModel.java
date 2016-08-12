@@ -50,8 +50,12 @@ public class PreferenceModel {
 
     public String get(String key) {
         Object obj = mJson.get(key);
-
         return obj == null ? null : (String) obj;
+    }
+
+    public String get(String key, String defValue) {
+        Object obj = mJson.get(key);
+        return obj == null ? defValue : (String) obj;
     }
 
     public void put(String key, String value) {

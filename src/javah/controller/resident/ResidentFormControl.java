@@ -8,10 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javah.container.Resident;
 
 import javax.imageio.ImageIO;
@@ -226,7 +223,6 @@ public class ResidentFormControl {
 
             if (mResidentPhoto != null) {
                 try {
-
                     // Save the photo in the approriate directory with a unique uuid name.
                     String imagePath = System.getenv("PUBLIC") + "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
 
