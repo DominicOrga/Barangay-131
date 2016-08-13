@@ -1,9 +1,7 @@
 package javah.model;
 
-import javah.util.DatabaseContract;
-import javah.util.DatabaseContract.*;
-
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,16 +22,17 @@ public class CacheModel {
     public CacheModel() {
         dbControl = new DatabaseModel();
 
-        List[] lists = dbControl.getResidentsIdAndName();
+        List[] lists = dbControl.getResidentEssentials();
         mResidentIDsCache = lists[0];
         mResidentNamesCache = lists[1];
 
-        mBarangayIDIDsCache =
-                (List<String>)(List<?>) dbControl.getData(BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_ID);
-        mBarangayIDResidentIDCache =
-                (List<String>)(List<?>) dbControl.getData(BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID);
-        mBarangayIDdateIssuedCache =
-                (List<Date>)(List<?>) dbControl.getData(BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_DATE_ISSUED);
+        lists = dbControl.getBarangayIDEssentials();
+
+        mBarangayIDIDsCache = lists[0];
+        mBarangayIDResidentIDCache = lists[1];
+        mBarangayIDdateIssuedCache = lists[2];
+
+        System.out.println(Arrays.asList(mBarangayIDIDsCache));
     }
 
     public List<String> getResidentIDsCache() {

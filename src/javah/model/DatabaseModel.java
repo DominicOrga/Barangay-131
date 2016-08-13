@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import javah.util.DatabaseContract;
@@ -64,7 +65,7 @@ public class DatabaseModel {
      * @return an array of lists, where List[0] contains the resident IDs, while List[1] contains the concatenated
      * resident names.
      */
-    public List[] getResidentsIdAndName() {
+    public List[] getResidentEssentials() {
 
         List[] returnList = new List[2];
         List<String> residentsIdList = new ArrayList<>();
@@ -281,21 +282,40 @@ public class DatabaseModel {
         }
     }
 
-    public List<Object> getData(String table, String column) {
-        List<Object> result = null;
+
+    /**
+     * Returns the Barangay ID's Ids, resident ids, and their issued date.
+     * @return an array of lists, where List[0] contains the Barangay ID's IDs, List[1] contains the the resident IDs
+     * of each Barangay ID, while List[2] is the issued date of each barangay ID.
+     */
+    public List[] getBarangayIDEssentials() {
+        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
 
         try {
             Connection dbConnection = dataSource.getConnection();
 
             // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(String.format("SELECT ? FROM %s", table));
+            // Only query the barangay ID data with applicants that are not archived.
 
-            preparedStatement.setString(1, column);
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_ID,
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_DATE_ISSUED,
+                            BarangayIdEntry.TABLE_NAME,
+                            ResidentEntry.TABLE_NAME,
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next())
-                result = Arrays.asList(resultSet.getArray(column));
+            while (resultSet.next()) {
+                result[0].add(resultSet.getString(BarangayIdEntry.COLUMN_ID));
+                result[1].add(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
+                result[2].add(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_ISSUED));
+            }
 
             dbConnection.close();
             preparedStatement.close();

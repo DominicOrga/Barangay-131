@@ -11,13 +11,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javah.container.Resident;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +42,7 @@ public class BarangayIdControl {
     /**
      * Used for resident list paging. *Each page contains 40 residents.
      */
-    @FXML private GridPane mResidentListGridPane;
+    @FXML private GridPane mListGridPane;
 
     /**
      * The current page label of the resident list paging.
@@ -81,6 +85,10 @@ public class BarangayIdControl {
      */
     private List<String> mResidentNames;
 
+    private List<String> mBarangayIDIDs;
+    private List<String> mBarangayIDResidentIDs;
+    private List<Date> mBarangayIDsDateIssued;
+
     /**
      * The value representing which label is selected from the resident list paging.
      * Value range is between 0 - 39.
@@ -98,6 +106,8 @@ public class BarangayIdControl {
      */
     private Label[] mGridLabels;
 
+    private String[] mBarangayIDLabelLocation;
+
     /**
      * Represents the current page of the resident list paging.
      */
@@ -109,10 +119,10 @@ public class BarangayIdControl {
     private int mPageCount;
 
     /**
-     * Represents the total number of residents within the resident list paging.
-     * *Does not reflect cached residents.
+     * Represents the total number of labels to be used.
+     * *Does not reflect the total number of labels, but rather, it is the totality of the label use and re-use.
      */
-    private int mResidentCount;
+    private int mLabelUseCount;
 
     private Resident mResidentSelected;
 
@@ -127,7 +137,9 @@ public class BarangayIdControl {
         // Initialize mGridLabels with storage for 40 labels.
         mGridLabels = new Label[40];
 
-        // Populate mGridLabels with 40 labels and display it in a matrix of 20x2 mResidentListGridPane.
+        mBarangayIDLabelLocation = new String[40];
+
+        // Populate mGridLabels with 40 labels and display it in a matrix of 20x2 mListGridPane.
         for (int i = 0; i < 40; i++) {
             Label label = new Label();
             label.setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
@@ -136,16 +148,14 @@ public class BarangayIdControl {
             label.setPrefWidth(1000);
 
             mGridLabels[i] = label;
-            mResidentListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
+//            mListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
 
             // Add a label selected event listener to each label.
             final int labelIndex = i;
             label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
         }
 
-        mResidentListGridPane.getChildren().remove(mGridLabels[0]);
-        mResidentListGridPane.add(mGridLabels[0], 0, 0, 2, 1);
-        mGridLabels[0].setText("August 2016");
+
     }
 
     /**
@@ -269,6 +279,11 @@ public class BarangayIdControl {
         // Create a volatile copy of the cached data.
         mResidentIDs = mCacheModel.getResidentIDsCache();
         mResidentNames = mCacheModel.getmResidentNamesCache();
+        mBarangayIDIDs = mCacheModel.getBarangayIDIDsCache();
+        mBarangayIDResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
+        mBarangayIDsDateIssued = mCacheModel.getBarangayIDdateIssuedCache();
+
+        System.out.println("barangay id id's: " + mBarangayIDIDs);
 
         // Determine the initial number of Pages and set the default current page to 1.
         updateListPaging(false);
@@ -304,8 +319,8 @@ public class BarangayIdControl {
 
         // Once the resident is created, the current page must be placed where the newly created resident is inserted and
         // must be auto selected.
-        mResidentCount = mResidentIDs.size();
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+        mLabelUseCount = mResidentIDs.size();
+        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
         mCurrentPage = (int) Math.ceil(index / 39.0);
 
         mCurrentPageLabel.setText(mCurrentPage + "");
@@ -339,9 +354,9 @@ public class BarangayIdControl {
 
     public void setBlurListPaging(boolean blur) {
         if (blur) {
-            mResidentListGridPane.setStyle("-fx-background-color: #f4f4f4;");
+            mListGridPane.setStyle("-fx-background-color: #f4f4f4;");
         } else {
-            mResidentListGridPane.setStyle("-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;");
+            mListGridPane.setStyle("-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;");
 
         }
     }
@@ -494,34 +509,122 @@ public class BarangayIdControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setResidentSelected(-1);
+//        setResidentSelected(-1);
+        int barangayIDIndex = 0;
+        int precedingMonth = -1;
+        int labelPosition = 0;
+        int page = 1;
+        Calendar calendar = Calendar.getInstance();
 
-        int firstIndex = (mCurrentPage - 1) * 40;
-        int lastIndex = mCurrentPage * 40 > mResidentCount - 1 ? mResidentCount - 1 : mCurrentPage * 40;
-        int currentIndex = firstIndex;
+        // Find the index of the barangayID to be first displayed to the list paging current page.
+        while (page < mCurrentPage) {
+            calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
+            int month = calendar.get(Calendar.MONTH);
 
-        for (int i = 0; i < 40; i++) {
-            if (currentIndex <= lastIndex) {
-                mGridLabels[i].setText(mResidentNames.get(currentIndex));
-                currentIndex++;
-            } else
-                mGridLabels[i].setText("");
+            if (precedingMonth != month) {
+                precedingMonth = month;
+                labelPosition += (labelPosition % 2 == 0) ? 2 : 3;
+            }
+
+            labelPosition++;
+            barangayIDIndex++;
+            if (labelPosition >= 40) {
+                // Move to the next Page.
+                page++;
+                labelPosition = 0;
+                precedingMonth = -1;
+            }
         }
+
+        // Reset to default the label placements within the list paging.
+        mListGridPane.getChildren().removeAll(mGridLabels);
+        for (int i = 0; i < 40; i++) {
+            mGridLabels[i].setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
+            mGridLabels[i].setText("");
+            mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2);
+        }
+
+        // Clear the Label references to the barangay ID's.
+        Arrays.fill(mBarangayIDLabelLocation, "");
+
+        // Determine the barangay ID placement within the labels.
+        while (labelPosition <= 40 && barangayIDIndex < mBarangayIDIDs.size()) {
+            calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
+            int month = calendar.get(Calendar.MONTH);
+
+            if (precedingMonth != month) {
+                precedingMonth = month;
+
+                labelPosition += (labelPosition % 2 == 0) ? 1 : 0;
+
+                // If the date label can no longer be placed or a single report for a specific date cannot be displayed,
+                // then break the operation since those reports are already for the next page.
+                if (labelPosition >= 39) return;
+
+                // Place the date month in the current label.
+                int labelIndex = labelPosition - 1;
+                Label currentLabel = mGridLabels[labelIndex];
+
+                // The date month label must span 2 columns.
+                mListGridPane.getChildren().remove(currentLabel);
+                mListGridPane.add(currentLabel, labelIndex % 2 == 0 ? 0 : 1, labelIndex / 2, 2, 1);
+
+                // The date month labels must have a background color of brown and text fill of white.
+                currentLabel.setStyle("-fx-background-color: yellow; -fx-text-fill: white; -fx-font-size: 18");
+
+                // Set the date text to the label.
+                String date = BarangayUtils.convertMonthIntToString(calendar.get(Calendar.MONTH)) + " " +
+                        calendar.get(Calendar.YEAR);
+                currentLabel.setText(date);
+
+                labelPosition += 2;
+            }
+
+            // Store the barangay ID in mBarangayIDLabelLocation which corresponds to the label location.
+            int labelIndex = labelPosition - 1;
+            Label currentLabel = mGridLabels[labelIndex];
+
+            // Get the name of the resident applicant of the barangay ID.
+            mBarangayIDLabelLocation[labelIndex] = mBarangayIDIDs.get(barangayIDIndex);
+            int index = mResidentIDs.indexOf(mBarangayIDResidentIDs.get(barangayIDIndex));
+
+            currentLabel.setText(mResidentNames.get(index));
+
+            labelPosition++;
+            barangayIDIndex++;
+        }
+
     }
 
     /**
-     * Updates the list paging, mResidentCount and mPageCount.
+     * Updates the list paging, mLabelUseCount and mPageCount.
      * @param stayOnPage determines whether current page should be maintained or not after the update.
      */
     private void updateListPaging(boolean stayOnPage) {
-        mResidentCount = mResidentIDs.size();
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-        mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;;
+        mLabelUseCount = 0;
+        int size = mBarangayIDsDateIssued.size();
+
+        int precedingMonth = -1;
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < size; i++) {
+            calendar.setTime(mBarangayIDsDateIssued.get(i));
+            int month = calendar.get(Calendar.MONTH);
+
+            if (precedingMonth != month) {
+                precedingMonth = month;
+                mLabelUseCount += (mLabelUseCount % 2 == 0) ? 2 : 3;
+            }
+
+            mLabelUseCount++;
+        }
+
+        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
+        mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
         mPageCountLabel.setText(mPageCount + "");
 
         updateCurrentPage();
     }
-
 }

@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javah.container.Resident;
+import javah.controller.barangay_id.BarangayIdControl;
 import javah.controller.resident.ResidentDeletionControl;
 import javah.controller.resident.ResidentFormControl;
 import javah.controller.resident.ResidentControl;
@@ -64,6 +65,7 @@ public class MainControl {
      * The information scene controllers
      */
     private ResidentControl mResidentControl;
+    private BarangayIdControl mBarangayIdControl;
 
 
     /**
@@ -166,6 +168,10 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/scene_barangay_id.fxml");
 
         mBarangayIdScene = fxmlLoader.load();
+        mBarangayIdControl = fxmlLoader.getController();
+
+        mBarangayIdControl.setCacheModel(mCacheModel);
+        mBarangayIdControl.setDatabaseModel(mDatabaseModel);
 
         // Add the information scenes to the mMainGridPane.
         mMainGridPane.add(mResidentScene, 1, 0);

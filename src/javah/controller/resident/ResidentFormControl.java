@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javah.container.Resident;
+import javah.util.BarangayUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
@@ -204,7 +205,7 @@ public class ResidentFormControl {
             Calendar birthdate = Calendar.getInstance();
             birthdate.set(
                     (int) mBirthYear.getValue(),
-                    convertMonthStringToInt(mBirthMonth.getValue().toString()),
+                    BarangayUtils.convertMonthStringToInt(mBirthMonth.getValue().toString()),
                     (int) mBirthDay.getValue()
             );
 
@@ -218,7 +219,8 @@ public class ResidentFormControl {
                 mResident.setYearOfResidency((short) -1);
             else {
                 mResident.setYearOfResidency(Short.parseShort(yearOfResidency));
-                mResident.setMonthOfResidency((short) convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
+                mResident.setMonthOfResidency(
+                        (short) BarangayUtils.convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
             }
 
             if (mResidentPhoto != null) {
@@ -292,7 +294,7 @@ public class ResidentFormControl {
         Calendar birthDate = Calendar.getInstance();
         birthDate.setTime(resident.getBirthDate());
 
-        mBirthMonth.setValue(convertMonthIntToString(birthDate.get(Calendar.MONTH)));
+        mBirthMonth.setValue(BarangayUtils.convertMonthIntToString(birthDate.get(Calendar.MONTH)));
         mBirthDay.setValue(birthDate.get(Calendar.DAY_OF_MONTH));
         mBirthYear.setValue(birthDate.get(Calendar.YEAR));
 
@@ -300,7 +302,7 @@ public class ResidentFormControl {
             mYearOfResidency.setValue("Birth");
         else {
             mYearOfResidency.setValue(resident.getYearOfResidency() + "");
-            mMonthOfResidency.setValue(convertMonthIntToString(resident.getMonthOfResidency()));
+            mMonthOfResidency.setValue(BarangayUtils.convertMonthIntToString(resident.getMonthOfResidency()));
             mMonthOfResidency.setVisible(true);
         }
     }
@@ -329,45 +331,6 @@ public class ResidentFormControl {
     public void setPhoto(WritableImage residentPhoto) {
         mResidentPhoto = residentPhoto;
         mResidentPhotoView.setImage(residentPhoto);
-    }
-
-    /**
-     * Convert a string month to its corresponding int value.
-     * @param monthStr
-     * @return
-     */
-    private int convertMonthStringToInt(String monthStr) {
-        switch(monthStr) {
-            case "January" : return 0;
-            case "February" : return 1;
-            case "March" : return 2;
-            case "April" : return 3;
-            case "May" : return 4;
-            case "June" : return 5;
-            case "July" : return 6;
-            case "August" : return 7;
-            case "September" : return 8;
-            case "October" : return 9;
-            case "November" : return 10;
-            default : return 11;
-        }
-    }
-
-    private String convertMonthIntToString(int monthValue) {
-        switch (monthValue) {
-            case 0 : return "January";
-            case 1 : return "February";
-            case 2 : return "March";
-            case 3 : return "April";
-            case 4 : return "May";
-            case 5 : return "June";
-            case 6 : return "July";
-            case 7 : return "August";
-            case 8 : return "September";
-            case 9 : return "October";
-            case 10 : return "November";
-            default : return "December";
-        }
     }
 
     /**

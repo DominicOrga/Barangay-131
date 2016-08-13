@@ -357,25 +357,6 @@ public class ResidentControl {
          */
         Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
 
-            Function<Integer, String> convertMonthIntToString = (monthValue) -> {
-                String birthMonth = "January";
-                switch(monthValue) {
-                    case 1 : birthMonth = "February"; break;
-                    case 2 : birthMonth = "March"; break;
-                    case 3 : birthMonth = "April"; break;
-                    case 4 : birthMonth = "May"; break;
-                    case 5 : birthMonth = "June"; break;
-                    case 6 : birthMonth = "July"; break;
-                    case 7 : birthMonth = "August"; break;
-                    case 8 : birthMonth = "September"; break;
-                    case 9 : birthMonth = "October"; break;
-                    case 10 : birthMonth = "November"; break;
-                    case 11 : birthMonth = "December";
-                }
-
-                return birthMonth;
-            };
-
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
@@ -391,7 +372,7 @@ public class ResidentControl {
                 LocalDate birthDate = mResidentSelected.getBirthDate().toLocalDate();
                 int birthYear = birthDate.getYear();
                 int birthDay = birthDate.getDayOfMonth();
-                String birthMonth = convertMonthIntToString.apply(birthDate.getMonthValue());
+                String birthMonth = BarangayUtils.convertMonthIntToString(birthDate.getMonthValue());
 
                 mBirthDate.setText("");
                 mBirthDate.setText(String.format("%s %s, %s", birthMonth, birthDay, birthYear));
@@ -409,7 +390,7 @@ public class ResidentControl {
                 // Set the displayed year and month of residency.
                 mResidentSince.setText(
                         mResidentSelected.getYearOfResidency() == -1 ?
-                                "Birth" : convertMonthIntToString.apply(mResidentSelected.getMonthOfResidency()) + " " +
+                                "Birth" : BarangayUtils.convertMonthIntToString(mResidentSelected.getMonthOfResidency()) + " " +
                                         mResidentSelected.getYearOfResidency());
 
 

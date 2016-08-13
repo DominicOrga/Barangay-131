@@ -56,12 +56,12 @@ public class PhotoshopControl {
             CLIENT_SECRETARY_SIGNATURE = 3,
             CLIENT_ID_SIGNATURE = 4;
 
-    private byte mClient, mRequest;
-
     // The possible requests of the clients.
     public static final byte
             REQUEST_PHOTO_CAPTURE = 0,
             REQUEST_PHOTO_UPLOAD = 1;
+
+    private byte mClient, mRequest;
 
     /**
      * Used for : REQUEST_PHOTO_UPLOAD.
