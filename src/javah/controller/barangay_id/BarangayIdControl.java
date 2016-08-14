@@ -11,9 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -27,7 +25,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BarangayIdControl {
 
@@ -91,10 +88,10 @@ public class BarangayIdControl {
     private List<Date> mBarangayIDsDateIssued;
 
     /**
-     * The value representing which label is selected from the resident list paging.
+     * The value representing which label is selected from the list paging.
      * Value range is between 0 - 39.
      */
-    private int mLabelSelectedIndex;
+    private int mLabelSelectedIndex = -1;
 
     /**
      * The value representing the index of the selected resident.
@@ -125,7 +122,7 @@ public class BarangayIdControl {
      */
     private int mLabelUseCount;
 
-    private Resident mResidentSelected;
+    private Resident mBarangayIDSelected;
 
     private OnResidentSceneListener mListener;
 
@@ -153,7 +150,7 @@ public class BarangayIdControl {
 
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
+            label.setOnMouseClicked(event -> setBarangayIDSelected(labelIndex));
         }
 
 
@@ -238,7 +235,7 @@ public class BarangayIdControl {
      */
     @FXML
     public void onEditResidentButtonClicked(Event event) {
-        mListener.onEditResidentButtonClicked(mResidentSelected);
+        mListener.onEditResidentButtonClicked(mBarangayIDSelected);
     }
 
     /**
@@ -247,7 +244,7 @@ public class BarangayIdControl {
      */
     @FXML
     public void onDeleteResidentButtonClicked(Event event) {
-        mListener.onDeleteResidentButtonClicked(mResidentSelected);
+        mListener.onDeleteResidentButtonClicked(mBarangayIDSelected);
     }
 
     /**
@@ -291,7 +288,7 @@ public class BarangayIdControl {
     }
 
     public void deleteSelectedResident() {
-        mDatabaseModel.archiveResident(mResidentSelected.getId());
+        mDatabaseModel.archiveResident(mBarangayIDSelected.getId());
         mResidentIDs.remove(mResidentSelectedIndex);
         mResidentNames.remove(mResidentSelectedIndex);
 
@@ -331,7 +328,7 @@ public class BarangayIdControl {
         updateCurrentPage();
 
         // Select the newly created resident.
-        setResidentSelected(index % 40);
+        setBarangayIDSelected(index % 40);
     }
 
     public void updateResident(Resident resident) {
@@ -349,8 +346,8 @@ public class BarangayIdControl {
         updateCurrentPage();
 
         // Unselect the resident and select it again to update its displayed data.
-        setResidentSelected(mLabelSelectedIndex);
-        setResidentSelected(labelSelectedIndex);
+        setBarangayIDSelected(mLabelSelectedIndex);
+        setBarangayIDSelected(labelSelectedIndex);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -358,91 +355,23 @@ public class BarangayIdControl {
     }
 
     /**
-     * Update the resident selected data displayed.
-     * @param newLabelSelectedIndex is the index of the label containing the resident to be displayed. If it is equal
+     * Update the barangay ID selected data displayed.
+     * @param newLabelSelectedIndex is the index of the label containing the barangay ID to be displayed. If it is equal
      *                              to -1, then the example data is displayed.
      */
-    private void setResidentSelected(int newLabelSelectedIndex) {
+    private void setBarangayIDSelected(int newLabelSelectedIndex) {
         // Determine the index of the resident in place of the currently selected label.
         mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
         /**
-         * If a resident is selected, then display its data.
-         * If a resident is unselected or no resident is selected, then display the example data.
+         * If a barangay ID is selected, then display its data.
+         * If a barangay ID is unselected or no barangay ID is selected, then display the example data.
          */
         Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
-
-            Function<Integer, String> convertMonthIntToString = (monthValue) -> {
-                String birthMonth = "January";
-                switch(monthValue) {
-                    case 1 : birthMonth = "February"; break;
-                    case 2 : birthMonth = "March"; break;
-                    case 3 : birthMonth = "April"; break;
-                    case 4 : birthMonth = "May"; break;
-                    case 5 : birthMonth = "June"; break;
-                    case 6 : birthMonth = "July"; break;
-                    case 7 : birthMonth = "August"; break;
-                    case 8 : birthMonth = "September"; break;
-                    case 9 : birthMonth = "October"; break;
-                    case 10 : birthMonth = "November"; break;
-                    case 11 : birthMonth = "December";
-                }
-
-                return birthMonth;
-            };
-
             if (isDisplayed) {
 
                 // Query the data of the currently selected resident.
-                mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
-
-                mResidentPhoto.setImage(new Image(mResidentSelected.getPhotoPath() != null ?
-                        "file:" + mResidentSelected.getPhotoPath() : "/res/ic_default_resident.png"));
-
-                mResidentName.setText(mResidentNames.get(mResidentSelectedIndex));
-
-                // Format birthdate to YYYY dd, mm
-                // Set the displayed birth date.
-                LocalDate birthDate = mResidentSelected.getBirthDate().toLocalDate();
-                int birthYear = birthDate.getYear();
-                int birthDay = birthDate.getDayOfMonth();
-                String birthMonth = convertMonthIntToString.apply(birthDate.getMonthValue());
-
-                mBirthDate.setText("");
-                mBirthDate.setText(String.format("%s %s, %s", birthMonth, birthDay, birthYear));
-
-                // Set the displayed age.
-                int age = Calendar.getInstance().get(Calendar.YEAR) - birthYear;
-
-                if(birthYear != Calendar.getInstance().get(Calendar.YEAR))
-                    age -= birthDate.getMonthValue() > Calendar.getInstance().get(Calendar.MONTH) ||
-                            (birthDate.getMonthValue() == Calendar.getInstance().get(Calendar.MONTH) &&
-                                    birthDate.getDayOfMonth() > Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) ? 1 : 0;
-
-                mAge.setText(age + "");
-
-                // Set the displayed year and month of residency.
-                mResidentSince.setText(
-                        mResidentSelected.getYearOfResidency() == -1 ?
-                                "Birth" : convertMonthIntToString.apply(mResidentSelected.getMonthOfResidency()) + " " +
-                                        mResidentSelected.getYearOfResidency());
-
-
-                // Set the displayed address 1.
-                mAddress1.setText(mResidentSelected.getAddress1());
-
-                // Set the displayed address 2.
-                if(mResidentSelected.getAddress2() != null) {
-                    mAddress2.setVisible(true);
-                    mAddress2Label.setVisible(true);
-                    mAddress2.setText(mResidentSelected.getAddress2());
-                } else {
-                    mAddress2.setVisible(false);
-                    mAddress2Label.setVisible(false);
-                }
-
-                mDeleteButton.setVisible(true);
-                mEditButton.setVisible(true);
+                mBarangayIDSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
             } else {
                 mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
@@ -461,15 +390,13 @@ public class BarangayIdControl {
         };
 
         // This is where the code selection and unselection view update happens.
-
         // If a label is clicked without containing any resident, then ignore the event.
-        if (mResidentSelectedIndex < mResidentIDs.size()) {
+        if (!mBarangayIDLabelLocation[newLabelSelectedIndex].isEmpty()) {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedResidentInfo.accept(true);
                 }
 
             } else {
@@ -479,15 +406,13 @@ public class BarangayIdControl {
                     mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
                     mResidentSelectedIndex = -1;
-                    setDisplaySelectedResidentInfo.accept(false);
 
-                // Unselect the previously selcted resident, then select the currently selected resident.
+                    // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
                     mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedResidentInfo.accept(true);
                 }
             }
         }
@@ -500,7 +425,7 @@ public class BarangayIdControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-//        setResidentSelected(-1);
+//        setBarangayIDSelected(-1);
         int barangayIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;
@@ -519,8 +444,10 @@ public class BarangayIdControl {
 
             labelPosition++;
             barangayIDIndex++;
-            if (labelPosition >= 40) {
+
+            if (labelPosition > 40) {
                 // Move to the next Page.
+                barangayIDIndex--;
                 page++;
                 labelPosition = 0;
                 precedingMonth = -1;
@@ -529,16 +456,19 @@ public class BarangayIdControl {
 
         // Reset to default the label placements within the list paging.
         mListGridPane.getChildren().removeAll(mGridLabels);
-//        String cssStyle = "-fx-background-color: f4f4f4;" + "-fx-font-size: 20;";
+
         for (int i = 0; i < 40; i++) {
             mGridLabels[i].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             mGridLabels[i].setText("");
-            mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2);
+            mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
         }
 
         // Clear the Label references to the barangay ID's.
         Arrays.fill(mBarangayIDLabelLocation, "");
 
+        System.out.println(barangayIDIndex < mBarangayIDIDs.size());
+        System.out.println(barangayIDIndex);
+        System.out.println(mBarangayIDIDs.size());
         // Determine the barangay ID placement within the labels.
         while (labelPosition <= 40 && barangayIDIndex < mBarangayIDIDs.size()) {
             calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
@@ -572,14 +502,14 @@ public class BarangayIdControl {
                 labelPosition += 2;
             }
 
-            // Store the barangay ID in mBarangayIDLabelLocation which corresponds to the label location.
             int labelIndex = labelPosition - 1;
             Label currentLabel = mGridLabels[labelIndex];
 
-            // Get the name of the resident applicant of the barangay ID.
+            // Store the barangay ID in mBarangayIDLabelLocation which corresponds to the label location.
             mBarangayIDLabelLocation[labelIndex] = mBarangayIDIDs.get(barangayIDIndex);
-            int index = mResidentIDs.indexOf(mBarangayIDResidentIDs.get(barangayIDIndex));
 
+            // Get the name of the resident applicant of the barangay ID.
+            int index = mResidentIDs.indexOf(mBarangayIDResidentIDs.get(barangayIDIndex));
             currentLabel.setText(mResidentNames.get(index));
 
             labelPosition++;

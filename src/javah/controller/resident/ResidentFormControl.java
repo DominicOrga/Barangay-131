@@ -209,6 +209,8 @@ public class ResidentFormControl {
                     (int) mBirthDay.getValue()
             );
 
+            System.out.println(birthdate.get(Calendar.MONTH));
+
             mResident.setBirthDate(new Date(birthdate.getTime().getTime()));
 
             // Store the value of the year of residency of the resident.

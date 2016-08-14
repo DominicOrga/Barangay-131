@@ -72,14 +72,16 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s",
+                    String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s, %s, %s",
                             ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_IS_ARCHIVED,
-                            ResidentEntry.COLUMN_LAST_NAME)
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME)
                     );
 
             ResultSet resultSet = preparedStatement.executeQuery();

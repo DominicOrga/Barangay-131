@@ -365,21 +365,23 @@ public class ResidentControl {
 
                 // Format birthdate to YYYY dd, mm
                 // Set the displayed birth date.
-                LocalDate birthDate = mResidentSelected.getBirthDate().toLocalDate();
-                int birthYear = birthDate.getYear();
-                int birthDay = birthDate.getDayOfMonth();
-                String birthMonth = BarangayUtils.convertMonthIntToString(birthDate.getMonthValue());
+                Calendar birthdate = Calendar.getInstance();
+                birthdate.setTime(mResidentSelected.getBirthDate());
+                int birthYear = birthdate.get(Calendar.YEAR);
+                int birthDay = birthdate.get(Calendar.DAY_OF_MONTH);
+                String birthMonth = BarangayUtils.convertMonthIntToString(birthdate.get(Calendar.MONTH));
 
                 mBirthDate.setText("");
                 mBirthDate.setText(String.format("%s %s, %s", birthMonth, birthDay, birthYear));
 
+                Calendar currentDate = Calendar.getInstance();
                 // Set the displayed age.
-                int age = Calendar.getInstance().get(Calendar.YEAR) - birthYear;
+                int age = currentDate.get(Calendar.YEAR) - birthYear;
 
-                if(birthYear != Calendar.getInstance().get(Calendar.YEAR))
-                    age -= birthDate.getMonthValue() > Calendar.getInstance().get(Calendar.MONTH) ||
-                            (birthDate.getMonthValue() == Calendar.getInstance().get(Calendar.MONTH) &&
-                                    birthDate.getDayOfMonth() > Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) ? 1 : 0;
+                if(birthYear != currentDate.get(Calendar.YEAR))
+                    age -= birthdate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH) ||
+                            (birthdate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) &&
+                                    birthdate.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH)) ? 1 : 0;
 
                 mAge.setText(age + "");
 
