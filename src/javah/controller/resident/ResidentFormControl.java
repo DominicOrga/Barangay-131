@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javah.container.Resident;
+import javah.contract.CSSContract;
 import javah.util.BarangayUtils;
 
 import javax.imageio.ImageIO;
@@ -62,7 +63,6 @@ public class ResidentFormControl {
 
     @FXML
     private void initialize() {
-        System.out.println("Resident Form Control Initialized");
 
         mResident = new Resident();
 
@@ -143,7 +143,7 @@ public class ResidentFormControl {
     public void onCancelButtonClicked(ActionEvent event) {
         mListener.onCancelButtonClicked();
         mResident = null;
-        resetForm();
+        resetScene();
     }
 
     /**
@@ -156,9 +156,9 @@ public class ResidentFormControl {
         boolean isDataValid = true;
 
         // Check name input.
-        mFirstName.setStyle(mFirstName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
-        mMiddleName.setStyle(mMiddleName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
-        mLastName.setStyle(mLastName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
+        mFirstName.setStyle(mFirstName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mMiddleName.setStyle(mMiddleName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mLastName.setStyle(mLastName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
 
         if (mFirstName.getText().matches("[a-zA-Z\\s]+") &&
             mMiddleName.getText().matches("[a-zA-Z\\s]+") &&
@@ -173,20 +173,20 @@ public class ResidentFormControl {
         // Check address 1 input.
         if(mAddress1.getText().matches("[a-zA-Z0-9\\.,'\\s-\\s#\\s]+")) {
             mAddress1Error.setVisible(false);
-            mAddress1.setStyle("-fx-background-color: white; -fx-border-color: #BEBEBE");
+            mAddress1.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
         } else {
             mAddress1Error.setVisible(true);
-            mAddress1.setStyle("-fx-background-color: white; -fx-border-color: #FF3F3F");
+            mAddress1.setStyle(CSSContract.STYLE_ADDRESS_ERROR);
             isDataValid = false;
         }
 
         // Check address 2 input.
         if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s]+)?")) {
             mAddress2Error.setVisible(false);
-            mAddress2.setStyle("-fx-background-color: white; -fx-border-color: #BEBEBE");
+            mAddress2.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
         } else {
             mAddress2Error.setVisible(true);
-            mAddress2.setStyle("-fx-background-color: white; -fx-border-color: #FF3F3F");
+            mAddress2.setStyle(CSSContract.STYLE_ADDRESS_ERROR);
             isDataValid = false;
         }
 
@@ -249,7 +249,7 @@ public class ResidentFormControl {
 
             mListener.onSaveButtonClicked(mResident);
             mResident = null;
-            resetForm();
+            resetScene();
         }
     }
 
@@ -336,7 +336,13 @@ public class ResidentFormControl {
     /**
      * Reset the form to its default values.
      */
-    private void resetForm() {
+    private void resetScene() {
+        mFirstName.setStyle(null);
+        mMiddleName.setStyle(null);
+        mLastName.setStyle(null);
+        mAddress1.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
+        mAddress2.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
+
         mFirstName.setText("");
         mMiddleName.setText("");
         mLastName.setText("");

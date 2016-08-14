@@ -1,9 +1,6 @@
 package javah.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javah.container.Resident;
 
 import java.io.File;
@@ -14,8 +11,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-import javah.util.DatabaseContract;
-import javah.util.DatabaseContract.*;
+import javah.contract.DatabaseContract.*;
 
 
 public class DatabaseModel {

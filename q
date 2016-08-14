@@ -1,0 +1,378 @@
+[33mcommit c14100d6edbe2597fcf057c377ce8d960e217953[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Sat Aug 13 21:47:19 2016 +0800
+
+    Display barangay ID record in list paging
+    
+    Barangay ID records are now displayed in the list paging of Barangay
+    ID Control. I'm good.
+
+[33mcommit 2ba86d6c68b826c9d99ea243fd8333130e44b27e[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Aug 12 20:29:51 2016 +0800
+
+    Prepare Barangay ID Scene creation
+    
+    Initializing initial requirements of the Barangay ID scene.
+    Updated the database contract, database model and cache model to
+    contain properties and methods necessary for the Barangay ID scene.
+
+[33mcommit f6bf74a39b7ccefaed3d7214f8c913e93ead3524[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Aug 12 08:29:52 2016 +0800
+
+    Finish Barangay agent control
+    
+    Barangay agent control is not fully operational.
+    Although the deadline is a little bit off... well at least I tried.
+
+[33mcommit 8f49a0cd7b99a881808312f5ba47d05c00175508[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Aug 11 18:04:55 2016 +0800
+
+    Build add and remove button for kagawad holders
+    
+    Bazzeingga! I've done it!
+    
+    Pressing the add button will introduce another kagawad holder and
+    pressing the remove button beside it will remove it.
+
+[33mcommit 419e08067e9d8a8ad13f7bf90f5a988e6009e5d7[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Aug 11 11:35:55 2016 +0800
+
+    Store data as a JSON file with Preference Model class
+    
+    Hello, JSON! welcome to the club.
+
+[33mcommit ad4cb0825d517405d9f780ed7d83370d7c871ada[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Aug 11 06:19:54 2016 +0800
+
+    Use JSON to store preferences rather than Preferences API
+    
+    The Preferences API is a good candidate to store setting
+    preferences. However, the data is stored in the registers. Manual
+    creation of registry keys are needed before the API can properly
+    function, making it unsuitable for a system that will be handed
+    to clients with no customer support.
+    
+    Making use of JSON as a workaround.
+
+[33mcommit c9f3d593e999da14014b437252ed89cf725d4d01[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 10 11:57:58 2016 +0800
+
+    Enable or disable web cam mirroring
+    
+    This is very useful for capturing signatures, since
+    they are inverted by default.
+
+[33mcommit e29f53e7fbe2e4d99e64d59fd9b7dd635fcc7057[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 10 11:14:57 2016 +0800
+
+    Chairman to upload or take signature directly
+    
+    The chairman can now upload a signature or take a signature with
+    the help of the web cam. However, signature is mirrored by default
+    due to the web cam. Fixing it on the next commit.
+
+[33mcommit 0232b658de22376cee3f005b39df96784e874c92[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 10 09:17:01 2016 +0800
+
+    Set chairman display photo
+
+[33mcommit 111b636dbe43e683f32c91038dd26ecfe9c5a175[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 9 21:22:44 2016 +0800
+
+    Construct Barangay Official Setup Form
+    
+    Couldn't wait for JN to make the form...
+    His academic spirit has departed weeks ago.
+
+[33mcommit 9c59e8123f6bff12d2175b619e42659cfc9f606b[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Mon Aug 8 21:46:42 2016 +0800
+
+    Fix Photoshop Control for Display Photo
+    
+    I've been sick for 3 days, so I wasn't able to finish this on time.
+    But now, photoshop control now works for Display photo uploading and
+    taking picture. Hoorah!
+    
+    Signature photos, you're next. . .
+
+[33mcommit f783e620b86dffbd2c523ecf0d8ea820281c92c4[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Mon Aug 8 11:30:22 2016 +0800
+
+    General controller to handle image manipulation
+    
+    WebcamCapture Control only works with 'take photo' feature of the
+    resident.
+    
+    Create Photoshop control which will be the combination of
+    WebcamCaptureControl (Take Picture with webcam)
+    and SignatureAmendControl (Filters signature to remove background),
+    and cropping features. Thus, it will serve as the universal
+    control for all image manipulation.
+    
+    This controller is still under testing and development.
+
+[33mcommit 251c83c010496a9f56bbbc60c9c72b35dd5c399a[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Aug 4 11:54:42 2016 +0800
+
+    Create Preference contract
+
+[33mcommit 44b5087e3fa3962990825128187e0ed6d7907165[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Aug 4 11:03:51 2016 +0800
+
+    Feature update resident
+
+[33mcommit f707421fcba022431ba5ec3965088ece87e0cdf6[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 3 20:45:55 2016 +0800
+
+    Integrate Webcam capture to resident creation form
+    
+    Resident creation with webcam capture to take the photo of the
+    resident now works! Next stop, resident update integration...
+
+[33mcommit 531d92b9c9e67625208cca4a57f57e4a3a100a7f[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 3 19:26:15 2016 +0800
+
+    Webcam capture partial support for Resident Form
+    
+    Fucking tiresome...
+
+[33mcommit 2b093ccba3ec7323d17aa75db7b7ef64b8e80497[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Aug 3 17:04:54 2016 +0800
+
+    Create DraggableSquare class for image cropping
+    
+    Haaaa... I was afraid that the creation of this class will take a
+    day or two. Finished it within half a day thanks to James_D's
+    code snippet at stack overflow which I used as the basis for this
+    class.
+
+[33mcommit c6dd1675e6b08b6163bd0f47c5d0ce9db71dda59[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 2 22:26:44 2016 +0800
+
+    Disable resident form dialog while upload window is active
+
+[33mcommit 2ff11af6d177d70e6bd3c9a4caddccca4b5b3bbc[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 2 18:11:54 2016 +0800
+
+    Build web cam capturing view
+
+[33mcommit 2f0964d9ab382d83073d804ec355533167ba74b5[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 2 17:04:34 2016 +0800
+
+    Add Webcam Capture API by Sarxos
+    
+    Added the webcam capture API to take photo using the
+    internal or external webcam.
+
+[33mcommit 887bc09842ccb70fc46eed7dd48492a0a00c68d1[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 2 11:17:55 2016 +0800
+
+    Reset resident form after use
+
+[33mcommit fdd0bac1ec0820870b4be19c0dd049c476f38896[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Aug 2 07:23:20 2016 +0800
+
+    Automatically select newly created resident
+
+[33mcommit f72369b33adad2f41f349e8de34e05e30096abe3[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Mon Aug 1 22:19:05 2016 +0800
+
+    Create a resident
+    
+    Creating a resident is now online! Next stop, updating a resident.
+
+[33mcommit e13e4f86ad27c5ea5e2ec486365b3e781cabeb7c[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Mon Aug 1 18:43:50 2016 +0800
+
+    Change resident form choice box to combo box
+    
+    Resident form creation is almost complete.
+    
+    All binary files will be stored in the public user, specifically in
+    the directory Barangay131 which contains some other sub-directories
+    to categorize the binary files.
+
+[33mcommit 58832a8bbf84e735f1aa290b46939e49bd65d97c[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 29 20:49:25 2016 +0800
+
+    Fix resident information collapsing
+    
+    The Resident address 1 collapses unto the address 2 when minimizing
+    the stage. To solve the problem, The width of both the addresses are
+    set to a static value of 450.
+
+[33mcommit 5e3f388cc184a8e4d54d0b4f7926f2b7e6f31eb2[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 29 17:51:19 2016 +0800
+
+    Represent date of residency with year and month
+    
+    A new column is added to the Resident table - month of residency -
+    and renamed resident_since to year of residency.
+    
+    This is to improve the determination of the number of residency years
+    of a resident, which will be needed in the barangay clearance.
+
+[33mcommit ca84be6fdb2acaf52241d556b5884916cf4fa126[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 29 14:18:42 2016 +0800
+
+    Delete, that is, archive selected resident
+    
+    Whoo! Finally did it. The main control acts as a wingman for the
+    resident control to communicate with the resident deletion control,
+    and vice-versa.
+    
+    All data manipulation regarding the resident must happen in the
+    resident control.
+
+[33mcommit cb98f02ba5ec39eeda744c4b1ce7d12ceceafe46[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 29 11:44:40 2016 +0800
+
+    Rename CacheManager and DatabaseControl class
+    
+    Renamed CacheManager to CacheModel and DatabaseControl to
+    DatabaseModel.
+    
+    In addition, configured DatabaseModel to be a global
+    object to be passed around the scene controllers.
+
+[33mcommit 465c300f10b6db43cd9de51e6afcf7a33846d3f8[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Jul 28 17:24:34 2016 +0800
+
+    Store resident selected in resident holder
+    
+    mResidentSelected is added to the resident scene, since it will be
+    needed during the data presentation and update of the currently
+    selected resident.
+
+[33mcommit ce71327e68d99dd921aed71f7c370ce37e4c00a5[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Thu Jul 28 06:53:14 2016 +0800
+
+    Create global cache manager
+    
+    The CacheManager class will now hold the cached data to be shared
+    to the different scenes of the application, rather than having the
+    different scenes have their own cached data.
+
+[33mcommit dd233f172ed7e77647d6ea425219c7fca5b69159[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Jul 27 21:34:56 2016 +0800
+
+    Fix label selection limited to 0 - 39 residents.
+    
+    Wtf. I've been working the whole day creating the resident selection
+    mechanism and I only just realized that selecting a label from the
+    resident list paging is limited to only displaying the data of
+    40 residents, particularly 0 - 39 residents. Created an integer
+    that will calculate the 'real' index of the resident in the label
+    selected. Thus, the index is not limited only to the values of 0 and 39.
+    
+    Also, mResidentSelectedIndex is renamed to mLabelSelectedIndex due
+    to the fact that it represents the index (0 - 39) of each labels.
+
+[33mcommit b9277ff3be7aac3eabc6c9093ee9a437fc7947b8[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Jul 27 20:48:15 2016 +0800
+
+    Display the selected resident data
+    
+    Redesigned the way on how the selected resident data is displayed.
+    
+    Enabled the selection and unselection of residents within the
+    resident list paging.
+
+[33mcommit 26cb19d2353d3b50ed24f834b89da2b39a710df0[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Wed Jul 27 09:45:45 2016 +0800
+
+    Convert resident scene grid matrix(20x2) to a list
+    
+    Transformed the resident grid matrix to a list so that its structure
+    matches that of the mResidentIds and mResidentNames. Thus, improving
+    the way they work together.
+
+[33mcommit 977fc83c4dce5d974524a3c5c7f5482a1dc4ce10[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Tue Jul 26 21:30:04 2016 +0800
+
+    Build resident list paging and filter feature
+    
+    The resident list paging mechanism now works smoothly.
+    
+    Also, the resident list paging can now be filtered with the help of
+    the search field.
+    
+    Furthermore, ListFilter class is created to handle the filtering
+    mechanisms of the list paging of each information system.
+
+[33mcommit 6e0b50e88f514860817edb626a14de6c44e5c508[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Mon Jul 25 21:11:21 2016 +0800
+
+    Add Database Contract and Database Control
+    
+    The Database contract now holds a contract for the Resident table.
+    
+    The Database Control implements the pooling of connection to avoid
+    the constant creation of connection which may cause performance
+    issues.
+    
+    The Database Control will be used to store specialized queries to
+    better suit the needs of the system while promoting code efficiency.
+    
+    Also, Resident Control now programmatically generates the labels of
+    the pages.
+
+[33mcommit fae5b10da0d7a524ec24f3e1a97da6930fdf7967[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Sat Jul 23 10:45:32 2016 +0800
+
+    Transfer resources and add scenes Main and Resident
+    
+    Main and Resident scenes are created but not even close to
+    being complete.
+
+[33mcommit 9c645095478b21faaf126bf77b7027a78c4284f9[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 22 22:10:25 2016 +0800
+
+    Add fundamental packages
+    
+    Different file types to be used in the projects include css, fxml,
+    java and image files. Based from this information, we've created
+    the following packages - css, fxml, javah, and res - to better
+    organize the project.
+
+[33mcommit 591bbec907cc6d136119265984516e87772d19c4[m
+Author: Dominic Orga <dominicorga@gmail.com>
+Date:   Fri Jul 22 22:03:47 2016 +0800
+
+    We meet again, Barangay_131 system...

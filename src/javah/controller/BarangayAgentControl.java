@@ -12,10 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javah.model.PreferenceModel;
 import javah.util.KagawadHolder;
-import javah.util.PreferenceContract;
+import javah.contract.PreferenceContract;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;

@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javah.container.Resident;
+import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
@@ -22,7 +23,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class ResidentControl {
 
@@ -128,9 +128,10 @@ public class ResidentControl {
         mResidentLabels = new Label[40];
 
         // Populate mResidentLabels with 40 labels and display it in a matrix of 20x2 mResidentListGridPane.
+//        String cssStyle = "-fx-background-color: f4f4f4;" + "-fx-font-size: 20;";
         for (int i = 0; i < 40; i++) {
             Label label = new Label();
-            label.setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
+            label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             label.setAlignment(Pos.CENTER);
             label.setPrefHeight(500);
             label.setPrefWidth(1000);
@@ -334,12 +335,7 @@ public class ResidentControl {
     }
 
     public void setBlurListPaging(boolean blur) {
-        if (blur) {
-            mResidentListGridPane.setStyle("-fx-background-color: #f4f4f4;");
-        } else {
-            mResidentListGridPane.setStyle("-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;");
-
-        }
+        mResidentListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
     }
 
     /**
@@ -433,8 +429,7 @@ public class ResidentControl {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
-                    mResidentLabels[newLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                    mResidentLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
                     setDisplaySelectedResidentInfo.accept(true);
                 }
@@ -443,19 +438,15 @@ public class ResidentControl {
                 // If there is a previous selection, unselect it.
                 // Also, if the previously selected resident is selected again, then unselect it.
                 if (newLabelSelectedIndex == -1 || mLabelSelectedIndex == newLabelSelectedIndex) {
-                    mResidentLabels[mLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+                    mResidentLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
                     mResidentSelectedIndex = -1;
                     setDisplaySelectedResidentInfo.accept(false);
 
                 // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
-                    mResidentLabels[mLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
-
-                    mResidentLabels[newLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                    mResidentLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
+                    mResidentLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
                     setDisplaySelectedResidentInfo.accept(true);

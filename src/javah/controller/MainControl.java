@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javah.container.Resident;
+import javah.contract.CSSContract;
 import javah.controller.barangay_id.BarangayIdControl;
 import javah.controller.resident.ResidentDeletionControl;
 import javah.controller.resident.ResidentFormControl;
@@ -394,12 +395,7 @@ public class MainControl {
          * @param isSelected determines the type of animation (selected or not selected) to be applied to the menuPane.
          */
         BiConsumer<Pane, Boolean> playMenuSlideAnimation = (menuPane, isSelected) -> {
-            menuPane.setStyle(isSelected ? "-fx-background-color : chocolate; " +
-                    "-fx-border-color : white; " +
-                    "-fx-border-width: 0 0 1 0;" :
-                    "-fx-background-color : #FF8600; " +
-                            "-fx-border-color : white; " +
-                            "-fx-border-width: 0 0 1 0");
+            menuPane.setStyle(isSelected ? CSSContract.STYLE_MENU_SELECTED : CSSContract.STYLE_MENU_UNSELECTED);
 
             menuPane.getChildren().remove(mRectAnimTransitioner);
             menuPane.getChildren().add(mRectAnimTransitioner);

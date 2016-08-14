@@ -15,6 +15,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javah.container.Resident;
+import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
@@ -142,7 +143,7 @@ public class BarangayIdControl {
         // Populate mGridLabels with 40 labels and display it in a matrix of 20x2 mListGridPane.
         for (int i = 0; i < 40; i++) {
             Label label = new Label();
-            label.setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
+            label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             label.setAlignment(Pos.CENTER);
             label.setPrefHeight(500);
             label.setPrefWidth(1000);
@@ -353,12 +354,7 @@ public class BarangayIdControl {
     }
 
     public void setBlurListPaging(boolean blur) {
-        if (blur) {
-            mListGridPane.setStyle("-fx-background-color: #f4f4f4;");
-        } else {
-            mListGridPane.setStyle("-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;");
-
-        }
+        mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_BORDERED : CSSContract.STYLE_GRID_UNBORDERED);
     }
 
     /**
@@ -471,8 +467,7 @@ public class BarangayIdControl {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
-                    mGridLabels[newLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                    mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
                     setDisplaySelectedResidentInfo.accept(true);
                 }
@@ -481,19 +476,15 @@ public class BarangayIdControl {
                 // If there is a previous selection, unselect it.
                 // Also, if the previously selected resident is selected again, then unselect it.
                 if (newLabelSelectedIndex == -1 || mLabelSelectedIndex == newLabelSelectedIndex) {
-                    mGridLabels[mLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
+                    mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
                     mResidentSelectedIndex = -1;
                     setDisplaySelectedResidentInfo.accept(false);
 
                 // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
-                    mGridLabels[mLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;" + "-fx-text-fill: black");
-
-                    mGridLabels[newLabelSelectedIndex]
-                            .setStyle("-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white");
+                    mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
+                    mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
                     setDisplaySelectedResidentInfo.accept(true);
@@ -538,8 +529,9 @@ public class BarangayIdControl {
 
         // Reset to default the label placements within the list paging.
         mListGridPane.getChildren().removeAll(mGridLabels);
+//        String cssStyle = "-fx-background-color: f4f4f4;" + "-fx-font-size: 20;";
         for (int i = 0; i < 40; i++) {
-            mGridLabels[i].setStyle("-fx-background-color: f4f4f4;" + "-fx-font-size: 20;");
+            mGridLabels[i].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             mGridLabels[i].setText("");
             mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2);
         }
@@ -570,7 +562,7 @@ public class BarangayIdControl {
                 mListGridPane.add(currentLabel, labelIndex % 2 == 0 ? 0 : 1, labelIndex / 2, 2, 1);
 
                 // The date month labels must have a background color of brown and text fill of white.
-                currentLabel.setStyle("-fx-background-color: yellow; -fx-text-fill: white; -fx-font-size: 18");
+                currentLabel.setStyle(CSSContract.STYLE_DATE_HEADER);
 
                 // Set the date text to the label.
                 String date = BarangayUtils.convertMonthIntToString(calendar.get(Calendar.MONTH)) + " " +

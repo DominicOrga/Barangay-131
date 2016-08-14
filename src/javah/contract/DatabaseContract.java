@@ -1,4 +1,4 @@
-package javah.util;
+package javah.contract;
 
 public class DatabaseContract {
 
