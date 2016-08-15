@@ -25,11 +25,11 @@
     <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Button fx:id="mNewResidentButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNewResidentButtonClicked" prefHeight="40.0" style="-fx-background-color: #FF861B;" text="New Resident" textFill="WHITE" StackPane.alignment="CENTER_LEFT">
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateReportButtonClicked" prefHeight="40.0" style="-fx-background-color: #FF861B;" text="New Resident" textFill="WHITE" StackPane.alignment="CENTER_LEFT">
                <graphic>
-                  <ImageView fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="mCreateButtonImageView" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/res/ic_new_resident.png" />
+                        <Image url="@../../res/ic_new_resident.png" />
                      </image>
                   </ImageView>
                </graphic>

@@ -3,8 +3,8 @@ package javah.contract;
 public class CSSContract {
     public static String STYLE_LABEL_SELECTED =
             "-fx-background-color: #0080FF;" + "-fx-font-size: 20;" + "-fx-text-fill: white";
-    public static String STYLE_LABEL_UNSELECTED =
-            "-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;";
+    public static String STYLE_LABEL_UNSELECTED = "-fx-background-color: #f4f4f4;" + "-fx-font-size: 20;";
+    public static String STYLE_LABEL_UNSELECTED_WHITE = "-fx-background-color: white;" + "-fx-font-size: 20;";
 
     public static String STYLE_GRID_BORDERED =
             "-fx-background-color: #000000;" + "-fx-hgap: 1;" + "-fx-vgap: 1;" + "-fx-padding: 1;";

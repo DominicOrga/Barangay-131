@@ -18,7 +18,6 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -73,11 +72,13 @@ public class ResidentControl {
 
     /**
      * A volatile copy of the mResidentIDsCache used to search for non-archived residents.
+     * This list can be filtered with the search field. Thus, making it volatile.
      */
     private List<String> mResidentIDs;
 
     /**
      * A volatile copy of the mResidentNamesCache used to display the residents in the list paging.
+     * This list can be filtered with the search field. Thus, making it volatile.
      */
     private List<String> mResidentNames;
 
@@ -156,12 +157,12 @@ public class ResidentControl {
 
         if (keywords.trim().equals("")) {
             mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getmResidentNamesCache();
+            mResidentNames = mCacheModel.getResidentNamesCache();
         } else {
             String[] keywordsArray = keywords.split(" ");
 
             List[] lists = BarangayUtils.filterLists(
-                    mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
+                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
 
 
             mResidentIDs = lists[0];
@@ -265,7 +266,7 @@ public class ResidentControl {
         mCacheModel = cacheModel;
         // Create a volatile copy of the cached data.
         mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getmResidentNamesCache();
+        mResidentNames = mCacheModel.getResidentNamesCache();
 
         // Determine the initial number of Pages and set the default current page to 1.
         updateListPaging(false);
@@ -489,7 +490,7 @@ public class ResidentControl {
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
+        mPageCountLabel.setText(mPageCount == 0 ? 1 + "" : mPageCount + "");
 
         updateCurrentPage();
     }

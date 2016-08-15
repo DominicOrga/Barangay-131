@@ -17,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javah.container.Resident;
 import javah.contract.CSSContract;
+import javah.controller.barangay_id.BarangayIDFormControl;
 import javah.controller.resident.ResidentDeletionControl;
 import javah.controller.resident.ResidentFormControl;
 import javah.controller.resident.ResidentControl;
@@ -59,7 +60,7 @@ public class MainControl {
     /**
      * The information scenes.
      */
-    private Pane mResidentScene, mBarangayIdScene, mBarangayClearanceScene, mBusinessClearanceScene, mBlotterScene;
+    private Pane mResidentScene, mInformationScene;
 
     /**
      * The information scene controllers
@@ -71,8 +72,9 @@ public class MainControl {
     /**
      * The popup scenes.
      */
-    private Pane mResidentDeletionScene, mResidentFormScene;
     private Pane mPhotoshopScene, mBarangayAgentScene;
+    private Pane mResidentDeletionScene, mResidentFormScene;
+    private Pane mBarangayIDFormScene;
 
     /**
      * The popup scene controllers.
@@ -81,6 +83,7 @@ public class MainControl {
     private ResidentFormControl mResidentFormControl;
     private PhotoshopControl mPhotoshopControl;
     private BarangayAgentControl mBarangayAgentControl;
+    private BarangayIDFormControl mBarangayIDFormControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -135,7 +138,6 @@ public class MainControl {
 
         // Initialize the Resident scene.
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/resident/scene_resident.fxml"));
-
         mResidentScene = fxmlLoader.load();
         mResidentControl = fxmlLoader.getController();
 
@@ -166,16 +168,30 @@ public class MainControl {
 
         // Initialize the Barangay ID Scene.
         resetFXMLLoader.accept("fxml/information/scene_information.fxml");
-
-        mBarangayIdScene = fxmlLoader.load();
+        mInformationScene = fxmlLoader.load();
         mInformationControl = fxmlLoader.getController();
 
         mInformationControl.setCacheModel(mCacheModel);
         mInformationControl.setDatabaseModel(mDatabaseModel);
 
+        mInformationControl.setListener(new InformationControl.OnInformationControlListener() {
+            @Override
+            public void onCreateReportButtonClicked(byte information) {
+                switch (information) {
+                    case InformationControl.INFORMATION_BARANGAY_ID :
+                        mInformationControl.setBlurListPaging(true);
+                        showPopupScene(mBarangayIDFormScene, false);
+                        break;
+                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE : break;
+                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
+                    case InformationControl.INFORMATION_BLOTTER :
+                }
+            }
+        });
+
         // Add the information scenes to the mMainGridPane.
         mMainGridPane.add(mResidentScene, 1, 0);
-        mMainGridPane.add(mBarangayIdScene, 1, 0);
+        mMainGridPane.add(mInformationScene, 1, 0);
 
         // The default selected menu must be the resident menu.
         updateMenuSelected(MENU_RESIDENT);
@@ -193,6 +209,80 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/scene_photoshop.fxml");
         mPhotoshopScene = fxmlLoader.load();
         mPhotoshopControl = fxmlLoader.getController();
+
+        // Initialize the barangay agent setup dialog.
+        resetFXMLLoader.accept("fxml/scene_barangay_agent.fxml");
+        mBarangayAgentScene = fxmlLoader.load();
+        mBarangayAgentControl = fxmlLoader.getController();
+        mBarangayAgentControl.setPreferenceModel(mPreferenceModel);
+
+        mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
+            @Override
+            public void onChmUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onChmCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
+            public void onChmSignatureUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onChmSignatureCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
+            public void onSecSignatureUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onSecSignatureCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayAgentControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBarangayAgentScene, false);
+
+                // When the barangay agent form scene is displayed, then blur the list paging of the
+                // current menu selected.
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                    default : mInformationControl.setBlurListPaging(false); break;
+                }
+            }
+
+            @Override
+            public void onSaveButtonClicked() {
+                hidePopupScene(mBarangayAgentScene, false);
+
+                // When the barangay agent form scene is displayed, then blur the list paging of the
+                // current menu selected.
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                    default : mInformationControl.setBlurListPaging(false); break;
+                }
+            }
+        });
 
         mPhotoshopControl.setListener(new PhotoshopControl.OnPhotoshopListener() {
             @Override
@@ -302,84 +392,19 @@ public class MainControl {
             }
         });
 
-        // Initialize the barangay agent setup dialog.
-        resetFXMLLoader.accept("fxml/scene_barangay_agent.fxml");
-        mBarangayAgentScene = fxmlLoader.load();
-        mBarangayAgentControl = fxmlLoader.getController();
-        mBarangayAgentControl.setPreferenceModel(mPreferenceModel);
+        // Initialize the barangay ID form dialog.
+        resetFXMLLoader.accept("fxml/information/barangay_id/scene_barangay_id_form.fxml");
+        mBarangayIDFormScene = fxmlLoader.load();
+        mBarangayIDFormControl = fxmlLoader.getController();
 
-        mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
-            @Override
-            public void onChmUploadButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
-            }
-
-            @Override
-            public void onChmCaptureButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
-            }
-
-            @Override
-            public void onChmSignatureUploadButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
-            }
-
-            @Override
-            public void onChmSignatureCaptureButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
-            }
-
-            @Override
-            public void onSecSignatureUploadButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
-            }
-
-            @Override
-            public void onSecSignatureCaptureButtonClicked() {
-                showPopupScene(mPhotoshopScene, true);
-                mBarangayAgentControl.setDisable(true);
-                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
-            }
-
-            @Override
-            public void onCancelButtonClicked() {
-                hidePopupScene(mBarangayAgentScene, false);
-
-                // When the barangay agent form scene is displayed, then blur the list paging of the
-                // current menu selected.
-                switch (mMenuSelected) {
-                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
-                }
-            }
-
-            @Override
-            public void onSaveButtonClicked() {
-                System.out.println("Save clicked");
-                hidePopupScene(mBarangayAgentScene, false);
-
-                // When the barangay agent form scene is displayed, then blur the list paging of the
-                // current menu selected.
-                switch (mMenuSelected) {
-                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
-                }
-            }
-        });
+        mBarangayIDFormControl.setCacheModel(mCacheModel);
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
+        addToPopupPane.accept(mBarangayIDFormScene);
     }
 
     /**
@@ -425,7 +450,7 @@ public class MainControl {
                 case MENU_RESIDENT:
                     playMenuSlideAnimation.accept(mResidentMenu, isSelected);
                     if (isSelected)
-                        mMainGridPane.getChildren().get(mMainGridPane.getChildren().indexOf(mResidentScene)).toFront();
+                        mResidentScene.toFront();
                     break;
 
                 case MENU_BARANGAY_CLEARANCE:
@@ -434,7 +459,8 @@ public class MainControl {
                 case MENU_BARANGAY_ID:
                     playMenuSlideAnimation.accept(mBarangayIdMenu, isSelected);
                     if (isSelected)
-                        mMainGridPane.getChildren().get(mMainGridPane.getChildren().indexOf(mBarangayIdScene)).toFront();
+                        mInformationControl.setInformation(InformationControl.INFORMATION_BARANGAY_ID);
+                        mInformationScene.toFront();
                     break;
 
                 case MENU_BUSINESS_CLEARANCE:
@@ -521,6 +547,7 @@ public class MainControl {
 
         switch (mMenuSelected) {
             case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
+            default : mInformationControl.setBlurListPaging(true); break;
         }
     }
 }

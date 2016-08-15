@@ -39,7 +39,7 @@ public class CacheModel {
         return mResidentIDsCache;
     }
 
-    public List<String> getmResidentNamesCache() {
+    public List<String> getResidentNamesCache() {
         return mResidentNamesCache;
     }
 

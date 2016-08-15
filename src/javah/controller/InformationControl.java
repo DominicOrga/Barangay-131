@@ -5,8 +5,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,10 +34,8 @@ public class InformationControl {
     /**
      * An interface that tells the main scene to open up a manipulation resident dialog.
      */
-    public interface OnResidentSceneListener {
-        void onNewResidentButtonClicked();
-        void onEditResidentButtonClicked(Resident resident);
-        void onDeleteResidentButtonClicked(Resident resident);
+    public interface OnInformationControlListener {
+        void onCreateReportButtonClicked(byte information);
     }
 
     /**
@@ -63,22 +61,25 @@ public class InformationControl {
     @FXML private VBox mInformationBox;
 
     /**
-     * Widgets representing the information of the selected resident.
+     * The image view of the create report button.
      */
-    @FXML private ImageView mResidentPhoto;
-    @FXML private Label mResidentName, mBirthDate, mAge, mResidentSince, mAddress2Label;
-    @FXML private TextArea mAddress1, mAddress2;
-
+    @FXML private ImageView mCreateButtonImageView;
+    @FXML private Button mCreateButton;
     /**
      * Edit or manipulate the currently selected resident with this buttons.
      */
     @FXML private ImageView mEditButton, mDeleteButton;
 
     public static final byte
-            INFORMATION_BARANGAY_ID = 0,
-            INFORMATION_BARANGAY_CLEARANCE = 1,
-            INFORMATION_BUSINESS_CLEARANCE = 2,
-            INFORMATION_BLOTTER = 3;
+            INFORMATION_BARANGAY_ID = 1,
+            INFORMATION_BARANGAY_CLEARANCE = 2,
+            INFORMATION_BUSINESS_CLEARANCE = 3,
+            INFORMATION_BLOTTER = 4;
+
+    /**
+     * The current information to be displayed.
+     */
+    private byte mInformation;
 
     private Pane mBarangayIDScene;
 
@@ -141,7 +142,9 @@ public class InformationControl {
 
     private Resident mBarangayIDSelected;
 
-    private OnResidentSceneListener mListener;
+    private OnInformationControlListener mListener;
+
+
 
     /**
      * Called before setCacheModel()
@@ -170,7 +173,7 @@ public class InformationControl {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/information/scene_barangay_id.fxml"));
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/information/barangay_id/scene_barangay_id.fxml"));
             mBarangayIDScene = fxmlLoader.load();
 
             mInformationBox.getChildren().add(mBarangayIDScene);
@@ -193,12 +196,12 @@ public class InformationControl {
 
         if (keywords.trim().equals("")) {
             mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getmResidentNamesCache();
+            mResidentNames = mCacheModel.getResidentNamesCache();
         } else {
             String[] keywordsArray = keywords.split(" ");
 
             List[] lists = BarangayUtils.filterLists(
-                    mCacheModel.getResidentIDsCache(), mCacheModel.getmResidentNamesCache(), keywordsArray);
+                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
 
 
             mResidentIDs = lists[0];
@@ -247,30 +250,12 @@ public class InformationControl {
     }
 
     /**
-     * Tell the main scene to show the resident creation dialog.
+     * Tell the main scene to show the appropriate form dialog of the current information displayed.
      * @param actionEvent
      */
     @FXML
-    public void onNewResidentButtonClicked(ActionEvent actionEvent) {
-        mListener.onNewResidentButtonClicked();
-    }
-
-    /**
-     * Tell the main scenne to show the resident update dialog.
-     * @param event
-     */
-    @FXML
-    public void onEditResidentButtonClicked(Event event) {
-        mListener.onEditResidentButtonClicked(mBarangayIDSelected);
-    }
-
-    /**
-     * Tell the main scene to show the resident delete confirmation dialog.
-     * @param event
-     */
-    @FXML
-    public void onDeleteResidentButtonClicked(Event event) {
-        mListener.onDeleteResidentButtonClicked(mBarangayIDSelected);
+    public void onCreateReportButtonClicked(ActionEvent actionEvent) {
+        mListener.onCreateReportButtonClicked(mInformation);
     }
 
     /**
@@ -278,7 +263,7 @@ public class InformationControl {
      * Set the main scene as the listener to this object.
      * @param listener
      */
-    public void setListener(OnResidentSceneListener listener) {
+    public void setListener(OnInformationControlListener listener) {
         mListener = listener;
     }
 
@@ -302,7 +287,7 @@ public class InformationControl {
         mCacheModel = cacheModel;
         // Create a volatile copy of the cached data.
         mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getmResidentNamesCache();
+        mResidentNames = mCacheModel.getResidentNamesCache();
         mBarangayIDIDs = mCacheModel.getBarangayIDIDsCache();
         mBarangayIDResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
         mBarangayIDsDateIssued = mCacheModel.getBarangayIDdateIssuedCache();
@@ -377,7 +362,7 @@ public class InformationControl {
     }
 
     public void setBlurListPaging(boolean blur) {
-        mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_BORDERED : CSSContract.STYLE_GRID_UNBORDERED);
+        mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
     }
 
     /**
@@ -385,11 +370,18 @@ public class InformationControl {
      * @param information
      */
     public void setInformation(byte information) {
+
         switch (information) {
             case INFORMATION_BARANGAY_ID :
-
+                if (mInformation != INFORMATION_BARANGAY_ID) {
+                    System.out.println("hey");
+                    mCreateButtonImageView.setImage(new Image("res/ic_id.png"));
+                    mCreateButton.setText("New Barangay ID");
+                }
                 break;
         }
+
+        mInformation = information;
     }
 
     /**
@@ -412,15 +404,15 @@ public class InformationControl {
                 mBarangayIDSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
             } else {
-                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
-                mResidentName.setText("");
-                mBirthDate.setText("");
-                mAge.setText("");
-                mResidentSince.setText("");
-
-                mAddress1.setText("");
-                mAddress2.setVisible(false);
-                mAddress2Label.setVisible(false);
+//                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
+//                mResidentName.setText("");
+//                mBirthDate.setText("");
+//                mAge.setText("");
+//                mResidentSince.setText("");
+//
+//                mAddress1.setText("");
+//                mAddress2.setVisible(false);
+//                mAddress2Label.setVisible(false);
 
                 mDeleteButton.setVisible(false);
                 mEditButton.setVisible(false);
