@@ -162,12 +162,12 @@
                      <children>
                         <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
                            <children>
-                              <ImageView fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="135.0" fitWidth="315.0" pickOnBounds="true">
                                  <image>
                                     <Image url="@../res/ic_trans_bg_16x9.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="mChmSignatureView" fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="mChmSignatureView" fitHeight="135.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -276,12 +276,12 @@
                      <children>
                         <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
                            <children>
-                              <ImageView fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="135.0" fitWidth="315.0" pickOnBounds="true">
                                  <image>
                                     <Image url="@../res/ic_trans_bg_16x9.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="mSecSignatureView" fitHeight="135.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="mSecSignatureView" fitHeight="135.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true">
                                  <StackPane.margin>
                                     <Insets />
                                  </StackPane.margin>

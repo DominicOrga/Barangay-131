@@ -16,9 +16,10 @@ public class DraggableRectangle extends Rectangle {
 
     private Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
 
+    private double mAspectRatio;
+
     public DraggableRectangle(int boundaryWidth, int boundaryHeight) {
         super(0, 0, 50, 50);
-
 
         this.setFill(Color.TRANSPARENT);
         this.setStroke(Color.WHITE);
@@ -54,8 +55,10 @@ public class DraggableRectangle extends Rectangle {
 
         mResizeHandleNW.setOnMouseDragged(event -> {
             double deltaX = event.getX() - this.getX();
+            double newWidth = this.getWidth() - deltaX;
+            double newHeight = newWidth / mAspectRatio;
             double newX = event.getX();
-            double newY = this.getY() + deltaX;
+            double newY = this.getY() + (this.getHeight() - newHeight);
 
             // Drag HandleNW if the handle is still inside the pane and the HandleNW is not touching HandleSE.
             if (newX > handleRadius && newY > handleRadius
@@ -64,21 +67,23 @@ public class DraggableRectangle extends Rectangle {
                 this.setX(newX);
                 this.setY(newY);
 
-                this.setWidth(this.getWidth() - deltaX);
-                this.setHeight(this.getHeight() - deltaX);
+                this.setWidth(newWidth);
+                this.setHeight(newHeight);
             }
         });
 
         mResizeHandleSE.setOnMouseDragged(event -> {
             double deltaX = event.getX() - (this.getX() + this.getWidth());
-            double newX = this.getX() + this.getWidth() + deltaX;
-            double newY = this.getY() + this.getHeight() + deltaX;
+            double newWidth = this.getWidth() + deltaX;
+            double newHeight = newWidth / mAspectRatio;
+            double newX = this.getX() + newWidth;
+            double newY = this.getY() + newHeight;
 
             // Drag HandleSE if the handle is still inside the pane and the HandleSE is not touching HandleNW.
             if ( newX < boundaryWidth - handleRadius && newY < boundaryHeight - handleRadius &&
                     newX > this.getX() + handleRadius && newY > this.getY() + handleRadius) {
                 this.setWidth(this.getWidth() + deltaX);
-                this.setHeight(this.getHeight() + deltaX);
+                this.setHeight(this.getWidth() / mAspectRatio);
             }
         });
 
@@ -105,17 +110,6 @@ public class DraggableRectangle extends Rectangle {
     }
 
     /**
-     * Manage visibility of the square and its handles.
-     * @param isVisible
-     */
-    public void setVisiblePref(boolean isVisible) {
-        this.setVisible(isVisible);
-        mResizeHandleNW.setVisible(isVisible);
-        mResizeHandleSE.setVisible(isVisible);
-        mMoveHandle.setVisible(isVisible);
-    }
-
-    /**
      * Set the square and its handles to the front.
      */
     public void toFrontPref() {
@@ -130,5 +124,14 @@ public class DraggableRectangle extends Rectangle {
         mResizeHandleNW.toBack();
         mResizeHandleSE.toBack();
         mMoveHandle.toBack();
+    }
+
+    /**
+     * Assign the aspect ratio of the rectangle for resizing.
+     * @param width
+     * @param height
+     */
+    public void setAspectRatio(double width, double height) {
+        mAspectRatio = width / height;
     }
 }

@@ -1,8 +1,9 @@
-package javah.controller.barangay_id;
+package javah.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -12,21 +13,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
+import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class BarangayIdControl {
+public class InformationControl {
 
     /**
      * An interface that tells the main scene to open up a manipulation resident dialog.
@@ -57,6 +60,8 @@ public class BarangayIdControl {
      */
     @FXML private TextField mSearchField;
 
+    @FXML private VBox mInformationBox;
+
     /**
      * Widgets representing the information of the selected resident.
      */
@@ -68,6 +73,14 @@ public class BarangayIdControl {
      * Edit or manipulate the currently selected resident with this buttons.
      */
     @FXML private ImageView mEditButton, mDeleteButton;
+
+    public static final byte
+            INFORMATION_BARANGAY_ID = 0,
+            INFORMATION_BARANGAY_CLEARANCE = 1,
+            INFORMATION_BUSINESS_CLEARANCE = 2,
+            INFORMATION_BLOTTER = 3;
+
+    private Pane mBarangayIDScene;
 
     private DatabaseModel mDatabaseModel;
 
@@ -100,11 +113,15 @@ public class BarangayIdControl {
     private int mResidentSelectedIndex;
 
     /**
-     * The array containing all the labels of the resident list paging.
+     * The array containing all the labels of the list paging.
      */
     private Label[] mGridLabels;
 
-    private String[] mBarangayIDLabelLocation;
+    /**
+     * Holds to report ID assigned to a label.
+     * Index is between 0 - 39, representing the label positions.
+     */
+    private String[] mReportIDToLabelLocation;
 
     /**
      * Represents the current page of the resident list paging.
@@ -135,7 +152,7 @@ public class BarangayIdControl {
         // Initialize mGridLabels with storage for 40 labels.
         mGridLabels = new Label[40];
 
-        mBarangayIDLabelLocation = new String[40];
+        mReportIDToLabelLocation = new String[40];
 
         // Populate mGridLabels with 40 labels and display it in a matrix of 20x2 mListGridPane.
         for (int i = 0; i < 40; i++) {
@@ -146,11 +163,20 @@ public class BarangayIdControl {
             label.setPrefWidth(1000);
 
             mGridLabels[i] = label;
-//            mListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
-
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setBarangayIDSelected(labelIndex));
+            label.setOnMouseClicked(event -> setReportSelected(labelIndex));
+        }
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/information/scene_barangay_id.fxml"));
+            mBarangayIDScene = fxmlLoader.load();
+
+            mInformationBox.getChildren().add(mBarangayIDScene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
@@ -328,7 +354,7 @@ public class BarangayIdControl {
         updateCurrentPage();
 
         // Select the newly created resident.
-        setBarangayIDSelected(index % 40);
+        setReportSelected(index % 40);
     }
 
     public void updateResident(Resident resident) {
@@ -346,8 +372,8 @@ public class BarangayIdControl {
         updateCurrentPage();
 
         // Unselect the resident and select it again to update its displayed data.
-        setBarangayIDSelected(mLabelSelectedIndex);
-        setBarangayIDSelected(labelSelectedIndex);
+        setReportSelected(mLabelSelectedIndex);
+        setReportSelected(labelSelectedIndex);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -355,11 +381,23 @@ public class BarangayIdControl {
     }
 
     /**
+     * Set the information to be displayed.
+     * @param information
+     */
+    public void setInformation(byte information) {
+        switch (information) {
+            case INFORMATION_BARANGAY_ID :
+
+                break;
+        }
+    }
+
+    /**
      * Update the barangay ID selected data displayed.
      * @param newLabelSelectedIndex is the index of the label containing the barangay ID to be displayed. If it is equal
      *                              to -1, then the example data is displayed.
      */
-    private void setBarangayIDSelected(int newLabelSelectedIndex) {
+    private void setReportSelected(int newLabelSelectedIndex) {
         // Determine the index of the resident in place of the currently selected label.
         mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
@@ -391,7 +429,7 @@ public class BarangayIdControl {
 
         // This is where the code selection and unselection view update happens.
         // If a label is clicked without containing any resident, then ignore the event.
-        if (!mBarangayIDLabelLocation[newLabelSelectedIndex].isEmpty()) {
+        if (!mReportIDToLabelLocation[newLabelSelectedIndex].isEmpty()) {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {
@@ -425,7 +463,7 @@ public class BarangayIdControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-//        setBarangayIDSelected(-1);
+//        setReportSelected(-1);
         int barangayIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;
@@ -464,7 +502,7 @@ public class BarangayIdControl {
         }
 
         // Clear the Label references to the barangay ID's.
-        Arrays.fill(mBarangayIDLabelLocation, "");
+        Arrays.fill(mReportIDToLabelLocation, "");
 
         System.out.println(barangayIDIndex < mBarangayIDIDs.size());
         System.out.println(barangayIDIndex);
@@ -505,8 +543,8 @@ public class BarangayIdControl {
             int labelIndex = labelPosition - 1;
             Label currentLabel = mGridLabels[labelIndex];
 
-            // Store the barangay ID in mBarangayIDLabelLocation which corresponds to the label location.
-            mBarangayIDLabelLocation[labelIndex] = mBarangayIDIDs.get(barangayIDIndex);
+            // Store the barangay ID in mReportIDToLabelLocation which corresponds to the label location.
+            mReportIDToLabelLocation[labelIndex] = mBarangayIDIDs.get(barangayIDIndex);
 
             // Get the name of the resident applicant of the barangay ID.
             int index = mResidentIDs.indexOf(mBarangayIDResidentIDs.get(barangayIDIndex));

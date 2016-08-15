@@ -126,6 +126,8 @@ public class PhotoshopControl {
         // Remove any photo placed in mPhotoView.
         mPhotoView.setImage(null);
 
+        System.out.println(mDraggableRectangle.getWidth() + "x" + mDraggableRectangle.getHeight());
+
         switch (mRequest) {
             case REQUEST_PHOTO_UPLOAD:
 
@@ -412,6 +414,7 @@ public class PhotoshopControl {
                 case CLIENT_CHAIRMAN_PHOTO :
                 case CLIENT_RESIDENT_PHOTO :
                     // mDraggableRectangle is set to a square.
+                    mDraggableRectangle.setAspectRatio(1, 1);
                     mDraggableRectangle.setWidth(216);
                     mDraggableRectangle.setHeight(216);
 
@@ -420,9 +423,10 @@ public class PhotoshopControl {
                     break;
 
                 default:
-                    // mDraggableRectangle is set to a rectangle.
-                    mDraggableRectangle.setWidth(384);
-                    mDraggableRectangle.setHeight(216);
+                    // mDraggableRectangle is set to a rectangle. (21:9)
+                    mDraggableRectangle.setAspectRatio(21, 9);
+                    mDraggableRectangle.setWidth(315);
+                    mDraggableRectangle.setHeight(135);
 
                     // Make sure that the mSignatureFilterBox is shown.
                     mFilterSignatureBox.setVisible(true);
@@ -498,13 +502,15 @@ public class PhotoshopControl {
                 case CLIENT_CHAIRMAN_PHOTO :
                 case CLIENT_RESIDENT_PHOTO :
                     // mDraggableRectangle is set to a square.
+                    mDraggableRectangle.setAspectRatio(1, 1);
                     mDraggableRectangle.setWidth(216);
                     mDraggableRectangle.setHeight(216);
                     break;
                 default :
-                    // mDraggableRectangle is set to a rectangle.
-                    mDraggableRectangle.setWidth(384);
-                    mDraggableRectangle.setHeight(216);
+                    // mDraggableRectangle is set to a rectangle. (21:9)
+                    mDraggableRectangle.setAspectRatio(21, 9);
+                    mDraggableRectangle.setWidth(315);
+                    mDraggableRectangle.setHeight(135);
 
                     mFilterSignatureCheckbox.setSelected(false);
             }
