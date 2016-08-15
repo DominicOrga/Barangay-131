@@ -1,20 +1,17 @@
-package javah.controller.barangay_id;
+package javah.controller.information.barangay_id;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.util.BarangayUtils;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
 

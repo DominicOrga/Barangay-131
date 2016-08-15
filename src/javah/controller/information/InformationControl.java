@@ -1,4 +1,4 @@
-package javah.controller;
+package javah.controller.information;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
