@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -17,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/scene_resident.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
+<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/scene_resident.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -120,7 +127,7 @@
                   </GridPane>
                   <HBox alignment="CENTER" GridPane.rowIndex="1">
                      <children>
-                        <ImageView fx:id="back_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="back_page_btn" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../res/ic_back_page.png" />
                            </image>
@@ -140,7 +147,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="next_page_btn" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNextPageButtonClicked" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="next_page_btn" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#onNextPageButtonClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../res/ic_next_page.png" />
                            </image>

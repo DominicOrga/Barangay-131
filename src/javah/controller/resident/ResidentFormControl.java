@@ -209,8 +209,6 @@ public class ResidentFormControl {
                     (int) mBirthDay.getValue()
             );
 
-            System.out.println(birthdate.get(Calendar.MONTH));
-
             mResident.setBirthDate(new Date(birthdate.getTime().getTime()));
 
             // Store the value of the year of residency of the resident.
@@ -225,6 +223,7 @@ public class ResidentFormControl {
                         (short) BarangayUtils.convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
             }
 
+            // Store the image permanently in Barangay131/Photos and return the path.
             if (mResidentPhoto != null) {
                 try {
                     // Save the photo in the approriate directory with a unique uuid name.
@@ -246,8 +245,6 @@ public class ResidentFormControl {
                     e.printStackTrace();
                 }
             }
-
-            // Store the image permanently in Barangay131/Photos and return the path.
 
             mListener.onSaveButtonClicked(mResident);
             mResident = null;

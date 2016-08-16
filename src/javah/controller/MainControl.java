@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.controller.information.barangay_id.BarangayIDFormControl;
@@ -182,6 +183,7 @@ public class MainControl {
                     case InformationControl.INFORMATION_BARANGAY_ID :
                         mInformationControl.setBlurListPaging(true);
                         showPopupScene(mBarangayIDFormScene, false);
+                        mBarangayIDFormControl.reset();
                         break;
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE : break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
@@ -210,6 +212,57 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/scene_photoshop.fxml");
         mPhotoshopScene = fxmlLoader.load();
         mPhotoshopControl = fxmlLoader.getController();
+
+        mPhotoshopControl.setListener(new PhotoshopControl.OnPhotoshopListener() {
+            @Override
+            public void onAcceptButtonClicked(byte client, WritableImage image) {
+                hidePopupScene(mPhotoshopScene, true);
+
+                // Return the image to the requesting client and re-enable their controller.
+                switch (client) {
+                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
+                        mResidentFormControl.setDisable(false);
+                        mResidentFormControl.setPhoto(image);
+                        break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setChmPhoto(image);
+                        break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE:
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setChmSignature(image);
+                        break;
+                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE:
+                        mBarangayAgentControl.setDisable(false);
+                        mBarangayAgentControl.setSecSignature(image);
+                        break;
+                    case PhotoshopControl.CLIENT_ID_SIGNATURE:
+                        mBarangayIDFormControl.setDisable(false);
+                        mBarangayIDFormControl.setSignature(image);
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelButtonClicked(byte client) {
+                hidePopupScene(mPhotoshopScene, true);
+
+                // Re-enable the controller of the client.
+                switch (client) {
+                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
+                        mResidentFormControl.setDisable(false);
+                        break;
+                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
+                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE:
+                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE:
+                        mBarangayAgentControl.setDisable(false);
+                        break;
+                    case PhotoshopControl.CLIENT_ID_SIGNATURE:
+                        mBarangayIDFormControl.setDisable(false);
+                        break;
+                }
+            }
+        });
 
         // Initialize the barangay agent setup dialog.
         resetFXMLLoader.accept("fxml/scene_barangay_agent.fxml");
@@ -285,53 +338,6 @@ public class MainControl {
             }
         });
 
-        mPhotoshopControl.setListener(new PhotoshopControl.OnPhotoshopListener() {
-            @Override
-            public void onAcceptButtonClicked(byte client, WritableImage image) {
-                hidePopupScene(mPhotoshopScene, true);
-
-                // Return the image to the requesting client and re-enable their controller.
-                switch (client) {
-                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
-                        mResidentFormControl.setDisable(false);
-                        mResidentFormControl.setPhoto(image);
-                        break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
-                        mBarangayAgentControl.setDisable(false);
-                        mBarangayAgentControl.setChmPhoto(image);
-                        break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE:
-                        mBarangayAgentControl.setDisable(false);
-                        mBarangayAgentControl.setChmSignature(image);
-                        break;
-                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE:
-                        mBarangayAgentControl.setDisable(false);
-                        mBarangayAgentControl.setSecSignature(image);
-                        break;
-                    case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
-                }
-            }
-
-            @Override
-            public void onCancelButtonClicked(byte client) {
-                hidePopupScene(mPhotoshopScene, true);
-
-                // Re-enable the controller of the client.
-                switch (client) {
-                    case PhotoshopControl.CLIENT_RESIDENT_PHOTO:
-                        mResidentFormControl.setDisable(false);
-                        break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_PHOTO:
-                        mBarangayAgentControl.setDisable(false);
-                        break;
-                    case PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE: break;
-                    case PhotoshopControl.CLIENT_SECRETARY_SIGNATURE: break;
-                    case PhotoshopControl.CLIENT_ID_SIGNATURE: break;
-                }
-                mBarangayAgentControl.setDisable(false);
-            }
-        });
-
         // Initialize the resident deletion confirmation dialog.
         resetFXMLLoader.accept("fxml/resident/scene_resident_deletion.fxml");
         mResidentDeletionScene = fxmlLoader.load();
@@ -399,6 +405,36 @@ public class MainControl {
         mBarangayIDFormControl = fxmlLoader.getController();
 
         mBarangayIDFormControl.setCacheModel(mCacheModel);
+        mBarangayIDFormControl.setDatabaseModel(mDatabaseModel);
+
+        mBarangayIDFormControl.setListener(new BarangayIDFormControl.OnBarangayIDFormListener() {
+            @Override
+            public void onUploadButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayIDFormControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
+            }
+
+            @Override
+            public void onCaptureButtonClicked() {
+                showPopupScene(mPhotoshopScene, true);
+                mBarangayIDFormControl.setDisable(true);
+                mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBarangayIDFormScene, false);
+                mInformationControl.setBlurListPaging(false);
+            }
+
+            @Override
+            public void onCreateButtonClicked(BarangayID barangayID) {
+                hidePopupScene(mBarangayIDFormScene, false);
+                mInformationControl.setBlurListPaging(false);
+                // todo: Send barangayID to report to be displayed.
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);

@@ -45,3 +45,18 @@
 .text-area .scroll-bar:vertical:disabled {
     -fx-opacity: 0;
 }
+
+
+.radio-button .dot {
+    -fx-mark-highlight-color: #009CC1;
+    -fx-mark-color: #009CC1;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #009CC1;
+    -fx-background-color: white;
+    -fx-border-radius: 15px;
+    -fx-padding: 3px;
+}
+

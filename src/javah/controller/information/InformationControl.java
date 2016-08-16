@@ -292,8 +292,6 @@ public class InformationControl {
         mBarangayIDResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
         mBarangayIDsDateIssued = mCacheModel.getBarangayIDdateIssuedCache();
 
-        System.out.println("barangay id id's: " + mBarangayIDIDs);
-
         // Determine the initial number of Pages and set the default current page to 1.
         updateListPaging(false);
     }
@@ -374,7 +372,6 @@ public class InformationControl {
         switch (information) {
             case INFORMATION_BARANGAY_ID :
                 if (mInformation != INFORMATION_BARANGAY_ID) {
-                    System.out.println("hey");
                     mCreateButtonImageView.setImage(new Image("res/ic_id.png"));
                     mCreateButton.setText("New Barangay ID");
                 }
@@ -456,6 +453,7 @@ public class InformationControl {
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
 //        setReportSelected(-1);
+
         int barangayIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;
@@ -489,16 +487,13 @@ public class InformationControl {
 
         for (int i = 0; i < 40; i++) {
             mGridLabels[i].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
-            mGridLabels[i].setText("");
+            mGridLabels[i].setText(null);
             mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
         }
 
         // Clear the Label references to the barangay ID's.
-        Arrays.fill(mReportIDToLabelLocation, "");
+        Arrays.fill(mReportIDToLabelLocation, null);
 
-        System.out.println(barangayIDIndex < mBarangayIDIDs.size());
-        System.out.println(barangayIDIndex);
-        System.out.println(mBarangayIDIDs.size());
         // Determine the barangay ID placement within the labels.
         while (labelPosition <= 40 && barangayIDIndex < mBarangayIDIDs.size()) {
             calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
@@ -545,7 +540,6 @@ public class InformationControl {
             labelPosition++;
             barangayIDIndex++;
         }
-
     }
 
     /**

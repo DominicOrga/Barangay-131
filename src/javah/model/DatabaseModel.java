@@ -116,7 +116,7 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -126,6 +126,7 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.COLUMN_SIGNATURE,
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_ID
                     )
@@ -148,6 +149,7 @@ public class DatabaseModel {
                 resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
                 resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
                 resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
+                resident.setSignature(resultSet.getString(ResidentEntry.COLUMN_SIGNATURE));
 
                 dbConnection.close();
                 preparedStatement.close();
@@ -268,7 +270,6 @@ public class DatabaseModel {
             statement.setString(8, resident.getAddress1());
             statement.setString(9, resident.getAddress2());
             statement.setString(10, resident.getId());
-//            PreparedStatement statement = dbConnection.prepareStatement("UPDATE Resident SET last_name='Orga' WHERE id='16-001'");
 
             statement.executeUpdate();
 
@@ -280,6 +281,26 @@ public class DatabaseModel {
         }
     }
 
+    public void updateResidentSignature(String residentId, String signaturePath) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("UPDATE %s SET %s = ? WHERE %s = ?",
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_SIGNATURE, ResidentEntry.COLUMN_ID));
+
+            statement.setString(1, signaturePath);
+            statement.setString(2, residentId);
+
+            statement.executeUpdate();
+
+            statement.close();
+            dbConnection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Returns the Barangay ID's Ids, resident ids, and their issued date.
@@ -325,6 +346,7 @@ public class DatabaseModel {
 
         return result;
     }
+
 
     /**
      * Generate a unique id for the given table.
