@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -65,6 +66,8 @@ public class ResidentControl {
      * Edit or manipulate the currently selected resident with this buttons.
      */
     @FXML private ImageView mEditButton, mDeleteButton;
+
+    @FXML private Button mBackPageButton, mNextPageButton;
 
     private DatabaseModel mDatabaseModel;
 
@@ -190,11 +193,15 @@ public class ResidentControl {
      */
     @FXML
     public void onBackPageButtonClicked(Event event) {
-        if (mCurrentPage > 1) {
-            mCurrentPage -= 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
+        mCurrentPage -= 1;
+        updateCurrentPage();
+        mCurrentPageLabel.setText(mCurrentPage + "");
+
+        if (mNextPageButton.isDisabled())
+            mNextPageButton.setDisable(false);
+
+        if (mCurrentPage == 1)
+            mBackPageButton.setDisable(true);
     }
 
     /**
@@ -202,12 +209,16 @@ public class ResidentControl {
      * @param event
      */
     @FXML
-    public void onNextPageButtonClicked(Event event) {
-        if(mCurrentPage < mPageCount) {
-            mCurrentPage += 1;
-            updateCurrentPage();
-            mCurrentPageLabel.setText(mCurrentPage + "");
-        }
+    public void onNextPageButtonClicked(ActionEvent event) {
+        mCurrentPage += 1;
+        updateCurrentPage();
+        mCurrentPageLabel.setText(mCurrentPage + "");
+
+        if (mBackPageButton.isDisable())
+            mBackPageButton.setDisable(false);
+
+        if (mCurrentPage == mPageCount)
+            mNextPageButton.setDisable(true);
     }
 
     /**
@@ -491,6 +502,12 @@ public class ResidentControl {
 
         mCurrentPageLabel.setText(mCurrentPage + "");
         mPageCountLabel.setText(mPageCount == 0 ? 1 + "" : mPageCount + "");
+
+        // Disable the back page button if the current page is the first one.
+        mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+        // Disable the next page button if the current page is the last one.
+        mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
 
         updateCurrentPage();
     }

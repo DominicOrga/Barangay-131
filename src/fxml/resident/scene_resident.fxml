@@ -127,31 +127,43 @@
                   </GridPane>
                   <HBox alignment="CENTER" GridPane.rowIndex="1">
                      <children>
-                        <ImageView fx:id="back_page_btn" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../res/ic_back_page.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="mCurrentPageLabel" text="8" textFill="#ff861b">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="301.0" layoutY="20.0" text=" of " textFill="#ff861b">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="mPageCountLabel" layoutX="311.0" layoutY="20.0" text="15" textFill="#ff861b">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="next_page_btn" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#onNextPageButtonClicked" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../res/ic_next_page.png" />
-                           </image>
-                        </ImageView>
+                        <Button fx:id="mBackPageButton" mnemonicParsing="false" onAction="#onBackPageButtonClicked" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); -fx-background-color: white;">
+                           <graphic>
+                              <ImageView fx:id="back_page_btn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../res/ic_back_page.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <HBox alignment="CENTER" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="mCurrentPageLabel" text="8" textFill="#ff861b">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label text=" of " textFill="#ff861b">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="mPageCountLabel" text="15" textFill="#ff861b">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Button fx:id="mNextPageButton" mnemonicParsing="false" onAction="#onNextPageButtonClicked" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
+                           <graphic>
+                              <ImageView fx:id="next_page_btn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../res/ic_next_page.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </HBox>
                </children>

@@ -200,7 +200,6 @@ public class BarangayIDFormControl {
      */
     @FXML
     public void onNextPageButtonClicked(ActionEvent actionEvent) {
-
         mCurrentPage += 1;
         updateCurrentPage();
         mCurrentPageLabel.setText(mCurrentPage + "");
@@ -210,8 +209,6 @@ public class BarangayIDFormControl {
 
         if (mCurrentPage == mPageCount)
             mNextPageButton.setDisable(true);
-
-        System.out.println(mCurrentPage);
     }
 
     @FXML
