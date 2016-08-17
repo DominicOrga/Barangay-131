@@ -260,8 +260,10 @@ public class BarangayIDFormControl {
 
                 // Store the path of the signature to the barangay ID.
                 mBarangayID.setResidentSignature(imagePath);
+                mBarangayID.setResidentSignatureDimension(null);
 
                 mSignatureImage = null;
+
 
             } catch (IOException e) {
                 e.printStackTrace();

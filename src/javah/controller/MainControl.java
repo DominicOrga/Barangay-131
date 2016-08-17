@@ -20,6 +20,7 @@ import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.controller.information.barangay_id.BarangayIDFormControl;
 import javah.controller.information.InformationControl;
+import javah.controller.information.barangay_id.BarangayIDReportControl;
 import javah.controller.resident.ResidentDeletionControl;
 import javah.controller.resident.ResidentFormControl;
 import javah.controller.resident.ResidentControl;
@@ -76,7 +77,7 @@ public class MainControl {
      */
     private Pane mPhotoshopScene, mBarangayAgentScene;
     private Pane mResidentDeletionScene, mResidentFormScene;
-    private Pane mBarangayIDFormScene;
+    private Pane mBarangayIDFormScene, mBarangayIDReportScene;
 
     /**
      * The popup scene controllers.
@@ -86,6 +87,7 @@ public class MainControl {
     private PhotoshopControl mPhotoshopControl;
     private BarangayAgentControl mBarangayAgentControl;
     private BarangayIDFormControl mBarangayIDFormControl;
+    private BarangayIDReportControl mBarangayIDReportControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -431,10 +433,15 @@ public class MainControl {
             @Override
             public void onCreateButtonClicked(BarangayID barangayID) {
                 hidePopupScene(mBarangayIDFormScene, false);
-                mInformationControl.setBlurListPaging(false);
                 // todo: Send barangayID to report to be displayed.
+                showPopupScene(mBarangayIDReportScene, false);
             }
         });
+
+        // Initialize the barangay ID report dialog.
+        resetFXMLLoader.accept("fxml/information/barangay_id/scene_barangay_id_report.fxml");
+        mBarangayIDReportScene = fxmlLoader.load();
+        mBarangayIDReportControl = fxmlLoader.getController();
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
@@ -442,6 +449,7 @@ public class MainControl {
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
         addToPopupPane.accept(mBarangayIDFormScene);
+        addToPopupPane.accept(mBarangayIDReportScene);
     }
 
     /**

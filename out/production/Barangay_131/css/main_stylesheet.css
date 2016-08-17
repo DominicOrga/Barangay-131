@@ -118,5 +118,8 @@
     -fx-background-color: #FF861B;
 }
 
+.text-area .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
 
 

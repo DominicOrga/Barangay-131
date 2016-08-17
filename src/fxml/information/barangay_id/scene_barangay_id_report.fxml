@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="0: 0;" stylesheets="@../../../css/main_stylesheet.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.information.barangay_id.BarangayIDReportControl">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="-fx-background-color: white;" stylesheets="@../../../css/barangay_id_report.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.information.barangay_id.BarangayIDReportControl">
   <columnConstraints>
     <ColumnConstraints percentWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="510.0" minHeight="510.0" prefHeight="510.0" valignment="CENTER" vgrow="NEVER" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
             <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -36,9 +42,9 @@
             </ImageView>
          </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <HBox alignment="CENTER_RIGHT" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="125.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -46,7 +52,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -54,7 +60,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCancelButton1" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+            <Button fx:id="mCancelButton1" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -72,7 +78,7 @@
             <Image url="@../../../res/report_barangay_id_low_res.png" />
          </image>
       </ImageView>
-      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="510.0" GridPane.rowIndex="1">
          <children>
             <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
@@ -98,7 +104,7 @@
                   <Insets top="303.0" />
                </StackPane.margin>
             </Label>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            <ImageView fx:id="mResSignatureView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
                   <Image url="@../../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
                </image>
@@ -108,9 +114,9 @@
             </ImageView>
          </children>
       </StackPane>
-      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="510.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <TextArea editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="290.0" styleClass="address" text="Unit 704, 7/F Ivy Hill Residences 2350 Taft Ave Malate District, Manila Manila City Metro Manila~Manila-Malate-Barangay 725 " wrapText="true" StackPane.alignment="TOP_CENTER">
+            <TextArea fx:id="mAddressTextArea" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="290.0" text="Unit 704, 7/F Ivy Hill Residences 2350 Taft Ave Malate District, Manila Manila City" wrapText="true" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="33.0" />
                </StackPane.margin>
@@ -118,7 +124,7 @@
                   <Font name="Microsoft YaHei UI Light" size="15.0" />
                </font>
             </TextArea>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="290.0" stylesheets="@../../../css/barangay_id_report.css" StackPane.alignment="TOP_CENTER">
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="290.0" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="33.0" />
                </StackPane.margin>
@@ -147,9 +153,9 @@
                   <Insets top="453.0" />
                </StackPane.margin>
             </Label>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            <ImageView fx:id="mChmSignatureView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
-                  <Image url="@../../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
+                  <Image url="@../../../../../../../../Public/Barangay131/Photos/0ac3bf17-954d-4dd2-a163-51408e8f0ba9.png" />
                </image>
                <StackPane.margin>
                   <Insets top="400.0" />

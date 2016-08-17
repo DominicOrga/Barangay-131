@@ -108,8 +108,6 @@ public class PhotoshopControl {
 
     @FXML
     private void initialize() {
-        System.out.println("Photoshop Control Initialized");
-
         mDraggableRectangle = new DraggableRectangle(
                 (int) mImagePane.getPrefWidth(),
                 (int) mImagePane.getPrefHeight());

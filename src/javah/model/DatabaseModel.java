@@ -399,8 +399,8 @@ public class DatabaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE);
-                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE);
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
 
                 dbConnection.close();
                 preparedStatement.close();

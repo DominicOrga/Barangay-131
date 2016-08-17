@@ -171,7 +171,7 @@ public class ResidentFormControl {
         }
 
         // Check address 1 input.
-        if(mAddress1.getText().matches("[a-zA-Z0-9\\.,'\\s-\\s#\\s]+")) {
+        if(mAddress1.getText().matches("([a-zA-Z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
             mAddress1Error.setVisible(false);
             mAddress1.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
         } else {
@@ -181,7 +181,7 @@ public class ResidentFormControl {
         }
 
         // Check address 2 input.
-        if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s]+)?")) {
+        if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
             mAddress2Error.setVisible(false);
             mAddress2.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
         } else {

@@ -242,7 +242,7 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
                <font>
-                  <Font name="Helvetica Neue Light" size="15.0" />
+                  <Font name="Microsoft YaHei UI Light" size="15.0" />
                </font>
             </TextArea>
             <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
@@ -267,7 +267,7 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
                <font>
-                  <Font name="Helvetica Neue Light" size="15.0" />
+                  <Font name="Microsoft YaHei UI Light" size="15.0" />
                </font>
             </TextArea>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="530.0">
