@@ -428,7 +428,7 @@ public class InformationControl {
 
         // This is where the code selection and unselection view update happens.
         // If a label is clicked without containing any resident, then ignore the event.
-        if (!mReportIDToLabelLocation[newLabelSelectedIndex].isEmpty()) {
+        if (mReportIDToLabelLocation[newLabelSelectedIndex] != null) {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
                 if (newLabelSelectedIndex != -1) {

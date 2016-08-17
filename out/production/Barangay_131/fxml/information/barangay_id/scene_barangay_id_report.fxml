@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="0: 0;" stylesheets="@../../../css/main_stylesheet.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.information.barangay_id.BarangayIDReportControl">
+  <columnConstraints>
+    <ColumnConstraints percentWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+         <children>
+            <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ic_id.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.columnSpan="2" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="125.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mCancelButton1" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <GridPane.margin>
+            <Insets top="-3.0" />
+         </GridPane.margin>
+      </HBox>
+      <ImageView fitHeight="510.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.rowIndex="1">
+         <image>
+            <Image url="@../../../res/report_barangay_id_low_res.png" />
+         </image>
+      </ImageView>
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+            <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="100.0" />
+               </StackPane.margin>
+               <image>
+                  <Image url="@../../../res/ic_default_resident_white_bg.png" />
+               </image>
+            </ImageView>
+            <Label text="No.131 - 16-001" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="275.0" />
+               </StackPane.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="118.0" layoutY="285.0" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="303.0" />
+               </StackPane.margin>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="350.0" />
+               </StackPane.margin>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <TextArea editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="290.0" styleClass="address" text="Unit 704, 7/F Ivy Hill Residences 2350 Taft Ave Malate District, Manila Manila City Metro Manila~Manila-Malate-Barangay 725 " wrapText="true" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="33.0" />
+               </StackPane.margin>
+               <font>
+                  <Font name="Microsoft YaHei UI Light" size="15.0" />
+               </font>
+            </TextArea>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="290.0" stylesheets="@../../../css/barangay_id_report.css" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="33.0" />
+               </StackPane.margin>
+            </Pane>
+            <Label text="October 15, 2016" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets left="75.0" top="95.0" />
+               </StackPane.margin>
+            </Label>
+            <Label layoutX="144.0" layoutY="105.0" text="October 14, 2017" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets left="75.0" top="123.0" />
+               </StackPane.margin>
+            </Label>
+            <Label text="Hon. ALAN J. TURING" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="453.0" />
+               </StackPane.margin>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="400.0" />
+               </StackPane.margin>
+            </ImageView>
+         </children>
+      </StackPane>
+   </children>
+</GridPane>

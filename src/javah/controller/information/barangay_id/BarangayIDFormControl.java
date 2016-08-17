@@ -111,11 +111,18 @@ public class BarangayIDFormControl {
     private List<String> mResidentIDs;
     private List<String> mResidentNames;
 
+    /**
+     * Used for: Photo upload and photo capture.
+     * If this variable is not equal to null, then a signature image is to be permanently stored and passed to the
+     * mBarangayID.
+     */
     private WritableImage mSignatureImage;
 
     private OnBarangayIDFormListener mListener;
 
     private Resident mResidentSelected;
+
+    private BarangayID mBarangayID;
 
     @FXML
     private void initialize() {
@@ -179,7 +186,7 @@ public class BarangayIDFormControl {
 
     /**
      * Move the resident list paging to the previous page when possible.
-     * @param event
+     * @param actionEvent
      */
     @FXML
     public void onBackPageButtonClicked(ActionEvent actionEvent) {
@@ -196,7 +203,7 @@ public class BarangayIDFormControl {
 
     /**
      * Move the resident list paging to the next page when possible.
-     * @param event
+     * @param actionEvent
      */
     @FXML
     public void onNextPageButtonClicked(ActionEvent actionEvent) {
@@ -227,24 +234,22 @@ public class BarangayIDFormControl {
     }
 
     @FXML void onCreateButtonClicked(ActionEvent actionEvent) {
-        BarangayID barangayID = new BarangayID();
-
-        barangayID.setResidentID(mResidentSelected.getId());
-        barangayID.setResidentName(String.format("%s %s. %s",
+        mBarangayID.setResidentID(mResidentSelected.getId());
+        mBarangayID.setResidentName(String.format("%s %s. %s",
                 mResidentSelected.getFirstName(),
                 mResidentSelected.getMiddleName().charAt(0),
                 mResidentSelected.getLastName()));
 
-        barangayID.setAddress(mAddress1RadioButton.isSelected() ?
+        mBarangayID.setAddress(mAddress1RadioButton.isSelected() ?
                 mResidentSelected.getAddress1() : mResidentSelected.getAddress2());
 
-        barangayID.setPhoto(mResidentSelected.getPhotoPath());
+        mBarangayID.setPhoto(mResidentSelected.getPhotoPath());
 
-        // Store the image permanently in Barangay131/Photos and return the path.
+        // Store the uploaded or captured signature (if any) permanently in Barangay131/Signatures/ and return the path.
         if (mSignatureImage != null) {
             try {
                 // Save the photo in the approriate directory with a unique uuid name.
-                String imagePath = System.getenv("PUBLIC") + "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                String imagePath = System.getenv("PUBLIC") + "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
 
                 File file = new File(imagePath);
                 RenderedImage renderedImage = SwingFXUtils.fromFXImage(mSignatureImage, null);
@@ -254,10 +259,7 @@ public class BarangayIDFormControl {
                         file);
 
                 // Store the path of the signature to the barangay ID.
-                barangayID.setResidentSignature(imagePath);
-
-                // Store the path of the signature to the resident selected.
-                mDatabaseModel.updateResidentSignature(mResidentSelected.getId(), imagePath);
+                mBarangayID.setResidentSignature(imagePath);
 
                 mSignatureImage = null;
 
@@ -266,18 +268,33 @@ public class BarangayIDFormControl {
             }
         }
 
+        // Get the current chairman name and signature from the preferences.
         PreferenceModel prefModel = new PreferenceModel();
 
-        barangayID.setChmName(String.format("%s %s. %s",
+        mBarangayID.setChmName(String.format("%s %s. %s",
                 prefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
                 prefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
                 prefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME)));
 
-        barangayID.setChmSignature(prefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
+        mBarangayID.setChmSignature(prefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
+
+        // Check if the current chairman signature is still the same with the one registered in the latest barangay ID.
+        // If so, then pass the previous chairman signature coordinates and dimension to mBarangayID.
+        Object[] chmSignature = mDatabaseModel.getChmSignatureFromBarangayID();
+
+        if (chmSignature != null) {
+            String prevSignature = (String) chmSignature[0];
+            Double[] prevSignatureDimension = (Double[]) chmSignature[1];
+
+            // If the current chairman signature is still the same with the last created barangay ID, then pass the
+            // dimension of the chairman signature.
+            mBarangayID.setChmSignatureDimension(
+                    prevSignature == mBarangayID.getChmSignature() ? prevSignatureDimension : null);
+        }
 
         // The date issued will be the current date.
         GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
-        barangayID.setDateIssued(new Date(calendar.getTime().getTime()));
+        mBarangayID.setDateIssued(new Date(calendar.getTime().getTime()));
 
         // Set the date validity of the barangay ID.
         // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
@@ -287,10 +304,10 @@ public class BarangayIDFormControl {
         if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
             calendar.add(Calendar.DATE, 1);
 
-        barangayID.setDateValid(new Date(calendar.getTime().getTime()));
+        mBarangayID.setDateValid(new Date(calendar.getTime().getTime()));
 
         // Pass the generated barangay ID to the Main Control in order to be processed into a report.
-        mListener.onCreateButtonClicked(barangayID);
+        mListener.onCreateButtonClicked(mBarangayID);
     }
 
     public void setCacheModel(CacheModel cacheModel) {
@@ -364,6 +381,7 @@ public class BarangayIDFormControl {
                 // Enable the create button.
                 mCreateButton.setDisable(false);
 
+                // Populate the address text areas with the selected resident's address.
                 mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
                 mAddress1RadioButton.setDisable(false);
@@ -377,8 +395,20 @@ public class BarangayIDFormControl {
                     mAddress2TextArea.setText(null);
                 }
 
-                mSignatureView.setImage(mResidentSelected.getSignature() != null ?
-                        new Image("file:" + mResidentSelected.getSignature()) : null);
+                // If the resident has a previous barangay ID, then check if it has a signature and get it.
+                Object[] result = mDatabaseModel.getResidentSignatureFromBarangayID(mResidentIDs.get(mResidentSelectedIndex));
+
+                // If a signature is found, then store it to mBarangayID.
+                if (result != null) {
+                    mBarangayID.setResidentSignature((String) result[0]);
+                    mBarangayID.setResidentSignatureDimension((Double[]) result[1]);
+
+                    mSignatureView.setImage(new Image("file:" + result[0]));
+                } else {
+                    mSignatureView.setImage(null);
+                    mBarangayID.setResidentSignature(null);
+                    mBarangayID.setResidentSignatureDimension(null);
+                }
 
             } else {
                 // Disable the address buttons.
@@ -399,6 +429,9 @@ public class BarangayIDFormControl {
                 mCreateButton.setDisable(true);
             }
         };
+
+        // mSignatureImage is set to null every time a new resident is selected or unselected.
+        mSignatureImage = null;
 
         // This is where the code selection and unselection view update happens.
 
@@ -436,6 +469,9 @@ public class BarangayIDFormControl {
      * Reset the whole scene, including having a fresh copy of the cached data.
      */
     public void reset() {
+        mBarangayID = new BarangayID();
+        mSignatureImage = null;
+
         // Disable the address buttons.
         mAddress1RadioButton.setSelected(true);
         mAddress1RadioButton.setDisable(true);

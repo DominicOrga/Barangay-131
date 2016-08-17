@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="640.0" stylesheets="/css/scene_photoshop.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.PhotoshopControl">
+<GridPane fx:id="mRootPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="640.0" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.PhotoshopControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="640.0" minWidth="640.0" prefWidth="640.0" />
   </columnConstraints>

@@ -14,6 +14,13 @@ public class BarangayID {
     private Date mDateIssued;
     private Date mDateValid;
 
+    /**
+     * This are special variable to determine the coordinates and dimensions of the barangay ID signatures.
+     * Index: [0] = x, [1] = y, [2] = width, [3] = height.
+     */
+    private Double[] mResidentSignatureDimension;
+    private Double[] mChmSignatureDimension;
+
     public String getID() {
         return mID;
     }
@@ -62,6 +69,14 @@ public class BarangayID {
         mResidentSignature = signature;
     }
 
+    public Double[] getResidentSignatureDimension() {
+        return mResidentSignatureDimension;
+    }
+
+    public void setResidentSignatureDimension(Double[] dimension) {
+        mResidentSignatureDimension = dimension;
+    }
+
     public String getChmName() {
         return mChmName;
     }
@@ -76,6 +91,14 @@ public class BarangayID {
 
     public void setChmSignature(String signature) {
         mChmSignature = signature;
+    }
+
+    public Double[] getChmSignatureDimension() {
+        return mChmSignatureDimension;
+    }
+
+    public void setChmSignatureDimension(Double[] dimension) {
+        mChmSignatureDimension = dimension;
     }
 
     public void setDateIssued(Date dateIssued) {

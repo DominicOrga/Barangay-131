@@ -282,8 +282,15 @@ public class BarangayAgentControl {
              */
             BiConsumer<String, WritableImage> writeImage = (prefKey, image) -> {
                 try {
-                    // Save the chairman photo in the appropriate directory with a unique uuid name.
-                    String imagePath = System.getenv("PUBLIC") + "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                    // Save the image in the appropriate directory with a unique uuid name.
+                    String imagePath = System.getenv("PUBLIC");
+                    switch (prefKey) {
+                        case PreferenceContract.CHAIRMAN_PHOTO_PATH :
+                            imagePath = "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                            break;
+                        default:
+                            imagePath = "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
+                    }
 
                     File file = new File(imagePath);
                     RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
@@ -297,7 +304,6 @@ public class BarangayAgentControl {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             };
 
             // Create the images.

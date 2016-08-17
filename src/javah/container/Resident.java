@@ -10,7 +10,6 @@ public class Resident {
     private short mYearOfResidency, mMonthOfResidency;
     private String mAddress1, mAddress2;
     private Date mBirthDate;
-    private String mSignature;
 
     public void setId(String id) {
         mResidentId = id;
@@ -91,10 +90,6 @@ public class Resident {
     public String getAddress2() {
         return mAddress2;
     }
-
-    public void setSignature(String signaturePath) { mSignature = signaturePath; }
-
-    public String getSignature() { return mSignature; }
 
     @Override
     public String toString() {

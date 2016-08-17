@@ -116,7 +116,7 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -126,7 +126,6 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
                             ResidentEntry.COLUMN_ADDRESS_1,
                             ResidentEntry.COLUMN_ADDRESS_2,
-                            ResidentEntry.COLUMN_SIGNATURE,
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_ID
                     )
@@ -149,7 +148,6 @@ public class DatabaseModel {
                 resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
                 resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
                 resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
-                resident.setSignature(resultSet.getString(ResidentEntry.COLUMN_SIGNATURE));
 
                 dbConnection.close();
                 preparedStatement.close();
@@ -281,27 +279,6 @@ public class DatabaseModel {
         }
     }
 
-    public void updateResidentSignature(String residentId, String signaturePath) {
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            PreparedStatement statement = dbConnection.prepareStatement(
-                    String.format("UPDATE %s SET %s = ? WHERE %s = ?",
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_SIGNATURE, ResidentEntry.COLUMN_ID));
-
-            statement.setString(1, signaturePath);
-            statement.setString(2, residentId);
-
-            statement.executeUpdate();
-
-            statement.close();
-            dbConnection.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Returns the Barangay ID's Ids, resident ids, and their issued date.
      * @return an array of lists, where List[0] contains the Barangay ID's IDs, List[1] contains the the resident IDs
@@ -347,6 +324,105 @@ public class DatabaseModel {
         return result;
     }
 
+    /**
+     * Get the signature of the resident from his/her latest barangay ID.
+     * @param residentId
+     * @return null if no barangay ID exists for the resident.
+     *         Else, return the Object[2] index: [0] = String 'signature path' and [1] = Double[4] 'signature dimension'.
+     *         Where Double[4] index: [0] = x, [1] = y, [2] = width, [3] height;
+     */
+    public Object[] getResidentSignatureFromBarangayID(String residentId) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s FROM %s WHERE %s = ? ORDER BY %s DESC LIMIT 1",
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE);
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                // If no signature is stores in the latest barangay ID of the resident, then return null.
+                if (signaturePath == null || signaturePath == "") return null;
+
+                String[] dimensionParsed = signatureDimension.split(" ");
+                Double[] dimension = new Double[4];
+
+                for (int i = 0; i < 4; i++)
+                    dimension[i] = Double.parseDouble(dimensionParsed[i]);
+
+                return new Object[]{signaturePath, dimension};
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the chairman signature from the latest barangay ID.
+     * @return null if no barangay ID exists.
+     *         Else, return the Object[2] index: [0] = String 'signature path' and [1] = Double[4] 'signature dimension'.
+     *         Where Double[4] index: [0] = x, [1] = y, [2] = width, [3] height;
+     */
+    public Object[] getChmSignatureFromBarangayID() {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s FROM %s ORDER BY %s DESC LIMIT 1",
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_ID
+                    )
+            );
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE);
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                // If no signature is stores in the latest barangay ID of the resident, then return null.
+                if (signaturePath == null || signaturePath == "") return null;
+
+                String[] dimensionParsed = signatureDimension.split(" ");
+                Double[] dimension = new Double[4];
+
+                for (int i = 0; i < 4; i++)
+                    dimension[i] = Double.parseDouble(dimensionParsed[i]);
+
+                return new Object[]{signaturePath, dimension};
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * Generate a unique id for the given table.

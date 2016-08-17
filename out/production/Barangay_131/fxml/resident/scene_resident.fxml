@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/scene_resident.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
+<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
