@@ -225,8 +225,8 @@ public class PhotoshopControl {
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
             mWebcamNode.toFront();
-            mPhotoView.toBack();
-            mDraggableRectangle.toBackPref();
+            mPhotoView.setVisible(false);
+            mDraggableRectangle.setVisible(false);
 
             // Center the mDraggableRectangle.
             mDraggableRectangle.setX(mImagePane.getWidth() / 2 - mDraggableRectangle.getWidth() / 2);
@@ -304,8 +304,8 @@ public class PhotoshopControl {
                 }
 
                 mPhotoView.setImage(mCapturedImage);
-                mPhotoView.toFront();
-                mDraggableRectangle.toFrontPref();
+                mPhotoView.setVisible(true);
+                mDraggableRectangle.setVisible(true);
                 mWebcamNode.toBack();
 
             } catch (IOException e) {
@@ -317,8 +317,8 @@ public class PhotoshopControl {
             mAcceptButton.setManaged(true);
             mMirrorCamBox.setVisible(false);
 
-            mPhotoView.toFront();
-            mDraggableRectangle.toFrontPref();
+            mPhotoView.setVisible(true);
+            mDraggableRectangle.setVisible(true);
 
             mIsImageCaptured = true;
         }
@@ -476,8 +476,8 @@ public class PhotoshopControl {
             mDraggableRectangle.setY(mImagePane.getHeight() / 2 - mDraggableRectangle.getHeight() / 2);
 
             // Make sure that the mPhotoView and mDraggableRectangle are visible.
-            mPhotoView.toFront();
-            mDraggableRectangle.toFrontPref();
+            mPhotoView.setVisible(true);
+            mDraggableRectangle.setVisible(true);
 
         } else {
 
@@ -550,5 +550,13 @@ public class PhotoshopControl {
 
     public void setListener(OnPhotoshopListener listener) {
         mListener = listener;
+    }
+
+    public void reset() {
+        mDraggableRectangle.setVisible(false);
+        mPhotoView.setVisible(false);
+
+        mFilterSignatureBox.setVisible(false);
+        mMirrorCamBox.setVisible(false);
     }
 }

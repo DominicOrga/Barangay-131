@@ -429,7 +429,7 @@ public class DatabaseModel {
      * @param tableName
      * @return the uniquely generated id.
      */
-    private String generateID(String tableName) {
+    public String generateID(String tableName) {
         try {
             Connection dbConnection = dataSource.getConnection();
 

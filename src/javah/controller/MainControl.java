@@ -118,6 +118,7 @@ public class MainControl {
      */
     @FXML
     private void initialize() throws Exception {
+
         mDatabaseModel = new DatabaseModel();
         mCacheModel = new CacheModel();
         mPreferenceModel = new PreferenceModel();
@@ -275,6 +276,7 @@ public class MainControl {
         mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
             @Override
             public void onChmUploadButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -282,6 +284,7 @@ public class MainControl {
 
             @Override
             public void onChmCaptureButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -289,6 +292,7 @@ public class MainControl {
 
             @Override
             public void onChmSignatureUploadButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -296,6 +300,7 @@ public class MainControl {
 
             @Override
             public void onChmSignatureCaptureButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -303,6 +308,7 @@ public class MainControl {
 
             @Override
             public void onSecSignatureUploadButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -310,6 +316,7 @@ public class MainControl {
 
             @Override
             public void onSecSignatureCaptureButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -388,6 +395,7 @@ public class MainControl {
 
             @Override
             public void onTakePhotoButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -395,6 +403,7 @@ public class MainControl {
 
             @Override
             public void onUploadButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -412,6 +421,7 @@ public class MainControl {
         mBarangayIDFormControl.setListener(new BarangayIDFormControl.OnBarangayIDFormListener() {
             @Override
             public void onUploadButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayIDFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -419,6 +429,7 @@ public class MainControl {
 
             @Override
             public void onCaptureButtonClicked() {
+                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayIDFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -435,7 +446,7 @@ public class MainControl {
                 hidePopupScene(mBarangayIDFormScene, false);
                 // todo: Send barangayID to report to be displayed.
                 mBarangayIDReportControl.reset();
-                mBarangayIDReportControl.setBarangayID(barangayID);
+                mBarangayIDReportControl.setBarangayID(barangayID, BarangayIDReportControl.REQUEST_CREATE_REPORT);
                 showPopupScene(mBarangayIDReportScene, false);
             }
         });

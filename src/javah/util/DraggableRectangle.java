@@ -12,11 +12,11 @@ import java.util.Arrays;
  */
 public class DraggableRectangle extends Rectangle {
 
-    private double handleRadius = 10;
+    protected double handleRadius = 10;
 
-    private Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
+    protected Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
 
-    private double mAspectRatio;
+    protected double mAspectRatio;
 
     public DraggableRectangle(int boundaryWidth, int boundaryHeight) {
         super(0, 0, 50, 50);
@@ -107,23 +107,10 @@ public class DraggableRectangle extends Rectangle {
             if (newY1 > handleRadius && newY2 < boundaryHeight - handleRadius)
                 this.setY(newY1);
         });
-    }
 
-    /**
-     * Set the square and its handles to the front.
-     */
-    public void toFrontPref() {
-        this.toFront();
-        mResizeHandleNW.toFront();
-        mResizeHandleSE.toFront();
-        mMoveHandle.toFront();
-    }
-
-    public void toBackPref() {
-        this.toBack();
-        mResizeHandleNW.toBack();
-        mResizeHandleSE.toBack();
-        mMoveHandle.toBack();
+        mResizeHandleNW.visibleProperty().bind(this.visibleProperty());
+        mResizeHandleSE.visibleProperty().bind(this.visibleProperty());
+        mMoveHandle.visibleProperty().bind(this.visibleProperty());
     }
 
     /**

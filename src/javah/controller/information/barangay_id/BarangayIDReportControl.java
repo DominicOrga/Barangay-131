@@ -4,12 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
 import javah.container.BarangayID;
+import javah.util.DraggableSignature;
 
 import java.text.SimpleDateFormat;
 
@@ -40,13 +40,22 @@ public class BarangayIDReportControl {
 
     @FXML private Button mPrintAndSaveButton, mPrintButton, mSaveButton, mCancelButton;
 
+    public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2;
+
     private BarangayID mBarangayID;
 
     private OnBarangayIDReportListener mListener;
 
+    /**
+     * Modifies the Signature views into draggable views.
+     */
+    private DraggableSignature mChmDraggableSignature;
+    private DraggableSignature mResDraggableSignature;
+
     @FXML
     private void initialize() {
-
+        mResDraggableSignature = new DraggableSignature(mResSignatureView);
+        mChmDraggableSignature = new DraggableSignature(mChmSignatureView);
     }
 
     @FXML
@@ -76,17 +85,19 @@ public class BarangayIDReportControl {
      *                   If the barangayID does not have a unique ID, then state of scene is set to barangay ID creation.
      *                   Else, barangayID is already created and the state is simply to display the barangay ID.
      */
-    public void setBarangayID(BarangayID barangayID) {
+    public void setBarangayID(BarangayID barangayID, byte request) {
         mBarangayID = barangayID;
 
         // If on report creation state, then display the 'print & save' and 'print' buttons.
-        if (mBarangayID.getID() == null) {
+        if (request == REQUEST_CREATE_REPORT) {
             mPrintButton.setVisible(false);
 
             mPrintAndSaveButton.setVisible(true);
             mPrintAndSaveButton.setManaged(true);
             mSaveButton.setVisible(true);
             mSaveButton.setManaged(true);
+
+            mChmDraggableSignature.setVisible(true);
         }
 
         // Set the image of the barangay ID, if any.
@@ -99,16 +110,18 @@ public class BarangayIDReportControl {
         mResidentNameLabel.setText(mBarangayID.getResidentName().toUpperCase());
 
         // Set the applicant signature, if any.
-        if (mBarangayID.getResidentSignature() != null)
+        if (mBarangayID.getResidentSignature() != null) {
             mResSignatureView.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
+            mResDraggableSignature.setVisible(true);
+        }
 
         if (mBarangayID.getResidentSignatureDimension() != null) {
             Double[] dimension = mBarangayID.getResidentSignatureDimension();
 
-            mResSignatureView.setTranslateX(dimension[0]);
-            mResSignatureView.setTranslateY(dimension[1]);
-            mResSignatureView.setFitWidth(dimension[2]);
-            mResSignatureView.setFitHeight(dimension[3]);
+            mResDraggableSignature.setX(dimension[0]);
+            mResDraggableSignature.setY(dimension[1]);
+            mResDraggableSignature.setWidth(dimension[2]);
+            mResDraggableSignature.setHeight(dimension[3]);
         }
 
         // Set the applicant address.
@@ -125,10 +138,10 @@ public class BarangayIDReportControl {
         if (mBarangayID.getChmSignatureDimension() != null) {
             Double[] dimension = mBarangayID.getChmSignatureDimension();
 
-            mChmSignatureView.setTranslateX(dimension[0]);
-            mChmSignatureView.setTranslateY(dimension[1]);
-            mChmSignatureView.setFitWidth(dimension[2]);
-            mChmSignatureView.setFitHeight(dimension[3]);
+            mChmDraggableSignature.setX(dimension[0]);
+            mChmDraggableSignature.setY(dimension[1]);
+            mChmDraggableSignature.setWidth(dimension[2]);
+            mChmDraggableSignature.setHeight(dimension[3]);
         }
     }
 
@@ -150,17 +163,20 @@ public class BarangayIDReportControl {
 
         mPhotoView.setImage(null);
 
+        mResDraggableSignature.setVisible(false);
+        mChmDraggableSignature.setVisible(false);
+
         // Place the resident and chairman signature back to its default coordinate and dimension.
         // Note that mChmSignatureView always has an image.
         mResSignatureView.setImage(null);
-        mResSignatureView.setTranslateX(0);
-        mResSignatureView.setTranslateY(0);
-        mResSignatureView.setFitWidth(210);
-        mResSignatureView.setFitHeight(90);
+        mResDraggableSignature.setX(60);
+        mResDraggableSignature.setY(350);
+        mResDraggableSignature.setWidth(210);
+        mResDraggableSignature.setHeight(90);
 
-        mChmSignatureView.setTranslateX(0);
-        mChmSignatureView.setTranslateX(0);
-        mChmSignatureView.setFitWidth(210);
-        mChmSignatureView.setFitHeight(90);
+        mChmDraggableSignature.setX(60);
+        mChmDraggableSignature.setY(400);
+        mChmDraggableSignature.setWidth(210);
+        mChmDraggableSignature.setHeight(90);
     }
 }

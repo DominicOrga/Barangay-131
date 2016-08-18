@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
+import javah.contract.DatabaseContract;
 import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
@@ -234,6 +235,9 @@ public class BarangayIDFormControl {
     }
 
     @FXML void onCreateButtonClicked(ActionEvent actionEvent) {
+        // Generate a temporary unique id for the barangay id.
+        mBarangayID.setID(mDatabaseModel.generateID(DatabaseContract.BarangayIdEntry.TABLE_NAME));
+
         mBarangayID.setResidentID(mResidentSelected.getId());
         mBarangayID.setResidentName(String.format("%s %s. %s",
                 mResidentSelected.getFirstName(),
@@ -263,7 +267,6 @@ public class BarangayIDFormControl {
                 mBarangayID.setResidentSignatureDimension(null);
 
                 mSignatureImage = null;
-
 
             } catch (IOException e) {
                 e.printStackTrace();
