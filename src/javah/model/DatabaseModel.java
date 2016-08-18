@@ -318,57 +318,66 @@ public class DatabaseModel {
         return result;
     }
 
-//    public String createBarangayID(BarangayID barangayID) {
-//
-//        if(resident.getPhotoPath() != null) {
-//            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
-//        }
-//
-//        try {
-//            Connection dbConnection = dataSource.getConnection();
-//
-//            String residentID = generateID(ResidentEntry.TABLE_NAME);
-//
-//            PreparedStatement statement = dbConnection.prepareStatement(
-//                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-//                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
-//                            ResidentEntry.TABLE_NAME,
-//                            ResidentEntry.COLUMN_ID,
-//                            ResidentEntry.COLUMN_FIRST_NAME,
-//                            ResidentEntry.COLUMN_MIDDLE_NAME,
-//                            ResidentEntry.COLUMN_LAST_NAME,
-//                            ResidentEntry.COLUMN_BIRTH_DATE,
-//                            ResidentEntry.COLUMN_PHOTO,
-//                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-//                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-//                            ResidentEntry.COLUMN_ADDRESS_1,
-//                            ResidentEntry.COLUMN_ADDRESS_2,
-//                            ResidentEntry.COLUMN_IS_ARCHIVED));
-//
-//            statement.setString(1, residentID);
-//            statement.setString(2, resident.getFirstName());
-//            statement.setString(3, resident.getMiddleName());
-//            statement.setString(4, resident.getLastName());
-//            statement.setDate(5, resident.getBirthDate());
-//            statement.setString(6, resident.getPhotoPath());
-//            statement.setInt(7, resident.getYearOfResidency());
-//            statement.setInt(8, resident.getMonthOfResidency());
-//            statement.setString(9, resident.getAddress1());
-//            statement.setString(10, resident.getAddress2());
-//
-//            statement.execute();
-//
-//            statement.close();
-//            dbConnection.close();
-//
-//            return residentID;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
+    public String createBarangayID(BarangayID barangayID) {
+
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_ID,
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_RESIDENT_NAME,
+                            BarangayIdEntry.COLUMN_ADDRESS,
+                            BarangayIdEntry.COLUMN_PHOTO,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_NAME,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED,
+                            BarangayIdEntry.COLUMN_DATE_VALID));
+
+            statement.setString(1, barangayID.getID());
+            statement.setString(2, barangayID.getResidentID());
+            statement.setString(3, barangayID.getResidentName());
+            statement.setString(4, barangayID.getAddress());
+            statement.setString(5, barangayID.getPhoto());
+            statement.setString(6, barangayID.getResidentSignature());
+
+            Double[] signatureDimension = barangayID.getResidentSignatureDimension();
+            statement.setString(7, signatureDimension != null ?
+                    String.format("%d %d %d %d",
+                    signatureDimension[0],
+                    signatureDimension[1],
+                    signatureDimension[2],
+                    signatureDimension[3]) : null);
+
+            statement.setString(8, barangayID.getChmName());
+            statement.setString(9, barangayID.getChmSignature());
+
+            signatureDimension = barangayID.getChmSignatureDimension();
+            statement.setString(10, String.format("%d %d %d %d",
+                    signatureDimension[0], signatureDimension[1], signatureDimension[2], signatureDimension[3]));
+
+            statement.setDate(11, barangayID.getDateIssued());
+            statement.setDate(12, barangayID.getDateValid());
+
+            statement.execute();
+
+            statement.close();
+            dbConnection.close();
+
+            return barangayID.getID();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * Get the signature of the resident from his/her latest barangay ID.
