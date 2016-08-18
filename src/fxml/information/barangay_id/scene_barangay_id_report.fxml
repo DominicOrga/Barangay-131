@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +20,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="-fx-background-color: white;" stylesheets="@../../../css/barangay_id_report.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.information.barangay_id.BarangayIDReportControl">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="-fx-background-color: white;" stylesheets="@../../../css/barangay_id_report.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.information.barangay_id.BarangayIDReportControl">
   <columnConstraints>
     <ColumnConstraints percentWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
@@ -44,7 +50,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Print" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -52,7 +58,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -60,7 +66,15 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCancelButton1" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -80,7 +94,24 @@
       </ImageView>
       <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="510.0" GridPane.rowIndex="1">
          <children>
-            <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="No.131 - ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mBarangayIDCode" text="16-001">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <StackPane.margin>
+                  <Insets top="275.0" />
+               </StackPane.margin>
+            </HBox>
+            <ImageView fx:id="mPhotoView" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="100.0" />
                </StackPane.margin>
@@ -88,15 +119,7 @@
                   <Image url="@../../../res/ic_default_resident_white_bg.png" />
                </image>
             </ImageView>
-            <Label text="No.131 - 16-001" StackPane.alignment="TOP_CENTER">
-               <StackPane.margin>
-                  <Insets top="275.0" />
-               </StackPane.margin>
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="118.0" layoutY="285.0" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="mResidentNameLabel" layoutX="118.0" layoutY="285.0" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -104,7 +127,7 @@
                   <Insets top="303.0" />
                </StackPane.margin>
             </Label>
-            <ImageView fx:id="mResSignatureView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            <ImageView fx:id="mResSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
                   <Image url="@../../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
                </image>
@@ -129,7 +152,7 @@
                   <Insets top="33.0" />
                </StackPane.margin>
             </Pane>
-            <Label text="October 15, 2016" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="mDateIssuedLabel" text="October 15, 2016" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -137,7 +160,7 @@
                   <Insets left="75.0" top="95.0" />
                </StackPane.margin>
             </Label>
-            <Label layoutX="144.0" layoutY="105.0" text="October 14, 2017" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="mDateValidLabel" layoutX="144.0" layoutY="105.0" text="October 14, 2017" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -145,7 +168,7 @@
                   <Insets left="75.0" top="123.0" />
                </StackPane.margin>
             </Label>
-            <Label text="Hon. ALAN J. TURING" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="mChmNameLabel" text="Hon. ALAN J. TURING" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -153,7 +176,7 @@
                   <Insets top="453.0" />
                </StackPane.margin>
             </Label>
-            <ImageView fx:id="mChmSignatureView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            <ImageView fx:id="mChmSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
                   <Image url="@../../../../../../../../Public/Barangay131/Photos/0ac3bf17-954d-4dd2-a163-51408e8f0ba9.png" />
                </image>

@@ -434,6 +434,8 @@ public class MainControl {
             public void onCreateButtonClicked(BarangayID barangayID) {
                 hidePopupScene(mBarangayIDFormScene, false);
                 // todo: Send barangayID to report to be displayed.
+                mBarangayIDReportControl.reset();
+                mBarangayIDReportControl.setBarangayID(barangayID);
                 showPopupScene(mBarangayIDReportScene, false);
             }
         });
@@ -442,6 +444,24 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/information/barangay_id/scene_barangay_id_report.fxml");
         mBarangayIDReportScene = fxmlLoader.load();
         mBarangayIDReportControl = fxmlLoader.getController();
+
+        mBarangayIDReportControl.setListener(new BarangayIDReportControl.OnBarangayIDReportListener() {
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBarangayIDReportScene, false);
+                mInformationControl.setBlurListPaging(false);
+            }
+
+            @Override
+            public void onSaveButtonClicked(BarangayID barangayID) {
+
+            }
+
+            @Override
+            public void onPrintButtonClicked() {
+
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
