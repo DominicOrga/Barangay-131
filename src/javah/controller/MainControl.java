@@ -28,6 +28,7 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -465,7 +466,19 @@ public class MainControl {
 
             @Override
             public void onSaveButtonClicked(BarangayID barangayID) {
+                hidePopupScene(mBarangayIDReportScene, false);
+                mInformationControl.setBlurListPaging(false);
 
+                System.out.println("id: " + barangayID.getID());
+                System.out.println("name: " + barangayID.getResidentName());
+                System.out.println("resident signature: " + barangayID.getResidentSignature());
+                System.out.println("res signature dimension " + Arrays.asList(barangayID.getResidentSignatureDimension()));
+                System.out.println("address: " + barangayID.getAddress());
+                System.out.println("date issued: " + barangayID.getDateIssued());
+                System.out.println("date valid: " + barangayID.getDateValid());
+                System.out.println("chairman name: " + barangayID.getChmName());
+                System.out.println("chairman signature: " + barangayID.getChmSignature());
+                System.out.println("chm signature dimension: " + Arrays.asList(barangayID.getChmSignatureDimension()));
             }
 
             @Override

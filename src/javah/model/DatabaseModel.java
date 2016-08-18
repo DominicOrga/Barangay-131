@@ -1,6 +1,7 @@
 package javah.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import javah.container.BarangayID;
 import javah.container.Resident;
 
 import java.io.File;
@@ -188,10 +189,6 @@ public class DatabaseModel {
 
     public String createResident(Resident resident) {
 
-        if(resident.getPhotoPath() != null) {
-            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
-        }
-
         try {
             Connection dbConnection = dataSource.getConnection();
 
@@ -239,9 +236,6 @@ public class DatabaseModel {
     }
 
     public void updateResident(Resident resident) {
-
-        if(resident.getPhotoPath() != null)
-            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
 
         try {
             Connection dbConnection = dataSource.getConnection();
@@ -323,6 +317,58 @@ public class DatabaseModel {
 
         return result;
     }
+
+//    public String createBarangayID(BarangayID barangayID) {
+//
+//        if(resident.getPhotoPath() != null) {
+//            resident.setPhotoPath(copyFile(resident.getPhotoPath(), BINARY_PHOTO));
+//        }
+//
+//        try {
+//            Connection dbConnection = dataSource.getConnection();
+//
+//            String residentID = generateID(ResidentEntry.TABLE_NAME);
+//
+//            PreparedStatement statement = dbConnection.prepareStatement(
+//                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+//                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+//                            ResidentEntry.TABLE_NAME,
+//                            ResidentEntry.COLUMN_ID,
+//                            ResidentEntry.COLUMN_FIRST_NAME,
+//                            ResidentEntry.COLUMN_MIDDLE_NAME,
+//                            ResidentEntry.COLUMN_LAST_NAME,
+//                            ResidentEntry.COLUMN_BIRTH_DATE,
+//                            ResidentEntry.COLUMN_PHOTO,
+//                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+//                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+//                            ResidentEntry.COLUMN_ADDRESS_1,
+//                            ResidentEntry.COLUMN_ADDRESS_2,
+//                            ResidentEntry.COLUMN_IS_ARCHIVED));
+//
+//            statement.setString(1, residentID);
+//            statement.setString(2, resident.getFirstName());
+//            statement.setString(3, resident.getMiddleName());
+//            statement.setString(4, resident.getLastName());
+//            statement.setDate(5, resident.getBirthDate());
+//            statement.setString(6, resident.getPhotoPath());
+//            statement.setInt(7, resident.getYearOfResidency());
+//            statement.setInt(8, resident.getMonthOfResidency());
+//            statement.setString(9, resident.getAddress1());
+//            statement.setString(10, resident.getAddress2());
+//
+//            statement.execute();
+//
+//            statement.close();
+//            dbConnection.close();
+//
+//            return residentID;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
     /**
      * Get the signature of the resident from his/her latest barangay ID.
@@ -469,37 +515,5 @@ public class DatabaseModel {
         return null;
     }
 
-    /**
-     * Make a copy of a binary file to be stored at the data folder of the application.
-     * @param sourceFilePath is a string path of the source file.
-     * @param binaryGroup determines which directory should the target file be placed.
-     * @return the string path of the target file.
-     */
-    private String copyFile(String sourceFilePath, byte binaryGroup) {
-        File sourceFile = new File(sourceFilePath);
 
-        // Get the file extension.
-        String fileExtension = sourceFile.getName().substring(sourceFile.getName().lastIndexOf("."));
-
-        // Initialize the target file.
-        String targetFilePath = sourceFilePath;
-        File targetFile = sourceFile;
-
-        // Determine which directory to store the target file.
-        if(binaryGroup == BINARY_PHOTO) {
-            // Generate a unique name for the target file.
-            targetFilePath = mPhotoDirectoryPath + "/" + UUID.randomUUID() + fileExtension;
-            targetFile = new File(targetFilePath);
-        }
-
-        // Let the target file copy the source file and save it.
-        try {
-            Files.copy(sourceFile.toPath(), targetFile.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return targetFilePath;
-    }
 }

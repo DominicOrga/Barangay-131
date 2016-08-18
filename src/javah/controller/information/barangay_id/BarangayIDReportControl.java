@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javah.container.BarangayID;
 import javah.util.DraggableSignature;
 
@@ -38,7 +37,7 @@ public class BarangayIDReportControl {
     @FXML private Label mChmNameLabel;
     @FXML private ImageView mChmSignatureView;
 
-    @FXML private Button mPrintAndSaveButton, mPrintButton, mSaveButton, mCancelButton;
+    @FXML private Button mPrintAndSaveButton, mPrintButton, mSaveButton;
 
     public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2;
 
@@ -60,22 +59,45 @@ public class BarangayIDReportControl {
 
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
-
+        reset();
     }
 
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-
+        reset();
     }
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
+        // If the barangay ID contains a resident signature, then store its coordinates and dimension to mBarangayID.
+        if (mBarangayID.getResidentSignature() != null) {
+            Double[] signatureDimension = new Double[]{
+                    mResDraggableSignature.getX(),
+                    mResDraggableSignature.getY(),
+                    mResDraggableSignature.getWidth(),
+                    mResDraggableSignature.getHeight()};
 
+            mBarangayID.setResidentSignatureDimension(signatureDimension);
+        }
+
+        // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
+        // dimension to mBarangayID.
+        Double[] signatureDimension = new Double[]{
+                mChmDraggableSignature.getX(),
+                mChmDraggableSignature.getY(),
+                mChmDraggableSignature.getWidth(),
+                mChmDraggableSignature.getHeight()};
+
+        mBarangayID.setChmSignatureDimension(signatureDimension);
+
+        mListener.onSaveButtonClicked(mBarangayID);
+        reset();
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
+        reset();
     }
 
     /**
@@ -160,6 +182,7 @@ public class BarangayIDReportControl {
         mPrintAndSaveButton.setManaged(false);
         mSaveButton.setVisible(false);
         mSaveButton.setManaged(false);
+        mPrintButton.setVisible(true);
 
         mPhotoView.setImage(null);
 

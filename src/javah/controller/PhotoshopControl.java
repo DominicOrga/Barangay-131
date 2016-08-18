@@ -124,8 +124,6 @@ public class PhotoshopControl {
         // Remove any photo placed in mPhotoView.
         mPhotoView.setImage(null);
 
-        System.out.println(mDraggableRectangle.getWidth() + "x" + mDraggableRectangle.getHeight());
-
         switch (mRequest) {
             case REQUEST_PHOTO_UPLOAD:
 
@@ -139,21 +137,6 @@ public class PhotoshopControl {
                 int uploadedImageHeight = (int) mUploadedImage.getHeight();
 
                 PixelReader pixelReader;
-
-//                if (mClient == CLIENT_CHAIRMAN_PHOTO || mClient == CLIENT_RESIDENT_PHOTO) {
-//                    // If uploaded photo is not a signature photo, then simply pass cropped the mUploadedImage to
-//                    // mModifiedImage.
-//                    mModifiedImage = new WritableImage(rectWidth, rectHeight);
-//                    pixelReader = mUploadedImage.getPixelReader();
-//                } else {
-//                    // If uploaded photo is
-//                    if (mFilterSignatureCheckbox.isSelected()) {
-//                        pixelReader = mModifiedImage.getPixelReader();
-//                        mModifiedImage = new WritableImage(rectWidth, rectHeight);
-//                    } else {
-//
-//                    }
-//                }
 
                 // If the uploaded photo is a signature and the signature filter is marked, then the image to crop is
                 // the filtered image, mModifiedImage.
@@ -206,7 +189,7 @@ public class PhotoshopControl {
 
     /**
      * Used for : REQUEST_PHOTO_CAPTURE
-     * A Button that acts as a way to take a retake a picture.
+     * A Button that acts as a way to take and retake a picture.
      * @param mouseEvent
      */
     @FXML
@@ -255,7 +238,6 @@ public class PhotoshopControl {
                 // If the mirror checkbox is selected, then store the flipped copy to mCapturedImage.
                 // Else store the non flipped copy to mCapturedImage.
                 if (mMirrorCamCheckbox.isSelected()) {
-                    System.out.println("mirror selected");
                     // Initialize mModifiedImage to load the flipped image.
                     mCapturedImage = new WritableImage(tempImage.getWidth(), tempImage.getHeight());
 
