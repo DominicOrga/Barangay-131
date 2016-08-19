@@ -325,7 +325,7 @@ public class DatabaseModel {
 
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                             BarangayIdEntry.TABLE_NAME,
                             BarangayIdEntry.COLUMN_ID,
                             BarangayIdEntry.COLUMN_RESIDENT_ID,
@@ -349,7 +349,7 @@ public class DatabaseModel {
 
             Double[] signatureDimension = barangayID.getResidentSignatureDimension();
             statement.setString(7, signatureDimension != null ?
-                    String.format("%d %d %d %d",
+                    String.format("%.5f %.5f %.5f %.5f",
                     signatureDimension[0],
                     signatureDimension[1],
                     signatureDimension[2],
@@ -359,7 +359,7 @@ public class DatabaseModel {
             statement.setString(9, barangayID.getChmSignature());
 
             signatureDimension = barangayID.getChmSignatureDimension();
-            statement.setString(10, String.format("%d %d %d %d",
+            statement.setString(10, String.format("%.5f %.5f %.5f %.5f",
                     signatureDimension[0], signatureDimension[1], signatureDimension[2], signatureDimension[3]));
 
             statement.setDate(11, barangayID.getDateIssued());

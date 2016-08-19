@@ -13,8 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -58,20 +58,18 @@ public class InformationControl {
      */
     @FXML private TextField mSearchField;
 
-    @FXML private VBox mInformationBox;
-
     /**
      * The image view of the create report button.
      */
     @FXML private ImageView mCreateButtonImageView;
     @FXML private Button mCreateButton;
 
-    /**
-     * Edit or manipulate the currently selected resident with this buttons.
-     */
-    @FXML private ImageView mEditButton, mDeleteButton;
-
     @FXML private Button mBackPageButton, mNextPageButton;
+
+    /**
+     * FXML components of the barangay ID details.
+     */
+    @FXML ImageView mIDImageView;
 
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
@@ -84,7 +82,7 @@ public class InformationControl {
      */
     private byte mInformation;
 
-    private Pane mBarangayIDScene;
+    private VBox mBarangayIDScene;
 
     private DatabaseModel mDatabaseModel;
 
@@ -110,11 +108,6 @@ public class InformationControl {
      */
     private int mLabelSelectedIndex = -1;
 
-    /**
-     * The value representing the index of the selected resident.
-     * Value range is between 0 - [mResidentIDs.size() - 1].
-     */
-    private int mResidentSelectedIndex;
 
     /**
      * The array containing all the labels of the list paging.
@@ -143,10 +136,7 @@ public class InformationControl {
      */
     private int mLabelUseCount;
 
-    private Resident mBarangayIDSelected;
-
     private OnInformationControlListener mListener;
-
 
     /**
      * Called before setCacheModel()
@@ -170,18 +160,7 @@ public class InformationControl {
             mGridLabels[i] = label;
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setReportSelected(labelIndex));
-        }
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/information/barangay_id/scene_barangay_id.fxml"));
-            mBarangayIDScene = fxmlLoader.load();
-
-            mInformationBox.getChildren().add(mBarangayIDScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            label.setOnMouseClicked(event -> setLabelSelectedIndex(labelIndex));
         }
 
 
@@ -295,7 +274,7 @@ public class InformationControl {
     public void setCacheModel(CacheModel cacheModel) {
 
         mCacheModel = cacheModel;
-        // Create a volatile copy of the cached data.
+
         mResidentIDs = mCacheModel.getResidentIDsCache();
         mResidentNames = mCacheModel.getResidentNamesCache();
         mBarangayIDIDs = mCacheModel.getBarangayIDIDsCache();
@@ -304,14 +283,6 @@ public class InformationControl {
 
         // Determine the initial number of Pages and set the default current page to 1.
         updateListPaging(false);
-    }
-
-    public void deleteSelectedResident() {
-        mDatabaseModel.archiveResident(mBarangayIDSelected.getId());
-        mResidentIDs.remove(mResidentSelectedIndex);
-        mResidentNames.remove(mResidentSelectedIndex);
-
-        updateListPaging(true);
     }
 
     public void createResident(Resident resident) {
@@ -347,7 +318,7 @@ public class InformationControl {
         updateCurrentPage();
 
         // Select the newly created resident.
-        setReportSelected(index % 40);
+        setLabelSelectedIndex(index % 40);
     }
 
     public void updateResident(Resident resident) {
@@ -365,8 +336,8 @@ public class InformationControl {
         updateCurrentPage();
 
         // Unselect the resident and select it again to update its displayed data.
-        setReportSelected(mLabelSelectedIndex);
-        setReportSelected(labelSelectedIndex);
+        setLabelSelectedIndex(mLabelSelectedIndex);
+        setLabelSelectedIndex(labelSelectedIndex);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -391,38 +362,36 @@ public class InformationControl {
         mInformation = information;
     }
 
+    public void createBarangayID(BarangayID barangayID) {
+        // Create the barangay id.
+        mDatabaseModel.createBarangayID(barangayID);
+
+        // Place the new barangay id in the cached data.
+        mBarangayIDsDateIssued.add(0, barangayID.getDateIssued());
+        mBarangayIDResidentIDs.add(0, barangayID.getResidentID());
+        mBarangayIDIDs.add(0, barangayID.getID());
+
+        // Update the list paging and select the newly created barangay id.
+        updateListPaging(false);
+        setLabelSelectedIndex(2);
+    }
+
     /**
      * Update the barangay ID selected data displayed.
      * @param newLabelSelectedIndex is the index of the label containing the barangay ID to be displayed. If it is equal
      *                              to -1, then the example data is displayed.
      */
-    private void setReportSelected(int newLabelSelectedIndex) {
-        // Determine the index of the resident in place of the currently selected label.
-        mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
+    private void setLabelSelectedIndex(int newLabelSelectedIndex) {
 
-        /**
-         * If a barangay ID is selected, then display its data.
-         * If a barangay ID is unselected or no barangay ID is selected, then display the example data.
-         */
-        Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
-            if (isDisplayed) {
+        Consumer<Boolean> setDisplaySelectedReport = (bool) -> {
+            System.out.println(mInformation);
+            if (bool) {
+                switch (mInformation) {
+                    case INFORMATION_BARANGAY_ID:
 
-                // Query the data of the currently selected resident.
-                mBarangayIDSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
-
-            } else {
-//                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
-//                mResidentName.setText("");
-//                mBirthDate.setText("");
-//                mAge.setText("");
-//                mResidentSince.setText("");
-//
-//                mAddress1.setText("");
-//                mAddress2.setVisible(false);
-//                mAddress2Label.setVisible(false);
-
-                mDeleteButton.setVisible(false);
-                mEditButton.setVisible(false);
+                        mIDImageView.setImage(new Image("res/ic_camera.png"));
+                        break;
+                }
             }
         };
 
@@ -434,6 +403,7 @@ public class InformationControl {
                 if (newLabelSelectedIndex != -1) {
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
+                    setDisplaySelectedReport.accept(true);
                 }
 
             } else {
@@ -442,7 +412,7 @@ public class InformationControl {
                 if (newLabelSelectedIndex == -1 || mLabelSelectedIndex == newLabelSelectedIndex) {
                     mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
-                    mResidentSelectedIndex = -1;
+                    setDisplaySelectedReport.accept(false);
 
                     // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
@@ -450,6 +420,7 @@ public class InformationControl {
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
+                    setDisplaySelectedReport.accept(true);
                 }
             }
         }
@@ -461,8 +432,9 @@ public class InformationControl {
      * Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
+        long startTime = System.currentTimeMillis();
         // Make sure that no resident is selected when moving from one page to another.
-//        setReportSelected(-1);
+//        setLabelSelectedIndex(-1);
 
         int barangayIDIndex = 0;
         int precedingMonth = -1;
@@ -550,6 +522,8 @@ public class InformationControl {
             labelPosition++;
             barangayIDIndex++;
         }
+
+        System.out.println(System.currentTimeMillis() - startTime);
     }
 
     /**

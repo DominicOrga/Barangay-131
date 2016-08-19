@@ -291,6 +291,10 @@ public class ResidentControl {
         updateListPaging(true);
     }
 
+    /**
+     * todo: Cache storage should be stored in permanent cache rather than the volatile cache.
+     * @param resident
+     */
     public void createResident(Resident resident) {
         // Create the resident and get its corresponding unique id.
         String residentId = mDatabaseModel.createResident(resident);

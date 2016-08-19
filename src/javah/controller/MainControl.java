@@ -446,7 +446,6 @@ public class MainControl {
             public void onCreateButtonClicked(BarangayID barangayID) {
                 hidePopupScene(mBarangayIDFormScene, false);
                 // todo: Send barangayID to report to be displayed.
-                mBarangayIDReportControl.reset();
                 mBarangayIDReportControl.setBarangayID(barangayID, BarangayIDReportControl.REQUEST_CREATE_REPORT);
                 showPopupScene(mBarangayIDReportScene, false);
             }
@@ -468,6 +467,8 @@ public class MainControl {
             public void onSaveButtonClicked(BarangayID barangayID) {
                 hidePopupScene(mBarangayIDReportScene, false);
                 mInformationControl.setBlurListPaging(false);
+
+                mInformationControl.createBarangayID(barangayID);
             }
 
             @Override

@@ -55,6 +55,8 @@ public class BarangayIDReportControl {
     private void initialize() {
         mResDraggableSignature = new DraggableSignature(mResSignatureView);
         mChmDraggableSignature = new DraggableSignature(mChmSignatureView);
+
+        reset();
     }
 
     @FXML
