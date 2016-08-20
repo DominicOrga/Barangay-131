@@ -132,7 +132,6 @@ public class ResidentFormControl {
         // Set a year of residency listener to determine whether its value is 'Birth' or not. If not, then display
         // the mMonthOfResidency.
         mYearOfResidency.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue.toString());
             mMonthOfResidency.setVisible(newValue.intValue() != 0);
         });
 

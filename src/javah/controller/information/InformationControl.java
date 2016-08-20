@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,7 @@ import javah.util.BarangayUtils;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -62,14 +64,17 @@ public class InformationControl {
      * The image view of the create report button.
      */
     @FXML private ImageView mCreateButtonImageView;
-    @FXML private Button mCreateButton;
 
+    @FXML private Button mCreateButton;
     @FXML private Button mBackPageButton, mNextPageButton;
 
     /**
      * FXML components of the barangay ID details.
      */
-    @FXML ImageView mIDImageView;
+    @FXML ImageView mIDImageView, mIDResSignatureView;
+    @FXML Label mBarangayIDCode, mIDNameLabel;
+    @FXML Label mIDDateIssued, mIDDateValid;
+    @FXML TextArea mIDAddress;
 
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
@@ -384,12 +389,35 @@ public class InformationControl {
     private void setLabelSelectedIndex(int newLabelSelectedIndex) {
 
         Consumer<Boolean> setDisplaySelectedReport = (bool) -> {
-            System.out.println(mInformation);
             if (bool) {
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
+                        // Get the label selected.
+                        BarangayID barangayID = mDatabaseModel.getBarangayID(mReportIDToLabelLocation[newLabelSelectedIndex]);
 
-                        mIDImageView.setImage(new Image("res/ic_camera.png"));
+                        mIDImageView.setImage(barangayID.getPhoto() != null ?
+                                new Image("file:" + barangayID.getPhoto()) : null);
+
+                        mBarangayIDCode.setText(barangayID.getID());
+                        mIDNameLabel.setText(barangayID.getResidentName().toUpperCase());
+
+                        if (barangayID.getResidentSignature() != null) {
+                            mIDResSignatureView.setImage(new Image("file:" + barangayID.getResidentSignature()));
+
+                            double[] dimension = barangayID.getResidentSignatureDimension();
+
+                            mIDResSignatureView.setX(dimension[0]);
+                            mIDResSignatureView.setY(dimension[1]);
+                            mIDResSignatureView.setFitWidth(dimension[2]);
+                            mIDResSignatureView.setFitHeight(dimension[3]);
+                        } else
+                            mIDResSignatureView.setImage(null);
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd yyyy");
+                        mIDDateIssued.setText(dateFormat.format(barangayID.getDateIssued()));
+                        mIDDateValid.setText(dateFormat.format(barangayID.getDateValid()));
+
+                        mIDAddress.setText(barangayID.getAddress());
                         break;
                 }
             }
@@ -432,7 +460,6 @@ public class InformationControl {
      * Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
-        long startTime = System.currentTimeMillis();
         // Make sure that no resident is selected when moving from one page to another.
 //        setLabelSelectedIndex(-1);
 
@@ -522,8 +549,6 @@ public class InformationControl {
             labelPosition++;
             barangayIDIndex++;
         }
-
-        System.out.println(System.currentTimeMillis() - startTime);
     }
 
     /**

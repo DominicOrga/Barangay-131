@@ -28,10 +28,7 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -289,12 +286,12 @@ public class BarangayIDFormControl {
 
         if (chmSignature != null) {
             String prevSignature = (String) chmSignature[0];
-            Double[] prevSignatureDimension = (Double[]) chmSignature[1];
+            double[] prevSignatureDimension = (double[]) chmSignature[1];
 
             // If the current chairman signature is still the same with the last created barangay ID, then pass the
             // dimension of the chairman signature.
             mBarangayID.setChmSignatureDimension(
-                    prevSignature == mBarangayID.getChmSignature() ? prevSignatureDimension : null);
+                    prevSignature.equals(mBarangayID.getChmSignature()) ? prevSignatureDimension : null);
         }
 
         // The date issued will be the current date.
@@ -406,7 +403,7 @@ public class BarangayIDFormControl {
                 // If a signature is found, then store it to mBarangayID.
                 if (result != null) {
                     mBarangayID.setResidentSignature((String) result[0]);
-                    mBarangayID.setResidentSignatureDimension((Double[]) result[1]);
+                    mBarangayID.setResidentSignatureDimension((double[]) result[1]);
 
                     mSignatureView.setImage(new Image("file:" + result[0]));
                 } else {

@@ -18,8 +18,8 @@ public class BarangayID {
      * This are special variable to determine the coordinates and dimensions of the barangay ID signatures.
      * Index: [0] = x, [1] = y, [2] = width, [3] = height.
      */
-    private Double[] mResidentSignatureDimension;
-    private Double[] mChmSignatureDimension;
+    private double[] mResidentSignatureDimension;
+    private double[] mChmSignatureDimension;
 
     public String getID() {
         return mID;
@@ -69,11 +69,11 @@ public class BarangayID {
         mResidentSignature = signature;
     }
 
-    public Double[] getResidentSignatureDimension() {
+    public double[] getResidentSignatureDimension() {
         return mResidentSignatureDimension;
     }
 
-    public void setResidentSignatureDimension(Double[] dimension) {
+    public void setResidentSignatureDimension(double[] dimension) {
         mResidentSignatureDimension = dimension;
     }
 
@@ -93,11 +93,11 @@ public class BarangayID {
         mChmSignature = signature;
     }
 
-    public Double[] getChmSignatureDimension() {
+    public double[] getChmSignatureDimension() {
         return mChmSignatureDimension;
     }
 
-    public void setChmSignatureDimension(Double[] dimension) {
+    public void setChmSignatureDimension(double[] dimension) {
         mChmSignatureDimension = dimension;
     }
 

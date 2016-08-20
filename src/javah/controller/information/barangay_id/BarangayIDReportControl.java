@@ -73,7 +73,7 @@ public class BarangayIDReportControl {
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         // If the barangay ID contains a resident signature, then store its coordinates and dimension to mBarangayID.
         if (mBarangayID.getResidentSignature() != null) {
-            Double[] signatureDimension = new Double[]{
+            double[] signatureDimension = new double[]{
                     mResDraggableSignature.getX(),
                     mResDraggableSignature.getY(),
                     mResDraggableSignature.getWidth(),
@@ -84,7 +84,7 @@ public class BarangayIDReportControl {
 
         // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
         // dimension to mBarangayID.
-        Double[] signatureDimension = new Double[]{
+        double[] signatureDimension = new double[]{
                 mChmDraggableSignature.getX(),
                 mChmDraggableSignature.getY(),
                 mChmDraggableSignature.getWidth(),
@@ -140,7 +140,7 @@ public class BarangayIDReportControl {
         }
 
         if (mBarangayID.getResidentSignatureDimension() != null) {
-            Double[] dimension = mBarangayID.getResidentSignatureDimension();
+            double[] dimension = mBarangayID.getResidentSignatureDimension();
 
             mResDraggableSignature.setX(dimension[0]);
             mResDraggableSignature.setY(dimension[1]);
@@ -160,12 +160,14 @@ public class BarangayIDReportControl {
         mChmSignatureView.setImage(new Image("file:" + mBarangayID.getChmSignature()));
 
         if (mBarangayID.getChmSignatureDimension() != null) {
-            Double[] dimension = mBarangayID.getChmSignatureDimension();
+            double[] dimension = mBarangayID.getChmSignatureDimension();
 
             mChmDraggableSignature.setX(dimension[0]);
             mChmDraggableSignature.setY(dimension[1]);
             mChmDraggableSignature.setWidth(dimension[2]);
             mChmDraggableSignature.setHeight(dimension[3]);
+
+
         }
     }
 

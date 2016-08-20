@@ -347,7 +347,7 @@ public class DatabaseModel {
             statement.setString(5, barangayID.getPhoto());
             statement.setString(6, barangayID.getResidentSignature());
 
-            Double[] signatureDimension = barangayID.getResidentSignatureDimension();
+            double[] signatureDimension = barangayID.getResidentSignatureDimension();
             statement.setString(7, signatureDimension != null ?
                     String.format("%.5f %.5f %.5f %.5f",
                     signatureDimension[0],
@@ -372,6 +372,72 @@ public class DatabaseModel {
 
             return barangayID.getID();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public BarangayID getBarangayID(String id) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_RESIDENT_NAME,
+                            BarangayIdEntry.COLUMN_ADDRESS,
+                            BarangayIdEntry.COLUMN_PHOTO,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_NAME,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED,
+                            BarangayIdEntry.COLUMN_DATE_VALID,
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BarangayID barangayID = new BarangayID();
+
+                barangayID.setID(id);
+                barangayID.setResidentID(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
+                barangayID.setResidentName(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_NAME));
+                barangayID.setAddress(resultSet.getString(BarangayIdEntry.COLUMN_ADDRESS));
+                barangayID.setPhoto(resultSet.getString(BarangayIdEntry.COLUMN_PHOTO));
+                barangayID.setResidentSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
+
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+                barangayID.setResidentSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
+                        null);
+
+                barangayID.setChmName(resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_NAME));
+                barangayID.setChmSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
+
+                signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
+                barangayID.setChmSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
+                        null);
+
+                barangayID.setDateIssued(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_ISSUED));
+                barangayID.setDateValid(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_VALID));
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return barangayID;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -417,7 +483,7 @@ public class DatabaseModel {
                 if (signaturePath == null || signaturePath == "") return null;
 
                 String[] dimensionParsed = signatureDimension.split(" ");
-                Double[] dimension = new Double[4];
+                double[] dimension = new double[4];
 
                 for (int i = 0; i < 4; i++)
                     dimension[i] = Double.parseDouble(dimensionParsed[i]);
@@ -465,7 +531,7 @@ public class DatabaseModel {
                 if (signaturePath == null || signaturePath == "") return null;
 
                 String[] dimensionParsed = signatureDimension.split(" ");
-                Double[] dimension = new Double[4];
+                double[] dimension = new double[4];
 
                 for (int i = 0; i < 4; i++)
                     dimension[i] = Double.parseDouble(dimensionParsed[i]);

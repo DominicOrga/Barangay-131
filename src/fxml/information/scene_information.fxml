@@ -196,6 +196,40 @@
                               <Insets top="95.0" />
                            </StackPane.margin>
                         </ImageView>
+                        <HBox alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
+                           <children>
+                              <Label text="No.131 - ">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="mBarangayIDCode" text="16-001">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <StackPane.margin>
+                              <Insets top="275.0" />
+                           </StackPane.margin>
+                        </HBox>
+                        <Label fx:id="mIDNameLabel" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets top="305.0" />
+                           </StackPane.margin>
+                        </Label>
+                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
+                           <children>
+                              <ImageView fx:id="mIDResSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
+                                 <image>
+                                    <Image url="@../../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
                      </children>
                      <VBox.margin>
                         <Insets bottom="50.0" />
@@ -203,7 +237,7 @@
                   </StackPane>
                   <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="150.0" text="Valid until:">
+                        <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -211,7 +245,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="mBirthDate" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Label fx:id="mIDDateIssued" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -223,7 +257,7 @@
                   </HBox>
                   <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">
+                        <Label minWidth="-Infinity" prefWidth="150.0" text="Valid until:">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -231,7 +265,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="mAge" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+                        <Label fx:id="mIDDateValid" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -251,7 +285,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </Label>
-                        <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
+                        <TextArea fx:id="mIDAddress" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="MOVE" />
                            </cursor>
