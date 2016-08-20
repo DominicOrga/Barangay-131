@@ -1,5 +1,7 @@
 package javah.controller;
 
+import com.sun.javafx.geom.transform.Affine3D;
+import com.sun.javafx.geom.transform.BaseTransform;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.Event;
@@ -7,14 +9,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Transform;
+import javafx.stage.Stage;
+import javah.Main;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
@@ -192,6 +203,21 @@ public class MainControl {
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE : break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
                     case InformationControl.INFORMATION_BLOTTER :
+                }
+            }
+
+            @Override
+            public void onPrintButtonClicked(byte information, Object reportData) {
+                switch (information) {
+                    case InformationControl.INFORMATION_BARANGAY_ID :
+                        mInformationControl.setBlurListPaging(true);
+                        mBarangayIDReportControl.setBarangayID((
+                                BarangayID) reportData, BarangayIDReportControl.REQUEST_DISPLAY_REPORT);
+                        showPopupScene(mBarangayIDReportScene, false);
+                        break;
+                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE: break;
+                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE: break;
+                    case InformationControl.INFORMATION_BLOTTER:
                 }
             }
         });
@@ -469,11 +495,6 @@ public class MainControl {
                 mInformationControl.setBlurListPaging(false);
 
                 mInformationControl.createBarangayID(barangayID);
-            }
-
-            @Override
-            public void onPrintButtonClicked() {
-
             }
         });
 

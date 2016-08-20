@@ -1,9 +1,17 @@
 package javah.util;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BarangayUtils {
+
+    private static Image mDefaultDisplayPhoto;
+
+    static {
+        mDefaultDisplayPhoto = new Image("res/ic_default_resident_white_bg.png");
+    }
 
     /**
      * Filter the lists in ascending order, priority level not ignored,with regards to the keywords.
@@ -101,6 +109,12 @@ public class BarangayUtils {
         return lists;
     }
 
+    public static List[] filterLists(
+            List<String> barangayIDIDs, List<String> barangayIDDateIssued, List<String> barangayIDResidentIDs, String[] keywords) {
+
+        return null;
+    }
+
     /**
      * Convert a string month to its corresponding int value.
      * @param monthStr
@@ -143,6 +157,10 @@ public class BarangayUtils {
             case 10 : return "November";
             default : return "December";
         }
+    }
+
+    public static Image getDefaultDisplayPhoto() {
+        return mDefaultDisplayPhoto;
     }
 
 }

@@ -127,7 +127,6 @@ public class ResidentControl {
      */
     @FXML
     private void initialize() {
-
         // Initialize mResidentLabels with storage for 40 labels.
         mResidentLabels = new Label[40];
 
@@ -374,8 +373,8 @@ public class ResidentControl {
                 // Query the data of the currently selected resident.
                 mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
-                mResidentPhoto.setImage(new Image(mResidentSelected.getPhotoPath() != null ?
-                        "file:" + mResidentSelected.getPhotoPath() : "/res/ic_default_resident.png"));
+                mResidentPhoto.setImage(mResidentSelected.getPhotoPath() != null ?
+                        new Image("file:" + mResidentSelected.getPhotoPath()) : BarangayUtils.getDefaultDisplayPhoto());
 
                 mResidentName.setText(mResidentNames.get(mResidentSelectedIndex));
 
@@ -425,7 +424,7 @@ public class ResidentControl {
                 mEditButton.setVisible(true);
 
             } else {
-                mResidentPhoto.setImage(new Image("/res/ic_default_resident.png"));
+                mResidentPhoto.setImage(BarangayUtils.getDefaultDisplayPhoto());
                 mResidentName.setText("");
                 mBirthDate.setText("");
                 mAge.setText("");

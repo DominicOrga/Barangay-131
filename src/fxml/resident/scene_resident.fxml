@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -16,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
+<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.resident.ResidentControl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -178,7 +185,7 @@
                            <children>
                               <ImageView fx:id="mResidentPhoto" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../res/ic_default_resident.png" />
+                                    <Image url="@../../res/ic_default_resident_white_bg.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets bottom="-20.0" />

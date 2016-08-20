@@ -3,14 +3,18 @@ package javah;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
+    public static Stage mPrimaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        mPrimaryStage = primaryStage;
         // Initialize the javah window.
         FXMLLoader mainFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_main.fxml"));
         Scene mainScene = new Scene(mainFxmlLoader.load());
@@ -27,7 +31,6 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
-
     }
 
     public static void main(String[] args) {

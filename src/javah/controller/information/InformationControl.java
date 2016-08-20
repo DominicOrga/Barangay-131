@@ -3,7 +3,6 @@ package javah.controller.information;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +21,6 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -38,6 +36,7 @@ public class InformationControl {
      */
     public interface OnInformationControlListener {
         void onCreateReportButtonClicked(byte information);
+        void onPrintButtonClicked(byte information, Object reportData);
     }
 
     /**
@@ -113,7 +112,6 @@ public class InformationControl {
      */
     private int mLabelSelectedIndex = -1;
 
-
     /**
      * The array containing all the labels of the list paging.
      */
@@ -143,12 +141,13 @@ public class InformationControl {
 
     private OnInformationControlListener mListener;
 
+    private BarangayID mBarangayIDSelected;
+
     /**
      * Called before setCacheModel()
      */
     @FXML
     private void initialize() {
-
         // Initialize mGridLabels with storage for 40 labels.
         mGridLabels = new Label[40];
 
@@ -165,7 +164,7 @@ public class InformationControl {
             mGridLabels[i] = label;
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setLabelSelectedIndex(labelIndex));
+            label.setOnMouseClicked(event -> setReportToLabelSelectedIndex(labelIndex));
         }
 
 
@@ -252,6 +251,11 @@ public class InformationControl {
         mListener.onCreateReportButtonClicked(mInformation);
     }
 
+    @FXML
+    public void onPrintButtonClicked(ActionEvent actionEvent) {
+        mListener.onPrintButtonClicked(mInformation, mBarangayIDSelected);
+    }
+
     /**
      * Called after initialize() and is called in the MainControl.
      * Set the main scene as the listener to this object.
@@ -323,7 +327,7 @@ public class InformationControl {
         updateCurrentPage();
 
         // Select the newly created resident.
-        setLabelSelectedIndex(index % 40);
+        setReportToLabelSelectedIndex(index % 40);
     }
 
     public void updateResident(Resident resident) {
@@ -341,8 +345,8 @@ public class InformationControl {
         updateCurrentPage();
 
         // Unselect the resident and select it again to update its displayed data.
-        setLabelSelectedIndex(mLabelSelectedIndex);
-        setLabelSelectedIndex(labelSelectedIndex);
+        setReportToLabelSelectedIndex(mLabelSelectedIndex);
+        setReportToLabelSelectedIndex(labelSelectedIndex);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -378,7 +382,7 @@ public class InformationControl {
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);
-        setLabelSelectedIndex(2);
+        setReportToLabelSelectedIndex(2);
     }
 
     /**
@@ -386,25 +390,25 @@ public class InformationControl {
      * @param newLabelSelectedIndex is the index of the label containing the barangay ID to be displayed. If it is equal
      *                              to -1, then the example data is displayed.
      */
-    private void setLabelSelectedIndex(int newLabelSelectedIndex) {
+    private void setReportToLabelSelectedIndex(int newLabelSelectedIndex) {
 
         Consumer<Boolean> setDisplaySelectedReport = (bool) -> {
             if (bool) {
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
                         // Get the label selected.
-                        BarangayID barangayID = mDatabaseModel.getBarangayID(mReportIDToLabelLocation[newLabelSelectedIndex]);
+                        mBarangayIDSelected = mDatabaseModel.getBarangayID(mReportIDToLabelLocation[newLabelSelectedIndex]);
 
-                        mIDImageView.setImage(barangayID.getPhoto() != null ?
-                                new Image("file:" + barangayID.getPhoto()) : null);
+                        mIDImageView.setImage(mBarangayIDSelected.getPhoto() != null ?
+                                new Image("file:" + mBarangayIDSelected.getPhoto()) : BarangayUtils.getDefaultDisplayPhoto());
 
-                        mBarangayIDCode.setText(barangayID.getID());
-                        mIDNameLabel.setText(barangayID.getResidentName().toUpperCase());
+                        mBarangayIDCode.setText(mBarangayIDSelected.getID());
+                        mIDNameLabel.setText(mBarangayIDSelected.getResidentName().toUpperCase());
 
-                        if (barangayID.getResidentSignature() != null) {
-                            mIDResSignatureView.setImage(new Image("file:" + barangayID.getResidentSignature()));
+                        if (mBarangayIDSelected.getResidentSignature() != null) {
+                            mIDResSignatureView.setImage(new Image("file:" + mBarangayIDSelected.getResidentSignature()));
 
-                            double[] dimension = barangayID.getResidentSignatureDimension();
+                            double[] dimension = mBarangayIDSelected.getResidentSignatureDimension();
 
                             mIDResSignatureView.setX(dimension[0]);
                             mIDResSignatureView.setY(dimension[1]);
@@ -414,10 +418,10 @@ public class InformationControl {
                             mIDResSignatureView.setImage(null);
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd yyyy");
-                        mIDDateIssued.setText(dateFormat.format(barangayID.getDateIssued()));
-                        mIDDateValid.setText(dateFormat.format(barangayID.getDateValid()));
+                        mIDDateIssued.setText(dateFormat.format(mBarangayIDSelected.getDateIssued()));
+                        mIDDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
 
-                        mIDAddress.setText(barangayID.getAddress());
+                        mIDAddress.setText(mBarangayIDSelected.getAddress());
                         break;
                 }
             }
@@ -461,8 +465,7 @@ public class InformationControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-//        setLabelSelectedIndex(-1);
-
+//        setReportToLabelSelectedIndex(-1);
         int barangayIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;

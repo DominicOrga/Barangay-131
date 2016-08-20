@@ -2,14 +2,21 @@ package javah.controller.information.barangay_id;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.transform.Scale;
+import javah.Main;
 import javah.container.BarangayID;
+import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 
 public class BarangayIDReportControl {
@@ -17,8 +24,14 @@ public class BarangayIDReportControl {
     public interface OnBarangayIDReportListener {
         void onCancelButtonClicked();
         void onSaveButtonClicked(BarangayID barangayID);
-        void onPrintButtonClicked();
     }
+
+    /**
+     * The Pane containing the barangay ID components.
+     */
+    @FXML private Pane mBarangayIDPane;
+
+    @FXML private Pane mRootPane;
 
     @FXML private Label mBarangayIDCode;
     @FXML private TextArea mAddressTextArea;
@@ -61,37 +74,28 @@ public class BarangayIDReportControl {
 
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
-        reset();
+        if (printReport()) {
+            saveReport();
+            mListener.onCancelButtonClicked();
+            reset();
+        }
     }
 
+    /**
+     * Print the report.
+     * @param actionEvent
+     */
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-        reset();
+        if (printReport()) {
+            mListener.onCancelButtonClicked();
+            reset();
+        }
     }
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
-        // If the barangay ID contains a resident signature, then store its coordinates and dimension to mBarangayID.
-        if (mBarangayID.getResidentSignature() != null) {
-            double[] signatureDimension = new double[]{
-                    mResDraggableSignature.getX(),
-                    mResDraggableSignature.getY(),
-                    mResDraggableSignature.getWidth(),
-                    mResDraggableSignature.getHeight()};
-
-            mBarangayID.setResidentSignatureDimension(signatureDimension);
-        }
-
-        // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
-        // dimension to mBarangayID.
-        double[] signatureDimension = new double[]{
-                mChmDraggableSignature.getX(),
-                mChmDraggableSignature.getY(),
-                mChmDraggableSignature.getWidth(),
-                mChmDraggableSignature.getHeight()};
-
-        mBarangayID.setChmSignatureDimension(signatureDimension);
-
+        saveReport();
         mListener.onSaveButtonClicked(mBarangayID);
         reset();
     }
@@ -125,9 +129,8 @@ public class BarangayIDReportControl {
         }
 
         // Set the image of the barangay ID, if any.
-        mPhotoView.setImage(
-                new Image(mBarangayID.getPhoto() != null ?
-                        "file:" + mBarangayID.getPhoto() : "/res/ic_default_resident_white_bg.png"));
+        mPhotoView.setImage(mBarangayID.getPhoto() != null ?
+                new Image("file:" + mBarangayID.getPhoto()) : BarangayUtils.getDefaultDisplayPhoto());
 
         // Set the applicant name and barangay ID code.
         mBarangayIDCode.setText(mBarangayID.getID());
@@ -138,6 +141,7 @@ public class BarangayIDReportControl {
             mResSignatureView.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
             mResDraggableSignature.setVisible(true);
         }
+
 
         if (mBarangayID.getResidentSignatureDimension() != null) {
             double[] dimension = mBarangayID.getResidentSignatureDimension();
@@ -166,8 +170,6 @@ public class BarangayIDReportControl {
             mChmDraggableSignature.setY(dimension[1]);
             mChmDraggableSignature.setWidth(dimension[2]);
             mChmDraggableSignature.setHeight(dimension[3]);
-
-
         }
     }
 
@@ -188,8 +190,6 @@ public class BarangayIDReportControl {
         mSaveButton.setManaged(false);
         mPrintButton.setVisible(true);
 
-        mPhotoView.setImage(null);
-
         mResDraggableSignature.setVisible(false);
         mChmDraggableSignature.setVisible(false);
 
@@ -205,5 +205,62 @@ public class BarangayIDReportControl {
         mChmDraggableSignature.setY(400);
         mChmDraggableSignature.setWidth(210);
         mChmDraggableSignature.setHeight(90);
+    }
+
+    private void saveReport() {
+        // If the barangay ID contains a resident signature, then store its coordinates and dimension to mBarangayID.
+        if (mBarangayID.getResidentSignature() != null) {
+            double[] signatureDimension = new double[]{
+                    mResDraggableSignature.getX(),
+                    mResDraggableSignature.getY(),
+                    mResDraggableSignature.getWidth(),
+                    mResDraggableSignature.getHeight()};
+
+            mBarangayID.setResidentSignatureDimension(signatureDimension);
+        }
+
+        // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
+        // dimension to mBarangayID.
+        double[] signatureDimension = new double[]{
+                mChmDraggableSignature.getX(),
+                mChmDraggableSignature.getY(),
+                mChmDraggableSignature.getWidth(),
+                mChmDraggableSignature.getHeight()};
+
+        mBarangayID.setChmSignatureDimension(signatureDimension);
+    }
+
+    /**
+     *
+     * @return true if printing is successful. Otherwise, return false.
+     */
+    private boolean printReport() {
+        // Hide the draggable rectangles to make sure that they're not printed.
+        mResDraggableSignature.setVisible(false);
+        mChmDraggableSignature.setVisible(false);
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        // Start print setup if a printer is found.
+        if(job != null){
+            // Disable the report dialog when the print dialog is open.
+            mRootPane.setDisable(true);
+            boolean result = job.showPrintDialog(Main.mPrimaryStage); // Window must be your main Stage
+            mRootPane.setDisable(false);
+
+            // If the client cancels the printing, then no printing will occur.
+            if (result) {
+                ImageView snapShot = new ImageView();
+                snapShot.setImage(mBarangayIDPane.snapshot(null, null));
+
+                snapShot.getTransforms().add(new Scale(0.5, 0.5));
+
+                job.endJob();
+            }
+
+            return result;
+        }
+
+        return false;
     }
 }
