@@ -21,7 +21,6 @@ public class BarangayUtils {
      * @return a new filtered lists of resident IDs List[0] and resident names List[1].
      */
     public static List[] filterLists(List<String> residentIds, List<String> residentNames, String[] keywords) {
-
         int listSize = residentIds.size();
 
         // Store the priority level of each residents.
@@ -107,12 +106,6 @@ public class BarangayUtils {
         List[] lists = new List[]{newResidentIds, newResidentNames};
 
         return lists;
-    }
-
-    public static List[] filterLists(
-            List<String> barangayIDIDs, List<String> barangayIDDateIssued, List<String> barangayIDResidentIDs, String[] keywords) {
-
-        return null;
     }
 
     /**

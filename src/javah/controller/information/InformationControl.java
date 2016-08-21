@@ -294,61 +294,6 @@ public class InformationControl {
         updateListPaging(false);
     }
 
-    public void createResident(Resident resident) {
-        // Create the resident and get its corresponding unique id.
-        String residentId = mDatabaseModel.createResident(resident);
-
-        // Format the resident name to be inserted in the list.
-        String residentName = String.format("%s, %s %s.",
-                resident.getLastName(),
-                resident.getFirstName(),
-                resident.getMiddleName().toUpperCase().charAt(0));
-
-        // Add the resident name to the resident names list and then sort it alphabetically.
-        mResidentNames.add(residentName);
-        Collections.sort(mResidentNames, String.CASE_INSENSITIVE_ORDER);
-
-        // Get the index of the resident name within the list after insertion.
-        int index = mResidentNames.indexOf(residentName);
-
-        // Use the acquired index to insert the resident ID to the resident IDs list.
-        mResidentIDs.add(index, residentId);
-
-        // Once the resident is created, the current page must be placed where the newly created resident is inserted and
-        // must be auto selected.
-        mLabelUseCount = mResidentIDs.size();
-        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
-        mCurrentPage = (int) Math.ceil(index / 39.0);
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        // Display the default data when no resident is selected.
-        updateCurrentPage();
-
-        // Select the newly created resident.
-        setReportToLabelSelectedIndex(index % 40);
-    }
-
-    public void updateResident(Resident resident) {
-        // Make a copy of the label selected index for reselecting.
-        int labelSelectedIndex = mLabelSelectedIndex;
-
-        mDatabaseModel.updateResident(resident);
-
-        // Update the resident lists.
-        int index = mResidentIDs.indexOf(resident.getId());
-        mResidentNames.remove(index);
-        mResidentNames.add(index, String.format("%s, %s %s.",
-                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0)));
-
-        updateCurrentPage();
-
-        // Unselect the resident and select it again to update its displayed data.
-        setReportToLabelSelectedIndex(mLabelSelectedIndex);
-        setReportToLabelSelectedIndex(labelSelectedIndex);
-    }
-
     public void setBlurListPaging(boolean blur) {
         mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
     }
@@ -392,7 +337,7 @@ public class InformationControl {
      */
     private void setReportToLabelSelectedIndex(int newLabelSelectedIndex) {
 
-        Consumer<Boolean> setDisplaySelectedReport = (bool) -> {
+        Consumer<Boolean> showSelectedReportDetails = (bool) -> {
             if (bool) {
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
@@ -424,6 +369,19 @@ public class InformationControl {
                         mIDAddress.setText(mBarangayIDSelected.getAddress());
                         break;
                 }
+
+            } else {
+                switch (mInformation) {
+                    case INFORMATION_BARANGAY_ID:
+                        mIDImageView.setImage(BarangayUtils.getDefaultDisplayPhoto());
+                        mBarangayIDCode.setText("00-0000");
+                        mIDNameLabel.setText(null);
+                        mIDResSignatureView.setImage(null);
+                        mIDAddress.setText(null);
+                        mIDDateIssued.setText(null);
+                        mIDDateValid.setText(null);
+                        break;
+                }
             }
         };
 
@@ -435,7 +393,7 @@ public class InformationControl {
                 if (newLabelSelectedIndex != -1) {
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedReport.accept(true);
+                    showSelectedReportDetails.accept(true);
                 }
 
             } else {
@@ -444,7 +402,7 @@ public class InformationControl {
                 if (newLabelSelectedIndex == -1 || mLabelSelectedIndex == newLabelSelectedIndex) {
                     mGridLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
-                    setDisplaySelectedReport.accept(false);
+                    showSelectedReportDetails.accept(false);
 
                     // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
@@ -452,7 +410,7 @@ public class InformationControl {
                     mGridLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedReport.accept(true);
+                    showSelectedReportDetails.accept(true);
                 }
             }
         }

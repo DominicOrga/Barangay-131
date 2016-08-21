@@ -139,7 +139,7 @@ public class BarangayIDReportControl {
         // Set the applicant signature, if any.
         if (mBarangayID.getResidentSignature() != null) {
             mResSignatureView.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
-            mResDraggableSignature.setVisible(true);
+            mResDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT);
         }
 
 
