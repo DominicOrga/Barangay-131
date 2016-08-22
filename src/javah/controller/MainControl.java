@@ -1,7 +1,5 @@
 package javah.controller;
 
-import com.sun.javafx.geom.transform.Affine3D;
-import com.sun.javafx.geom.transform.BaseTransform;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.Event;
@@ -9,37 +7,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.PageLayout;
-import javafx.print.PrinterJob;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Transform;
-import javafx.stage.Stage;
-import javah.Main;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
-import javah.controller.information.barangay_id.BarangayIDFormControl;
-import javah.controller.information.InformationControl;
-import javah.controller.information.barangay_id.BarangayIDReportControl;
-import javah.controller.resident.ResidentDeletionControl;
-import javah.controller.resident.ResidentFormControl;
-import javah.controller.resident.ResidentControl;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
-import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -98,7 +80,7 @@ public class MainControl {
     private ResidentFormControl mResidentFormControl;
     private PhotoshopControl mPhotoshopControl;
     private BarangayAgentControl mBarangayAgentControl;
-    private BarangayIDFormControl mBarangayIDFormControl;
+    private ResidentInfoFormControl mResidentInfoFormControl;
     private BarangayIDReportControl mBarangayIDReportControl;
 
     /**
@@ -154,7 +136,7 @@ public class MainControl {
         };
 
         // Initialize the Resident scene.
-        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/resident/scene_resident.fxml"));
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("fxml/scene_resident.fxml"));
         mResidentScene = fxmlLoader.load();
         mResidentControl = fxmlLoader.getController();
 
@@ -184,7 +166,7 @@ public class MainControl {
         });
 
         // Initialize the Barangay ID Scene.
-        resetFXMLLoader.accept("fxml/information/scene_information.fxml");
+        resetFXMLLoader.accept("fxml/scene_information.fxml");
         mInformationScene = fxmlLoader.load();
         mInformationControl = fxmlLoader.getController();
 
@@ -198,7 +180,9 @@ public class MainControl {
                     case InformationControl.INFORMATION_BARANGAY_ID :
                         mInformationControl.setBlurListPaging(true);
                         showPopupScene(mBarangayIDFormScene, false);
-                        mBarangayIDFormControl.reset();
+
+                        mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_ID);
+                        mResidentInfoFormControl.reset();
                         break;
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE : break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
@@ -207,7 +191,7 @@ public class MainControl {
             }
 
             @Override
-            public void onPrintButtonClicked(byte information, Object reportData) {
+            public void onViewButtonClicked(byte information, Object reportData) {
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
                         mInformationControl.setBlurListPaging(true);
@@ -267,8 +251,8 @@ public class MainControl {
                         mBarangayAgentControl.setSecSignature(image);
                         break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE:
-                        mBarangayIDFormControl.setDisable(false);
-                        mBarangayIDFormControl.setSignature(image);
+                        mResidentInfoFormControl.setDisable(false);
+                        mResidentInfoFormControl.setSignature(image);
                         break;
                 }
             }
@@ -288,7 +272,7 @@ public class MainControl {
                         mBarangayAgentControl.setDisable(false);
                         break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE:
-                        mBarangayIDFormControl.setDisable(false);
+                        mResidentInfoFormControl.setDisable(false);
                         break;
                 }
             }
@@ -375,7 +359,7 @@ public class MainControl {
         });
 
         // Initialize the resident deletion confirmation dialog.
-        resetFXMLLoader.accept("fxml/resident/scene_resident_deletion.fxml");
+        resetFXMLLoader.accept("fxml/scene_resident_deletion.fxml");
         mResidentDeletionScene = fxmlLoader.load();
         mResidentDeletionControl = fxmlLoader.getController();
 
@@ -395,7 +379,7 @@ public class MainControl {
         });
 
         // Initialize the resident form dialog.
-        resetFXMLLoader.accept("fxml/resident/scene_resident_form.fxml");
+        resetFXMLLoader.accept("fxml/scene_resident_form.fxml");
         mResidentFormScene = fxmlLoader.load();
         mResidentFormControl = fxmlLoader.getController();
 
@@ -437,20 +421,20 @@ public class MainControl {
             }
         });
 
-        // Initialize the barangay ID form dialog.
-        resetFXMLLoader.accept("fxml/information/barangay_id/scene_barangay_id_form.fxml");
+        // Initialize the resident info form dialog.
+        resetFXMLLoader.accept("fxml/scene_barangay_id_form.fxml");
         mBarangayIDFormScene = fxmlLoader.load();
-        mBarangayIDFormControl = fxmlLoader.getController();
+        mResidentInfoFormControl = fxmlLoader.getController();
 
-        mBarangayIDFormControl.setCacheModel(mCacheModel);
-        mBarangayIDFormControl.setDatabaseModel(mDatabaseModel);
+        mResidentInfoFormControl.setCacheModel(mCacheModel);
+        mResidentInfoFormControl.setDatabaseModel(mDatabaseModel);
 
-        mBarangayIDFormControl.setListener(new BarangayIDFormControl.OnBarangayIDFormListener() {
+        mResidentInfoFormControl.setListener(new ResidentInfoFormControl.OnResidentInfoFormListener() {
             @Override
             public void onUploadButtonClicked() {
                 mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
-                mBarangayIDFormControl.setDisable(true);
+                mResidentInfoFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
             }
 
@@ -458,7 +442,7 @@ public class MainControl {
             public void onCaptureButtonClicked() {
                 mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
-                mBarangayIDFormControl.setDisable(true);
+                mResidentInfoFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
             }
 
@@ -469,16 +453,24 @@ public class MainControl {
             }
 
             @Override
-            public void onCreateButtonClicked(BarangayID barangayID) {
+            public void onCreateButtonClicked(Object data, byte information) {
                 hidePopupScene(mBarangayIDFormScene, false);
-                // todo: Send barangayID to report to be displayed.
-                mBarangayIDReportControl.setBarangayID(barangayID, BarangayIDReportControl.REQUEST_CREATE_REPORT);
-                showPopupScene(mBarangayIDReportScene, false);
+
+                switch (information) {
+                    case ResidentInfoFormControl.INFORMATION_BARANGAY_ID :
+                        mBarangayIDReportControl.setBarangayID((BarangayID) data, BarangayIDReportControl.REQUEST_CREATE_REPORT);
+                        showPopupScene(mBarangayIDReportScene, false);
+                        break;
+                    case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE: break;
+                    case ResidentInfoFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
+                    case ResidentInfoFormControl.INFORMATION_BLOTTER: break;
+                }
+
             }
         });
 
         // Initialize the barangay ID report dialog.
-        resetFXMLLoader.accept("fxml/information/barangay_id/scene_barangay_id_report.fxml");
+        resetFXMLLoader.accept("fxml/scene_barangay_id_report.fxml");
         mBarangayIDReportScene = fxmlLoader.load();
         mBarangayIDReportControl = fxmlLoader.getController();
 

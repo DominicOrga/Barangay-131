@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentFormControl">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" spacing="10.0" style="-fx-background-color: #FF861B;">
+         <children>
+            <Label fx:id="mActionLabel" text="New Resident" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="25.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="7.0" />
+               </HBox.margin>
+            </Label>
+            <ImageView fx:id="mActionIcon" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/ic_new_resident.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.rowIndex="1">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                     <HBox.margin>
+                        <Insets left="20.0" top="-30.0" />
+                     </HBox.margin>
+                     <children>
+                        <ImageView fx:id="mResidentPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_default_resident.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <Label text="Attach Picture:">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="mUploadPhotoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadPhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="mTakePhotoButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTakePhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+               <children>
+                  <Label text="Name:">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="mNameError" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="29.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="mFirstName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="mMiddleName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="mLastName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+               <children>
+                  <Label text="Birth Date:">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="mBirthMonth" minWidth="-Infinity" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="January">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="January" />
+                           <String fx:value="February" />
+                           <String fx:value="March" />
+                           <String fx:value="April" />
+                           <String fx:value="May" />
+                           <String fx:value="June" />
+                           <String fx:value="July" />
+                           <String fx:value="August" />
+                           <String fx:value="September" />
+                           <String fx:value="October" />
+                           <String fx:value="November" />
+                           <String fx:value="December" />
+                        </FXCollections>
+                     </items>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="mBirthDay" minWidth="-Infinity" prefWidth="75.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="1">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin></ComboBox>
+                  <ComboBox fx:id="mBirthYear" layoutX="250.0" layoutY="14.0" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="2016" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0">
+               <children>
+                  <Label text="Resident Since: ">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="mYearOfResidency" minWidth="-Infinity" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="Birth">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin></ComboBox>
+                  <ComboBox fx:id="mMonthOfResidency" layoutX="154.0" layoutY="8.0" minWidth="-Infinity" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="January" visible="false">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="January" />
+                           <String fx:value="February" />
+                           <String fx:value="March" />
+                           <String fx:value="April" />
+                           <String fx:value="May" />
+                           <String fx:value="June" />
+                           <String fx:value="July" />
+                           <String fx:value="August" />
+                           <String fx:value="September" />
+                           <String fx:value="October" />
+                           <String fx:value="November" />
+                           <String fx:value="December" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+               <children>
+                  <Label text="Address 1">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="mAddress1Error" text="What kind of address is this?" textFill="#ff3f3f" visible="false">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <TextArea fx:id="mAddress1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="487.0" promptText="Your Address*" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Microsoft YaHei UI Light" size="15.0" />
+               </font>
+            </TextArea>
+            <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="200.0">
+               <children>
+                  <Label text="Address 2">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="mAddress2Error" text="Is this address for real?" textFill="#ff3f3f" visible="false">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <TextArea fx:id="mAddress2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="487.0" promptText="Other Address (Optional)" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Microsoft YaHei UI Light" size="15.0" />
+               </font>
+            </TextArea>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="530.0">
+               <children>
+                  <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
