@@ -48,4 +48,10 @@ public class PreferenceContract {
     public static final String KAGAWAD_7_FIRST_NAME= "kagawad_7_first_name";
     public static final String KAGAWAD_7_MIDDLE_NAME= "kagawad_7_middle_name";
     public static final String KAGAWAD_7_LAST_NAME= "kagawad_7_last_name";
+
+    public static final String BRGY_ID_CHM_SIGNATURE_DIMENSION = "brgy_id_chrm_sign_dim";
+    public static final String BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION = "brgy_clearance_chm_sign_dim";
+    public static final String BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION = "brgy_clearance_sec_sign_dim";
+    public static final String BUSI_CLEARANCE_CHM_SIGNATURE_DIMENSION = "busi_clearance_chm_sign_dim";
+    public static final String BUSI_CLEARANCE_SEC_SIGNATURE_DIMENSION = "busi_clearance_sec_sign_dim";
 }

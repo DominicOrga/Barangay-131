@@ -497,53 +497,6 @@ public class DatabaseModel {
         return null;
     }
 
-    /**
-     * Get the chairman signature from the latest barangay ID.
-     * @return null if no barangay ID exists.
-     *         Else, return the Object[2] index: [0] = String 'signature path' and [1] = Double[4] 'signature dimension'.
-     *         Where Double[4] index: [0] = x, [1] = y, [2] = width, [3] height;
-     */
-    public Object[] getChmSignatureFromBarangayID() {
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s FROM %s ORDER BY %s DESC LIMIT 1",
-                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
-                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
-                            BarangayIdEntry.TABLE_NAME,
-                            BarangayIdEntry.COLUMN_ID
-                    )
-            );
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE);
-                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
-
-                dbConnection.close();
-                preparedStatement.close();
-                resultSet.close();
-
-                // If no signature is stores in the latest barangay ID of the resident, then return null.
-                if (signaturePath == null || signaturePath == "") return null;
-
-                String[] dimensionParsed = signatureDimension.split(" ");
-                double[] dimension = new double[4];
-
-                for (int i = 0; i < 4; i++)
-                    dimension[i] = Double.parseDouble(dimensionParsed[i]);
-
-                return new Object[]{signaturePath, dimension};
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     /**
      * Generate a unique id for the given table.

@@ -94,6 +94,7 @@ public class ResidentInfoFormControl {
     private Label[] mResidentLabels = new Label[10];
 
     private CacheModel mCacheModel;
+    private PreferenceModel mPrefModel;
 
     /**
      * Get the database model to query the information of the resident selected.
@@ -311,33 +312,38 @@ public class ResidentInfoFormControl {
                 }
 
                 // Get the current chairman name and signature from the preferences.
-                PreferenceModel prefModel = new PreferenceModel();
 
                 mBarangayID.setChmName(String.format("%s %s. %s",
-                        prefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
-                        prefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
-                        prefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME)));
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME)));
 
-                mBarangayID.setChmSignature(prefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
+                mBarangayID.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
 
-                // Check if the current chairman signature is still the same with the one registered in the latest barangay ID.
-                // If so, then pass the previous chairman signature coo3+rdinates and dimension to mBarangayID.
-                Object[] chmSignature = mDatabaseModel.getChmSignatureFromBarangayID();
+                String chmSignatureDimension = mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION);
 
-                if (chmSignature != null) {
-                    String prevSignature = (String) chmSignature[0];
-                    double[] prevSignatureDimension = (double[]) chmSignature[1];
+                // If the chairman signature dimension is not empty, then pass it to mBarangayID.
+                if (chmSignatureDimension != null)
+                    mBarangayID.setChmSignatureDimension(BarangayUtils.parseSignatureDimension(chmSignatureDimension));
 
-                    // If the current chairman signature is still the same with the last created barangay ID, then pass the
-                    // dimension of the chairman signature.
-                    mBarangayID.setChmSignatureDimension(
-                            prevSignature.equals(mBarangayID.getChmSignature()) ? prevSignatureDimension : null);
-                }
+//                mBarangayID.setChmSignatureDimension();
+//                // Check if the current chairman signature is still the same with the one registered in the latest barangay ID.
+//                // If so, then pass the previous chairman signature coo3+rdinates and dimension to mBarangayID.
+//                Object[] chmSignature = mDatabaseModel.getChmSignatureFromBarangayID();
+//
+//                if (chmSignature != null) {
+//                    String prevSignature = (String) chmSignature[0];
+//                    double[] prevSignatureDimension = (double[]) chmSignature[1];
+//
+//                    // If the current chairman signature is still the same with the last created barangay ID, then pass the
+//                    // dimension of the chairman signature.
+//                    mBarangayID.setChmSignatureDimension(
+//                            prevSignature.equals(mBarangayID.getChmSignature()) ? prevSignatureDimension : null);
+//                }
 
                 // The date issued will be the current date.
                 GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
                 mBarangayID.setDateIssued(new Date(calendar.getTime().getTime()));
-
                 // Set the date validity of the barangay ID.
                 // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
                 calendar.add(Calendar.DATE, 364);
@@ -358,14 +364,6 @@ public class ResidentInfoFormControl {
                 break;
             case INFORMATION_BLOTTER :
         }
-    }
-
-    public void setCacheModel(CacheModel cacheModel) {
-        mCacheModel = cacheModel;
-    }
-
-    public void setDatabaseModel(DatabaseModel databaseModel) {
-        mDatabaseModel = databaseModel;
     }
 
     /**
@@ -611,5 +609,17 @@ public class ResidentInfoFormControl {
                 break;
             case INFORMATION_BLOTTER :
         }
+    }
+
+    public void setCacheModel(CacheModel cacheModel) {
+        mCacheModel = cacheModel;
+    }
+
+    public void setDatabaseModel(DatabaseModel databaseModel) {
+        mDatabaseModel = databaseModel;
+    }
+
+    public void setPreferenceModel(PreferenceModel preferenceModel) {
+        mPrefModel = preferenceModel;
     }
 }

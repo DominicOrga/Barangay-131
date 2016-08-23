@@ -156,4 +156,14 @@ public class BarangayUtils {
         return mDefaultDisplayPhoto;
     }
 
+    public static double[] parseSignatureDimension(String signatureDimension) {
+        String[] dimensionParsed = signatureDimension.split(" ");
+        double[] dimension = new double[4];
+
+        for (int i = 0; i < 4; i++)
+            dimension[i] = Double.parseDouble(dimensionParsed[i]);
+
+        return dimension;
+    }
+
 }

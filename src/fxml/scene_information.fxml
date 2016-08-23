@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -18,7 +26,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.InformationControl">
+<GridPane prefHeight="768.0" prefWidth="1096.0" style="-fx-background-color: #F4F4F4;" styleClass="mylistview" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.InformationControl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -33,7 +41,7 @@
                <graphic>
                   <ImageView fx:id="mCreateButtonImageView" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../res/ic_new_resident.png" />
+                        <Image url="@../res/ic_id.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -177,32 +185,6 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="mAddress1Label" minWidth="-Infinity" prefWidth="150.0" text="Address:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea fx:id="mIDAddress" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
-                                 <cursor>
-                                    <Cursor fx:constant="MOVE" />
-                                 </cursor>
-                                 <font>
-                                    <Font name="Calibri Light" size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </HBox.margin>
-                              </TextArea>
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" />

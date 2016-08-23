@@ -71,7 +71,7 @@ public class MainControl {
      */
     private Pane mPhotoshopScene, mBarangayAgentScene;
     private Pane mResidentDeletionScene, mResidentFormScene;
-    private Pane mBarangayIDFormScene, mBarangayIDReportScene;
+    private Pane mResidentInfoFormScene, mBarangayIDReportScene;
 
     /**
      * The popup scene controllers.
@@ -179,7 +179,7 @@ public class MainControl {
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
                         mInformationControl.setBlurListPaging(true);
-                        showPopupScene(mBarangayIDFormScene, false);
+                        showPopupScene(mResidentInfoFormScene, false);
 
                         mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_ID);
                         mResidentInfoFormControl.reset();
@@ -423,11 +423,12 @@ public class MainControl {
 
         // Initialize the resident info form dialog.
         resetFXMLLoader.accept("fxml/scene_barangay_id_form.fxml");
-        mBarangayIDFormScene = fxmlLoader.load();
+        mResidentInfoFormScene = fxmlLoader.load();
         mResidentInfoFormControl = fxmlLoader.getController();
 
         mResidentInfoFormControl.setCacheModel(mCacheModel);
         mResidentInfoFormControl.setDatabaseModel(mDatabaseModel);
+        mResidentInfoFormControl.setPreferenceModel(mPreferenceModel);
 
         mResidentInfoFormControl.setListener(new ResidentInfoFormControl.OnResidentInfoFormListener() {
             @Override
@@ -448,13 +449,13 @@ public class MainControl {
 
             @Override
             public void onCancelButtonClicked() {
-                hidePopupScene(mBarangayIDFormScene, false);
+                hidePopupScene(mResidentInfoFormScene, false);
                 mInformationControl.setBlurListPaging(false);
             }
 
             @Override
             public void onCreateButtonClicked(Object data, byte information) {
-                hidePopupScene(mBarangayIDFormScene, false);
+                hidePopupScene(mResidentInfoFormScene, false);
 
                 switch (information) {
                     case ResidentInfoFormControl.INFORMATION_BARANGAY_ID :
@@ -474,6 +475,7 @@ public class MainControl {
         mBarangayIDReportScene = fxmlLoader.load();
         mBarangayIDReportControl = fxmlLoader.getController();
 
+        mBarangayIDReportControl.setPreferenceModel(mPreferenceModel);
         mBarangayIDReportControl.setListener(new BarangayIDReportControl.OnBarangayIDReportListener() {
             @Override
             public void onCancelButtonClicked() {
@@ -495,8 +497,38 @@ public class MainControl {
         addToPopupPane.accept(mBarangayAgentScene);
         addToPopupPane.accept(mResidentDeletionScene);
         addToPopupPane.accept(mResidentFormScene);
-        addToPopupPane.accept(mBarangayIDFormScene);
+        addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);
+    }
+
+    @FXML
+    public void onResidentMenuClicked(Event event) {
+        if(mMenuSelected != MENU_RESIDENT)
+            updateMenuSelected(MENU_RESIDENT);
+    }
+
+    @FXML
+    public void onBarangayClearanceMenuClicked(Event event) {
+        if(mMenuSelected != MENU_BARANGAY_CLEARANCE)
+            updateMenuSelected(MENU_BARANGAY_CLEARANCE);
+    }
+
+    @FXML
+    public void onBarangayIdMenuClicked(Event event) {
+        if(mMenuSelected != MENU_BARANGAY_ID)
+            updateMenuSelected(MENU_BARANGAY_ID);
+    }
+
+    @FXML
+    public void onBusinessClearanceMenuClicked(Event event) {
+        if(mMenuSelected != MENU_BUSINESS_CLEARANCE)
+            updateMenuSelected(MENU_BUSINESS_CLEARANCE);
+    }
+
+    @FXML
+    public void onBlotterMenuClicked(Event event) {
+        if(mMenuSelected != MENU_BLOTTER)
+            updateMenuSelected(MENU_BLOTTER);
     }
 
     /**
@@ -546,13 +578,17 @@ public class MainControl {
                     break;
 
                 case MENU_BARANGAY_CLEARANCE:
-                    playMenuSlideAnimation.accept(mBarangayClearanceMenu, isSelected); break;
+                    playMenuSlideAnimation.accept(mBarangayClearanceMenu, isSelected);
+                    if (isSelected)
+                        mInformationControl.setInformation(InformationControl.INFORMATION_BARANGAY_CLEARANCE);
+                    mInformationScene.toFront();
+                    break;
 
                 case MENU_BARANGAY_ID:
                     playMenuSlideAnimation.accept(mBarangayIdMenu, isSelected);
                     if (isSelected)
                         mInformationControl.setInformation(InformationControl.INFORMATION_BARANGAY_ID);
-                        mInformationScene.toFront();
+                    mInformationScene.toFront();
                     break;
 
                 case MENU_BUSINESS_CLEARANCE:
@@ -596,36 +632,6 @@ public class MainControl {
         popupScene.setVisible(true);
         popupScene.toFront();
         mPopupStackPane.setVisible(true);
-    }
-
-    @FXML
-    public void onResidentMenuClicked(Event event) {
-        if(mMenuSelected != MENU_RESIDENT)
-            updateMenuSelected(MENU_RESIDENT);
-    }
-
-    @FXML
-    public void onBarangayClearanceMenuClicked(Event event) {
-        if(mMenuSelected != MENU_BARANGAY_CLEARANCE)
-            updateMenuSelected(MENU_BARANGAY_CLEARANCE);
-    }
-
-    @FXML
-    public void onBarangayIdMenuClicked(Event event) {
-        if(mMenuSelected != MENU_BARANGAY_ID)
-            updateMenuSelected(MENU_BARANGAY_ID);
-    }
-
-    @FXML
-    public void onBusinessClearanceMenuClicked(Event event) {
-        if(mMenuSelected != MENU_BUSINESS_CLEARANCE)
-            updateMenuSelected(MENU_BUSINESS_CLEARANCE);
-    }
-
-    @FXML
-    public void onBlotterMenuClicked(Event event) {
-        if(mMenuSelected != MENU_BLOTTER)
-            updateMenuSelected(MENU_BLOTTER);
     }
 
     /**

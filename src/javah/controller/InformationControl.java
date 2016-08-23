@@ -75,7 +75,6 @@ public class InformationControl {
     @FXML ImageView mIDImageView, mIDResSignatureView;
     @FXML Label mBarangayIDCode, mIDNameLabel;
     @FXML Label mIDDateIssued, mIDDateValid;
-    @FXML TextArea mIDAddress;
 
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
@@ -309,8 +308,12 @@ public class InformationControl {
         switch (information) {
             case INFORMATION_BARANGAY_ID :
                 if (mInformation != INFORMATION_BARANGAY_ID) {
-                    mCreateButtonImageView.setImage(new Image("res/ic_id.png"));
                     mCreateButton.setText("New Barangay ID");
+                }
+                break;
+            case INFORMATION_BARANGAY_CLEARANCE :
+                if (mInformation != INFORMATION_BARANGAY_CLEARANCE) {
+                    mCreateButton.setText("New Barangay Clearance");
                 }
                 break;
         }
@@ -369,7 +372,6 @@ public class InformationControl {
                         mIDDateIssued.setText(dateFormat.format(mBarangayIDSelected.getDateIssued()));
                         mIDDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
 
-                        mIDAddress.setText(mBarangayIDSelected.getAddress());
                         break;
                 }
 
@@ -380,7 +382,6 @@ public class InformationControl {
                         mBarangayIDCode.setText("00-000");
                         mIDNameLabel.setText(null);
                         mIDResSignatureView.setImage(null);
-                        mIDAddress.setText(null);
                         mIDDateIssued.setText(null);
                         mIDDateValid.setText(null);
                         break;

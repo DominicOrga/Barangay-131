@@ -307,15 +307,30 @@ public class BarangayAgentControl {
             };
 
             // Create the images.
-            if (mChmPhoto != null)
+            if (mChmPhoto != null) {
                 writeImage.accept(PreferenceContract.CHAIRMAN_PHOTO_PATH, mChmPhoto);
 
-            if (mChmSignature != null)
+                mChmPhoto = null;
+            }
+
+            if (mChmSignature != null) {
                 writeImage.accept(PreferenceContract.CHAIRMAN_SIGNATURE_PATH, mChmSignature);
 
-            if (mSecSignature != null)
+                writeImage.accept(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION, null);
+                writeImage.accept(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
+                writeImage.accept(PreferenceContract.BUSI_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
+
+                mChmSignature = null;
+            }
+
+            if (mSecSignature != null) {
                 writeImage.accept(PreferenceContract.CHAIRMAN_SIGNATURE_PATH, mSecSignature);
 
+                writeImage.accept(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
+                writeImage.accept(PreferenceContract.BUSI_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
+
+                mSecSignature = null;
+            }
             mPreferences.save();
 
             mListener.onSaveButtonClicked();

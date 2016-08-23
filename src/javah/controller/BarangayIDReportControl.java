@@ -2,7 +2,6 @@ package javah.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,10 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import javah.Main;
 import javah.container.BarangayID;
+import javah.contract.PreferenceContract;
+import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
-import javax.swing.*;
 import java.text.SimpleDateFormat;
 
 public class BarangayIDReportControl {
@@ -54,6 +54,8 @@ public class BarangayIDReportControl {
 
     public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2;
 
+    private PreferenceModel mPrefModel;
+
     private BarangayID mBarangayID;
 
     private OnBarangayIDReportListener mListener;
@@ -75,7 +77,7 @@ public class BarangayIDReportControl {
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
-            saveReport();
+            saveChmSignatureDimension();
             mListener.onCancelButtonClicked();
             reset();
         }
@@ -95,7 +97,7 @@ public class BarangayIDReportControl {
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
-        saveReport();
+        saveChmSignatureDimension();
         mListener.onSaveButtonClicked(mBarangayID);
         reset();
     }
@@ -104,6 +106,10 @@ public class BarangayIDReportControl {
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
         reset();
+    }
+
+    public void setPreferenceModel(PreferenceModel prefModel) {
+        mPrefModel = prefModel;
     }
 
     /**
@@ -207,18 +213,7 @@ public class BarangayIDReportControl {
         mChmDraggableSignature.setHeight(90);
     }
 
-    private void saveReport() {
-        // If the barangay ID contains a resident signature, then store its coordinates and dimension to mBarangayID.
-        if (mBarangayID.getResidentSignature() != null) {
-            double[] signatureDimension = new double[]{
-                    mResDraggableSignature.getX(),
-                    mResDraggableSignature.getY(),
-                    mResDraggableSignature.getWidth(),
-                    mResDraggableSignature.getHeight()};
-
-            mBarangayID.setResidentSignatureDimension(signatureDimension);
-        }
-
+    private void saveChmSignatureDimension() {
         // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
         // dimension to mBarangayID.
         double[] signatureDimension = new double[]{
@@ -228,6 +223,18 @@ public class BarangayIDReportControl {
                 mChmDraggableSignature.getHeight()};
 
         mBarangayID.setChmSignatureDimension(signatureDimension);
+
+        // Save the dimension of the chairman signature to the preference model.
+        mPrefModel.put(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION,
+                String.format("%.5f %.5f %.5f %.5f",
+                        mChmDraggableSignature.getX(),
+                        mChmDraggableSignature.getY(),
+                        mChmDraggableSignature.getWidth(),
+                        mChmDraggableSignature.getHeight()
+                )
+        );
+
+        mPrefModel.save();
     }
 
     /**

@@ -27,7 +27,7 @@ public class CacheModel {
         mResidentNamesCache = lists[1];
 
         lists = dbControl.getBarangayIDEssentials();
-
+        System.out.println(Arrays.asList(lists[2]));
         mBarangayIDIDsCache = lists[0];
         mBarangayIDResidentIDCache = lists[1];
         mBarangayIDdateIssuedCache = lists[2];
