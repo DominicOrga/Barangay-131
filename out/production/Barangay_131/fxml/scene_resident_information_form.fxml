@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInfoFormControl">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="420.0" prefWidth="420.0" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="470.0" minHeight="470.0" prefHeight="470.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+         <children>
+            <Label fx:id="mActionLabel" text="Barangay ID Form" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/ic_id.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" GridPane.rowIndex="1">
+         <children>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="20.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="-40.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <GridPane fx:id="mResidentGridPane" alignment="TOP_CENTER" style="-fx-background-color: #BEBEBE; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+         <GridPane.margin>
+            <Insets left="20.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <HBox alignment="CENTER" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="mBackPageButton" mnemonicParsing="false" onAction="#onBackPageButtonClicked" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); -fx-background-color: white;">
+               <graphic>
+                  <ImageView fx:id="back_page_btn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onBackPageButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_back_page.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <HBox alignment="CENTER" prefWidth="100.0">
+               <children>
+                  <Label fx:id="mCurrentPageLabel" text="8" textFill="#ff861b">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text=" of " textFill="#ff861b">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mPageCountLabel" text="15" textFill="#ff861b">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="mNextPageButton" mnemonicParsing="false" onAction="#onNextPageButtonClicked" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
+               <graphic>
+                  <ImageView fx:id="next_page_btn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_next_page.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Create" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <VBox fx:id="mBarangayIDPane" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label text="Address:" textFill="#ff861b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <RadioButton fx:id="mAddress1RadioButton" alignment="TOP_LEFT" mnemonicParsing="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <graphic>
+                  <StackPane prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <TextArea fx:id="mAddress1TextArea" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextArea>
+                        <Pane prefHeight="100.0" prefWidth="500.0" />
+                     </children>
+                  </StackPane>
+               </graphic>
+            </RadioButton>
+            <RadioButton fx:id="mAddress2RadioButton" alignment="TOP_LEFT" layoutX="10.0" layoutY="60.0" mnemonicParsing="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <graphic>
+                  <StackPane prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <TextArea fx:id="mAddress2TextArea" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextArea>
+                        <Pane prefHeight="100.0" prefWidth="500.0" />
+                     </children>
+                  </StackPane>
+               </graphic>
+            </RadioButton>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                     <children>
+                        <ImageView fitHeight="135.0" fitWidth="315.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../res/ic_trans_bg_16x9.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mSignatureView" fitHeight="135.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </StackPane>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Attach Signature:">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Button fx:id="mSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="mSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica Neue Light" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox fx:id="mBrgyClearancePane" layoutX="450.0" layoutY="80.0" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label text="Address:" textFill="#ff861b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <RadioButton fx:id="mBrgyClearanceAddress1RadioButton" alignment="TOP_LEFT" mnemonicParsing="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <StackPane prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <TextArea fx:id="mAddress1TextArea1" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="15.0" />
+                           </font>
+                        </TextArea>
+                        <Pane prefHeight="100.0" prefWidth="500.0" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="mBrgyClearanceAddress1RadioButton" alignment="TOP_LEFT" layoutX="10.0" layoutY="60.0" mnemonicParsing="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <StackPane prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <TextArea fx:id="mAddress2TextArea1" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="15.0" />
+                           </font>
+                        </TextArea>
+                        <Pane prefHeight="100.0" prefWidth="500.0" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </RadioButton>
+            <Label text="Purpose:" textFill="#ff861b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #F4F4F4;">
+               <children>
+                  <StackPane prefHeight="100.0" prefWidth="500.0">
+                     <children>
+                        <TextArea fx:id="mAddress2TextArea11" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="15.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </TextArea>
+                        <Pane prefHeight="100.0" prefWidth="500.0">
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </Pane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+   </children>
+</GridPane>

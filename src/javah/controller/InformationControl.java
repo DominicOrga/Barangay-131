@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javah.container.BarangayID;
 import javah.contract.CSSContract;
@@ -72,9 +73,15 @@ public class InformationControl {
     /**
      * FXML components of the barangay ID details.
      */
+    @FXML Pane mBrgyIDDetailsPane;
     @FXML ImageView mIDImageView, mIDResSignatureView;
     @FXML Label mBarangayIDCode, mIDNameLabel;
     @FXML Label mIDDateIssued, mIDDateValid;
+
+    /**
+     * FXML components of the barangay clearance details.
+     */
+    @FXML Pane mBrgyClearanceDetailsPane;
 
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
@@ -159,7 +166,7 @@ public class InformationControl {
             Label label = new Label();
             label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             label.setAlignment(Pos.CENTER);
-            label.setPrefHeight(500);
+            label.setPrefHeight(250);
             label.setPrefWidth(1000);
 
             mGridLabels[i] = label;
@@ -303,19 +310,38 @@ public class InformationControl {
      * Set the information to be displayed.
      * @param information
      */
-    public void setInformation(byte information) {
+    public void setInformation(byte information){
+        // Refresh the list paging.
+        updateListPaging(false);
 
-        switch (information) {
+        // Hide the previous Information details pane used.
+        switch (mInformation) {
             case INFORMATION_BARANGAY_ID :
-                if (mInformation != INFORMATION_BARANGAY_ID) {
-                    mCreateButton.setText("New Barangay ID");
-                }
+                mBrgyIDDetailsPane.setVisible(false);
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :
-                if (mInformation != INFORMATION_BARANGAY_CLEARANCE) {
-                    mCreateButton.setText("New Barangay Clearance");
-                }
+                mBrgyClearanceDetailsPane.setVisible(false);
                 break;
+            case INFORMATION_BUSINESS_CLEARANCE :
+                break;
+            case INFORMATION_BLOTTER :
+        }
+
+        // Show the new Information details pane.
+        switch (information) {
+            case INFORMATION_BARANGAY_ID :
+                mCreateButton.setText("New Barangay ID");
+                mBrgyIDDetailsPane.setVisible(true);
+
+                break;
+            case INFORMATION_BARANGAY_CLEARANCE :
+                mCreateButton.setText("New Barangay Clearance");
+                mBrgyClearanceDetailsPane.setVisible(true);
+
+                break;
+            case INFORMATION_BUSINESS_CLEARANCE :
+                break;
+            case INFORMATION_BLOTTER :
         }
 
         mInformation = information;
@@ -388,6 +414,13 @@ public class InformationControl {
                 }
         };
 
+        // If newLabelSelectedIndex is equal to -1, then clear the details.
+        if (newLabelSelectedIndex == -1) {
+            mLabelSelectedIndex = -1;
+            showSelectedReportDetails.accept(false);
+            return;
+        }
+
         // This is where the code selection and unselection view update happens.
         // If a label is clicked without containing any resident, then ignore the event.
         if (mReportIDToLabelLocation[newLabelSelectedIndex] != null) {
@@ -426,7 +459,7 @@ public class InformationControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-//        setReportToLabelSelectedIndex(-1);
+        setReportToLabelSelectedIndex(-1);
         int barangayIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;

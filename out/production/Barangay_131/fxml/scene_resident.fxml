@@ -81,7 +81,6 @@
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
             <GridPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -175,8 +174,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints percentHeight="70.0" vgrow="SOMETIMES" />
-                        <RowConstraints percentHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="403.0" prefWidth="398.0">
@@ -288,7 +286,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
+                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
                                  <font>
                                     <Font name="Calibri Light" size="20.0" />
                                  </font>
@@ -314,14 +312,14 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="450.0" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
+                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="450.0" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
                                  <font>
                                     <Font name="Calibri Light" size="20.0" />
                                  </font>
                               </TextArea>
                            </children>
                            <VBox.margin>
-                              <Insets top="50.0" />
+                              <Insets top="100.0" />
                            </VBox.margin>
                         </HBox>
                      </children>

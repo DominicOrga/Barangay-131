@@ -422,7 +422,7 @@ public class MainControl {
         });
 
         // Initialize the resident info form dialog.
-        resetFXMLLoader.accept("fxml/scene_barangay_id_form.fxml");
+        resetFXMLLoader.accept("fxml/scene_resident_information_form.fxml");
         mResidentInfoFormScene = fxmlLoader.load();
         mResidentInfoFormControl = fxmlLoader.getController();
 
@@ -536,6 +536,7 @@ public class MainControl {
      * @param menu clicked.
      */
     private void updateMenuSelected(byte menu) {
+        if (mMenuSelected == menu) return;
 
         /**
          * Manage menu slide animations.

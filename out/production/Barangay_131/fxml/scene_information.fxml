@@ -41,7 +41,7 @@
                <graphic>
                   <ImageView fx:id="mCreateButtonImageView" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../res/ic_id.png" />
+                        <Image url="@../res/ic_new_resident.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -84,12 +84,11 @@
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
             <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                  <VBox fx:id="mBrgyIDDetailsPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
                      <children>
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
                            <children>
@@ -191,6 +190,141 @@
                            </VBox.margin>
                         </HBox>
                      </children>
+                     <StackPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
+                     <children>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
+                           <children>
+                              <ImageView fitHeight="510.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/ic_barangay_id.png" />
+                                 </image>
+                              </ImageView>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="175.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="175.0" StackPane.alignment="TOP_CENTER">
+                                 <StackPane.margin>
+                                    <Insets top="95.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <ImageView fx:id="mIDImageView1" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                                 <image>
+                                    <Image url="@../res/ic_default_resident_white_bg.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets top="95.0" />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <HBox alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
+                                 <children>
+                                    <Label text="No.131 - ">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="mBarangayIDCode1" text="16-001">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets top="275.0" />
+                                 </StackPane.margin>
+                              </HBox>
+                              <Label fx:id="mIDNameLabel1" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="305.0" />
+                                 </StackPane.margin>
+                              </Label>
+                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
+                                 <children>
+                                    <ImageView fx:id="mIDResSignatureView1" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
+                                       <image>
+                                          <Image url="@../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="mIDDateIssued1" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label minWidth="-Infinity" prefWidth="150.0" text="Valid until:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="mIDDateValid1" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="mAddress1Label1" minWidth="-Infinity" prefWidth="150.0" text="Purpose:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextArea fx:id="mPurpose" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
+                                 <cursor>
+                                    <Cursor fx:constant="MOVE" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Calibri Light" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
+                              </TextArea>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <StackPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </StackPane.margin>
                   </VBox>
                </children>
             </StackPane>
@@ -219,16 +353,16 @@
                         <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <GridPane.margin>
                         <Insets />
