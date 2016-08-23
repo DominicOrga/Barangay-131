@@ -1,0 +1,7 @@
+.agent-name .text-area *.text {
+    -fx-text-alignment: center;
+}
+
+.text-area .scroll-bar {
+    -fx-opacity: 0;
+}

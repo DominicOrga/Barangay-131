@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ScrollPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <content>
+            <GridPane prefHeight="990.0" prefWidth="765.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="215.0" minHeight="215.0" prefHeight="215.0" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="192.9" fitWidth="765.0" pickOnBounds="true" preserveRatio="true" GridPane.valignment="TOP">
+                     <image>
+                        <Image url="@../res/report_barangay_clearance_header.png" />
+                     </image>
+                  </ImageView>
+                  <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
+                    </rowConstraints>
+                     <children>
+                        <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" styleClass="agent-name" GridPane.halignment="CENTER" GridPane.rowSpan="2">
+                           <children>
+                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/ic_default_resident_white_bg.png" />
+                                 </image>
+                              </ImageView>
+                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <stylesheets>
+                                    <URL value="@../css/main_stylesheet.css" />
+                                    <URL value="@../css/barangay_clearance_report.css" />
+                                 </stylesheets>
+                              </TextArea>
+                              <Label layoutX="16.0" layoutY="210.0" text="Barangay Chairman">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="38.0" layoutY="255.0" text="K A G A W A D" underline="true">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="25.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea editable="false" layoutX="10.0" layoutY="210.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="agent-names" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="353.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <TextArea editable="false" layoutX="10.0" layoutY="428.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <Label text="Barangay Treasurer">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="25.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                              </TextArea>
+                              <Label text="Barangay Secretary">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="25.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </VBox>
+                        <GridPane GridPane.columnIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="BARANGAY CLEARANCE" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="TO WHOM IT MAY CONCERN:" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets top="75.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
+                                 <GridPane.margin>
+                                    <Insets top="125.0" />
+                                 </GridPane.margin>
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </TextArea>
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Attested by:">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="ORLANDO D. LINTAG" wrapText="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="50.0" />
+                                       </VBox.margin>
+                                    </TextArea>
+                                    <Label text="Barangay Chairman">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Certified Correct:">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="50.0" />
+                                       </VBox.margin>
+                                    </TextArea>
+                                    <Label text="Barangay Secretary">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="50.0" />
+                           </GridPane.margin>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+                  <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="B.C. NO: ">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="131-16-001">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="950.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="NOT VALID WITHOUT OFFICIAL BARANGAY SEAL">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;">
+         <children>
+            <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/ic_id.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Print" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Light" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+   <stylesheets>
+      <URL value="@../css/main_stylesheet.css" />
+      <URL value="@../css/barangay_clearance_report.css" />
+   </stylesheets>
+</GridPane>

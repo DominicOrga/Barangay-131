@@ -42,12 +42,6 @@
     -fx-text-alignment: left;
 }
 
-/* Hide the Text area scroll bar*/
-.text-area .scroll-bar:vertical:disabled {
-    -fx-opacity: 0;
-}
-
-
 .radio-button .dot {
     -fx-mark-highlight-color: #009CC1;
     -fx-mark-color: #009CC1;
@@ -118,8 +112,5 @@
     -fx-background-color: #FF861B;
 }
 
-.text-area .scroll-bar:vertical:disabled {
-    -fx-opacity: 0;
-}
 
 

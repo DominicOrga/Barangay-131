@@ -136,7 +136,7 @@ public class ResidentControl {
             Label label = new Label();
             label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             label.setAlignment(Pos.CENTER);
-            label.setPrefHeight(250);
+            label.setPrefHeight(500);
             label.setPrefWidth(1000);
 
             mResidentLabels[i] = label;
