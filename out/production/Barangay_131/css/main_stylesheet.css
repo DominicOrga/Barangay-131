@@ -1,7 +1,7 @@
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: #F4F4F4;
+    -fx-border-color: #F4F4F4;
     -fx-background-radius: 0em;
     -fx-border-radius:0em;
 }

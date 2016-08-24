@@ -176,18 +176,22 @@ public class MainControl {
         mInformationControl.setListener(new InformationControl.OnInformationControlListener() {
             @Override
             public void onCreateReportButtonClicked(byte information) {
+                mInformationControl.setBlurListPaging(true);
+                showPopupScene(mResidentInfoFormScene, false);
+
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
-                        mInformationControl.setBlurListPaging(true);
-                        showPopupScene(mResidentInfoFormScene, false);
-
                         mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_ID);
-                        mResidentInfoFormControl.reset();
+
                         break;
-                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE : break;
+                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE :
+                        mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE);
+                        break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
                     case InformationControl.INFORMATION_BLOTTER :
                 }
+
+                mResidentInfoFormControl.reset();
             }
 
             @Override

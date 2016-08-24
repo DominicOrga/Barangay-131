@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javah.container.BarangayID;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -29,8 +27,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class InformationControl {
-
-
 
     /**
      * An interface that tells the main scene to open up a manipulation resident dialog.
@@ -59,11 +55,6 @@ public class InformationControl {
      * The search field used for specialized resident query.
      */
     @FXML private TextField mSearchField;
-
-    /**
-     * The image view of the create report button.
-     */
-    @FXML private ImageView mCreateButtonImageView;
 
     @FXML private Button mCreateButton;
     @FXML private Button mBackPageButton, mNextPageButton;
@@ -94,8 +85,6 @@ public class InformationControl {
      */
     private byte mInformation;
 
-    private VBox mBarangayIDScene;
-
     private DatabaseModel mDatabaseModel;
 
     private CacheModel mCacheModel;
@@ -110,9 +99,12 @@ public class InformationControl {
      */
     private List<String> mResidentNames;
 
-    private List<String> mBarangayIDIDs;
-    private List<String> mBarangayIDResidentIDs;
-    private List<Date> mBarangayIDsDateIssued;
+    /**
+     * Volatile copy of the cached data based on the information displayed.
+     */
+    private List<String> mReportIDs;
+    private List<String> mReportResidentIDs;
+    private List<Date> mReportDateIssuedList;
 
     /**
      * The value representing which label is selected from the list paging.
@@ -289,17 +281,7 @@ public class InformationControl {
      * @param cacheModel
      */
     public void setCacheModel(CacheModel cacheModel) {
-
         mCacheModel = cacheModel;
-
-        mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
-        mBarangayIDIDs = mCacheModel.getBarangayIDIDsCache();
-        mBarangayIDResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
-        mBarangayIDsDateIssued = mCacheModel.getBarangayIDdateIssuedCache();
-
-        // Determine the initial number of Pages and set the default current page to 1.
-        updateListPaging(false);
     }
 
     public void setBlurListPaging(boolean blur) {
@@ -311,8 +293,9 @@ public class InformationControl {
      * @param information
      */
     public void setInformation(byte information){
-        // Refresh the list paging.
-        updateListPaging(false);
+        // Reset the resident volatile cache.
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+        mResidentNames = mCacheModel.getResidentNamesCache();
 
         // Hide the previous Information details pane used.
         switch (mInformation) {
@@ -327,16 +310,26 @@ public class InformationControl {
             case INFORMATION_BLOTTER :
         }
 
-        // Show the new Information details pane.
+        // Update the scene to match the information.
         switch (information) {
             case INFORMATION_BARANGAY_ID :
                 mCreateButton.setText("New Barangay ID");
                 mBrgyIDDetailsPane.setVisible(true);
 
+                // The volatile cache should hold the cached data pertaining to the barangay id.
+                mReportIDs = mCacheModel.getBarangayIDIDsCache();
+                mReportResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
+                mReportDateIssuedList = mCacheModel.getBarangayIDdateIssuedCache();
+
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :
                 mCreateButton.setText("New Barangay Clearance");
                 mBrgyClearanceDetailsPane.setVisible(true);
+
+                // The volatile cache should hold the cached data pertaining to the barangay clearance.
+                mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
+                mReportResidentIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
+                mReportDateIssuedList = mCacheModel.getBrgyClearanceDateIssuedCache();
 
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
@@ -345,6 +338,10 @@ public class InformationControl {
         }
 
         mInformation = information;
+
+        // Refresh the list paging.
+        updateListPaging(false);
+
     }
 
     public void createBarangayID(BarangayID barangayID) {
@@ -352,9 +349,9 @@ public class InformationControl {
         mDatabaseModel.createBarangayID(barangayID);
 
         // Place the new barangay id in the cached data.
-        mBarangayIDsDateIssued.add(0, barangayID.getDateIssued());
-        mBarangayIDResidentIDs.add(0, barangayID.getResidentID());
-        mBarangayIDIDs.add(0, barangayID.getID());
+        mReportDateIssuedList.add(0, barangayID.getDateIssued());
+        mReportResidentIDs.add(0, barangayID.getResidentID());
+        mReportIDs.add(0, barangayID.getID());
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);
@@ -468,7 +465,7 @@ public class InformationControl {
 
         // Find the index of the barangayID to be first displayed to the list paging current page.
         while (page < mCurrentPage) {
-            calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
+            calendar.setTime(mReportDateIssuedList.get(barangayIDIndex));
             int month = calendar.get(Calendar.MONTH);
 
             if (precedingMonth != month) {
@@ -501,8 +498,8 @@ public class InformationControl {
         Arrays.fill(mReportIDToLabelLocation, null);
 
         // Determine the barangay ID placement within the labels.
-        while (labelPosition <= 40 && barangayIDIndex < mBarangayIDIDs.size()) {
-            calendar.setTime(mBarangayIDsDateIssued.get(barangayIDIndex));
+        while (labelPosition <= 40 && barangayIDIndex < mReportIDs.size()) {
+            calendar.setTime(mReportDateIssuedList.get(barangayIDIndex));
             int month = calendar.get(Calendar.MONTH);
 
             if (precedingMonth != month) {
@@ -537,10 +534,10 @@ public class InformationControl {
             Label currentLabel = mGridLabels[labelIndex];
 
             // Store the barangay ID in mReportIDToLabelLocation which corresponds to the label location.
-            mReportIDToLabelLocation[labelIndex] = mBarangayIDIDs.get(barangayIDIndex);
+            mReportIDToLabelLocation[labelIndex] = mReportIDs.get(barangayIDIndex);
 
             // Get the name of the resident applicant of the barangay ID.
-            int index = mResidentIDs.indexOf(mBarangayIDResidentIDs.get(barangayIDIndex));
+            int index = mResidentIDs.indexOf(mReportResidentIDs.get(barangayIDIndex));
             currentLabel.setText(mResidentNames.get(index));
 
             labelPosition++;
@@ -554,13 +551,13 @@ public class InformationControl {
      */
     private void updateListPaging(boolean stayOnPage) {
         mLabelUseCount = 0;
-        int size = mBarangayIDsDateIssued.size();
+        int size = mReportDateIssuedList.size();
 
         int precedingMonth = -1;
         Calendar calendar = Calendar.getInstance();
 
         for (int i = 0; i < size; i++) {
-            calendar.setTime(mBarangayIDsDateIssued.get(i));
+            calendar.setTime(mReportDateIssuedList.get(i));
             int month = calendar.get(Calendar.MONTH);
 
             if (precedingMonth != month) {

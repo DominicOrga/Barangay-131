@@ -15,7 +15,12 @@ public class CacheModel {
 
     private List<String> mBarangayIDIDsCache;
     private List<String> mBarangayIDResidentIDCache;
-    private List<Date> mBarangayIDdateIssuedCache;
+    private List<Date> mBarangayIDDateIssuedCache;
+
+    private List<String> mBrgyClearanceIDsCache;
+    private List<String> mBrgyClearanceResidentIDsCache;
+    private List<Date> mBrgyClearanceDateIssuedCache;
+
 
     private DatabaseModel dbControl;
 
@@ -27,12 +32,14 @@ public class CacheModel {
         mResidentNamesCache = lists[1];
 
         lists = dbControl.getBarangayIDEssentials();
-        System.out.println(Arrays.asList(lists[2]));
         mBarangayIDIDsCache = lists[0];
         mBarangayIDResidentIDCache = lists[1];
-        mBarangayIDdateIssuedCache = lists[2];
+        mBarangayIDDateIssuedCache = lists[2];
 
-        System.out.println(Arrays.asList(mBarangayIDIDsCache));
+        lists = dbControl.getBarangayClearanceEssentials();
+        mBrgyClearanceIDsCache = lists[0];
+        mBrgyClearanceResidentIDsCache = lists[1];
+        mBrgyClearanceDateIssuedCache = lists[2];
     }
 
     public List<String> getResidentIDsCache() {
@@ -47,5 +54,17 @@ public class CacheModel {
 
     public List<String> getBarangayIDResidentIDCache() { return mBarangayIDResidentIDCache; }
 
-    public List<Date> getBarangayIDdateIssuedCache() { return mBarangayIDdateIssuedCache; }
+    public List<Date> getBarangayIDdateIssuedCache() { return mBarangayIDDateIssuedCache; }
+
+    public List<String> getBrgyClearanceIDsCache() {
+        return mBrgyClearanceIDsCache;
+    }
+
+    public List<String> getBrgyClearanceResidentIDsCache() {
+        return mBrgyClearanceResidentIDsCache;
+    }
+
+    public List<Date> getBrgyClearanceDateIssuedCache() {
+        return mBrgyClearanceDateIssuedCache;
+    }
 }

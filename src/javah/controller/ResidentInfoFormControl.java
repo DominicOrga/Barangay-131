@@ -604,6 +604,8 @@ public class ResidentInfoFormControl {
                 mActionLabel.setText("Barangay ID Form");
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :
+                mBrgyClearancePane.toFront();
+                mActionLabel.setText("Barangay Clearance Form");
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
                 break;

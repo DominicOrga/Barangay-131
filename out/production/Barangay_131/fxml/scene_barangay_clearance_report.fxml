@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
@@ -18,9 +18,9 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <ScrollPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="210.0" GridPane.rowIndex="1">
          <content>
-            <GridPane prefHeight="990.0" prefWidth="765.0">
+            <GridPane fx:id="mDocumentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="990.0" prefWidth="765.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -47,12 +47,12 @@
                      <children>
                         <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" styleClass="agent-name" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <children>
-                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="mChmPhoto" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../res/ic_default_resident_white_bg.png" />
                                  </image>
                               </ImageView>
-                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
+                              <TextArea fx:id="mChmNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -74,7 +74,7 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea editable="false" layoutX="10.0" layoutY="210.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad1Text" editable="false" layoutX="10.0" layoutY="210.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -82,7 +82,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad2Text" editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -90,7 +90,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad3Text" editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -98,7 +98,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="agent-names" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad4Text" editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="agent-names" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -106,7 +106,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="353.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad5Text" editable="false" layoutX="10.0" layoutY="353.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -114,7 +114,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad6Text" editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -122,7 +122,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <TextArea editable="false" layoutX="10.0" layoutY="428.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
+                              <TextArea fx:id="mKagawad7Text" editable="false" layoutX="10.0" layoutY="428.0" minHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" text="ORLANDO D. LINTAG" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -138,7 +138,7 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                              <TextArea fx:id="mTrsrNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -151,7 +151,7 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                              <TextArea fx:id="mSecNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
@@ -183,7 +183,7 @@
                                     <Insets top="75.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
+                              <TextArea fx:id="mBodyTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
                                  <GridPane.margin>
                                     <Insets top="125.0" />
                                  </GridPane.margin>
@@ -191,34 +191,6 @@
                                     <Font name="Times New Roman" size="20.0" />
                                  </font>
                               </TextArea>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label text="Attested by:">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="10.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextArea editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets top="50.0" />
-                                       </VBox.margin>
-                                    </TextArea>
-                                    <Label text="Barangay Chairman">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="10.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                 </children>
-                              </VBox>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" GridPane.rowIndex="1">
                                  <children>
                                     <Label text="Certified Correct:">
@@ -229,7 +201,7 @@
                                           <Insets left="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextArea editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
+                                    <TextArea fx:id="mSecPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
@@ -247,6 +219,48 @@
                                     </Label>
                                  </children>
                               </VBox>
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Attested by:">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="mChmPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Hon. ORLANDO D. LINTAG" wrapText="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="50.0" />
+                                       </VBox.margin>
+                                    </TextArea>
+                                    <Label text="Barangay Chairman">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <Pane layoutX="10.0" layoutY="585.0" prefHeight="150.0" prefWidth="440.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="mSecSignature" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="5.0" y="25.0">
+                                       <image>
+                                          <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="mChmSignature" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="220.0" y="25.0">
+                                       <image>
+                                          <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
                            </children>
                            <GridPane.margin>
                               <Insets right="50.0" />

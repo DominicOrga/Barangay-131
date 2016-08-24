@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/css/main_stylesheet.css" afterPath="$PROJECT_DIR$/src/css/main_stylesheet.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_main.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_main.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_resident_form.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_resident_information_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_resident_information_form.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/InformationControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/InformationControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/MainControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/model/CacheModel.java" afterPath="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" afterPath="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -65,10 +67,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResidentInfoFormControl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="612" column="9" selection-start-line="612" selection-start-column="9" selection-end-line="612" selection-end-column="9" />
+              <folding>
+                <element signature="docComment;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onCreateButtonClicked#0;class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentGridPane#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#INFORMATION_BARANGAY_ID#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentLabels#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mDatabaseModel#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mPageCount#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentCount#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentIDs#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;field#mSignatureImage#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#initialize#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onUploadButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#onCaptureButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#onCreateButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="e#10956#11013#0" expanded="false" />
+                <element signature="e#12198#12242#0" expanded="false" />
+                <element signature="docComment;method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="e#19662#19734#0" expanded="false" />
+                <element signature="e#20348#20397#0" expanded="false" />
+                <element signature="docComment;method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
+                <element signature="docComment;method#setInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="820">
+            <state relative-caret-position="-263">
               <caret line="460" column="57" selection-start-line="460" selection-start-column="57" selection-end-line="460" selection-end-column="57" />
               <folding>
                 <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
@@ -119,8 +174,8 @@
       <file leaf-file-name="InformationControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/InformationControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="168" column="35" selection-start-line="168" selection-start-column="35" selection-end-line="168" selection-end-column="35" />
+            <state relative-caret-position="-1210">
+              <caret line="149" column="30" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
               <folding>
                 <element signature="docComment;class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
                 <element signature="class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
@@ -128,7 +183,6 @@
                 <element signature="docComment;field#mCurrentPageLabel#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;field#mPageCountLabel#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;field#mSearchField#0;class#InformationControl#0" expanded="false" />
-                <element signature="docComment;field#mCreateButtonImageView#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;field#mBrgyIDDetailsPane#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;field#mBrgyClearanceDetailsPane#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;field#mInformation#0;class#InformationControl#0" expanded="false" />
@@ -155,27 +209,93 @@
                 <element signature="docComment;method#setListener#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;method#setDatabaseModel#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;method#setCacheModel#0;class#InformationControl#0" expanded="false" />
-                <element signature="method#setCacheModel#0;class#InformationControl#0" expanded="false" />
-                <element signature="method#setBlurListPaging#0;class#InformationControl#0" expanded="false" />
-                <element signature="docComment;method#setInformation#0;class#InformationControl#0" expanded="false" />
+                <element signature="e#8360#8361#0" expanded="true" />
+                <element signature="e#8400#8401#0" expanded="true" />
                 <element signature="method#createBarangayID#0;class#InformationControl#0" expanded="false" />
                 <element signature="docComment;method#setReportToLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
-                <element signature="e#14676#14725#0" expanded="false" />
+                <element signature="method#setReportToLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
+                <element signature="e#14211#14283#0" expanded="false" />
+                <element signature="e#14908#14957#0" expanded="false" />
                 <element signature="docComment;method#updateCurrentPage#0;class#InformationControl#0" expanded="false" />
-                <element signature="e#17872#17976#0" expanded="false" />
+                <element signature="method#updateCurrentPage#0;class#InformationControl#0" expanded="false" />
+                <element signature="e#18098#18202#0" expanded="false" />
                 <element signature="docComment;method#updateListPaging#0;class#InformationControl#0" expanded="false" />
-                <element signature="method#updateListPaging#0;class#InformationControl#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CSSContract.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
+      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-              <folding />
+            <state relative-caret-position="395">
+              <caret line="187" column="81" selection-start-line="187" selection-start-column="81" selection-end-line="187" selection-end-column="81" />
+              <folding>
+                <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mUserLabel#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentMenu#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mPhotoshopScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentDeletionControl#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#MENU_RESIDENT#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mMenuSelected#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mRectAnimTransitioner#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
+                <element signature="e#3506#3546#0" expanded="false" />
+                <element signature="class#4665:5526" expanded="false" />
+                <element signature="method#onNewResidentButtonClicked#0;class#4665:5526" expanded="false" />
+                <element signature="method#onEditResidentButtonClicked#0;class#4665:5526" expanded="false" />
+                <element signature="method#onDeleteResidentButtonClicked#0;class#4665:5526" expanded="false" />
+                <element signature="method#onViewButtonClicked#0;class#5907:7723" expanded="false" />
+                <element signature="class#8592:11000" expanded="false" />
+                <element signature="method#onAcceptButtonClicked#0;class#8592:11000" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#8592:11000" expanded="false" />
+                <element signature="class#11349:14720" expanded="false" />
+                <element signature="method#onChmUploadButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onChmCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onChmSignatureUploadButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onChmSignatureCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onSecSignatureUploadButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onSecSignatureCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="e#13815#13899#0" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#11349:14720" expanded="false" />
+                <element signature="e#14337#14421#0" expanded="false" />
+                <element signature="class#15023:15563" expanded="false" />
+                <element signature="method#onDeleteButtonClicked#0;class#15023:15563" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#15023:15563" expanded="false" />
+                <element signature="class#15833:17393" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#15833:17393" expanded="false" />
+                <element signature="e#16042#16136#0" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#15833:17393" expanded="false" />
+                <element signature="method#onTakePhotoButtonClicked#0;class#15833:17393" expanded="false" />
+                <element signature="method#onUploadButtonClicked#0;class#15833:17393" expanded="false" />
+                <element signature="class#17892:19699" expanded="false" />
+                <element signature="method#onUploadButtonClicked#0;class#17892:19699" expanded="false" />
+                <element signature="method#onCaptureButtonClicked#0;class#17892:19699" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#17892:19699" expanded="false" />
+                <element signature="method#onCreateButtonClicked#0;class#17892:19699" expanded="false" />
+                <element signature="class#20062:20635" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#20062:20635" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#20062:20635" expanded="false" />
+                <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onBlotterMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+                <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+                <element signature="class#22742:23185" expanded="false" />
+                <element signature="method#call#0;class#22742:23185" expanded="false" />
+                <element signature="e#25003#25107#0" expanded="false" />
+                <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+                <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -247,16 +367,16 @@
         <option value="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
         <option value="$PROJECT_DIR$/src/javah/util/BarangayUtils.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/BarangayIDReportControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
-        <option value="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml" />
         <option value="$PROJECT_DIR$/src/fxml/scene_information.fxml" />
         <option value="$PROJECT_DIR$/src/fxml/scene_resident.fxml" />
         <option value="$PROJECT_DIR$/src/javah/contract/CSSContract.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/InformationControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/InformationControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java" />
       </list>
     </option>
   </component>
@@ -845,7 +965,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17780295" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28652322" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1147,34 +1267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1078">
-          <caret line="300" column="0" selection-start-line="300" selection-start-column="0" selection-end-line="300" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="docComment;field#BINARY_PHOTO#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;field#mPhotoDirectoryPath#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;method#DatabaseModel#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#DatabaseModel#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;method#getResidentEssentials#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#getResidentEssentials#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#createResident#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#updateResident#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;method#getBarangayIDEssentials#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="e#11742#11821#0" expanded="false" />
-            <element signature="method#createBarangayID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#getBarangayID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;method#getResidentSignatureFromBarangayID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#getResidentSignatureFromBarangayID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="docComment;method#generateID#0;class#DatabaseModel#0" expanded="false" />
-            <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -1216,138 +1308,6 @@
             <element signature="docComment;method#printReport#0;class#BarangayIDReportControl#0" expanded="false" />
             <element signature="method#printReport#0;class#BarangayIDReportControl#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="275" column="52" selection-start-line="275" selection-start-column="52" selection-end-line="275" selection-end-column="52" />
-          <folding>
-            <element signature="docComment;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onCreateButtonClicked#0;class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentGridPane#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mBarangayIDPane#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#INFORMATION_BARANGAY_ID#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentLabels#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mDatabaseModel#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mPageCount#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentCount#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentIDs#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;field#mSignatureImage#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#initialize#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onUploadButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#onCaptureButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="e#10956#11013#0" expanded="false" />
-            <element signature="e#12198#12242#0" expanded="false" />
-            <element signature="docComment;method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="e#19662#19734#0" expanded="false" />
-            <element signature="e#20348#20397#0" expanded="false" />
-            <element signature="docComment;method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="docComment;method#setInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
-            <element signature="method#setInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="538" column="42" selection-start-line="538" selection-start-column="42" selection-end-line="538" selection-end-column="42" />
-          <folding>
-            <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mUserLabel#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentMenu#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mPhotoshopScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentDeletionControl#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#MENU_RESIDENT#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mRectAnimTransitioner#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
-            <element signature="e#3506#3546#0" expanded="false" />
-            <element signature="class#4665:5526" expanded="false" />
-            <element signature="method#onNewResidentButtonClicked#0;class#4665:5526" expanded="false" />
-            <element signature="method#onEditResidentButtonClicked#0;class#4665:5526" expanded="false" />
-            <element signature="method#onDeleteResidentButtonClicked#0;class#4665:5526" expanded="false" />
-            <element signature="class#5907:7600" expanded="false" />
-            <element signature="method#onCreateReportButtonClicked#0;class#5907:7600" expanded="false" />
-            <element signature="method#onViewButtonClicked#0;class#5907:7600" expanded="false" />
-            <element signature="class#8469:10877" expanded="false" />
-            <element signature="method#onAcceptButtonClicked#0;class#8469:10877" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#8469:10877" expanded="false" />
-            <element signature="class#11226:14597" expanded="false" />
-            <element signature="method#onChmUploadButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onChmCaptureButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onChmSignatureUploadButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onChmSignatureCaptureButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onSecSignatureUploadButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onSecSignatureCaptureButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="e#13692#13776#0" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#11226:14597" expanded="false" />
-            <element signature="e#14214#14298#0" expanded="false" />
-            <element signature="class#14900:15440" expanded="false" />
-            <element signature="method#onDeleteButtonClicked#0;class#14900:15440" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#14900:15440" expanded="false" />
-            <element signature="class#15710:17270" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#15710:17270" expanded="false" />
-            <element signature="e#15919#16013#0" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#15710:17270" expanded="false" />
-            <element signature="method#onTakePhotoButtonClicked#0;class#15710:17270" expanded="false" />
-            <element signature="method#onUploadButtonClicked#0;class#15710:17270" expanded="false" />
-            <element signature="class#17769:19576" expanded="false" />
-            <element signature="method#onUploadButtonClicked#0;class#17769:19576" expanded="false" />
-            <element signature="method#onCaptureButtonClicked#0;class#17769:19576" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#17769:19576" expanded="false" />
-            <element signature="method#onCreateButtonClicked#0;class#17769:19576" expanded="false" />
-            <element signature="class#19939:20512" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#19939:20512" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#19939:20512" expanded="false" />
-            <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBlotterMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="e#24880#24984#0" expanded="false" />
-            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
-            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1527,69 +1487,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/InformationControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="168" column="35" selection-start-line="168" selection-start-column="35" selection-end-line="168" selection-end-column="35" />
-          <folding>
-            <element signature="docComment;class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
-            <element signature="class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mListGridPane#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mCurrentPageLabel#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mPageCountLabel#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mSearchField#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mCreateButtonImageView#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mBrgyIDDetailsPane#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mBrgyClearanceDetailsPane#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mInformation#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentIDs#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentNames#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mGridLabels#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mReportIDToLabelLocation#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mCurrentPage#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mPageCount#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;field#mLabelUseCount#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#initialize#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#onSearchButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onSearchButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onSearchFieldKeyPressed#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#onBackPageButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onBackPageButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#onNextPageButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onNextPageButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#onCreateReportButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onCreateReportButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#onViewButtonClicked#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#setListener#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#setDatabaseModel#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#setCacheModel#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#setCacheModel#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#setBlurListPaging#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#setInformation#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#createBarangayID#0;class#InformationControl#0" expanded="false" />
-            <element signature="docComment;method#setReportToLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
-            <element signature="e#14676#14725#0" expanded="false" />
-            <element signature="docComment;method#updateCurrentPage#0;class#InformationControl#0" expanded="false" />
-            <element signature="e#17872#17976#0" expanded="false" />
-            <element signature="docComment;method#updateListPaging#0;class#InformationControl#0" expanded="false" />
-            <element signature="method#updateListPaging#0;class#InformationControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="820">
+        <state relative-caret-position="-263">
           <caret line="460" column="57" selection-start-line="460" selection-start-column="57" selection-end-line="460" selection-end-column="57" />
           <folding>
             <element signature="docComment;class#OnResidentSceneListener#0;class#ResidentControl#0" expanded="false" />
@@ -1632,6 +1532,230 @@
             <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
             <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/DatabaseModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1041">
+          <caret line="504" column="51" selection-start-line="504" selection-start-column="51" selection-end-line="504" selection-end-column="51" />
+          <folding>
+            <element signature="docComment;field#BINARY_PHOTO#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="docComment;field#mPhotoDirectoryPath#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="docComment;method#DatabaseModel#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="docComment;method#getResidentEssentials#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#getResidentEssentials#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#getResident#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#archiveResident#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#createResident#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#updateResident#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#createBarangayID#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#getBarangayID#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="docComment;method#getResidentSignatureFromBarangayID#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#getResidentSignatureFromBarangayID#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#getBarangayClearanceEssentials#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="docComment;method#generateID#0;class#DatabaseModel#0" expanded="false" />
+            <element signature="method#generateID#0;class#DatabaseModel#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+          <folding>
+            <element signature="e#1761#1762#0" expanded="true" />
+            <element signature="e#1806#1807#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="true" />
+            <element signature="e#1921#1922#0" expanded="true" />
+            <element signature="e#1980#1981#0" expanded="true" />
+            <element signature="e#2032#2033#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="187" column="81" selection-start-line="187" selection-start-column="81" selection-end-line="187" selection-end-column="81" />
+          <folding>
+            <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mUserLabel#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentMenu#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mPhotoshopScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentDeletionControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#MENU_RESIDENT#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mRectAnimTransitioner#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
+            <element signature="e#3506#3546#0" expanded="false" />
+            <element signature="class#4665:5526" expanded="false" />
+            <element signature="method#onNewResidentButtonClicked#0;class#4665:5526" expanded="false" />
+            <element signature="method#onEditResidentButtonClicked#0;class#4665:5526" expanded="false" />
+            <element signature="method#onDeleteResidentButtonClicked#0;class#4665:5526" expanded="false" />
+            <element signature="method#onViewButtonClicked#0;class#5907:7723" expanded="false" />
+            <element signature="class#8592:11000" expanded="false" />
+            <element signature="method#onAcceptButtonClicked#0;class#8592:11000" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#8592:11000" expanded="false" />
+            <element signature="class#11349:14720" expanded="false" />
+            <element signature="method#onChmUploadButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onChmCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onChmSignatureUploadButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onChmSignatureCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onSecSignatureUploadButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onSecSignatureCaptureButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="e#13815#13899#0" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#11349:14720" expanded="false" />
+            <element signature="e#14337#14421#0" expanded="false" />
+            <element signature="class#15023:15563" expanded="false" />
+            <element signature="method#onDeleteButtonClicked#0;class#15023:15563" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#15023:15563" expanded="false" />
+            <element signature="class#15833:17393" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#15833:17393" expanded="false" />
+            <element signature="e#16042#16136#0" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#15833:17393" expanded="false" />
+            <element signature="method#onTakePhotoButtonClicked#0;class#15833:17393" expanded="false" />
+            <element signature="method#onUploadButtonClicked#0;class#15833:17393" expanded="false" />
+            <element signature="class#17892:19699" expanded="false" />
+            <element signature="method#onUploadButtonClicked#0;class#17892:19699" expanded="false" />
+            <element signature="method#onCaptureButtonClicked#0;class#17892:19699" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#17892:19699" expanded="false" />
+            <element signature="method#onCreateButtonClicked#0;class#17892:19699" expanded="false" />
+            <element signature="class#20062:20635" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#20062:20635" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#20062:20635" expanded="false" />
+            <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBlotterMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="class#22742:23185" expanded="false" />
+            <element signature="method#call#0;class#22742:23185" expanded="false" />
+            <element signature="e#25003#25107#0" expanded="false" />
+            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/InformationControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1210">
+          <caret line="149" column="30" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
+          <folding>
+            <element signature="docComment;class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
+            <element signature="class#OnInformationControlListener#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mListGridPane#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPageLabel#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCountLabel#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mSearchField#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mBrgyIDDetailsPane#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mBrgyClearanceDetailsPane#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mInformation#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentIDs#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentNames#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mGridLabels#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mReportIDToLabelLocation#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPage#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCount#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelUseCount#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onSearchFieldKeyPressed#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#onBackPageButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#onNextPageButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onNextPageButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#onCreateReportButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onCreateReportButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#onViewButtonClicked#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#setDatabaseModel#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#setCacheModel#0;class#InformationControl#0" expanded="false" />
+            <element signature="e#8360#8361#0" expanded="true" />
+            <element signature="e#8400#8401#0" expanded="true" />
+            <element signature="method#createBarangayID#0;class#InformationControl#0" expanded="false" />
+            <element signature="docComment;method#setReportToLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#setReportToLabelSelectedIndex#0;class#InformationControl#0" expanded="false" />
+            <element signature="e#14211#14283#0" expanded="false" />
+            <element signature="e#14908#14957#0" expanded="false" />
+            <element signature="docComment;method#updateCurrentPage#0;class#InformationControl#0" expanded="false" />
+            <element signature="method#updateCurrentPage#0;class#InformationControl#0" expanded="false" />
+            <element signature="e#18098#18202#0" expanded="false" />
+            <element signature="docComment;method#updateListPaging#0;class#InformationControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentInfoFormControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="612" column="9" selection-start-line="612" selection-start-column="9" selection-end-line="612" selection-end-column="9" />
+          <folding>
+            <element signature="docComment;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onCreateButtonClicked#0;class#OnResidentInfoFormListener#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentGridPane#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#INFORMATION_BARANGAY_ID#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentLabels#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mDatabaseModel#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mPageCount#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentCount#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentIDs#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;field#mSignatureImage#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#initialize#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#onSearchButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#onSearchFieldKeyPressed#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#onBackPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#onNextPageButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onUploadButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#onCaptureButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#onCreateButtonClicked#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="e#10956#11013#0" expanded="false" />
+            <element signature="e#12198#12242#0" expanded="false" />
+            <element signature="docComment;method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#updateListPaging#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#updateCurrentPage#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#setResidentSelected#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="e#19662#19734#0" expanded="false" />
+            <element signature="e#20348#20397#0" expanded="false" />
+            <element signature="docComment;method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#reset#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="method#setSignature#0;class#ResidentInfoFormControl#0" expanded="false" />
+            <element signature="docComment;method#setInformation#0;class#ResidentInfoFormControl#0" expanded="false" />
           </folding>
         </state>
       </provider>

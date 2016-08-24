@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInfoFormControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="1000.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInfoFormControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="420.0" prefWidth="420.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -34,14 +34,14 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
             <Label fx:id="mActionLabel" text="Barangay ID Form" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../res/ic_id.png" />
                </image>
@@ -159,7 +159,7 @@
             </Button>
          </children>
       </HBox>
-      <VBox fx:id="mBarangayIDPane" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox fx:id="mBarangayIDPane" prefHeight="470.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <children>
             <Label text="Address:" textFill="#ff861b">
                <font>
@@ -268,10 +268,10 @@
             </HBox>
          </children>
          <GridPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets left="20.0" top="20.0" />
          </GridPane.margin>
       </VBox>
-      <VBox fx:id="mBrgyClearancePane" layoutX="450.0" layoutY="80.0" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox fx:id="mBrgyClearancePane" layoutX="450.0" layoutY="80.0" prefHeight="470.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <children>
             <Label text="Address:" textFill="#ff861b">
                <font>
@@ -360,14 +360,14 @@
                         </Pane>
                      </children>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </HBox.margin>
                   </StackPane>
                </children>
             </HBox>
          </children>
          <GridPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets left="20.0" top="20.0" />
          </GridPane.margin>
       </VBox>
    </children>
