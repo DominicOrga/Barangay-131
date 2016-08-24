@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
@@ -75,6 +76,7 @@ public class ResidentInfoFormControl {
     @FXML Pane mBrgyClearancePane;
     @FXML RadioButton mBrgyClearanceAddress1RadioButton, mBrgyClearanceAddress2RadioButton;
     @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text, mBrgyClearancePurpose;
+    @FXML Label mPurposeError;
 
     @FXML Button mCreateButton;
 
@@ -153,6 +155,7 @@ public class ResidentInfoFormControl {
     private Resident mResidentSelected;
 
     private BarangayID mBarangayID;
+    private BarangayClearance mBarangayClearance;
 
     @FXML
     private void initialize() {
@@ -327,26 +330,9 @@ public class ResidentInfoFormControl {
 
                 mBarangayID.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
 
-                String chmSignatureDimension = mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION);
-
-                // If the chairman signature dimension is not empty, then pass it to mBarangayID.
-                if (chmSignatureDimension != null)
-                    mBarangayID.setChmSignatureDimension(BarangayUtils.parseSignatureDimension(chmSignatureDimension));
-
-//                mBarangayID.setChmSignatureDimension();
-//                // Check if the current chairman signature is still the same with the one registered in the latest barangay ID.
-//                // If so, then pass the previous chairman signature coo3+rdinates and dimension to mBarangayID.
-//                Object[] chmSignature = mDatabaseModel.getChmSignatureFromBarangayID();
-//
-//                if (chmSignature != null) {
-//                    String prevSignature = (String) chmSignature[0];
-//                    double[] prevSignatureDimension = (double[]) chmSignature[1];
-//
-//                    // If the current chairman signature is still the same with the last created barangay ID, then pass the
-//                    // dimension of the chairman signature.
-//                    mBarangayID.setChmSignatureDimension(
-//                            prevSignature.equals(mBarangayID.getChmSignature()) ? prevSignatureDimension : null);
-//                }
+                mBarangayID.setChmSignatureDimension(
+                        BarangayUtils.parseSignatureDimension(
+                                mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION)));
 
                 // The date issued will be the current date.
                 GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -362,11 +348,151 @@ public class ResidentInfoFormControl {
                 mBarangayID.setDateValid(new Date(calendar.getTime().getTime()));
 
                 // Pass the generated barangay ID to the Main Control in order to be processed into a report.
-                mListener.onCreateButtonClicked(mBarangayID, mInformation);
+                mListener.onCreateButtonClicked(mBarangayID, INFORMATION_BARANGAY_ID);
                 break;
 
             case INFORMATION_BARANGAY_CLEARANCE :
+                if (mBrgyClearancePurpose.getText() == null || mBrgyClearancePurpose.getText().isEmpty()) {
+                    mPurposeError.setVisible(true);
+                    mBrgyClearancePurpose.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
+                    return;
+                } else {
+                    mPurposeError.setVisible(false);
+                    mBrgyClearancePurpose.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                }
+
+                // Generate a temporary unique id for the barangay clearance.
+                mBarangayClearance.setID(mDatabaseModel.generateID(DatabaseContract.BarangayClearanceEntry.TABLE_NAME));
+
+                mBarangayClearance.setResidentID(mResidentSelected.getId());
+                mBarangayClearance.setResidentName(String.format("%s %s. %s",
+                        mResidentSelected.getFirstName(),
+                        mResidentSelected.getMiddleName().charAt(0),
+                        mResidentSelected.getLastName())
+                );
+
+                mBarangayClearance.setAddress(mBrgyClearanceAddress1RadioButton.isSelected() ?
+                        mResidentSelected.getAddress1() : mResidentSelected.getAddress2());
+
+                mBarangayClearance.setYearOfResidency(mResidentSelected.getYearOfResidency());
+
+                // Compute the total years of residency of the resident.
+                Calendar birthdate = Calendar.getInstance();
+                birthdate.setTime(mResidentSelected.getBirthDate());
+
+                Calendar currentDate = Calendar.getInstance();
+
+                int totalYears = currentDate.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
+
+                // If year of residency is equal to -1, then that means that the resident is a resident since birth.
+                if (mResidentSelected.getYearOfResidency() == -1)
+                    // Date Subtraction Algorithm.
+                    totalYears -= currentDate.get(Calendar.YEAR) > birthdate.get(Calendar.YEAR) &&
+                                    currentDate.get(Calendar.MONTH) == birthdate.get(Calendar.MONTH) &&
+                                    currentDate.get(Calendar.DAY_OF_MONTH) < birthdate.get(Calendar.DAY_OF_MONTH) ||
+                                    currentDate.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH) ?
+                                    1 : 0;
+
+                else
+                    totalYears -= currentDate.get(Calendar.YEAR) > birthdate.get(Calendar.YEAR) &&
+                            currentDate.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH) ? 1 : 0;
+
+                mBarangayClearance.setTotalYearsResidency(totalYears);
+
+                mBarangayClearance.setPurpose(mBrgyClearancePurpose.getText());
+
+                // The date issued will be the current date.
+                calendar = (GregorianCalendar) GregorianCalendar.getInstance();
+                mBarangayClearance.setDateIssued(new Date(calendar.getTime().getTime()));
+
+                // Set the date validity of the barangay ID.
+                // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
+                calendar.add(Calendar.DATE, 364);
+
+                // Add one more day to the calendar if it is a leap year.
+                if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
+                    calendar.add(Calendar.DATE, 1);
+
+                mBarangayClearance.setDateValid(new Date(calendar.getTime().getTime()));
+
+                // Set the chairman data.
+                mBarangayClearance.setChmName(String.format("%s %s. %s",
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME))
+                );
+
+                mBarangayClearance.setChmPhoto(mPrefModel.get(PreferenceContract.CHAIRMAN_PHOTO_PATH));
+                mBarangayClearance.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
+
+                mBarangayClearance.setChmSignatureDimension(
+                        BarangayUtils.parseSignatureDimension(
+                                mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION)));
+
+                mBarangayClearance.setSecName(String.format("%s %s. %s",
+                        mPrefModel.get(PreferenceContract.SECRETARY_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_MIDDLE_NAME).charAt(0),
+                        mPrefModel.get(PreferenceContract.SECRETARY_LAST_NAME))
+                );
+
+                mBarangayClearance.setSecSignature(mPrefModel.get(PreferenceContract.SECRETARY_SIGNATURE_PATH));
+
+                mBarangayClearance.setSecSignatureDimension(
+                        BarangayUtils.parseSignatureDimension(
+                                mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION)));
+
+                mBarangayClearance.setTreasurerName(String.format("%s  %s. %s",
+                        mPrefModel.get(PreferenceContract.TREASURER_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_MIDDLE_NAME).charAt(0),
+                        mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME))
+                );
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_1_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(0, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_1_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_1_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_1_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_2_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(1, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_2_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_2_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_2_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_3_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(2, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_3_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_3_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_3_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_4_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(3, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_4_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_4_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_4_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_5_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(4, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_5_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_5_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_5_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_6_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(5, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_6_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_6_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_6_LAST_NAME)));
+
+                if (!mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME).isEmpty())
+                    mBarangayClearance.setKagawadName(7, String.format("%s %s. %s",
+                            mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_7_MIDDLE_NAME).charAt(0),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_7_LAST_NAME)));
+
+                // Pass the generated barangay clearance to the Main Control in order to be processed into a report.
+                mListener.onCreateButtonClicked(mBarangayClearance, INFORMATION_BARANGAY_CLEARANCE);
                 break;
+
             case INFORMATION_BUSINESS_CLEARANCE :
                 break;
             case INFORMATION_BLOTTER :
@@ -634,10 +760,12 @@ public class ResidentInfoFormControl {
             case INFORMATION_BARANGAY_ID :
                 mBarangayIDPane.toFront();
                 mActionLabel.setText("Barangay ID Form");
+                mBarangayID = new BarangayID();
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :
                 mBrgyClearancePane.toFront();
                 mActionLabel.setText("Barangay Clearance Form");
+                mBarangayClearance = new BarangayClearance();
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
                 break;

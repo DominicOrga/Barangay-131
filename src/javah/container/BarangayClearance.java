@@ -114,7 +114,7 @@ public class BarangayClearance {
         return mChmPhoto;
     }
 
-    public void setmChmSignature(String signature) {
+    public void setChmSignature(String signature) {
         mChmSignature = signature;
     }
 
@@ -167,7 +167,7 @@ public class BarangayClearance {
      * @param kagawadIndex between 0 ~ 6.
      * @param name
      */
-    private void setKagawadName(byte kagawadIndex, String name) {
+    public void setKagawadName(int kagawadIndex, String name) {
         mKagawadNames[kagawadIndex] = name;
     }
 
@@ -176,7 +176,7 @@ public class BarangayClearance {
      * @param kagawadIndex between 0 ~ 6.
      * @return
      */
-    public String getKagawadName(byte kagawadIndex) {
+    public String getKagawadName(int kagawadIndex) {
         return mKagawadNames[kagawadIndex];
     }
 }

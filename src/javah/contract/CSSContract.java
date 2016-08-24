@@ -12,8 +12,8 @@ public class CSSContract {
 
     public static String STYLE_TEXTFIELD_ERROR = "-fx-border-color: #FF3F3F;";
 
-    public static String STYLE_ADDRESS_NO_ERROR = "-fx-background-color: white; -fx-border-color: #BEBEBE";
-    public static String STYLE_ADDRESS_ERROR = "-fx-background-color: white; -fx-border-color: #FF3F3F";
+    public static String STYLE_TEXTAREA_NO_ERROR = "-fx-background-color: white; -fx-border-color: #BEBEBE";
+    public static String STYLE_TEXTAREA_ERROR = "-fx-background-color: white; -fx-border-color: #FF3F3F";
 
     public static String STYLE_MENU_SELECTED =
             "-fx-background-color : chocolate; " + "-fx-border-color : white; " + "-fx-border-width: 0 0 1 0;";

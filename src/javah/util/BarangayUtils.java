@@ -157,6 +157,8 @@ public class BarangayUtils {
     }
 
     public static double[] parseSignatureDimension(String signatureDimension) {
+        if (signatureDimension == null) return null;
+
         String[] dimensionParsed = signatureDimension.split(" ");
         double[] dimension = new double[4];
 

@@ -65,13 +65,23 @@ public class MainControl {
     private ResidentControl mResidentControl;
     private InformationControl mInformationControl;
 
+    /**
+     * The popup scenes. (CONFIRMATION)
+     */
+    private Pane mResidentDeletionScene;
 
     /**
-     * The popup scenes.
+     * The popup scenes. (FORMS)
      */
     private Pane mPhotoshopScene, mBarangayAgentScene;
-    private Pane mResidentDeletionScene, mResidentFormScene;
-    private Pane mResidentInfoFormScene, mBarangayIDReportScene;
+    private Pane mResidentFormScene;
+    private Pane mResidentInfoFormScene;
+
+    /**
+     * The popup scenes. (REPORTS)
+     */
+    private Pane mBarangayIDReportScene;
+    private Pane mBarangayClearanceScene;
 
     /**
      * The popup scene controllers.
@@ -82,6 +92,7 @@ public class MainControl {
     private BarangayAgentControl mBarangayAgentControl;
     private ResidentInfoFormControl mResidentInfoFormControl;
     private BarangayIDReportControl mBarangayIDReportControl;
+
 
     /**
      * Key-value pairs to represent each menu.
@@ -466,7 +477,11 @@ public class MainControl {
                         mBarangayIDReportControl.setBarangayID((BarangayID) data, BarangayIDReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBarangayIDReportScene, false);
                         break;
-                    case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE: break;
+
+                    case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE:
+                        showPopupScene(mBarangayClearanceScene, false);
+                        break;
+
                     case ResidentInfoFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
                     case ResidentInfoFormControl.INFORMATION_BLOTTER: break;
                 }
@@ -474,7 +489,7 @@ public class MainControl {
             }
         });
 
-        // Initialize the barangay ID report dialog.
+        // Initialize the barangay ID report.
         resetFXMLLoader.accept("fxml/scene_barangay_id_report.fxml");
         mBarangayIDReportScene = fxmlLoader.load();
         mBarangayIDReportControl = fxmlLoader.getController();
@@ -496,6 +511,10 @@ public class MainControl {
             }
         });
 
+        // Initialize the barangay clearance report.
+        resetFXMLLoader.accept("fxml/scene_barangay_clearance_report.fxml");
+        mBarangayClearanceScene = fxmlLoader.load();
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
@@ -503,6 +522,7 @@ public class MainControl {
         addToPopupPane.accept(mResidentFormScene);
         addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);
+        addToPopupPane.accept(mBarangayClearanceScene);
     }
 
     @FXML

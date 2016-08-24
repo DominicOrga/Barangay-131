@@ -172,20 +172,20 @@ public class ResidentFormControl {
         // Check address 1 input.
         if(mAddress1.getText().matches("([a-zA-Z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
             mAddress1Error.setVisible(false);
-            mAddress1.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
+            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
         } else {
             mAddress1Error.setVisible(true);
-            mAddress1.setStyle(CSSContract.STYLE_ADDRESS_ERROR);
+            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
             isDataValid = false;
         }
 
         // Check address 2 input.
         if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
             mAddress2Error.setVisible(false);
-            mAddress2.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
+            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
         } else {
             mAddress2Error.setVisible(true);
-            mAddress2.setStyle(CSSContract.STYLE_ADDRESS_ERROR);
+            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
             isDataValid = false;
         }
 
@@ -338,8 +338,8 @@ public class ResidentFormControl {
         mFirstName.setStyle(null);
         mMiddleName.setStyle(null);
         mLastName.setStyle(null);
-        mAddress1.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
-        mAddress2.setStyle(CSSContract.STYLE_ADDRESS_NO_ERROR);
+        mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+        mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
 
         mFirstName.setText("");
         mMiddleName.setText("");
