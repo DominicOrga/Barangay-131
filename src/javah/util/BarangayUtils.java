@@ -185,7 +185,7 @@ public class BarangayUtils {
             double width = fontLoader.computeStringWidth(newValue, textArea.getFont());
 
             // Each line has a maximum legth of 220. Add a new line to fit the text.
-            double newLine = width / widthLimit;
+            int newLine = (int) (width / widthLimit);
 
             textArea.setPrefHeight(30 + newLine * 20);
             textArea.setMinHeight(textArea.getPrefHeight());

@@ -1,9 +1,5 @@
 package javah.controller;
 
-import com.sun.javafx.tk.FontLoader;
-import com.sun.javafx.tk.Toolkit;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,9 +12,6 @@ import javafx.scene.paint.Color;
 import javah.container.BarangayClearance;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
-import javah.util.DynamicTextArea;
-
-import java.util.function.Consumer;
 
 public class BarangayClearanceReportControl {
 
@@ -60,6 +53,16 @@ public class BarangayClearanceReportControl {
 
         BarangayUtils.addAutoResizeListener(mChmNameText, 220);
         BarangayUtils.addAutoResizeListener(mSecNameText, 220);
+        BarangayUtils.addAutoResizeListener(mTrsrNameText, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad1Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad2Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad3Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad4Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad5Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad6Text, 220);
+        BarangayUtils.addAutoResizeListener(mKagawad7Text, 220);
+        BarangayUtils.addAutoResizeListener(mChmPrintedName, 220);
+        BarangayUtils.addAutoResizeListener(mSecPrintedName, 220);
     }
 
     @FXML
