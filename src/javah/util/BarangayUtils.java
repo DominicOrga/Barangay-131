@@ -1,5 +1,10 @@
 package javah.util;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -166,6 +171,25 @@ public class BarangayUtils {
             dimension[i] = Double.parseDouble(dimensionParsed[i]);
 
         return dimension;
+    }
+
+    /**
+     * Auto resizes text areas.
+     * @param textArea
+     * @param widthLimit the width limit given to the text area.
+     */
+    public static void addAutoResizeListener(TextArea textArea, double widthLimit) {
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Get the width of the text area.
+            FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+            double width = fontLoader.computeStringWidth(newValue, textArea.getFont());
+
+            // Each line has a maximum legth of 220. Add a new line to fit the text.
+            double newLine = width / widthLimit;
+
+            textArea.setPrefHeight(30 + newLine * 20);
+            textArea.setMinHeight(textArea.getPrefHeight());
+        });
     }
 
 }

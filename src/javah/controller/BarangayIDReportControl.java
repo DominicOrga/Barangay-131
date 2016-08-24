@@ -16,6 +16,7 @@ import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
+import javah.util.DynamicTextArea;
 
 import java.text.SimpleDateFormat;
 

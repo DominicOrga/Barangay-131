@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
@@ -92,6 +93,7 @@ public class MainControl {
     private BarangayAgentControl mBarangayAgentControl;
     private ResidentInfoFormControl mResidentInfoFormControl;
     private BarangayIDReportControl mBarangayIDReportControl;
+    private BarangayClearanceReportControl mBrgyClearanceReportControl;
 
 
     /**
@@ -479,6 +481,8 @@ public class MainControl {
                         break;
 
                     case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE:
+                        mBrgyClearanceReportControl.setBarangayClearance(
+                                (BarangayClearance) data, BarangayClearanceReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBarangayClearanceScene, false);
                         break;
 
@@ -514,6 +518,7 @@ public class MainControl {
         // Initialize the barangay clearance report.
         resetFXMLLoader.accept("fxml/scene_barangay_clearance_report.fxml");
         mBarangayClearanceScene = fxmlLoader.load();
+        mBrgyClearanceReportControl = fxmlLoader.getController();
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);

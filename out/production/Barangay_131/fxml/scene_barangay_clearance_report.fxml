@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -60,16 +61,16 @@
                                     <Image url="@../res/ic_default_resident_white_bg.png" />
                                  </image>
                               </ImageView>
-                              <TextArea fx:id="mChmNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" styleClass="agent-name" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
-                              </TextArea>
                               <Label alignment="CENTER" layoutX="16.0" layoutY="210.0" prefWidth="220.0" text="Barangay Chairman">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                               </Label>
+                              <TextArea fx:id="mChmNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="220.0" styleClass="agent-name" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Times New Roman" size="16.0" />
+                                 </font>
+                              </TextArea>
                               <Label layoutX="38.0" layoutY="255.0" text="K A G A W A D" underline="true">
                                  <font>
                                     <Font name="Times New Roman Bold" size="20.0" />
@@ -165,7 +166,7 @@
                               <Insets />
                            </GridPane.margin>
                         </VBox>
-                        <GridPane styleClass="text-body" GridPane.columnIndex="1">
+                        <GridPane GridPane.columnIndex="1">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
@@ -187,14 +188,17 @@
                                     <Insets top="75.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextArea fx:id="mBodyTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
+                              <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="text-body">
+                                 <children>
+                                    <TextArea fx:id="mBodyTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="text-body" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </TextArea>
+                                 </children>
                                  <GridPane.margin>
                                     <Insets top="125.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Times New Roman" size="20.0" />
-                                 </font>
-                              </TextArea>
+                                 </GridPane.margin></StackPane>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.rowIndex="1">
                                  <children>
                                     <Label text="Certified Correct:">
@@ -233,7 +237,7 @@
                                           <Insets left="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextArea fx:id="mSecPrintedName1" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
+                                    <TextArea fx:id="mChmPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
@@ -251,19 +255,22 @@
                                     </Label>
                                  </children>
                               </VBox>
-                              <Pane layoutX="10.0" layoutY="585.0" prefHeight="150.0" prefWidth="440.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                              <Pane layoutX="10.0" layoutY="585.0" minWidth="-Infinity" prefHeight="150.0" prefWidth="550.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                  <children>
-                                    <ImageView fx:id="mSecSignature" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="5.0" y="25.0">
+                                    <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="25.0" y="25.0">
                                        <image>
                                           <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="mChmSignature" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="220.0" y="25.0">
+                                    <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="265.0" y="25.0">
                                        <image>
                                           <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
                                        </image>
                                     </ImageView>
                                  </children>
+                                 <GridPane.margin>
+                                    <Insets right="-30.0" />
+                                 </GridPane.margin>
                               </Pane>
                            </children>
                            <GridPane.margin>
