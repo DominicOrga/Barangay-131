@@ -69,7 +69,12 @@ public class ResidentInfoFormControl {
     @FXML ImageView mSignatureView;
     @FXML Button mSignatureUploadButton, mSignatureCaptureButton;
 
+    /**
+     * Nodes contained within the barangay clearance pane.
+     */
     @FXML Pane mBrgyClearancePane;
+    @FXML RadioButton mBrgyClearanceAddress1RadioButton, mBrgyClearanceAddress2RadioButton;
+    @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text, mBrgyClearancePurpose;
 
     @FXML Button mCreateButton;
 
@@ -167,11 +172,13 @@ public class ResidentInfoFormControl {
         }
 
         // Set the toggle group of the radio buttons.
-        ToggleGroup toggleGroup = new ToggleGroup();
-        mAddress1RadioButton.setToggleGroup(toggleGroup);
-        mAddress2RadioButton.setToggleGroup(toggleGroup);
+        ToggleGroup brgyIDToggleGroup = new ToggleGroup();
+        mAddress1RadioButton.setToggleGroup(brgyIDToggleGroup);
+        mAddress2RadioButton.setToggleGroup(brgyIDToggleGroup);
 
-
+        ToggleGroup brgyClearanceToggleGroup = new ToggleGroup();
+        mBrgyClearanceAddress1RadioButton.setToggleGroup(brgyClearanceToggleGroup);
+        mBrgyClearanceAddress2RadioButton.setToggleGroup(brgyClearanceToggleGroup);
     }
 
     /**
@@ -426,18 +433,20 @@ public class ResidentInfoFormControl {
                 // Get the resident selected.
                 mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
 
-                // Setup the state of the form, depending on the Information to be created.
+                // Enable the create button.
+                mCreateButton.setDisable(false);
+
+
+                // A resident is selected, display their date required for the information creation.
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID :
                         // Enable the upload and capture buttons.
                         mSignatureUploadButton.setDisable(false);
                         mSignatureCaptureButton.setDisable(false);
 
-                        // Enable the create button.
-                        mCreateButton.setDisable(false);
-
                         // Populate the address text areas with the selected resident's address.
                         mAddress1RadioButton.setDisable(false);
+                        mAddress1RadioButton.setSelected(true);
                         mAddress1TextArea.setText(mResidentSelected.getAddress1());
 
                         if (!mResidentSelected.getAddress2().isEmpty()) {
@@ -466,15 +475,31 @@ public class ResidentInfoFormControl {
                         // mSignatureImage is set to null every time a new resident is selected or unselected.
                         mSignatureImage = null;
                         break;
+
                     case INFORMATION_BARANGAY_CLEARANCE :
+                        mBrgyClearanceAddress1RadioButton.setDisable(false);
+                        mBrgyClearanceAddress1RadioButton.setSelected(true);
+                        mBrgyClearanceAddress1Text.setText(mResidentSelected.getAddress1());
+
+                        if (!mResidentSelected.getAddress2().isEmpty()) {
+                            mBrgyClearanceAddress2RadioButton.setDisable(false);
+                            mBrgyClearanceAddress2Text.setText(mResidentSelected.getAddress2());
+                        } else {
+                            mBrgyClearanceAddress2RadioButton.setDisable(true);
+                            mBrgyClearanceAddress2Text.setText(null);
+                        }
+
+                        mBrgyClearancePurpose.setDisable(false);
                         break;
+
                     case INFORMATION_BUSINESS_CLEARANCE :
                         break;
                     case INFORMATION_BLOTTER :
                 }
 
             } else {
-                // Setup the state of the form, depending on the Information to be created.
+                mCreateButton.setDisable(true);
+                // No resident is selected, so update the UI.
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID :
                         // Disable the address buttons.
@@ -492,12 +517,19 @@ public class ResidentInfoFormControl {
 
                         mSignatureView.setImage(null);
 
-                        mCreateButton.setDisable(true);
-
                         // mSignatureImage is set to null every time a new resident is selected or unselected.
                         mSignatureImage = null;
                         break;
+
                     case INFORMATION_BARANGAY_CLEARANCE :
+                        mBrgyClearanceAddress1RadioButton.setDisable(true);
+                        mBrgyClearanceAddress2RadioButton.setDisable(true);
+                        mBrgyClearancePurpose.setDisable(true);
+
+                        mBrgyClearanceAddress1Text.setText(null);
+                        mBrgyClearanceAddress2Text.setText(null);
+                        mBrgyClearancePurpose.setText(null);
+
                         break;
                     case INFORMATION_BUSINESS_CLEARANCE :
                         break;

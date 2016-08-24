@@ -5,3 +5,7 @@
 .text-area .scroll-bar {
     -fx-opacity: 0;
 }
+
+.text-body .text-area *.text {
+    -fx-text-alignment: justify;
+}

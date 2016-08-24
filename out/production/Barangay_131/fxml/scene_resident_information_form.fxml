@@ -288,7 +288,7 @@
                <graphic>
                   <StackPane prefHeight="100.0" prefWidth="500.0">
                      <children>
-                        <TextArea fx:id="mAddress1TextArea1" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                        <TextArea fx:id="mBrgyClearanceAddress1Text" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
@@ -307,14 +307,14 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="mBrgyClearanceAddress1RadioButton" alignment="TOP_LEFT" layoutX="10.0" layoutY="60.0" mnemonicParsing="false">
+            <RadioButton fx:id="mBrgyClearanceAddress2RadioButton" alignment="TOP_LEFT" layoutX="10.0" layoutY="60.0" mnemonicParsing="false">
                <font>
                   <Font size="18.0" />
                </font>
                <graphic>
                   <StackPane prefHeight="100.0" prefWidth="500.0">
                      <children>
-                        <TextArea fx:id="mAddress2TextArea1" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                        <TextArea fx:id="mBrgyClearanceAddress2Text" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
@@ -342,7 +342,7 @@
                <children>
                   <StackPane prefHeight="100.0" prefWidth="500.0">
                      <children>
-                        <TextArea fx:id="mAddress2TextArea11" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                        <TextArea fx:id="mBrgyClearancePurpose" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
@@ -353,11 +353,6 @@
                               <Insets />
                            </StackPane.margin>
                         </TextArea>
-                        <Pane prefHeight="100.0" prefWidth="500.0">
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </Pane>
                      </children>
                      <HBox.margin>
                         <Insets left="5.0" />
