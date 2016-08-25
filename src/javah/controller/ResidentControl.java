@@ -392,7 +392,7 @@ public class ResidentControl {
                 Calendar currentDate = Calendar.getInstance();
                 // Set the displayed age.
                 int age = currentDate.get(Calendar.YEAR) - birthYear;
-
+    
                 if(birthYear != currentDate.get(Calendar.YEAR))
                     age -= birthdate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH) ||
                             (birthdate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) &&

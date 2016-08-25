@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -17,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayClearanceReportControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayClearanceReportControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
@@ -61,16 +69,19 @@
                                     <Image url="@../res/ic_default_resident_white_bg.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" layoutX="16.0" layoutY="210.0" prefWidth="220.0" text="Barangay Chairman">
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="18.0" />
-                                 </font>
-                              </Label>
                               <TextArea fx:id="mChmNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="220.0" styleClass="agent-name" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
                               </TextArea>
+                              <Label alignment="CENTER" layoutX="16.0" layoutY="210.0" prefWidth="220.0" text="Barangay Chairman">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="-5.0" />
+                                 </VBox.margin>
+                              </Label>
                               <Label layoutX="38.0" layoutY="255.0" text="K A G A W A D" underline="true">
                                  <font>
                                     <Font name="Times New Roman Bold" size="20.0" />
@@ -188,17 +199,108 @@
                                     <Insets top="75.0" />
                                  </GridPane.margin>
                               </Label>
-                              <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="text-body">
+                              <TextFlow fx:id="mTextFlow" lineSpacing="1.5" prefWidth="200.0" textAlignment="JUSTIFY">
+                                 <GridPane.margin>
+                                    <Insets top="125.0" />
+                                 </GridPane.margin>
                                  <children>
-                                    <TextArea fx:id="mBodyTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="text-body" text="     This is to certify that _______ of legal age a resident of _______________ for ________ since _________ is a member of the aformentioned barangay, and the he/she has no derogatory record as of this date.&#10;&#10;     This clearance is being issued upon the request of the above mentioned name and will be used for ________ and valid for only (6) months upon the date of issuance.&#10;&#10;     Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ____ daty of ________." wrapText="true">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    This is to certify ">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
-                                    </TextArea>
+                                    </Text>
+                                    <Text fx:id="mBrgyClearanceName" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominic R. Orga" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" of legal age a resident of  ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mBrgyClearanceAddress" layoutX="65.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19 Tagaytay St. Barangay 131, Caloocan City" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="38.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=", for ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mTotalYearsOfResidency" layoutX="65.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="18 years" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="176.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" since ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mYearOfResidency" strokeType="OUTSIDE" strokeWidth="0.0" text="birth" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" is a member of the aformentioned barangay, and that he/she has no derogatory record as of this date.">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mTextLineBreak1" strokeType="OUTSIDE" strokeWidth="0.0" text="\\n\n\n">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    This clearance is being issued upon the request of the above mentioned name and will be used for ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mBrgyClearancePurpose" strokeType="OUTSIDE" strokeWidth="0.0" text="Local Employment" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" and valid for only (6) months upon the date of issuance.">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mTextLineBreak2" strokeType="OUTSIDE" strokeWidth="0.0" text="\\n\n\n">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mTextLineBreak21" strokeType="OUTSIDE" strokeWidth="0.0" text="    Issued at Barangay Hall, Barangay 131, Zone 11, District II, Caloocan City this ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mBrgyClearanceDay" strokeType="OUTSIDE" strokeWidth="0.0" text="24th" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" day of ">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mBrgyClearanceDate" strokeType="OUTSIDE" strokeWidth="0.0" text="December, 2015" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=".">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
                                  </children>
-                                 <GridPane.margin>
-                                    <Insets top="125.0" />
-                                 </GridPane.margin></StackPane>
+                              </TextFlow>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.rowIndex="1">
                                  <children>
                                     <Label text="Certified Correct:">
@@ -222,7 +324,7 @@
                                           <Font name="Times New Roman Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets left="10.0" top="-5.0" />
                                        </VBox.margin>
                                     </Label>
                                  </children>
@@ -250,7 +352,7 @@
                                           <Font name="Times New Roman Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets left="10.0" top="-5.0" />
                                        </VBox.margin>
                                     </Label>
                                  </children>
@@ -286,7 +388,7 @@
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <Label text="131-16-001">
+                        <Label fx:id="mBrgyClearanceIDLabel" text="131-16-001">
                            <font>
                               <Font size="12.0" />
                            </font>

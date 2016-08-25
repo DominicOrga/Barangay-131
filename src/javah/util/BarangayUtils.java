@@ -174,7 +174,7 @@ public class BarangayUtils {
     }
 
     /**
-     * Auto resizes text areas.
+     * Auto resize text areas.
      * @param textArea
      * @param widthLimit the width limit given to the text area.
      */

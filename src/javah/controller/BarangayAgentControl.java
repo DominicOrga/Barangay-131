@@ -281,15 +281,16 @@ public class BarangayAgentControl {
              * @Param image is the image to be created.
              */
             BiConsumer<String, WritableImage> writeImage = (prefKey, image) -> {
+                System.out.println(prefKey + " " + image);
                 try {
                     // Save the image in the appropriate directory with a unique uuid name.
                     String imagePath = System.getenv("PUBLIC");
                     switch (prefKey) {
                         case PreferenceContract.CHAIRMAN_PHOTO_PATH :
-                            imagePath = "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                            imagePath += "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
                             break;
                         default:
-                            imagePath = "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
+                            imagePath += "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
                     }
 
                     File file = new File(imagePath);
@@ -316,18 +317,18 @@ public class BarangayAgentControl {
             if (mChmSignature != null) {
                 writeImage.accept(PreferenceContract.CHAIRMAN_SIGNATURE_PATH, mChmSignature);
 
-                writeImage.accept(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION, null);
-                writeImage.accept(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
-                writeImage.accept(PreferenceContract.BUSI_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
+                mPreferences.put(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION, null);
+                mPreferences.put(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
+                mPreferences.put(PreferenceContract.BUSI_CLEARANCE_CHM_SIGNATURE_DIMENSION, null);
 
                 mChmSignature = null;
             }
 
             if (mSecSignature != null) {
-                writeImage.accept(PreferenceContract.CHAIRMAN_SIGNATURE_PATH, mSecSignature);
+                writeImage.accept(PreferenceContract.SECRETARY_SIGNATURE_PATH, mSecSignature);
 
-                writeImage.accept(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
-                writeImage.accept(PreferenceContract.BUSI_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
+                mPreferences.put(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
+                mPreferences.put(PreferenceContract.BUSI_CLEARANCE_SEC_SIGNATURE_DIMENSION, null);
 
                 mSecSignature = null;
             }
@@ -428,7 +429,7 @@ public class BarangayAgentControl {
 
         String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
         if (mSecSignaturePath != null)
-            mChmSignatureView.setImage(new Image("file:" + mSecSignaturePath));
+            mSecSignatureView.setImage(new Image("file:" + mSecSignaturePath));
 
         // Reset treasurer data.
         mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, ""));

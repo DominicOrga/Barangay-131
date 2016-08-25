@@ -484,7 +484,7 @@ public class ResidentInfoFormControl {
                             mPrefModel.get(PreferenceContract.KAGAWAD_6_LAST_NAME)));
 
                 if (!mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(7, String.format("%s %s. %s",
+                    mBarangayClearance.setKagawadName(6, String.format("%s %s. %s",
                             mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME),
                             mPrefModel.get(PreferenceContract.KAGAWAD_7_MIDDLE_NAME).charAt(0),
                             mPrefModel.get(PreferenceContract.KAGAWAD_7_LAST_NAME)));

@@ -3,15 +3,20 @@ package javah.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javah.container.BarangayClearance;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
+
+import java.util.Calendar;
 
 public class BarangayClearanceReportControl {
 
@@ -24,11 +29,23 @@ public class BarangayClearanceReportControl {
             mKagawad7Text;
     @FXML TextArea mTrsrNameText;
     @FXML TextArea mSecNameText;
+    @FXML Label mBrgyClearanceIDLabel;
 
+    /**
+     * Components within the document.
+     */
     @FXML Pane mDocumentPane;
-    @FXML TextArea mBodyTextArea;
     @FXML ImageView mChmSignature, mSecSignature;
     @FXML TextArea mChmPrintedName, mSecPrintedName;
+    @FXML TextFlow mTextFlow;
+    /**
+     * The line breaks used to seperate the paragraphs.
+     * Unfortunately, new line \n can only  work programmatically.
+     */
+    @FXML Text mTextLineBreak1, mTextLineBreak2;
+    @FXML Text mBrgyClearanceName, mBrgyClearanceAddress,
+            mTotalYearsOfResidency, mYearOfResidency, mBrgyClearancePurpose,
+            mBrgyClearanceDay, mBrgyClearanceDate;
 
     @FXML Button mPrintButton, mPrintAndSaveButton, mSaveButton;
 
@@ -63,6 +80,10 @@ public class BarangayClearanceReportControl {
         BarangayUtils.addAutoResizeListener(mKagawad7Text, 220);
         BarangayUtils.addAutoResizeListener(mChmPrintedName, 220);
         BarangayUtils.addAutoResizeListener(mSecPrintedName, 220);
+
+        // This is needed since \n only works programmatically.
+        mTextLineBreak1.setText("\n\n");
+        mTextLineBreak2.setText("\n\n");
     }
 
     @FXML
@@ -99,6 +120,7 @@ public class BarangayClearanceReportControl {
         mChmNameText.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
         mSecNameText.setText(mBarangayClearance.getSecName().toUpperCase());
         mTrsrNameText.setText(mBarangayClearance.getTreasurerName().toUpperCase());
+        mBrgyClearanceIDLabel.setText("131-" + mBarangayClearance.getID());
 
         if (mBarangayClearance.getKagawadName(0) != null) {
             mKagawad1Text.setText(mBarangayClearance.getKagawadName(0).toUpperCase());
@@ -196,7 +218,6 @@ public class BarangayClearanceReportControl {
             mSecDraggableSignature.setVisible(false);
         }
 
-
         signatureDimension = mBarangayClearance.getSecSignatureDimension();
 
         if (signatureDimension != null) {
@@ -210,5 +231,29 @@ public class BarangayClearanceReportControl {
             mSecDraggableSignature.setWidth(210);
             mSecDraggableSignature.setHeight(90);
         }
+
+        // Fill out the document body.
+        mBrgyClearanceName.setText(mBarangayClearance.getResidentName().toUpperCase());
+        mBrgyClearanceAddress.setText(mBarangayClearance.getAddress());
+        mTotalYearsOfResidency.setText(mBarangayClearance.getTotalYearsResidency() + "year/s");
+        mYearOfResidency.setText(mBarangayClearance.getYearOfResidency() == -1 ?
+                "birth" : mBarangayClearance.getYearOfResidency() + "");
+        mBrgyClearancePurpose.setText(mBarangayClearance.getPurpose());
+
+        Calendar dateIssued = Calendar.getInstance();
+        dateIssued.setTime(mBarangayClearance.getDateIssued());
+
+        int day = dateIssued.get(Calendar.DAY_OF_MONTH);
+        String daySuffix;
+        switch (day % 10) {
+            case 1 : daySuffix = "st"; break;
+            case 2 : daySuffix = "nd"; break;
+            case 3 : daySuffix = "rd"; break;
+            default : daySuffix = "th";
+        }
+
+        mBrgyClearanceDay.setText(day + daySuffix);
+        mBrgyClearanceDate.setText(
+                BarangayUtils.convertMonthIntToString(dateIssued.get(Calendar.MONTH)) + ", " + dateIssued.get(Calendar.YEAR));
     }
 }
