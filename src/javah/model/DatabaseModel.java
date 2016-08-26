@@ -363,8 +363,8 @@ public class DatabaseModel {
             statement.setString(10, String.format("%.5f %.5f %.5f %.5f",
                     signatureDimension[0], signatureDimension[1], signatureDimension[2], signatureDimension[3]));
 
-            statement.setDate(11, barangayID.getDateIssued());
-            statement.setDate(12, barangayID.getDateValid());
+            statement.setTimestamp(11, barangayID.getDateIssued());
+            statement.setTimestamp(12, barangayID.getDateValid());
 
             statement.execute();
 
@@ -430,8 +430,8 @@ public class DatabaseModel {
                         Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
                         null);
 
-                barangayID.setDateIssued(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_ISSUED));
-                barangayID.setDateValid(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_VALID));
+                barangayID.setDateIssued(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_ISSUED));
+                barangayID.setDateValid(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_VALID));
 
                 dbConnection.close();
                 preparedStatement.close();
@@ -585,8 +585,8 @@ public class DatabaseModel {
             statement.setInt(5, barangayClearance.getYearOfResidency());
             statement.setInt(6, barangayClearance.getTotalYearsResidency());
             statement.setString(7, barangayClearance.getPurpose());
-            statement.setDate(8, barangayClearance.getDateIssued());
-            statement.setDate(9, barangayClearance.getDateValid());
+            statement.setTimestamp(8, barangayClearance.getDateIssued());
+            statement.setTimestamp(9, barangayClearance.getDateValid());
             statement.setString(10, barangayClearance.getChmName());
             statement.setString(11, barangayClearance.getChmPhoto());
             statement.setString(12, barangayClearance.getChmSignature());
@@ -677,8 +677,8 @@ public class DatabaseModel {
                 brgyClearance.setYearOfResidency(resultSet.getInt(BarangayClearanceEntry.COLUMN_YEAR_OF_RESIDENCY));
                 brgyClearance.setTotalYearsResidency(resultSet.getInt(BarangayClearanceEntry.COLUMN_TOTAL_YEARS_RESIDENCY));
                 brgyClearance.setPurpose(resultSet.getString(BarangayClearanceEntry.COLUMN_PURPOSE));
-                brgyClearance.setDateIssued(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_ISSUED));
-                brgyClearance.setDateValid(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_VALID));
+                brgyClearance.setDateIssued(resultSet.getTimestamp(BarangayClearanceEntry.COLUMN_DATE_ISSUED));
+                brgyClearance.setDateValid(resultSet.getTimestamp(BarangayClearanceEntry.COLUMN_DATE_VALID));
                 brgyClearance.setChmName(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_NAME));
                 brgyClearance.setChmPhoto(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_PHOTO));
                 brgyClearance.setChmSignature(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE));

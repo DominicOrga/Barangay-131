@@ -21,6 +21,7 @@ import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -107,7 +108,7 @@ public class InformationControl {
      */
     private List<String> mReportIDs;
     private List<String> mReportResidentIDs;
-    private List<Date> mReportDateIssuedList;
+    private List<Timestamp> mReportDateIssuedList;
 
     /**
      * The value representing which label is selected from the list paging.

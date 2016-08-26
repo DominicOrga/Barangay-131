@@ -1,6 +1,7 @@
 package javah.container;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BarangayID {
     private String mID;
@@ -11,8 +12,8 @@ public class BarangayID {
     private String mResidentSignature;
     private String mChmName;
     private String mChmSignature;
-    private Date mDateIssued;
-    private Date mDateValid;
+    private Timestamp mDateIssued;
+    private Timestamp mDateValid;
 
     /**
      * This are special variable to determine the coordinates and dimensions of the barangay ID signatures.
@@ -101,19 +102,19 @@ public class BarangayID {
         mChmSignatureDimension = dimension;
     }
 
-    public void setDateIssued(Date dateIssued) {
+    public void setDateIssued(Timestamp dateIssued) {
         mDateIssued = dateIssued;
     }
 
-    public Date getDateIssued() {
+    public Timestamp getDateIssued() {
         return mDateIssued;
     }
 
-    public void setDateValid(Date dateValid) {
+    public void setDateValid(Timestamp dateValid) {
         mDateValid = dateValid;
     }
 
-    public Date getDateValid() {
+    public Timestamp getDateValid() {
         return mDateValid;
     }
 

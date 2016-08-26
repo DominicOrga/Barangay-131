@@ -1,6 +1,7 @@
 package javah.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,11 +16,11 @@ public class CacheModel {
 
     private List<String> mBarangayIDIDsCache;
     private List<String> mBarangayIDResidentIDCache;
-    private List<Date> mBarangayIDDateIssuedCache;
+    private List<Timestamp> mBarangayIDDateIssuedCache;
 
     private List<String> mBrgyClearanceIDsCache;
     private List<String> mBrgyClearanceResidentIDsCache;
-    private List<Date> mBrgyClearanceDateIssuedCache;
+    private List<Timestamp> mBrgyClearanceDateIssuedCache;
 
 
     private DatabaseModel dbControl;
@@ -54,7 +55,7 @@ public class CacheModel {
 
     public List<String> getBarangayIDResidentIDCache() { return mBarangayIDResidentIDCache; }
 
-    public List<Date> getBarangayIDdateIssuedCache() { return mBarangayIDDateIssuedCache; }
+    public List<Timestamp> getBarangayIDdateIssuedCache() { return mBarangayIDDateIssuedCache; }
 
     public List<String> getBrgyClearanceIDsCache() {
         return mBrgyClearanceIDsCache;
@@ -64,7 +65,7 @@ public class CacheModel {
         return mBrgyClearanceResidentIDsCache;
     }
 
-    public List<Date> getBrgyClearanceDateIssuedCache() {
+    public List<Timestamp> getBrgyClearanceDateIssuedCache() {
         return mBrgyClearanceDateIssuedCache;
     }
 }

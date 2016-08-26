@@ -1,6 +1,8 @@
 package javah.container;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class BarangayClearance {
     private String mID;
@@ -10,7 +12,7 @@ public class BarangayClearance {
     private int mYearOfResidency;
     private int mTotalYearsResidency;
     private String mPurpose;
-    private Date mDateIssued, mDateValid;
+    private Timestamp mDateIssued, mDateValid;
 
     private String mChmName;
     private String mChmPhoto;
@@ -82,19 +84,19 @@ public class BarangayClearance {
         return mPurpose;
     }
 
-    public void setDateIssued(Date date) {
+    public void setDateIssued(Timestamp date) {
         mDateIssued = date;
     }
 
-    public Date getDateIssued() {
+    public Timestamp getDateIssued() {
         return mDateIssued;
     }
 
-    public void setDateValid(Date date) {
+    public void setDateValid(Timestamp date) {
         mDateValid = date;
     }
 
-    public Date getDateValid() {
+    public Timestamp getDateValid() {
         return mDateValid;
     }
 

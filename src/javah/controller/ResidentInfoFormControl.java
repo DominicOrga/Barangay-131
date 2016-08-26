@@ -29,6 +29,7 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -336,7 +337,7 @@ public class ResidentInfoFormControl {
 
                 // The date issued will be the current date.
                 GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
-                mBarangayID.setDateIssued(new Date(calendar.getTime().getTime()));
+                mBarangayID.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
                 // Set the date validity of the barangay ID.
                 // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
                 calendar.add(Calendar.DATE, 364);
@@ -345,7 +346,7 @@ public class ResidentInfoFormControl {
                 if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
                     calendar.add(Calendar.DATE, 1);
 
-                mBarangayID.setDateValid(new Date(calendar.getTime().getTime()));
+                mBarangayID.setDateValid(new Timestamp(calendar.getTimeInMillis()));
 
                 // Pass the generated barangay ID to the Main Control in order to be processed into a report.
                 mListener.onCreateButtonClicked(mBarangayID, INFORMATION_BARANGAY_ID);
@@ -403,7 +404,7 @@ public class ResidentInfoFormControl {
 
                 // The date issued will be the current date.
                 calendar = (GregorianCalendar) GregorianCalendar.getInstance();
-                mBarangayClearance.setDateIssued(new Date(calendar.getTime().getTime()));
+                mBarangayClearance.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
 
                 // Set the date validity of the barangay ID.
                 // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
@@ -413,7 +414,7 @@ public class ResidentInfoFormControl {
                 if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
                     calendar.add(Calendar.DATE, 1);
 
-                mBarangayClearance.setDateValid(new Date(calendar.getTime().getTime()));
+                mBarangayClearance.setDateValid(new Timestamp(calendar.getTimeInMillis()));
 
                 // Set the chairman data.
                 mBarangayClearance.setChmName(String.format("%s %s. %s",
