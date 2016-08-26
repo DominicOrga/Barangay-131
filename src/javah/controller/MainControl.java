@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -82,7 +83,7 @@ public class MainControl {
      * The popup scenes. (REPORTS)
      */
     private Pane mBarangayIDReportScene;
-    private Pane mBarangayClearanceScene;
+    private Pane mBrgyClearanceReportScene;
 
     /**
      * The popup scene controllers.
@@ -178,7 +179,7 @@ public class MainControl {
             }
         });
 
-        // Initialize the Barangay ID Scene.
+        // Initialize the Information Scene.
         resetFXMLLoader.accept("fxml/scene_information.fxml");
         mInformationScene = fxmlLoader.load();
         mInformationControl = fxmlLoader.getController();
@@ -212,15 +213,32 @@ public class MainControl {
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
                         mInformationControl.setBlurListPaging(true);
-                        mBarangayIDReportControl.setBarangayID((
-                                BarangayID) reportData, BarangayIDReportControl.REQUEST_DISPLAY_REPORT);
+                        mBarangayIDReportControl.setBarangayID(
+                                (BarangayID) reportData, BarangayIDReportControl.REQUEST_DISPLAY_REPORT);
                         showPopupScene(mBarangayIDReportScene, false);
                         break;
-                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE: break;
+                    case InformationControl.INFORMATION_BARANGAY_CLEARANCE:
+                        mInformationControl.setBlurListPaging(true);
+                        mBrgyClearanceReportControl.setBarangayClearance(
+                                (BarangayClearance) reportData, BarangayClearanceReportControl.REQUEST_DISPLAY_REPORT);
+                        showPopupScene(mBrgyClearanceReportScene, false);
+                        break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE: break;
                     case InformationControl.INFORMATION_BLOTTER:
                 }
             }
+
+            @Override
+            public Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance) {
+                // Image snap shot works only when the pane to be shot is visible.
+                showPopupScene(mBrgyClearanceReportScene, false);
+                Image image = mBrgyClearanceReportControl.setBarangayClearance(barangayClearance, BarangayClearanceReportControl.REQUEST_SNAPSHOT_REPORT);
+                hidePopupScene(mBrgyClearanceReportScene, false);
+
+                return image;
+            }
+
+
         });
 
         // Add the information scenes to the mMainGridPane.
@@ -483,7 +501,7 @@ public class MainControl {
                     case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceReportControl.setBarangayClearance(
                                 (BarangayClearance) data, BarangayClearanceReportControl.REQUEST_CREATE_REPORT);
-                        showPopupScene(mBarangayClearanceScene, false);
+                        showPopupScene(mBrgyClearanceReportScene, false);
                         break;
 
                     case ResidentInfoFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
@@ -517,8 +535,26 @@ public class MainControl {
 
         // Initialize the barangay clearance report.
         resetFXMLLoader.accept("fxml/scene_barangay_clearance_report.fxml");
-        mBarangayClearanceScene = fxmlLoader.load();
+        mBrgyClearanceReportScene = fxmlLoader.load();
+
         mBrgyClearanceReportControl = fxmlLoader.getController();
+        mBrgyClearanceReportControl.setPreferenceModel(mPreferenceModel);
+
+        mBrgyClearanceReportControl.setListener(new BarangayClearanceReportControl.OnBarangayClearanceReportListener() {
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBrgyClearanceReportScene, false);
+                mInformationControl.setBlurListPaging(false);
+            }
+
+            @Override
+            public void onSaveButtonClicked(BarangayClearance barangayClearance) {
+                hidePopupScene(mBrgyClearanceReportScene, false);
+                mInformationControl.setBlurListPaging(false);
+
+                mInformationControl.createBarangayClearance(barangayClearance);
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
@@ -527,7 +563,7 @@ public class MainControl {
         addToPopupPane.accept(mResidentFormScene);
         addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);
-        addToPopupPane.accept(mBarangayClearanceScene);
+        addToPopupPane.accept(mBrgyClearanceReportScene);
     }
 
     @FXML

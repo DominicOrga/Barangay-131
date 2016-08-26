@@ -247,7 +247,6 @@ public class BarangayIDReportControl {
         mChmDraggableSignature.setVisible(false);
 
         PrinterJob job = PrinterJob.createPrinterJob();
-
         // Start print setup if a printer is found.
         if(job != null){
             // Disable the report dialog when the print dialog is open.
@@ -255,6 +254,7 @@ public class BarangayIDReportControl {
             boolean result = job.showPrintDialog(Main.mPrimaryStage); // Window must be your main Stage
             mRootPane.setDisable(false);
 
+            System.out.println(result);
             // If the client cancels the printing, then no printing will occur.
             if (result) {
                 ImageView snapShot = new ImageView();
@@ -262,6 +262,7 @@ public class BarangayIDReportControl {
 
                 snapShot.getTransforms().add(new Scale(0.5, 0.5));
 
+                job.printPage(snapShot);
                 job.endJob();
             }
 

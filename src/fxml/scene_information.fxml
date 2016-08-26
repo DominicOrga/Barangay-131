@@ -194,67 +194,16 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" />
                      </StackPane.margin>
                   </VBox>
-                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
+                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                      <children>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
-                           <children>
-                              <ImageView fitHeight="510.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_barangay_id.png" />
-                                 </image>
-                              </ImageView>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="175.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="175.0" StackPane.alignment="TOP_CENTER">
-                                 <StackPane.margin>
-                                    <Insets top="95.0" />
-                                 </StackPane.margin>
-                              </Rectangle>
-                              <ImageView fx:id="mIDImageView1" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                                 <image>
-                                    <Image url="@../res/ic_default_resident_white_bg.png" />
-                                 </image>
-                                 <StackPane.margin>
-                                    <Insets top="95.0" />
-                                 </StackPane.margin>
-                              </ImageView>
-                              <HBox alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="No.131 - ">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="mBarangayIDCode1" text="16-001">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <StackPane.margin>
-                                    <Insets top="275.0" />
-                                 </StackPane.margin>
-                              </HBox>
-                              <Label fx:id="mIDNameLabel1" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                                 <StackPane.margin>
-                                    <Insets top="305.0" />
-                                 </StackPane.margin>
-                              </Label>
-                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
-                                 <children>
-                                    <ImageView fx:id="mIDResSignatureView1" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
-                                       <image>
-                                          <Image url="@../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
-                           </children>
+                        <ImageView fx:id="mBrgyClearanceImage" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_barangay_id.png" />
+                           </image>
                            <VBox.margin>
                               <Insets bottom="50.0" />
                            </VBox.margin>
-                        </StackPane>
+                        </ImageView>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
                               <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">

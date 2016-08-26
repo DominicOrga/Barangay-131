@@ -2,6 +2,7 @@ package javah.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,13 +13,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.transform.Scale;
+import javah.Main;
 import javah.container.BarangayClearance;
+import javah.container.BarangayID;
+import javah.contract.PreferenceContract;
+import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaPrintableArea;
 import java.util.Calendar;
 
 public class BarangayClearanceReportControl {
+
+    public interface OnBarangayClearanceReportListener {
+        void onCancelButtonClicked();
+        void onSaveButtonClicked(BarangayClearance barangayClearance);
+    }
 
     @FXML Pane mRootPane;
 
@@ -51,11 +64,17 @@ public class BarangayClearanceReportControl {
 
     @FXML ScrollPane mScrollPane;
 
+    public static final byte
+            REQUEST_CREATE_REPORT = 1,
+            REQUEST_DISPLAY_REPORT = 2,
+            REQUEST_SNAPSHOT_REPORT = 3;
+
+    private PreferenceModel mPrefModel;
     private BarangayClearance mBarangayClearance;
-
     private DraggableSignature mChmDraggableSignature, mSecDraggableSignature;
+    private OnBarangayClearanceReportListener mListener;
 
-    public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2;
+
 
     @FXML
     private void initialize() {
@@ -68,6 +87,7 @@ public class BarangayClearanceReportControl {
         mChmDraggableSignature.setStroke(Color.BLACK);
         mSecDraggableSignature.setStroke(Color.BLACK);
 
+        // All text areas are assigned a listener to auto adjust their height when the text no longer fits.
         BarangayUtils.addAutoResizeListener(mChmNameText, 220);
         BarangayUtils.addAutoResizeListener(mSecNameText, 220);
         BarangayUtils.addAutoResizeListener(mTrsrNameText, 220);
@@ -88,30 +108,119 @@ public class BarangayClearanceReportControl {
 
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-
+        if (printReport()) mListener.onCancelButtonClicked();
     }
 
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
-
+        if (printReport()) {
+            saveSignatureDimensions();
+            mListener.onCancelButtonClicked();
+        }
     }
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
-
+        saveSignatureDimensions();
+        mListener.onSaveButtonClicked(mBarangayClearance);
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-
+        mListener.onCancelButtonClicked();
     }
+
+    private void saveSignatureDimensions() {
+        // If the barangay clearance contains a chairman signature (which always does), then store its coordinates and
+        // dimension to mBarangayID.
+        double[] signatureDimension = new double[]{
+                mChmDraggableSignature.getX(),
+                mChmDraggableSignature.getY(),
+                mChmDraggableSignature.getWidth(),
+                mChmDraggableSignature.getHeight()};
+
+        mBarangayClearance.setChmSignatureDimension(signatureDimension);
+
+        // Save the dimension of the chairman signature to the preference model.
+        mPrefModel.put(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION,
+                String.format("%.5f %.5f %.5f %.5f",
+                        mChmDraggableSignature.getX(),
+                        mChmDraggableSignature.getY(),
+                        mChmDraggableSignature.getWidth(),
+                        mChmDraggableSignature.getHeight()
+                )
+        );
+
+        signatureDimension = new double[]{
+                mSecDraggableSignature.getX(),
+                mSecDraggableSignature.getY(),
+                mSecDraggableSignature.getWidth(),
+                mSecDraggableSignature.getHeight()};
+
+        mBarangayClearance.setSecSignatureDimension(signatureDimension);
+
+        // Save the dimension of the secretary signature to the preference model.
+        mPrefModel.put(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION,
+                String.format("%.5f %.5f %.5f %.5f",
+                        mSecDraggableSignature.getX(),
+                        mSecDraggableSignature.getY(),
+                        mSecDraggableSignature.getWidth(),
+                        mSecDraggableSignature.getHeight()
+                )
+        );
+
+        mPrefModel.save();
+    }
+
+    /**
+     *
+     * @return true if printing is successful. Otherwise, return false.
+     */
+    private boolean printReport() {
+        // Hide the draggable rectangles to make sure that they're not printed.
+        mSecDraggableSignature.setVisible(false);
+        mChmDraggableSignature.setVisible(false);
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        // Start print setup if a printer is found.
+        if(job != null){
+
+            // Disable the report dialog when the print dialog is open.
+            mRootPane.setDisable(true);
+            boolean result = job.showPrintDialog(Main.mPrimaryStage); // Window must be your main Stage
+            mRootPane.setDisable(false);
+
+            // If the client cancels the printing, then no printing will occur.
+            if (result) {
+                ImageView snapShot = new ImageView();
+                snapShot.setImage(mDocumentPane.snapshot(null, null));
+
+                Paper paper = job.getPrinter().getDefaultPageLayout().getPaper();
+                PageLayout pageLayout = job.getPrinter().createPageLayout(paper, PageOrientation.PORTRAIT, 0.5, 0.5, 0.5, 0.5);
+
+                double scaleX = pageLayout.getPrintableWidth() / snapShot.getBoundsInParent().getWidth();
+
+                snapShot.getTransforms().add(new Scale(scaleX, scaleX));
+
+                job.printPage(pageLayout, snapShot);
+                job.endJob();
+            }
+
+            return result;
+        }
+
+        return false;
+    }
+
 
     /**
      * Populate the report with the barangay clearance data.
      * Furthermore, update the scene depending on the request.
+     * Can also return a snapshot of the barangay clearance.
      * @param barangayClearance
      */
-    public void setBarangayClearance(BarangayClearance barangayClearance, byte request) {
+    public Image setBarangayClearance(BarangayClearance barangayClearance, byte request) {
         mBarangayClearance = barangayClearance;
 
         mChmPhoto.setImage(mBarangayClearance.getChmPhoto() != null ?
@@ -235,7 +344,8 @@ public class BarangayClearanceReportControl {
         // Fill out the document body.
         mBrgyClearanceName.setText(mBarangayClearance.getResidentName().toUpperCase());
         mBrgyClearanceAddress.setText(mBarangayClearance.getAddress());
-        mTotalYearsOfResidency.setText(mBarangayClearance.getTotalYearsResidency() + "year/s");
+        mTotalYearsOfResidency.setText(mBarangayClearance.getTotalYearsResidency() +
+                (mBarangayClearance.getTotalYearsResidency() > 1 ? " years" : " year"));
         mYearOfResidency.setText(mBarangayClearance.getYearOfResidency() == -1 ?
                 "birth" : mBarangayClearance.getYearOfResidency() + "");
         mBrgyClearancePurpose.setText(mBarangayClearance.getPurpose());
@@ -255,5 +365,38 @@ public class BarangayClearanceReportControl {
         mBrgyClearanceDay.setText(day + daySuffix);
         mBrgyClearanceDate.setText(
                 BarangayUtils.convertMonthIntToString(dateIssued.get(Calendar.MONTH)) + ", " + dateIssued.get(Calendar.YEAR));
+
+        switch (request) {
+            case REQUEST_CREATE_REPORT :
+                mPrintAndSaveButton.setVisible(true);
+                mPrintAndSaveButton.setManaged(true);
+                mSaveButton.setVisible(true);
+                mSaveButton.setManaged(true);
+
+                mPrintButton.setVisible(false);
+                mPrintButton.setManaged(false);
+                break;
+            case REQUEST_DISPLAY_REPORT :
+                mPrintAndSaveButton.setVisible(false);
+                mPrintAndSaveButton.setManaged(false);
+                mSaveButton.setVisible(false);
+                mSaveButton.setManaged(false);
+
+                mPrintButton.setVisible(true);
+                mPrintButton.setManaged(true);
+                break;
+            case REQUEST_SNAPSHOT_REPORT :
+                return mDocumentPane.snapshot(null, null);
+        }
+
+        return null;
+    }
+
+    public void setListener(OnBarangayClearanceReportListener listener) {
+        mListener = listener;
+    }
+
+    public void setPreferenceModel(PreferenceModel prefModel) {
+        mPrefModel = prefModel;
     }
 }

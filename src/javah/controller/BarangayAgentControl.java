@@ -281,7 +281,6 @@ public class BarangayAgentControl {
              * @Param image is the image to be created.
              */
             BiConsumer<String, WritableImage> writeImage = (prefKey, image) -> {
-                System.out.println(prefKey + " " + image);
                 try {
                     // Save the image in the appropriate directory with a unique uuid name.
                     String imagePath = System.getenv("PUBLIC");

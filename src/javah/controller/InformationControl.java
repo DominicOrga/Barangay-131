@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -34,6 +35,7 @@ public class InformationControl {
     public interface OnInformationControlListener {
         void onCreateReportButtonClicked(byte information);
         void onViewButtonClicked(byte information, Object reportData);
+        Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance);
     }
 
     /**
@@ -73,6 +75,7 @@ public class InformationControl {
      * FXML components of the barangay clearance details.
      */
     @FXML Pane mBrgyClearanceDetailsPane;
+    @FXML ImageView mBrgyClearanceImage;
 
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
@@ -142,6 +145,7 @@ public class InformationControl {
     private OnInformationControlListener mListener;
 
     private BarangayID mBarangayIDSelected;
+    private BarangayClearance mBrgyClearanceSelected;
 
     /**
      * Called before setCacheModel()
@@ -253,109 +257,10 @@ public class InformationControl {
 
     @FXML
     public void onViewButtonClicked(ActionEvent actionEvent) {
-        mListener.onViewButtonClicked(mInformation, mBarangayIDSelected);
-    }
-
-    /**
-     * Called after initialize() and is called in the MainControl.
-     * Set the main scene as the listener to this object.
-     * @param listener
-     */
-    public void setListener(OnInformationControlListener listener) {
-        mListener = listener;
-    }
-
-    /**
-     * Called after initialize() and is called in the MainControl.
-     * Make a reference to the global database model.
-     * @param databaseModel
-     */
-    public void setDatabaseModel(DatabaseModel databaseModel) {
-        mDatabaseModel = databaseModel;
-    }
-
-    /**
-     * Called after initialize() and is called in the MainControl.
-     * Make a reference to the global cache model and start initializing the variables that are initially
-     * dependent on some cached data.
-     * @param cacheModel
-     */
-    public void setCacheModel(CacheModel cacheModel) {
-        mCacheModel = cacheModel;
-    }
-
-    public void setBlurListPaging(boolean blur) {
-        mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
-    }
-
-    /**
-     * Set the information to be displayed.
-     * @param information
-     */
-    public void setInformation(byte information){
-        // Reset the resident volatile cache.
-        mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
-
-        // Hide the previous Information details pane used.
         switch (mInformation) {
-            case INFORMATION_BARANGAY_ID :
-                mBrgyIDDetailsPane.setVisible(false);
-                break;
-            case INFORMATION_BARANGAY_CLEARANCE :
-                mBrgyClearanceDetailsPane.setVisible(false);
-                break;
-            case INFORMATION_BUSINESS_CLEARANCE :
-                break;
-            case INFORMATION_BLOTTER :
+            case INFORMATION_BARANGAY_ID : mListener.onViewButtonClicked(mInformation, mBarangayIDSelected); break;
+            case INFORMATION_BARANGAY_CLEARANCE : mListener.onViewButtonClicked(mInformation, mBrgyClearanceSelected); break;
         }
-
-        // Update the scene to match the information.
-        switch (information) {
-            case INFORMATION_BARANGAY_ID :
-                mCreateButton.setText("New Barangay ID");
-                mBrgyIDDetailsPane.setVisible(true);
-
-                // The volatile cache should hold the cached data pertaining to the barangay id.
-                mReportIDs = mCacheModel.getBarangayIDIDsCache();
-                mReportResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
-                mReportDateIssuedList = mCacheModel.getBarangayIDdateIssuedCache();
-
-                break;
-            case INFORMATION_BARANGAY_CLEARANCE :
-                mCreateButton.setText("New Barangay Clearance");
-                mBrgyClearanceDetailsPane.setVisible(true);
-
-                // The volatile cache should hold the cached data pertaining to the barangay clearance.
-                mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
-                mReportResidentIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
-                mReportDateIssuedList = mCacheModel.getBrgyClearanceDateIssuedCache();
-
-                break;
-            case INFORMATION_BUSINESS_CLEARANCE :
-                break;
-            case INFORMATION_BLOTTER :
-        }
-
-        mInformation = information;
-
-        // Refresh the list paging.
-        updateListPaging(false);
-
-    }
-
-    public void createBarangayID(BarangayID barangayID) {
-        // Create the barangay id.
-        mDatabaseModel.createBarangayID(barangayID);
-
-        // Place the new barangay id in the cached data.
-        mReportDateIssuedList.add(0, barangayID.getDateIssued());
-        mReportResidentIDs.add(0, barangayID.getResidentID());
-        mReportIDs.add(0, barangayID.getID());
-
-        // Update the list paging and select the newly created barangay id.
-        updateListPaging(false);
-        setReportToLabelSelectedIndex(2);
     }
 
     /**
@@ -364,10 +269,10 @@ public class InformationControl {
      *                              to -1, then the example data is displayed.
      */
     private void setReportToLabelSelectedIndex(int newLabelSelectedIndex) {
-        Consumer<Boolean> showSelectedReportDetails = (bool) -> {
-            mViewButton.setVisible(bool);
+        Consumer<Boolean> showSelectedReportDetails = (show) -> {
+            mViewButton.setVisible(show);
 
-            if (bool)
+            if (show)
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
                         // Get the label selected.
@@ -396,6 +301,13 @@ public class InformationControl {
                         mIDDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
 
                         break;
+
+                    case INFORMATION_BARANGAY_CLEARANCE :
+                        mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
+                        System.out.println(mBrgyClearanceSelected.getID());
+                        Image image = mListener.OnRequestBarangayClearanceSnapshot(mBrgyClearanceSelected);
+                        mBrgyClearanceImage.setImage(image);
+                        break;
                 }
 
             else
@@ -408,6 +320,9 @@ public class InformationControl {
                         mIDDateIssued.setText(null);
                         mIDDateValid.setText(null);
                         break;
+
+                    case INFORMATION_BARANGAY_CLEARANCE:
+
                 }
         };
 
@@ -581,5 +496,122 @@ public class InformationControl {
         mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
 
         updateCurrentPage();
+    }
+
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Set the main scene as the listener to this object.
+     * @param listener
+     */
+    public void setListener(OnInformationControlListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Make a reference to the global database model.
+     * @param databaseModel
+     */
+    public void setDatabaseModel(DatabaseModel databaseModel) {
+        mDatabaseModel = databaseModel;
+    }
+
+    /**
+     * Called after initialize() and is called in the MainControl.
+     * Make a reference to the global cache model and start initializing the variables that are initially
+     * dependent on some cached data.
+     * @param cacheModel
+     */
+    public void setCacheModel(CacheModel cacheModel) {
+        mCacheModel = cacheModel;
+    }
+
+    public void setBlurListPaging(boolean blur) {
+        mListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
+    }
+
+    /**
+     * Set the information to be displayed.
+     * @param information
+     */
+    public void setInformation(byte information){
+        // Reset the resident volatile cache.
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+        mResidentNames = mCacheModel.getResidentNamesCache();
+
+        // Hide the previous Information details pane used.
+        switch (mInformation) {
+            case INFORMATION_BARANGAY_ID :
+                mBrgyIDDetailsPane.setVisible(false);
+                break;
+            case INFORMATION_BARANGAY_CLEARANCE :
+                mBrgyClearanceDetailsPane.setVisible(false);
+                break;
+            case INFORMATION_BUSINESS_CLEARANCE :
+                break;
+            case INFORMATION_BLOTTER :
+        }
+
+        // Update the scene to match the information.
+        switch (information) {
+            case INFORMATION_BARANGAY_ID :
+                mCreateButton.setText("New Barangay ID");
+                mBrgyIDDetailsPane.setVisible(true);
+
+                // The volatile cache should hold the cached data pertaining to the barangay id.
+                mReportIDs = mCacheModel.getBarangayIDIDsCache();
+                mReportResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
+                mReportDateIssuedList = mCacheModel.getBarangayIDdateIssuedCache();
+
+                break;
+            case INFORMATION_BARANGAY_CLEARANCE :
+                mCreateButton.setText("New Barangay Clearance");
+                mBrgyClearanceDetailsPane.setVisible(true);
+
+                // The volatile cache should hold the cached data pertaining to the barangay clearance.
+                mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
+                mReportResidentIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
+                mReportDateIssuedList = mCacheModel.getBrgyClearanceDateIssuedCache();
+
+                break;
+            case INFORMATION_BUSINESS_CLEARANCE :
+                break;
+            case INFORMATION_BLOTTER :
+        }
+
+        mInformation = information;
+
+        // Refresh the list paging.
+        updateListPaging(false);
+
+    }
+
+    public void createBarangayID(BarangayID barangayID) {
+        // Create the barangay id.
+        mDatabaseModel.createBarangayID(barangayID);
+
+        // todo: before adding, make sure that the cache reference are pointing to the non-volatile cached data.
+        // Place the new barangay id in the cached data.
+        mReportDateIssuedList.add(0, barangayID.getDateIssued());
+        mReportResidentIDs.add(0, barangayID.getResidentID());
+        mReportIDs.add(0, barangayID.getID());
+
+        // Update the list paging and select the newly created barangay id.
+        updateListPaging(false);
+        setReportToLabelSelectedIndex(2);
+    }
+
+    public void createBarangayClearance(BarangayClearance barangayClearance) {
+        mDatabaseModel.createBarangayClearance(barangayClearance);
+
+        // todo: before adding, make sure that the cache reference are pointing to the non-volatile cached data.
+        // Place the new barangay id in the cached data.
+        mReportDateIssuedList.add(0, barangayClearance.getDateIssued());
+        mReportResidentIDs.add(0, barangayClearance.getResidentID());
+        mReportIDs.add(0, barangayClearance.getID());
+
+        // Update the list paging and select the newly created barangay id.
+        updateListPaging(false);
+        setReportToLabelSelectedIndex(2);
     }
 }

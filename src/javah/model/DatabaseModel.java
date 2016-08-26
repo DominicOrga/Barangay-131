@@ -1,6 +1,7 @@
 package javah.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
 
@@ -541,6 +542,177 @@ public class DatabaseModel {
         return result;
     }
 
+    public String createBarangayClearance(BarangayClearance barangayClearance) {
+
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, " +
+                                    "%s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            BarangayClearanceEntry.TABLE_NAME,
+                            BarangayClearanceEntry.COLUMN_ID,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_NAME,
+                            BarangayClearanceEntry.COLUMN_ADDRESS,
+                            BarangayClearanceEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            BarangayClearanceEntry.COLUMN_TOTAL_YEARS_RESIDENCY,
+                            BarangayClearanceEntry.COLUMN_PURPOSE,
+                            BarangayClearanceEntry.COLUMN_DATE_ISSUED,
+                            BarangayClearanceEntry.COLUMN_DATE_VALID,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_NAME,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_PHOTO,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_NAME,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
+                            BarangayClearanceEntry.COLUMN_TREASURER_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_1_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_2_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_3_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_4_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_5_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_6_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_7_NAME
+                    ));
+
+            statement.setString(1, barangayClearance.getID());
+            statement.setString(2, barangayClearance.getResidentID());
+            statement.setString(3, barangayClearance.getResidentName());
+            statement.setString(4, barangayClearance.getAddress());
+            statement.setInt(5, barangayClearance.getYearOfResidency());
+            statement.setInt(6, barangayClearance.getTotalYearsResidency());
+            statement.setString(7, barangayClearance.getPurpose());
+            statement.setDate(8, barangayClearance.getDateIssued());
+            statement.setDate(9, barangayClearance.getDateValid());
+            statement.setString(10, barangayClearance.getChmName());
+            statement.setString(11, barangayClearance.getChmPhoto());
+            statement.setString(12, barangayClearance.getChmSignature());
+            statement.setString(14, barangayClearance.getSecName());
+            statement.setString(15, barangayClearance.getSecSignature());
+            statement.setString(17, barangayClearance.getTreasurerName());
+
+            for (int i = 0; i < 7; i++)
+                statement.setString(18 + i, barangayClearance.getKagawadName(i));
+
+            double[] signatureDimension = barangayClearance.getChmSignatureDimension();
+            statement.setString(13, signatureDimension != null ?
+                    String.format("%.5f %.5f %.5f %.5f",
+                            signatureDimension[0],
+                            signatureDimension[1],
+                            signatureDimension[2],
+                            signatureDimension[3]) : null);
+
+            signatureDimension = barangayClearance.getSecSignatureDimension();
+            statement.setString(16, signatureDimension != null ?
+                    String.format("%.5f %.5f %.5f %.5f",
+                            signatureDimension[0],
+                            signatureDimension[1],
+                            signatureDimension[2],
+                            signatureDimension[3]) : null);
+
+            statement.execute();
+            statement.close();
+            dbConnection.close();
+
+            return barangayClearance.getID();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public BarangayClearance getBarangayClearance(String id) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, " +
+                                    "%s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            BarangayClearanceEntry.COLUMN_ID,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_NAME,
+                            BarangayClearanceEntry.COLUMN_ADDRESS,
+                            BarangayClearanceEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            BarangayClearanceEntry.COLUMN_TOTAL_YEARS_RESIDENCY,
+                            BarangayClearanceEntry.COLUMN_PURPOSE,
+                            BarangayClearanceEntry.COLUMN_DATE_ISSUED,
+                            BarangayClearanceEntry.COLUMN_DATE_VALID,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_NAME,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_PHOTO,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_NAME,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
+                            BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
+                            BarangayClearanceEntry.COLUMN_TREASURER_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_1_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_2_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_3_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_4_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_5_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_6_NAME,
+                            BarangayClearanceEntry.COLUMN_KAGAWAD_7_NAME,
+                            BarangayClearanceEntry.TABLE_NAME,
+                            BarangayClearanceEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BarangayClearance brgyClearance = new BarangayClearance();
+
+                brgyClearance.setID(id);
+                brgyClearance.setResidentID(resultSet.getString(BarangayClearanceEntry.COLUMN_RESIDENT_ID));
+                brgyClearance.setResidentName(resultSet.getString(BarangayClearanceEntry.COLUMN_RESIDENT_NAME));
+                brgyClearance.setAddress(resultSet.getString(BarangayClearanceEntry.COLUMN_ADDRESS));
+                brgyClearance.setYearOfResidency(resultSet.getInt(BarangayClearanceEntry.COLUMN_YEAR_OF_RESIDENCY));
+                brgyClearance.setTotalYearsResidency(resultSet.getInt(BarangayClearanceEntry.COLUMN_TOTAL_YEARS_RESIDENCY));
+                brgyClearance.setPurpose(resultSet.getString(BarangayClearanceEntry.COLUMN_PURPOSE));
+                brgyClearance.setDateIssued(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_ISSUED));
+                brgyClearance.setDateValid(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_VALID));
+                brgyClearance.setChmName(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_NAME));
+                brgyClearance.setChmPhoto(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_PHOTO));
+                brgyClearance.setChmSignature(resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE));
+                brgyClearance.setSecName(resultSet.getString(BarangayClearanceEntry.COLUMN_SECRETARY_NAME));
+                brgyClearance.setSecSignature(resultSet.getString(BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE));
+                brgyClearance.setTreasurerName(resultSet.getString(BarangayClearanceEntry.COLUMN_TREASURER_NAME));
+                brgyClearance.setKagawadName(0, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_1_NAME));
+                brgyClearance.setKagawadName(1, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_2_NAME));
+                brgyClearance.setKagawadName(2, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_3_NAME));
+                brgyClearance.setKagawadName(3, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_4_NAME));
+                brgyClearance.setKagawadName(4, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_5_NAME));
+                brgyClearance.setKagawadName(5, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_6_NAME));
+                brgyClearance.setKagawadName(6, resultSet.getString(BarangayClearanceEntry.COLUMN_KAGAWAD_7_NAME));
+
+                String signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
+                brgyClearance.setChmSignatureDimension(signatureDimension != null ?
+                Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
+
+                signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION);
+                brgyClearance.setSecSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return brgyClearance;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * Generate a unique id for the given table.
