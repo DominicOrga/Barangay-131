@@ -193,18 +193,22 @@ public class BarangayClearanceReportControl {
 
             // If the client cancels the printing, then no printing will occur.
             if (result) {
-                ImageView snapShot = new ImageView();
-                snapShot.setImage(mDocumentPane.snapshot(null, null));
+                // Create a new page layout with reduced margins.
+                PageLayout pageLayout = job.getPrinter().createPageLayout(
+                                job.getPrinter().getDefaultPageLayout().getPaper(),
+                                PageOrientation.PORTRAIT, 0.5, 0.5, 0.5, 0.5);
 
-                Paper paper = job.getPrinter().getDefaultPageLayout().getPaper();
-                PageLayout pageLayout = job.getPrinter().createPageLayout(paper, PageOrientation.PORTRAIT, 0.5, 0.5, 0.5, 0.5);
+                // Determine the scale value needed to fit mDocumentPane in the paper.
+                double scaleValue = pageLayout.getPrintableWidth() / mDocumentPane.getBoundsInParent().getWidth();
+                Scale tempScale = new Scale(scaleValue, scaleValue);
 
-                double scaleX = pageLayout.getPrintableWidth() / snapShot.getBoundsInParent().getWidth();
+                // Temporarily apply the scale value to mDocumentPane. Reset scaleback to normal after printing.
+                mDocumentPane.getTransforms().add(tempScale);
 
-                snapShot.getTransforms().add(new Scale(scaleX, scaleX));
-
-                job.printPage(pageLayout, snapShot);
+                job.printPage(pageLayout, mDocumentPane);
                 job.endJob();
+
+                mDocumentPane.getTransforms().removeAll(tempScale);
             }
 
             return result;

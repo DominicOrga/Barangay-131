@@ -254,16 +254,18 @@ public class BarangayIDReportControl {
             boolean result = job.showPrintDialog(Main.mPrimaryStage); // Window must be your main Stage
             mRootPane.setDisable(false);
 
-            System.out.println(result);
             // If the client cancels the printing, then no printing will occur.
             if (result) {
-                ImageView snapShot = new ImageView();
-                snapShot.setImage(mBarangayIDPane.snapshot(null, null));
+                // Determine the scale value needed to fit mBarangayIDPane in the paper.
+                Scale tempScale = new Scale(0.5, 0.5);
 
-                snapShot.getTransforms().add(new Scale(0.5, 0.5));
+                // Temporarily apply the scale value to mDocumentPane. Reset scaleback to normal after printing.
+                mBarangayIDPane.getTransforms().add(tempScale);
 
-                job.printPage(snapShot);
+                job.printPage(mBarangayIDPane);
                 job.endJob();
+
+                mBarangayIDPane.getTransforms().remove(tempScale);
             }
 
             return result;
