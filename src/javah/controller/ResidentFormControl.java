@@ -47,7 +47,7 @@ public class ResidentFormControl {
     private TextArea mAddress1, mAddress2;
 
     @FXML
-    private ComboBox mBirthMonth, mBirthDay, mBirthYear, mYearOfResidency, mMonthOfResidency;
+    private ComboBox mBirthMonth, mBirthDay, mBirthYear, mYearOfResidency, mMonthOfResidency, mAuxiliary;
 
     @FXML
     private ImageView mActionIcon;
@@ -197,6 +197,11 @@ public class ResidentFormControl {
             mResident.setFirstName(mFirstName.getText());
             mResident.setLastName(mLastName.getText());
             mResident.setMiddleName(mMiddleName.getText());
+
+
+            String auxiliary = mAuxiliary.getValue().toString();
+            mResident.setAuxiliary(auxiliary == "N/A" ? null : auxiliary);
+
             mResident.setAddress1(mAddress1.getText());
             mResident.setAddress2(mAddress2.getText());
 

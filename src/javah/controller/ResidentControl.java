@@ -24,14 +24,63 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Serves as the central heart of the resident information system. Displays
+ * all the residents within this' list paging. Calls varying dialogs to
+ * create, update and delete residents from the Main Control. In addition,
+ * this controller is connected to the Database model and has the authority
+ * to update the Residents Table. Furthermore, it makes use of the Cache model
+ * to cache queried data, specifically about the residents, from the database.
+ *
+ * @see ResidentFormControl
+ * @see MainControl
+ * @see DatabaseModel
+ * @see CacheModel
+ */
 public class ResidentControl {
 
     /**
-     * An interface that tells the main scene to open up a manipulation resident dialog.
+     * Sends a task to this listener to launch a pop-up that can create, update or
+     * delete a resident. The listener exists within the main control, since the
+     * main control has the power to launch pop-ups.
+     *
+     * @version  %I%, %G%
+     * @see MainControl
      */
-    public interface OnResidentSceneListener {
+    public interface OnResidentControlListener {
+
+        /**
+         * Tells this listener at the Main Control to show the resident form pop-up.
+         * Sets the Resident Form Control to resident creation mode.
+         *
+         * @see MainControl
+         * @see ResidentFormControl
+         */
         void onNewResidentButtonClicked();
+
+        /**
+         * Tells this listener at the Main Control to show the resident form pop-up.
+         * Sets the Resident Form Control to resident update mode.
+         *
+         * @param resident
+         *        The resident to be displayed in the Resident Form for data updating.
+         * @see MainControl
+         * @see ResidentFormControl
+         */
         void onEditResidentButtonClicked(Resident resident);
+
+        /**
+         * Tells this listener at the Main Control to show the Confirmation Dialog.
+         * The confirmation dialog will contain a two buttons, specifically the
+         * confirm button and cancel buttonn. If the confirm button is clicked,
+         * then the parameter resident will be deleted. Otherwise, cancel the
+         * resident deletion.
+         *
+         * @param resident
+         *        The resident to be deleted.
+         * @see MainControl
+         * @see ConfirmationDialogControl
+         */
         void onDeleteResidentButtonClicked(Resident resident);
     }
 
@@ -120,7 +169,7 @@ public class ResidentControl {
 
     private Resident mResidentSelected;
 
-    private OnResidentSceneListener mListener;
+    private OnResidentControlListener mListener;
 
     /**
      * Called before setCacheModel()
@@ -252,7 +301,7 @@ public class ResidentControl {
      * Set the main scene as the listener to this object.
      * @param listener
      */
-    public void setListener(OnResidentSceneListener listener) {
+    public void setListener(OnResidentControlListener listener) {
         mListener = listener;
     }
 
@@ -339,8 +388,16 @@ public class ResidentControl {
         // Update the resident lists.
         int index = mResidentIDs.indexOf(resident.getId());
         mResidentNames.remove(index);
-        mResidentNames.add(index, String.format("%s, %s %s.",
-                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0)));
+
+
+
+        String name = String.format("%s, %s %s.",
+                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0));
+
+        String auxiliary = resident.getAuxiliary();
+        name += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
+
+        mResidentNames.add(index, name);
 
         updateCurrentPage();
 

@@ -88,11 +88,11 @@ public class MainControl {
     /**
      * The popup scene controllers.
      */
-    private ResidentDeletionControl mResidentDeletionControl;
+    private ConfirmationDialogControl mConfirmationDialogControl;
     private ResidentFormControl mResidentFormControl;
     private PhotoshopControl mPhotoshopControl;
     private BarangayAgentControl mBarangayAgentControl;
-    private ResidentInfoFormControl mResidentInfoFormControl;
+    private ResidentInformationFormControl mResidentInformationFormControl;
     private BarangayIDReportControl mBarangayIDReportControl;
     private BarangayClearanceReportControl mBrgyClearanceReportControl;
 
@@ -157,7 +157,7 @@ public class MainControl {
         mResidentControl.setDatabaseModel(mDatabaseModel);
         mResidentControl.setCacheModel(mCacheModel);
 
-        mResidentControl.setListener(new ResidentControl.OnResidentSceneListener() {
+        mResidentControl.setListener(new ResidentControl.OnResidentControlListener() {
             @Override
             public void onNewResidentButtonClicked() {
                 mResidentControl.setBlurListPaging(true);
@@ -174,7 +174,7 @@ public class MainControl {
             @Override
             public void onDeleteResidentButtonClicked(Resident resident) {
                 mResidentControl.setBlurListPaging(true);
-                mResidentDeletionControl.setNameLabel(resident.getFirstName());
+                mConfirmationDialogControl.setNameLabel(resident.getFirstName());
                 showPopupScene(mResidentDeletionScene, false);
             }
         });
@@ -195,17 +195,17 @@ public class MainControl {
 
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
-                        mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_ID);
+                        mResidentInformationFormControl.setInformation(ResidentInformationFormControl.INFORMATION_BARANGAY_ID);
 
                         break;
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE :
-                        mResidentInfoFormControl.setInformation(ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE);
+                        mResidentInformationFormControl.setInformation(ResidentInformationFormControl.INFORMATION_BARANGAY_CLEARANCE);
                         break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
                     case InformationControl.INFORMATION_BLOTTER :
                 }
 
-                mResidentInfoFormControl.reset();
+                mResidentInformationFormControl.reset();
             }
 
             @Override
@@ -286,8 +286,8 @@ public class MainControl {
                         mBarangayAgentControl.setSecSignature(image);
                         break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE:
-                        mResidentInfoFormControl.setDisable(false);
-                        mResidentInfoFormControl.setSignature(image);
+                        mResidentInformationFormControl.setDisable(false);
+                        mResidentInformationFormControl.setSignature(image);
                         break;
                 }
             }
@@ -307,7 +307,7 @@ public class MainControl {
                         mBarangayAgentControl.setDisable(false);
                         break;
                     case PhotoshopControl.CLIENT_ID_SIGNATURE:
-                        mResidentInfoFormControl.setDisable(false);
+                        mResidentInformationFormControl.setDisable(false);
                         break;
                 }
             }
@@ -394,11 +394,11 @@ public class MainControl {
         });
 
         // Initialize the resident deletion confirmation dialog.
-        resetFXMLLoader.accept("fxml/scene_resident_deletion.fxml");
+        resetFXMLLoader.accept("fxml/scene_confirmation_dialog.fxml");
         mResidentDeletionScene = fxmlLoader.load();
-        mResidentDeletionControl = fxmlLoader.getController();
+        mConfirmationDialogControl = fxmlLoader.getController();
 
-        mResidentDeletionControl.setListener(new ResidentDeletionControl.OnResidentDeletionListener() {
+        mConfirmationDialogControl.setListener(new ConfirmationDialogControl.OnResidentDeletionListener() {
             @Override
             public void onDeleteButtonClicked() {
                 hidePopupScene(mResidentDeletionScene, false);
@@ -459,18 +459,18 @@ public class MainControl {
         // Initialize the resident info form dialog.
         resetFXMLLoader.accept("fxml/scene_resident_information_form.fxml");
         mResidentInfoFormScene = fxmlLoader.load();
-        mResidentInfoFormControl = fxmlLoader.getController();
+        mResidentInformationFormControl = fxmlLoader.getController();
 
-        mResidentInfoFormControl.setCacheModel(mCacheModel);
-        mResidentInfoFormControl.setDatabaseModel(mDatabaseModel);
-        mResidentInfoFormControl.setPreferenceModel(mPreferenceModel);
+        mResidentInformationFormControl.setCacheModel(mCacheModel);
+        mResidentInformationFormControl.setDatabaseModel(mDatabaseModel);
+        mResidentInformationFormControl.setPreferenceModel(mPreferenceModel);
 
-        mResidentInfoFormControl.setListener(new ResidentInfoFormControl.OnResidentInfoFormListener() {
+        mResidentInformationFormControl.setListener(new ResidentInformationFormControl.OnResidentInfoFormListener() {
             @Override
             public void onUploadButtonClicked() {
                 mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
-                mResidentInfoFormControl.setDisable(true);
+                mResidentInformationFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
             }
 
@@ -478,7 +478,7 @@ public class MainControl {
             public void onCaptureButtonClicked() {
                 mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
-                mResidentInfoFormControl.setDisable(true);
+                mResidentInformationFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
             }
 
@@ -493,19 +493,19 @@ public class MainControl {
                 hidePopupScene(mResidentInfoFormScene, false);
 
                 switch (information) {
-                    case ResidentInfoFormControl.INFORMATION_BARANGAY_ID :
+                    case ResidentInformationFormControl.INFORMATION_BARANGAY_ID :
                         mBarangayIDReportControl.setBarangayID((BarangayID) data, BarangayIDReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBarangayIDReportScene, false);
                         break;
 
-                    case ResidentInfoFormControl.INFORMATION_BARANGAY_CLEARANCE:
+                    case ResidentInformationFormControl.INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceReportControl.setBarangayClearance(
                                 (BarangayClearance) data, BarangayClearanceReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBrgyClearanceReportScene, false);
                         break;
 
-                    case ResidentInfoFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
-                    case ResidentInfoFormControl.INFORMATION_BLOTTER: break;
+                    case ResidentInformationFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
+                    case ResidentInformationFormControl.INFORMATION_BLOTTER: break;
                 }
 
             }

@@ -36,7 +36,7 @@ import java.util.function.Consumer;
 /**
  *  This class will handle all the information forms of the residents.
  */
-public class ResidentInfoFormControl {
+public class ResidentInformationFormControl {
 
     public interface OnResidentInfoFormListener {
         void onUploadButtonClicked();

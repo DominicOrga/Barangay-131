@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 
-public class ResidentDeletionControl {
+public class ConfirmationDialogControl {
 
     @FXML
     private Label mNameLabel;

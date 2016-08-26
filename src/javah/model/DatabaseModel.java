@@ -74,11 +74,12 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s, %s, %s",
+                    String.format("SELECT %s, %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s, %s, %s",
                             ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_IS_ARCHIVED,
                             ResidentEntry.COLUMN_LAST_NAME,
@@ -91,10 +92,16 @@ public class DatabaseModel {
             while(resultSet.next()) {
                 residentsIdList.add(resultSet.getString(ResidentEntry.COLUMN_ID));
 
-                residentNameList.add(String.format("%s, %s %s.",
+                String name = String.format("%s, %s %s.",
                         resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
                         resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME),
-                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0)));
+                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0));
+
+                String auxiliary;
+                if ((auxiliary = resultSet.getString(ResidentEntry.COLUMN_AUXILIARY)) != null)
+                    name += " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "");
+
+                residentNameList.add(name);
             }
 
             returnList[0] = residentsIdList;
@@ -118,10 +125,11 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
                             ResidentEntry.COLUMN_BIRTH_DATE,
                             ResidentEntry.COLUMN_PHOTO,
                             ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
@@ -144,6 +152,7 @@ public class DatabaseModel {
                 resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
                 resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
                 resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
+                resident.setAuxiliary(resultSet.getString(ResidentEntry.COLUMN_AUXILIARY));
                 resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
                 resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
                 resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
@@ -196,13 +205,14 @@ public class DatabaseModel {
             String residentID = generateID(ResidentEntry.TABLE_NAME);
 
             PreparedStatement statement = dbConnection.prepareStatement(
-                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
                             ResidentEntry.COLUMN_BIRTH_DATE,
                             ResidentEntry.COLUMN_PHOTO,
                             ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
@@ -215,15 +225,15 @@ public class DatabaseModel {
             statement.setString(2, resident.getFirstName());
             statement.setString(3, resident.getMiddleName());
             statement.setString(4, resident.getLastName());
-            statement.setDate(5, resident.getBirthDate());
-            statement.setString(6, resident.getPhotoPath());
-            statement.setInt(7, resident.getYearOfResidency());
-            statement.setInt(8, resident.getMonthOfResidency());
-            statement.setString(9, resident.getAddress1());
-            statement.setString(10, resident.getAddress2());
+            statement.setString(5, resident.getAuxiliary());
+            statement.setDate(6, resident.getBirthDate());
+            statement.setString(7, resident.getPhotoPath());
+            statement.setInt(8, resident.getYearOfResidency());
+            statement.setInt(9, resident.getMonthOfResidency());
+            statement.setString(10, resident.getAddress1());
+            statement.setString(11, resident.getAddress2());
 
             statement.execute();
-
             statement.close();
             dbConnection.close();
 
@@ -243,29 +253,36 @@ public class DatabaseModel {
 
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("UPDATE %s SET " +
-                            "%s = ?, %s = ?, %s = ?, " +
+                            "%s = ?, %s = ?, %s = ?, %s = ?, " +
                             "%s = ?, %s = ?, %s = ?, " +
                             "%s = ?, %s = ?, %s = ? " +
                             "WHERE %s = ?",
                             ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_FIRST_NAME, ResidentEntry.COLUMN_MIDDLE_NAME, ResidentEntry.COLUMN_LAST_NAME,
-                            ResidentEntry.COLUMN_BIRTH_DATE, ResidentEntry.COLUMN_PHOTO, ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY, ResidentEntry.COLUMN_ADDRESS_1, ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
                             ResidentEntry.COLUMN_ID));
 
             statement.setString(1, resident.getFirstName());
             statement.setString(2, resident.getMiddleName());
             statement.setString(3, resident.getLastName());
-            statement.setDate(4, resident.getBirthDate());
-            statement.setString(5, resident.getPhotoPath());
-            statement.setInt(6, resident.getYearOfResidency());
-            statement.setInt(7, resident.getMonthOfResidency());
-            statement.setString(8, resident.getAddress1());
-            statement.setString(9, resident.getAddress2());
-            statement.setString(10, resident.getId());
+            statement.setString(4, resident.getAuxiliary());
+            statement.setDate(5, resident.getBirthDate());
+            statement.setString(6, resident.getPhotoPath());
+            statement.setInt(7, resident.getYearOfResidency());
+            statement.setInt(8, resident.getMonthOfResidency());
+            statement.setString(9, resident.getAddress1());
+            statement.setString(10, resident.getAddress2());
+            statement.setString(11, resident.getId());
 
             statement.executeUpdate();
-
             statement.close();
             dbConnection.close();
 

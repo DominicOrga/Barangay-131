@@ -6,6 +6,7 @@ public class Resident {
     private String mResidentId;
     private String mFirstName, mLastName;
     private String mMiddleName;
+    private String mAuxiliary;
     private String mPhotoPath;
     private short mYearOfResidency, mMonthOfResidency;
     private String mAddress1, mAddress2;
@@ -41,6 +42,14 @@ public class Resident {
 
     public String getLastName() {
         return mLastName;
+    }
+
+    public void setAuxiliary(String auxiliary) {
+        mAuxiliary = auxiliary;
+    }
+
+    public String getAuxiliary() {
+        return mAuxiliary;
     }
 
     public void setPhotoPath(String photoPath) {
