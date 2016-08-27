@@ -108,14 +108,14 @@ public class BarangayClearanceReportControl {
 
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-        if (printReport()) mListener.onCancelButtonClicked();
+        if (printReport()) mListener.onSaveButtonClicked(mBarangayClearance);;
     }
 
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
             saveSignatureDimensions();
-            mListener.onCancelButtonClicked();
+            mListener.onSaveButtonClicked(mBarangayClearance);
         }
     }
 
@@ -299,7 +299,7 @@ public class BarangayClearanceReportControl {
         }
 
         mSecPrintedName.setText(mBarangayClearance.getSecName().toUpperCase());
-        mChmPrintedName.setText(mBarangayClearance.getChmName().toUpperCase());
+        mChmPrintedName.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
 
         if (mBarangayClearance.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBarangayClearance.getChmSignature()));

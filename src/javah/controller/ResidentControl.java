@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -85,79 +86,166 @@ public class ResidentControl {
     }
 
     /**
-     * Used for resident list paging. *Each page contains 40 residents.
+     * A grid pane used to display 40 residents at a time. The residents to
+     * be displayed are determined by the current page.
      */
-    @FXML private GridPane mResidentListGridPane;
+    @FXML private GridPane mResidentListPaging;
 
-    /**
-     * The current page label of the resident list paging.
-     */
+    /* A label signifying the current page within the resident list paging. */
     @FXML private Label mCurrentPageLabel;
 
-    /**
-     * The total number of pages of the resident list paging.
-     */
+    /* A total number of pages of the resident list paging. */
     @FXML private Label mPageCountLabel;
 
     /**
-     * The search field used for specialized resident query.
+     * A text field used for filtering the residents to be displayed at the resident
+     * list paging. The system filters the residents by name in alphabetical order.
+     * If no text is present within the text field, then filter is considered as
+     * disabled.
      */
     @FXML private TextField mSearchField;
 
-    /**
-     * Widgets representing the information of the selected resident.
-     */
+    /* An Image view that displays the photo of the resident selected. */
     @FXML private ImageView mResidentPhoto;
-    @FXML private Label mResidentName, mBirthDate, mAge, mResidentSince, mAddress2Label;
-    @FXML private TextArea mAddress1, mAddress2;
+
+    /* A label displaying the name of the resident selected. */
+    @FXML private Label mResidentName;
+
+    /* A label displaying the birth date of the resident selected. */
+    @FXML private Label mBirthDate;
+
+    /* A label displaying the age of the resident selected. */
+    @FXML private Label mAge;
+
+    /* A label displaying the year of residency of the resident selected. */
+    @FXML private Label mResidentSince;
 
     /**
-     * Edit or manipulate the currently selected resident with this buttons.
+     * A label signifying the address 2 of the resident selected. If the resident
+     * selected does not have an address 2 then the label is invisible. Else, the
+     * label is set to visible.
      */
-    @FXML private ImageView mEditButton, mDeleteButton;
+    @FXML private Label mAddress2Label;
 
-    @FXML private Button mBackPageButton, mNextPageButton;
+    /**
+     * A text area displaying the address 1 of the resident selected. Note that
+     * address 1 cannot be null.
+     */
+    @FXML private TextArea mAddress1;
 
+    /**
+     * A text area displaying the address 2 of the resident selected. Unlike
+     * address 1, the address 2 can be null.
+     */
+    @FXML private TextArea mAddress2;
+
+    /**
+     * Allows editing of the resident selected. Tells the listener of this
+     * resident control at the main control to open the Resident form pop-up
+     * and populate the form with the resident selected data, to be modified
+     * or updated.
+     *
+     * @see ResidentFormControl
+     */
+    @FXML private ImageView mEditButton;
+
+    /**
+     * Tells the listener of thie resident control to call the confirmation
+     * dialog pop-up to confirm whether to delete the resident selected.
+     *
+     * @see ConfirmationDialogControl
+     */
+    @FXML private ImageView mDeleteButton;
+
+    /**
+     * A button that decrements the current page value, if possible. Then
+     * calls the function to update the current page of the resident list
+     * paging. The current page value cannot be less than 1.
+     */
+    @FXML private Button mBackPageButton;
+
+    /**
+     * A button that increments the current page value, if possible. Then
+     * calls the function to update the current page of the resident list
+     * paging. The current page values cannot exceed the value of the
+     * total page count.
+     */
+    @FXML private Button mNextPageButton;
+
+    /**
+     * A pane that covers the resident details panel. If a resident is
+     * selected then the pane is invisble. Else, the pane is set to
+     * visible.
+     */
+    @FXML private Pane mNoResidentSelectedPane;
+
+    /**
+     * A reference to the database model instantiated from the main control.
+     * Allows this resident controller to manage the residents table from
+     * the database.
+     *
+     * @see DatabaseModel
+     */
     private DatabaseModel mDatabaseModel;
 
+    /**
+     * A reference to the cache model instantiated from the main control.
+     * Allows this resident controller to manage the cached data pertaining to the
+     * resident.
+     *
+     * @see CacheModel
+     */
     private CacheModel mCacheModel;
 
     /**
-     * A volatile copy of the mResidentIDsCache used to search for non-archived residents.
-     * This list can be filtered with the search field. Thus, making it volatile.
+     * Holds the resident IDs that can be displayed at the list paging. The list can
+     * either serve as a reference to the resident IDs cached data from the Cache Model
+     * or have a filtered list of resident IDs.
+     *
+     * @see CacheModel
      */
     private List<String> mResidentIDs;
 
     /**
-     * A volatile copy of the mResidentNamesCache used to display the residents in the list paging.
-     * This list can be filtered with the search field. Thus, making it volatile.
+     * Holds the resident names that can be displayed at the list paging. The list can
+     * either serve as a reference to the resident names cached data from the Cache
+     * Model or have a filtered list of resident names.
+     *
+     * @see CacheModel
      */
     private List<String> mResidentNames;
 
     /**
-     * The value representing which label is selected from the resident list paging.
-     * Value range is between 0 - 39.
-     */
-    private int mLabelSelectedIndex;
-
-    /**
-     * The value representing the index of the selected resident.
-     * Value range is between 0 - [mResidentIDs.size() - 1].
+     * The value representing the index of the selected resident. Value range is
+     * between 0 and the number of residents minus 1. If the value is equal to -1,
+     * then no resident is currently selected. Used for identifying the elected
+     * resident data from the Resident IDs list and Resident names list.
      */
     private int mResidentSelectedIndex;
 
     /**
-     * The array containing all the labels of the resident list paging.
+     * An array containing all the labels of the resident list paging. The total
+     * number of labels contained within the array is exactly 40.
      */
     private Label[] mResidentLabels;
 
     /**
-     * Represents the current page of the resident list paging.
+     * The value representing which label is selected from the resident list paging.
+     * Value range is between 0 and 39. If the value is equal to -1, then no label
+     * from the list paging is currently selected.
+     */
+    private int mLabelSelectedIndex;
+
+    /**
+     * Represents the current page of the resident list paging. The range is between
+     * 1 and the page count.
      */
     private int mCurrentPage;
 
     /**
-     * Represents the number of pages within the resident list paging.
+     * Represents the number of pages within the resident list paging. The value
+     * is calculated by dividing the total number of residents by 40 and getting its
+     * ceil.
      */
     private int mPageCount;
 
@@ -167,8 +255,19 @@ public class ResidentControl {
      */
     private int mResidentCount;
 
+    /**
+     * Holds the data of the resident selected. The data will be used to show a
+     * description about the selected resident at the stage.
+     */
     private Resident mResidentSelected;
 
+    /**
+     * The listener of this controller. The listener is placed at the main control
+     * so that it can launch the pop-ups needed to create, update or delete a
+     * resident.
+     *
+     * @see OnResidentControlListener
+     */
     private OnResidentControlListener mListener;
 
     /**
@@ -179,8 +278,7 @@ public class ResidentControl {
         // Initialize mResidentLabels with storage for 40 labels.
         mResidentLabels = new Label[40];
 
-        // Populate mResidentLabels with 40 labels and display it in a matrix of 20x2 mResidentListGridPane.
-//        String cssStyle = "-fx-background-color: f4f4f4;" + "-fx-font-size: 20;";
+        // Populate mResidentLabels with 40 labels and display it in a matrix of 20x2 mResidentListPaging.
         for (int i = 0; i < 40; i++) {
             Label label = new Label();
             label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
@@ -189,7 +287,7 @@ public class ResidentControl {
             label.setPrefWidth(1000);
 
             mResidentLabels[i] = label;
-            mResidentListGridPane.add(label, i / 20, i >= 20 ? i - 20 : i);
+            mResidentListPaging.add(label, i % 2 == 0 ? 0 : 1, i / 2);
 
             // Add a label selected event listener to each label.
             final int labelIndex = i;
@@ -389,8 +487,6 @@ public class ResidentControl {
         int index = mResidentIDs.indexOf(resident.getId());
         mResidentNames.remove(index);
 
-
-
         String name = String.format("%s, %s %s.",
                 resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0));
 
@@ -407,7 +503,7 @@ public class ResidentControl {
     }
 
     public void setBlurListPaging(boolean blur) {
-        mResidentListGridPane.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
+        mResidentListPaging.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
     }
 
     /**
@@ -426,6 +522,7 @@ public class ResidentControl {
         Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
 
             if (isDisplayed) {
+                mNoResidentSelectedPane.setVisible(false);
 
                 // Query the data of the currently selected resident.
                 mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
@@ -481,18 +578,7 @@ public class ResidentControl {
                 mEditButton.setVisible(true);
 
             } else {
-                mResidentPhoto.setImage(BarangayUtils.getDefaultDisplayPhoto());
-                mResidentName.setText("");
-                mBirthDate.setText("");
-                mAge.setText("");
-                mResidentSince.setText("");
-
-                mAddress1.setText("");
-                mAddress2.setVisible(false);
-                mAddress2Label.setVisible(false);
-
-                mDeleteButton.setVisible(false);
-                mEditButton.setVisible(false);
+                mNoResidentSelectedPane.setVisible(true);
             }
         };
 

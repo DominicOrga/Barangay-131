@@ -3,13 +3,13 @@ package javah.container;
 import java.sql.Timestamp;
 
 /**
- * Holds the barangay clearance data.
+ * A container for a specific barangay clearance data.
  *
  * @version %I%, %G%
  */
 public class BarangayClearance {
 
-    /* Holds the unique ID of this barangay clearance. */
+    /* A string holding the unique ID of this barangay clearance. */
     private String mID;
 
     /* Holds the ID of the barangay clearance owner. */

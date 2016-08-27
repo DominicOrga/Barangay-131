@@ -78,7 +78,7 @@ public class BarangayIDReportControl {
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
             saveChmSignatureDimension();
-            mListener.onCancelButtonClicked();
+            mListener.onSaveButtonClicked(mBarangayID);
             reset();
         }
     }
@@ -90,7 +90,7 @@ public class BarangayIDReportControl {
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
-            mListener.onCancelButtonClicked();
+            mListener.onSaveButtonClicked(mBarangayID);
             reset();
         }
     }
