@@ -190,12 +190,7 @@ public class InformationControl {
         } else {
             String[] keywordsArray = keywords.split(" ");
 
-            List[] lists = BarangayUtils.filterLists(
-                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
 
-
-            mResidentIDs = lists[0];
-            mResidentNames = lists[1];
         }
 
         updateListPaging(false);

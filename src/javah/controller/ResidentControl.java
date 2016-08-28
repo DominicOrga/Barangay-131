@@ -31,7 +31,7 @@ import java.util.function.Consumer;
  * create, update and delete residents from the Main Control. In addition,
  * this controller is connected to the Database model and has the authority
  * to update the Residents Table. Furthermore, it makes use of the Cache model
- * to cache queried data, specifically about the residents, from the database.
+ * to cache queried data, specifically about the residents from the database.
  *
  * @see ResidentFormControl
  * @see MainControl
@@ -138,24 +138,6 @@ public class ResidentControl {
      * address 1, the address 2 can be null.
      */
     @FXML private TextArea mAddress2;
-
-    /**
-     * Allows editing of the resident selected. Tells the listener of this
-     * resident control at the main control to open the Resident form pop-up
-     * and populate the form with the resident selected data, to be modified
-     * or updated.
-     *
-     * @see ResidentFormControl
-     */
-    @FXML private ImageView mEditButton;
-
-    /**
-     * Tells the listener of thie resident control to call the confirmation
-     * dialog pop-up to confirm whether to delete the resident selected.
-     *
-     * @see ConfirmationDialogControl
-     */
-    @FXML private ImageView mDeleteButton;
 
     /**
      * A button that decrements the current page value, if possible. Then
@@ -271,14 +253,14 @@ public class ResidentControl {
     private OnResidentControlListener mListener;
 
     /**
-     * Called before setCacheModel()
+     * Initialize the label of the resident list paging. Each labels has its own mouse
+     * click listener, which if clicked will set the label and the resident it contains
+     * as selected. Automatically Called during initialization.
      */
     @FXML
     private void initialize() {
-        // Initialize mResidentLabels with storage for 40 labels.
         mResidentLabels = new Label[40];
 
-        // Populate mResidentLabels with 40 labels and display it in a matrix of 20x2 mResidentListPaging.
         for (int i = 0; i < 40; i++) {
             Label label = new Label();
             label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
@@ -289,15 +271,16 @@ public class ResidentControl {
             mResidentLabels[i] = label;
             mResidentListPaging.add(label, i % 2 == 0 ? 0 : 1, i / 2);
 
-            // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
+            label.setOnMouseClicked(event -> setLabelSelected(labelIndex));
         }
     }
 
     /**
-     * Update the resident list paging to display the residents that has a match with the text in the search field.
-     * A blank search field will result to displaying all the residents.
+     * Update the resident list paging to display the residents that has a match with
+     * the text in the search field. A blank search field will result to displaying all
+     * the residents.
+     *
      * @param event
      */
     @FXML
@@ -310,31 +293,30 @@ public class ResidentControl {
         } else {
             String[] keywordsArray = keywords.split(" ");
 
-            List[] lists = BarangayUtils.filterLists(
+            mResidentIDs = BarangayUtils.getFilteredIDs(
                     mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
-
-
-            mResidentIDs = lists[0];
-            mResidentNames = lists[1];
         }
 
         updateListPaging(false);
     }
 
     /**
-     * If the Enter key is pressed within the search field, then automatically click the search button.
+     * Listen to any key press from the search field. If the key pressed is the enter
+     * key, then manually click the search button.
+     *
      * @param event
      */
     @FXML
     public void onSearchFieldKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == KeyCode.ENTER)
             onSearchButtonClicked(null);
-            mCurrentPageLabel.requestFocus();
-        }
     }
 
     /**
-     * Move the resident list paging to the previous page when possible.
+     * Move the resident list paging to the previous page when possible. If moving
+     * backwards is no longer possible, then hide the back page button. If moving
+     * backwards from the last page, then re-enable the Next Page Button.
+     *
      * @param event
      */
     @FXML
@@ -351,7 +333,10 @@ public class ResidentControl {
     }
 
     /**
-     * Move the resident list paging to the next page when possible.
+     * Move the resident list paging to the next page when possible. If moving
+     * forward is no longer possible, then hide the next page button. If moving
+     * forward from the start page, then re-enable the Back Page Button.
+     *
      * @param event
      */
     @FXML
@@ -368,8 +353,13 @@ public class ResidentControl {
     }
 
     /**
-     * Tell the main scene to show the resident creation dialog.
+     * Tell listener at the main control to show the resident form for resident
+     * creation.
+     *
      * @param actionEvent
+     *
+     * @see OnResidentControlListener
+     * @see ResidentFormControl
      */
     @FXML
     public void onNewResidentButtonClicked(ActionEvent actionEvent) {
@@ -377,8 +367,13 @@ public class ResidentControl {
     }
 
     /**
-     * Tell the main scenne to show the resident update dialog.
+     * Tell the listener at the main control to show the resident form for
+     * resident updating.
+     *
      * @param event
+     *
+     * @see OnResidentControlListener
+     * @see ResidentFormControl
      */
     @FXML
     public void onEditResidentButtonClicked(Event event) {
@@ -386,7 +381,9 @@ public class ResidentControl {
     }
 
     /**
-     * Tell the main scene to show the resident delete confirmation dialog.
+     * Tell the main scene to show the confirmation dialog. If yes is clicked, then
+     * archive the resident.
+     *
      * @param event
      */
     @FXML
@@ -395,158 +392,53 @@ public class ResidentControl {
     }
 
     /**
-     * Called after initialize() and is called in the MainControl.
-     * Set the main scene as the listener to this object.
-     * @param listener
-     */
-    public void setListener(OnResidentControlListener listener) {
-        mListener = listener;
-    }
-
-    /**
-     * Called after initialize() and is called in the MainControl.
-     * Make a reference to the global database model.
-     * @param databaseModel
-     */
-    public void setDatabaseModel(DatabaseModel databaseModel) {
-        mDatabaseModel = databaseModel;
-    }
-
-    /**
-     * Called after initialize() and is called in the MainControl.
-     * Make a reference to the global cache model and start initializing the variables that are initially
-     * dependent on some cached data.
-     * @param cacheModel
-     */
-    public void setCacheModel(CacheModel cacheModel) {
-
-        mCacheModel = cacheModel;
-        // Create a volatile copy of the cached data.
-        mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
-
-        // Determine the initial number of Pages and set the default current page to 1.
-        updateListPaging(false);
-    }
-
-    public void deleteSelectedResident() {
-        mDatabaseModel.archiveResident(mResidentSelected.getId());
-        mResidentIDs.remove(mResidentSelectedIndex);
-        mResidentNames.remove(mResidentSelectedIndex);
-
-        updateListPaging(true);
-    }
-
-    /**
-     * todo: Cache storage should be stored in permanent cache rather than the volatile cache.
-     * @param resident
-     */
-    public void createResident(Resident resident) {
-        // Create the resident and get its corresponding unique id.
-        String residentId = mDatabaseModel.createResident(resident);
-
-        // Format the resident name to be inserted in the list.
-        String residentName = String.format("%s, %s %s.",
-                resident.getLastName(),
-                resident.getFirstName(),
-                resident.getMiddleName().toUpperCase().charAt(0));
-
-        // Add the resident name to the resident names list and then sort it alphabetically.
-        mResidentNames.add(residentName);
-        Collections.sort(mResidentNames, String.CASE_INSENSITIVE_ORDER);
-
-        // Get the index of the resident name within the list after insertion.
-        int index = mResidentNames.indexOf(residentName);
-
-        // Use the acquired index to insert the resident ID to the resident IDs list.
-        mResidentIDs.add(index, residentId);
-
-        // Once the resident is created, the current page must be placed where the newly created resident is inserted and
-        // must be auto selected.
-        mResidentCount = mResidentIDs.size();
-        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-        mCurrentPage = (int) Math.ceil(index / 39.0);
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        // Display the default data when no resident is selected.
-        updateCurrentPage();
-
-        // Select the newly created resident.
-        setResidentSelected(index % 40);
-    }
-
-    public void updateResident(Resident resident) {
-        // Make a copy of the label selected index for reselecting.
-        int labelSelectedIndex = mLabelSelectedIndex;
-
-        mDatabaseModel.updateResident(resident);
-
-        // Update the resident lists.
-        int index = mResidentIDs.indexOf(resident.getId());
-        mResidentNames.remove(index);
-
-        String name = String.format("%s, %s %s.",
-                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0));
-
-        String auxiliary = resident.getAuxiliary();
-        name += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
-
-        mResidentNames.add(index, name);
-
-        updateCurrentPage();
-
-        // Unselect the resident and select it again to update its displayed data.
-        setResidentSelected(mLabelSelectedIndex);
-        setResidentSelected(labelSelectedIndex);
-    }
-
-    public void setBlurListPaging(boolean blur) {
-        mResidentListPaging.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
-    }
-
-    /**
      * Update the resident selected data displayed.
-     * @param newLabelSelectedIndex is the index of the label containing the resident to be displayed. If it is equal
-     *                              to -1, then the example data is displayed.
+     *
+     * @param newLabelSelectedIndex
+     *        The index of the label containing the resident to be displayed. If it is equal
+     *        to -1, then remove any displayed resident data.
      */
-    private void setResidentSelected(int newLabelSelectedIndex) {
+    private void setLabelSelected(int newLabelSelectedIndex) {
         // Determine the index of the resident in place of the currently selected label.
         mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
         /**
-         * If a resident is selected, then display its data.
-         * If a resident is unselected or no resident is selected, then display the example data.
+         * If a resident is selected, then display its data. If a resident is unselected or
+         * no resident is selected, then do not display any data.
          */
-        Consumer<Boolean> setDisplaySelectedResidentInfo = (isDisplayed) -> {
+        Consumer<Boolean> displayResidentInfo = (isDisplayed) -> {
 
             if (isDisplayed) {
                 mNoResidentSelectedPane.setVisible(false);
 
-                // Query the data of the currently selected resident.
-                mResidentSelected = mDatabaseModel.getResident(mResidentIDs.get(mResidentSelectedIndex));
+                String residentSelectedID = mResidentIDs.get(mResidentSelectedIndex);
 
-                mResidentPhoto.setImage(mResidentSelected.getPhotoPath() != null ?
-                        new Image("file:" + mResidentSelected.getPhotoPath()) : BarangayUtils.getDefaultDisplayPhoto());
+                mResidentSelected = mDatabaseModel.getResident(residentSelectedID);
 
-                mResidentName.setText(mResidentNames.get(mResidentSelectedIndex));
+                if (mResidentSelected.getPhotoPath() != null)
+                    mResidentPhoto.setImage(new Image("file:" + mResidentSelected.getPhotoPath()));
 
-                // Format birthdate to YYYY dd, mm
-                // Set the displayed birth date.
+                // Note: mResidentIDs field can either reference the Resident IDs at the cache
+                // model or take hold of a seperate filtered Resident IDs list. Thus, in
+                // tracking the Resident Name, the cached resident IDs should always be used
+                // to track the Resident Name.
+                int i = mCacheModel.getResidentIDsCache().indexOf(residentSelectedID);
+
+                mResidentName.setText(mResidentNames.get(i));
+
                 Calendar birthdate = Calendar.getInstance();
                 birthdate.setTime(mResidentSelected.getBirthDate());
+
                 int birthYear = birthdate.get(Calendar.YEAR);
                 int birthDay = birthdate.get(Calendar.DAY_OF_MONTH);
                 String birthMonth = BarangayUtils.convertMonthIntToString(birthdate.get(Calendar.MONTH));
 
-                mBirthDate.setText("");
                 mBirthDate.setText(String.format("%s %s, %s", birthMonth, birthDay, birthYear));
 
-                Calendar currentDate = Calendar.getInstance();
                 // Set the displayed age.
+                Calendar currentDate = Calendar.getInstance();
                 int age = currentDate.get(Calendar.YEAR) - birthYear;
-    
+
                 if(birthYear != currentDate.get(Calendar.YEAR))
                     age -= birthdate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH) ||
                             (birthdate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) &&
@@ -558,13 +450,11 @@ public class ResidentControl {
                 mResidentSince.setText(
                         mResidentSelected.getYearOfResidency() == -1 ?
                                 "Birth" : BarangayUtils.convertMonthIntToString(mResidentSelected.getMonthOfResidency()) + " " +
-                                        mResidentSelected.getYearOfResidency());
+                                mResidentSelected.getYearOfResidency());
 
-
-                // Set the displayed address 1.
                 mAddress1.setText(mResidentSelected.getAddress1());
 
-                // Set the displayed address 2.
+                // Set the displayed address 2, if any.
                 if(mResidentSelected.getAddress2() != null) {
                     mAddress2.setVisible(true);
                     mAddress2Label.setVisible(true);
@@ -574,15 +464,10 @@ public class ResidentControl {
                     mAddress2Label.setVisible(false);
                 }
 
-                mDeleteButton.setVisible(true);
-                mEditButton.setVisible(true);
-
             } else {
                 mNoResidentSelectedPane.setVisible(true);
             }
         };
-
-        // This is where the code selection and unselection view update happens.
 
         // If a label is clicked without containing any resident, then ignore the event.
         if (mResidentSelectedIndex < mResidentIDs.size()) {
@@ -591,7 +476,7 @@ public class ResidentControl {
                 if (newLabelSelectedIndex != -1) {
                     mResidentLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedResidentInfo.accept(true);
+                    displayResidentInfo.accept(true);
                 }
 
             } else {
@@ -601,28 +486,29 @@ public class ResidentControl {
                     mResidentLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mLabelSelectedIndex = -1;
                     mResidentSelectedIndex = -1;
-                    setDisplaySelectedResidentInfo.accept(false);
+                    displayResidentInfo.accept(false);
 
-                // Unselect the previously selcted resident, then select the currently selected resident.
+                    // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
                     mResidentLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
                     mResidentLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
 
                     mLabelSelectedIndex = newLabelSelectedIndex;
-                    setDisplaySelectedResidentInfo.accept(true);
+                    displayResidentInfo.accept(true);
                 }
             }
         }
     }
 
     /**
-     * Update current page with respect to mCurrentPage. That is, the value of mCurrentPage will determine the displayed
-     * residents.
-     * Moving from one page to another removes the resident selected.
+     * Update current page with respect to Current Page. That is, the value of Current Page
+     * will determine the displayed residents.
+     *
+     * Note: Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setResidentSelected(-1);
+        setLabelSelected(-1);
 
         int firstIndex = (mCurrentPage - 1) * 40;
         int lastIndex = mCurrentPage * 40 > mResidentCount - 1 ? mResidentCount - 1 : mCurrentPage * 40;
@@ -630,7 +516,10 @@ public class ResidentControl {
 
         for (int i = 0; i < 40; i++) {
             if (currentIndex <= lastIndex) {
-                mResidentLabels[i].setText(mResidentNames.get(currentIndex));
+                String id = mResidentIDs.get(i + firstIndex);
+                int index = mCacheModel.getResidentIDsCache().indexOf(id);
+
+                mResidentLabels[i].setText(mResidentNames.get(index));
                 currentIndex++;
             } else
                 mResidentLabels[i].setText("");
@@ -638,7 +527,10 @@ public class ResidentControl {
     }
 
     /**
-     * Updates the list paging, mResidentCount and mPageCount.
+     * Update the resident count, page count and current page based on the mResidentIDs
+     * and go back to the first page of the resident list paging without any resident
+     * selected.
+     *
      * @param stayOnPage determines whether current page should be maintained or not after the update.
      */
     private void updateListPaging(boolean stayOnPage) {
@@ -658,4 +550,175 @@ public class ResidentControl {
         updateCurrentPage();
     }
 
+    /**
+     * Note: Called right after the initialize method.
+     *
+     * Set the listener of this controller.
+     *
+     * @param listener
+     *        The listener to call the necessary dialogs for resident creation,
+     *        update and deletion.
+     *
+     * @see OnResidentControlListener
+     */
+    public void setListener(OnResidentControlListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Note: Called after the initialize method.
+     *
+     * Make a reference to the global database model.
+     *
+     * @param databaseModel
+     *        The global database model shared throughout the system.
+     *
+     * @see DatabaseModel
+     */
+    public void setDatabaseModel(DatabaseModel databaseModel) {
+        mDatabaseModel = databaseModel;
+    }
+
+    /**
+     * Note: Called after the initialize method.
+     *
+     * Make a reference to the global cache model.
+     *
+     * @param cacheModel
+     *        The global cache model throughout the system.
+     *
+     * @see CacheModel
+     */
+    public void setCacheModel(CacheModel cacheModel) {
+        mCacheModel = cacheModel;
+    }
+
+    /**
+     * Confirm if the user wants to delete the resident. If confirmed yes, then archive
+     * the resident and remove the data of the deleted resident from the Resident's
+     * cached data.
+     */
+    public void deleteSelectedResident() {
+        mDatabaseModel.archiveResident(mResidentSelected.getId());
+
+        String id = mResidentIDs.get(mResidentSelectedIndex);
+        int index = mCacheModel.getResidentIDsCache().indexOf(id);
+
+        // Note: mResidentIDs does not always reference the cached resident IDs. So, make
+        // sure to remove the ID of the deleted resident from the cache model.
+        mResidentIDs.remove(mResidentSelectedIndex);
+        mCacheModel.getResidentIDsCache().remove(id);
+
+        mResidentNames.remove(index);
+
+        updateListPaging(true);
+    }
+
+    /**
+     * Add the parameter resident to the database and include it at the cached Resident's
+     * data.
+     *
+     * @param resident
+     *        The resident to be created.
+     */
+    public void createResident(Resident resident) {
+        // Create the resident and get its corresponding unique id.
+        String residentId = mDatabaseModel.createResident(resident);
+
+        // Format the resident name to be inserted in the list.
+        String residentName = String.format("%s, %s %s.",
+                resident.getLastName(),
+                resident.getFirstName(),
+                resident.getMiddleName().toUpperCase().charAt(0));
+
+        String auxiliary = resident.getAuxiliary();
+        residentName += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
+
+        // Add the resident name to the resident names list and then sort it
+        // alphabetically.
+        mResidentNames.add(residentName);
+        Collections.sort(mResidentNames, String.CASE_INSENSITIVE_ORDER);
+
+        // Get the index of the resident name within the list after insertion.
+        int index = mResidentNames.indexOf(residentName);
+
+        // Use the acquired index to insert the resident ID to the resident IDs list.
+        // Make sure that mResidentIDs is a reference to the Resident IDs Cached data.
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+        mResidentIDs.add(index, residentId);
+
+        // Once the resident is created, the current page must be placed where the newly
+        // created resident is inserted and must be auto selected.
+        mResidentCount = mResidentIDs.size();
+        mPageCount = (int) Math.ceil(mResidentCount / 40.0);
+        mCurrentPage = (int) Math.ceil(index / 39.0);
+
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        // Disable the back page button if the current page is the first one.
+        mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+        // Disable the next page button if the current page is the last one.
+        mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
+
+        // Display the default data when no resident is selected.
+        updateCurrentPage();
+
+        // Select the newly created resident.
+        setLabelSelected(index % 40);
+    }
+
+    /**
+     * Update the data of the resident from the database and set the name to the
+     * Resident Names cached data.
+     *
+     * @param resident
+     *        The resident to be updated.
+     */
+    public void updateResident(Resident resident) {
+        mDatabaseModel.updateResident(resident);
+
+        // Update the name of the Resident from the Resident Names cached data.
+        int index = mCacheModel.getResidentIDsCache().indexOf(resident.getId());
+        mResidentNames.remove(index);
+
+        String name = String.format("%s, %s %s.",
+                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0));
+
+        String auxiliary = resident.getAuxiliary();
+        name += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
+
+        mResidentNames.add(index, name);
+
+        updateCurrentPage();
+
+        // Make a copy of the label selected index for reselecting.
+        int labelSelectedIndex = mLabelSelectedIndex;
+
+        // Unselect the resident and select it again to update its displayed data.
+        setLabelSelected(mLabelSelectedIndex);
+        setLabelSelected(labelSelectedIndex);
+    }
+
+    /**
+     * Prepare the list paging for blurring at the Main control whenever a pop-up
+     * is displayed.
+     *
+     * @param blur
+     *        The boolean to determine whether to prepare the list paging for blurring
+     *        or unblurring.
+     */
+    public void setBlurListPaging(boolean blur) {
+        mResidentListPaging.setStyle(blur ? CSSContract.STYLE_GRID_UNBORDERED : CSSContract.STYLE_GRID_BORDERED);
+    }
+
+    /**
+     * Update the Resident IDs cached data and update the list paging. Call after
+     * sending the Resident Scene to front.
+     */
+    public void resetCachedData() {
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+        updateListPaging(false);
+    }
 }

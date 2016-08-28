@@ -25,92 +25,63 @@ public class BarangayUtils {
      * @param keywords
      * @return a new filtered lists of resident IDs List[0] and resident names List[1].
      */
-    public static List[] filterLists(List<String> residentIds, List<String> residentNames, String[] keywords) {
-        int listSize = residentIds.size();
-
-        // Store the priority level of each residents.
-        List<Integer> residentPriorities = new ArrayList<>();
-
-        // The resident priorities list must have a size equal to the resident lists with 0 as default values.
-        for (int i = 0; i < listSize; i++)
-            residentPriorities.add(0);
-
+    public static List getFilteredIDs(List<String> residentIds, List<String> residentNames, String[] keywords) {
         // Lower case all keywords.
-        for (int i = 0; i < keywords.length; i++)
+        int keywordLength = keywords.length;
+        for (int i = 0; i < keywordLength; i++)
             keywords[i] = keywords[i].toLowerCase();
 
-        boolean isExistingMatchFound = false;
+        // Take hold of all the total number of matches of each resident name that has at
+        // least one match with the keywords.
+        List<Integer> priorityList = new ArrayList<>();
 
-        // For every keyword existing on a resident name, its priority will increase.
+        // Take hold of all the resident IDs that has at least one match with the keywords.
+        //
+        // Note: The elements between the Priority and Filtered ID list have a relationship
+        // among the same index. Therefore, they are always connected.S
+        List<String> filteredIDs = new ArrayList<>();
+
+        // Match each resident names with the keywords. If at least one match is found,
+        // then store its ID to the filtered IDs list and store the number of matches to
+        // the priority list.
+        int listSize = residentIds.size();
         for (int i = 0; i < listSize; i++) {
             String residentName = residentNames.get(i).toLowerCase();
-            for (int j = 0; j < keywords.length; j++)
-                if (residentName.contains(keywords[j].toLowerCase())) {
-                    residentPriorities.set(i, residentPriorities.get(i) + 1);
-                    isExistingMatchFound = true;
-                }
+            int matchCount = 0;
+
+            for (int j = 0; j < keywordLength; j++)
+                if (residentName.contains(keywords[j]))
+                    matchCount++;
+
+            if (matchCount > 0) {
+                filteredIDs.add(residentIds.get(i));
+                priorityList.add(matchCount);
+            }
         }
 
-        // If all the priority levels are 0, then immediately return the resident lists with empty elements.
-        if (!isExistingMatchFound)
-            return new List[]{new ArrayList<>(), new ArrayList<>()};
+        // Use Selection Sorting to sort the Filtered ID List with the help of sorting
+        // the Priority List.
+        listSize = filteredIDs.size();
+        for (int i = 0; i < listSize; i++) {
+            int highestPriorityIndex = i;
 
-        // Clone the lists.
-        List<String> residentIdsTemp = new ArrayList<>();
-        List<String> residentNamesTemp = new ArrayList<>();
-
-        // Cloning...
-        for(int i = 0; i < residentIds.size(); i++) {
-            residentIdsTemp.add(residentIds.get(i));
-            residentNamesTemp.add(residentNames.get(i));
-        }
-
-        // Remove the residents from the lists if their priority is 0.
-        for (int i = 0; i < residentPriorities.size(); i++)
-            if (residentPriorities.get(i) == 0) {
-                residentPriorities.remove(i);
-                residentIdsTemp.remove(i);
-                residentNamesTemp.remove(i);
-
-                i -= 1;
+            for (int j = i; j < listSize; j++) {
+                if (priorityList.get(j) > priorityList.get(highestPriorityIndex));
+                    highestPriorityIndex = j;
             }
 
-        // Update list size to be equiavlent with the reduced residents list.
-        listSize = residentPriorities.size();
+            int highestVal = priorityList.get(highestPriorityIndex);
 
-        // Make a list storing the sorted resident IDs and names according to their priority level.
-        // Residents with a priority level less than 1 will not be added in the list.
-        List<String> newResidentIds = new ArrayList<>();
-        List<String> newResidentNames = new ArrayList<>();
+            priorityList.set(highestPriorityIndex, priorityList.get(i));
+            priorityList.set(i, highestVal);
 
-        // Use selection sorting to build the new resident lists.
-        for (int i = 0; i < listSize - 1; i++) {
-            // Determine the index of the resident with the highest priority.
-            int highestPriorityIndex = 0;
-            for (int j = 1; j < residentPriorities.size(); j++)
-                if (residentPriorities.get(j) > residentPriorities.get(highestPriorityIndex))
-                    highestPriorityIndex = j;
+            String highestID = filteredIDs.get(highestPriorityIndex);
 
-            // Add the resident with the highest priority to the new resident lists.
-            newResidentIds.add(residentIdsTemp.get(highestPriorityIndex));
-            newResidentNames.add(residentNamesTemp.get(highestPriorityIndex));
-
-            // remove the resident with the highest priority from the original resident lists, so that
-            // the highest priority resident will not be reiterated from the list and the next resident with the
-            // highest priority will be determined.
-            residentIdsTemp.remove(highestPriorityIndex);
-            residentNamesTemp.remove(highestPriorityIndex);
-            residentPriorities.remove(highestPriorityIndex);
+            filteredIDs.set(highestPriorityIndex, filteredIDs.get(i));
+            filteredIDs.set(i, highestID);
         }
 
-        // Only 1 element will remain inside the temporary resident lists - the resident with the lowest priority.
-        // Transfer them to the new Resident lists.
-        newResidentIds.add(residentIdsTemp.get(0));
-        newResidentNames.add(residentNamesTemp.get(0));
-
-        List[] lists = new List[]{newResidentIds, newResidentNames};
-
-        return lists;
+        return filteredIDs;
     }
 
     /**

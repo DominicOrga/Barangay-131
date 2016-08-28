@@ -200,7 +200,7 @@ public class ResidentFormControl {
 
 
             String auxiliary = mAuxiliary.getValue().toString();
-            mResident.setAuxiliary(auxiliary == "N/A" ? null : auxiliary);
+            mResident.setAuxiliary(auxiliary.equals("N/A") ? null : auxiliary);
 
             mResident.setAddress1(mAddress1.getText());
             mResident.setAddress2(mAddress2.getText());

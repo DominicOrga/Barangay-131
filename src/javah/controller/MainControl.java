@@ -639,8 +639,10 @@ public class MainControl {
             switch (mMenuSelected) {
                 case MENU_RESIDENT:
                     playMenuSlideAnimation.accept(mResidentMenu, isSelected);
-                    if (isSelected)
+                    if (isSelected) {
                         mResidentScene.toFront();
+                        mResidentControl.resetCachedData();
+                    }
                     break;
 
                 case MENU_BARANGAY_CLEARANCE:
