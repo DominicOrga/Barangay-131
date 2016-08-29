@@ -35,7 +35,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane fx:id="mScrollPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="210.0" GridPane.rowIndex="1">
+      <ScrollPane fx:id="mScrollPane" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="210.0" GridPane.rowIndex="1">
          <content>
             <GridPane fx:id="mDocumentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="990.0" prefWidth="765.0">
               <columnConstraints>

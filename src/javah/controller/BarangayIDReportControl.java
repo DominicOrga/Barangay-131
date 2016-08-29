@@ -77,7 +77,7 @@ public class BarangayIDReportControl {
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
-            saveChmSignatureDimension();
+            saveSignatureDimensions();
             mListener.onSaveButtonClicked(mBarangayID);
             reset();
         }
@@ -97,7 +97,7 @@ public class BarangayIDReportControl {
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
-        saveChmSignatureDimension();
+        saveSignatureDimensions();
         mListener.onSaveButtonClicked(mBarangayID);
         reset();
     }
@@ -150,6 +150,7 @@ public class BarangayIDReportControl {
 
 
         if (mBarangayID.getResidentSignatureDimension() != null) {
+            System.out.println("hey");
             double[] dimension = mBarangayID.getResidentSignatureDimension();
 
             mResDraggableSignature.setX(dimension[0]);
@@ -213,7 +214,7 @@ public class BarangayIDReportControl {
         mChmDraggableSignature.setHeight(90);
     }
 
-    private void saveChmSignatureDimension() {
+    private void saveSignatureDimensions() {
         // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
         // dimension to mBarangayID.
         double[] signatureDimension = new double[]{
@@ -235,6 +236,16 @@ public class BarangayIDReportControl {
         );
 
         mPrefModel.save();
+
+        double[] resSignatureDimension = new double[] {
+                mResDraggableSignature.getX(),
+                mResDraggableSignature.getY(),
+                mResDraggableSignature.getWidth(),
+                mResDraggableSignature.getHeight()
+        };
+
+        mBarangayID.setResidentSignatureDimension(resSignatureDimension);
+
     }
 
     /**

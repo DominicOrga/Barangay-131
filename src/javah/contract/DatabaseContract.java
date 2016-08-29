@@ -65,4 +65,21 @@ public class DatabaseContract {
         public static final String COLUMN_KAGAWAD_6_NAME = "kagawad6_name";
         public static final String COLUMN_KAGAWAD_7_NAME = "kagawad7_name";
     }
+
+    public static class BusinessClearanceEntry extends RowColumn {
+        public static final String TABLE_NAME = "BarangayDB.Business_clearance";
+
+        public static final String COLUMN_CLIENT_NAME = "client_name";
+        public static final String COLUMN_BUSINESS_NAME = "business_name";
+        public static final String COLUMN_BUSINESS_TYPE = "business_type";
+        public static final String COLUMN_BUSINESS_ADDRESS = "business_address";
+        public static final String COLUMN_DATE_ISSUED = "date_issued";
+        public static final String COLUMN_DATE_VALID = "date_valid";
+        public static final String COLUMN_CHAIRMAN_NAME = "chairman_name";
+        public static final String COLUMN_CHAIRMAN_SIGNATURE = "chairman_signature";
+        public static final String COLUMN_CHAIRMAN_SIGNATURE_DIMENSION = "chm_sign_dim";
+        public static final String COLUMN_SECRETARY_NAME = "secretary_name";
+        public static final String COLUMN_SECRETARY_SIGNATURE = "secretary_signature";
+        public static final String COLUMN_SECRETARY_SIGNATURE_DIMENSION = "sec_sign_dim";
+    }
 }

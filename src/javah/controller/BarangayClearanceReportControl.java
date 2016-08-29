@@ -317,7 +317,7 @@ public class BarangayClearanceReportControl {
             mChmDraggableSignature.setWidth(signatureDimension[2]);
             mChmDraggableSignature.setHeight(signatureDimension[3]);
         } else {
-            mChmDraggableSignature.setX(25);
+            mChmDraggableSignature.setX(265);
             mChmDraggableSignature.setY(25);
             mChmDraggableSignature.setWidth(210);
             mChmDraggableSignature.setHeight(90);
@@ -339,7 +339,7 @@ public class BarangayClearanceReportControl {
             mSecDraggableSignature.setWidth(signatureDimension[2]);
             mSecDraggableSignature.setHeight(signatureDimension[3]);
         } else {
-            mSecDraggableSignature.setX(265);
+            mSecDraggableSignature.setX(25);
             mSecDraggableSignature.setY(25);
             mSecDraggableSignature.setWidth(210);
             mSecDraggableSignature.setHeight(90);

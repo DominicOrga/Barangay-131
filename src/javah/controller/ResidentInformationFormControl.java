@@ -200,12 +200,9 @@ public class ResidentInformationFormControl {
         } else {
             String[] keywordsArray = keywords.split(" ");
 
-//            List[] lists = BarangayUtils.getFilteredIDs(
-//                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
-//
-//
-//            mResidentIDs = lists[0];
-//            mResidentNames = lists[1];
+            mResidentIDs = BarangayUtils.getFilteredIDs(
+                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
+
         }
 
         updateListPaging(false);
@@ -536,7 +533,10 @@ public class ResidentInformationFormControl {
 
         for (int i = 0; i < 10; i++) {
             if (currentIndex <= lastIndex) {
-                mResidentLabels[i].setText(mResidentNames.get(currentIndex));
+                String id = mResidentIDs.get(i + firstIndex);
+                int index = mCacheModel.getResidentIDsCache().indexOf(id);
+
+                mResidentLabels[i].setText(mResidentNames.get(index));
                 currentIndex++;
             } else
                 mResidentLabels[i].setText("");

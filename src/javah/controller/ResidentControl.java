@@ -272,7 +272,7 @@ public class ResidentControl {
             mResidentListPaging.add(label, i % 2 == 0 ? 0 : 1, i / 2);
 
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setLabelSelected(labelIndex));
+            label.setOnMouseClicked(event -> setResidentToLabelSelected(labelIndex));
         }
     }
 
@@ -398,7 +398,7 @@ public class ResidentControl {
      *        The index of the label containing the resident to be displayed. If it is equal
      *        to -1, then remove any displayed resident data.
      */
-    private void setLabelSelected(int newLabelSelectedIndex) {
+    private void setResidentToLabelSelected(int newLabelSelectedIndex) {
         // Determine the index of the resident in place of the currently selected label.
         mResidentSelectedIndex = newLabelSelectedIndex + 40 * (mCurrentPage - 1);
 
@@ -508,7 +508,7 @@ public class ResidentControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setLabelSelected(-1);
+        setResidentToLabelSelected(-1);
 
         int firstIndex = (mCurrentPage - 1) * 40;
         int lastIndex = mCurrentPage * 40 > mResidentCount - 1 ? mResidentCount - 1 : mCurrentPage * 40;
@@ -666,7 +666,7 @@ public class ResidentControl {
         updateCurrentPage();
 
         // Select the newly created resident.
-        setLabelSelected(index % 40);
+        setResidentToLabelSelected(index % 40);
     }
 
     /**
@@ -697,8 +697,8 @@ public class ResidentControl {
         int labelSelectedIndex = mLabelSelectedIndex;
 
         // Unselect the resident and select it again to update its displayed data.
-        setLabelSelected(mLabelSelectedIndex);
-        setLabelSelected(labelSelectedIndex);
+        setResidentToLabelSelected(mLabelSelectedIndex);
+        setResidentToLabelSelected(labelSelectedIndex);
     }
 
     /**
@@ -719,6 +719,7 @@ public class ResidentControl {
      */
     public void resetCachedData() {
         mResidentIDs = mCacheModel.getResidentIDsCache();
+        mResidentNames = mCacheModel.getResidentNamesCache();
         updateListPaging(false);
     }
 }

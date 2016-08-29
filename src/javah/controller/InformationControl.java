@@ -172,7 +172,8 @@ public class InformationControl {
             label.setOnMouseClicked(event -> setReportToLabelSelectedIndex(labelIndex));
         }
 
-
+        mBrgyIDDetailsPane.setVisible(false);
+        mBrgyClearanceDetailsPane.setVisible(false);
     }
 
     /**
