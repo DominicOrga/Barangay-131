@@ -369,19 +369,7 @@ public class MainControl {
             }
 
             @Override
-            public void onCancelButtonClicked() {
-                hidePopupScene(mBarangayAgentScene, false);
-
-                // When the barangay agent form scene is displayed, then blur the list paging of the
-                // current menu selected.
-                switch (mMenuSelected) {
-                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
-                    default : mInformationControl.setBlurListPaging(false); break;
-                }
-            }
-
-            @Override
-            public void onSaveButtonClicked() {
+            public void onFinished() {
                 hidePopupScene(mBarangayAgentScene, false);
 
                 // When the barangay agent form scene is displayed, then blur the list paging of the

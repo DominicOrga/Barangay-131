@@ -29,54 +29,179 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * This class will handle the setup of the barangay officials.
+ * A controller that setups the barangay officials for use in information
+ * generation.
  */
 public class BarangayAgentControl {
 
+    /**
+     * A listener created at the main control to listen to this controller for action
+     * events, such as hiding this controller's pop-up, take pictures for the chairman
+     * photo and signature of the chairman and secretary with the Photoshop Control.
+     *
+     * @see MainControl
+     */
     public interface OnBarangayAgentListener {
+        /**
+         * If the chairman photo upload button is clicked, then tell the Main Control to
+         * launch the photoshop dialog to upload a chairman photo.
+         *
+         * @see PhotoshopControl
+         */
         void onChmUploadButtonClicked();
+
+        /**
+         * If the chairman photo capture button is clicked, then tell the Main Control to
+         * launch the photoshop dialog to capture a chairman photo.
+         *
+         * @see PhotoshopControl
+         */
         void onChmCaptureButtonClicked();
+
+        /**
+         * If the chairman signature upload button is clicked, then tell the Main Control
+         * to launch the photoshop dialog to upload a chairman signature.
+         *
+         * @see PhotoshopControl
+         */
         void onChmSignatureUploadButtonClicked();
+
+        /**
+         * If the chairman signature capture button is clicked, then tell the Main control
+         * to launch the photoshop dialog to capture a chairman signature.
+         *
+         * @see PhotoshopControl
+         */
         void onChmSignatureCaptureButtonClicked();
+
+        /**
+         * If the secretary signature upload button is clicked, then tell the Main control
+         * to launch the photoshop dialog to upload a secretary signature.
+         *
+         * @see PhotoshopControl
+         */
         void onSecSignatureUploadButtonClicked();
+
+        /**
+         * If the secretary signature capture button is clicked, then tell the Main control
+         * to launch the photoshop dialog to upload a secretary signature.
+         *
+         * @see PhotoshopControl
+         */
         void onSecSignatureCaptureButtonClicked();
-        void onCancelButtonClicked();
-        void onSaveButtonClicked();
+
+        /**
+         * If the cancel button is clicked or the save button is clicked, then tell the
+         * Main Control to hide this controller's scene.
+         */
+        void onFinished();
     }
 
+    /**
+     * A grid pane that serves as a root node for this' scene. The root pane must have
+     * the ability to be disabled when the dialog to query images by the Photoshop
+     * control is displayed, and re-enabled once the image query is done in order to
+     * avoid any interaction with this controller.
+     */
     @FXML private Pane mRootPane;
+
+    /**
+     * A scroll pane containing all the necessary nodes to set the barangay officials.
+     * Everytime a new kagawad button is clicked, the root pane's height within the
+     * scroll pane changes and the scroll pane should always be scrolled at the very
+     * bottom when that happens.
+     */
     @FXML private ScrollPane mScrollPane;
+
+    /**
+     * A VBox contained within the Scroll Pane which takes hold of all the necessary
+     * nodes regarding the kagawads. Everytime a kagawad is removed, that kagawad's
+     * nodes will be removed from the kagawad pane. Conversely, if a kagawad is to be
+     * added, then that kagawad's nodes will be added to the Kagawad Pane.
+     */
     @FXML private Pane mKagawadPane;
 
-    /**
-     * FXML components related to the chairman.
-     */
-    @FXML private ImageView mChmPhotoView, mChmSignatureView;
+    /* An image view holding the chairman photo. */
+    @FXML private ImageView mChmPhotoView;
+
+    /* An image view holding the chairman signature. */
+    @FXML private ImageView mChmSignatureView;
+
+    /* Text Fields holding the chairman name. */
     @FXML private TextField mChmFirstName, mChmMiddleName, mChmLastName;
+
+    /**
+     * A Label holding the chairman name error, which is set to visible when the name
+     * of the chairman is invalid.
+     */
     @FXML private Label mChmNameError;
 
-    /**
-     * FXML components relation to the secretary.
-     */
+    /* An Image View displaying the secretary signature. */
     @FXML private ImageView mSecSignatureView;
+
+    /* Text Fields holding the secretary name. */
     @FXML private TextField mSecFirstName, mSecMiddleName, mSecLastName;
+
+    /**
+     * A Label holding the secretary name error, which is set to visible when the
+     * name of the secretary is invalid.
+     */
     @FXML private Label mSecNameError;
 
+    /* Text Fields holding the treasurer name. */
     @FXML private TextField mTrsrFirstName, mTrsrMiddleName, mTrsrLastName;
+
+    /**
+     * A Label holding the treasurer name error, which is set to visible when the
+     * name of the treasurer is invalid.
+     */
     @FXML private Label mTrsrNameError;
 
+    /**
+     * A Label holding the kagawad name error, which is set to visible when at
+     * least one of the names of the kagawads is invalid.
+     */
     @FXML private Label mKagawadNameError;
 
     /**
-     * The chairman display photo and signature photo.
+     * A reference to the chairman image passed from the Photoshop Control. The
+     * Chairman Photo Image is null if the chairman's photo wasn't changed starting
+     * from the time in which the this scene is shown. If the image is not null and
+     * when the save button is clicked, then the chairman photo image is permanently
+     * stored.
+     *
+     * @see PhotoshopControl
      */
-    private WritableImage mChmPhoto, mChmSignature;
+    private WritableImage mChmPhoto;
 
     /**
-     * The secretary signature photo.
+     * A reference to the chairman signature image passed from the Photoshop Control.
+     * The Chairman Signature Photo Image is null if the chairman's signature photo
+     * wasn't changed starting from the time in which the this scene is shown. If the
+     * image is not null and when the save button is clicked, then the chairman
+     * signature photo image is permanently stored.
+     *
+     * @see PhotoshopControl
+     */
+    private WritableImage mChmSignature;
+
+    /**
+     * A reference to the secretary signature image passed from the Photoshop Control.
+     * The Secretary Signature Photo Image is null if the secretary's signature photo
+     * wasn't changed starting from the time in which the this scene is shown. If the
+     * image is not null and when the save button is clicked, then the secretary signature
+     * photo image is permanently stored.
+     *
+     * @see PhotoshopControl
      */
     private WritableImage mSecSignature;
 
+    /**
+     * A listener that listens to this controller for any action events that needs to
+     * be handled outside of this controller.
+     *
+     * @see OnBarangayAgentListener
+     */
     private OnBarangayAgentListener mListener;
 
     /**
@@ -333,13 +458,13 @@ public class BarangayAgentControl {
             }
             mPreferences.save();
 
-            mListener.onSaveButtonClicked();
+            mListener.onFinished();
         }
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-        mListener.onCancelButtonClicked();
+        mListener.onFinished();
     }
 
     public void setListener(OnBarangayAgentListener listener) {
