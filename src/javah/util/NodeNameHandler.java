@@ -1,5 +1,7 @@
 package javah.util;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -7,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javah.contract.CSSContract;
+
+import java.util.Arrays;
 
 /**
  * A class that will handle the generation of name nodes within a certain
@@ -76,17 +81,28 @@ public class NodeNameHandler {
          * child nodes of the HBox Node Name Container.
          */
         public NodeName() {
+            super(20);
             mFirstName = new TextField();
             mMiddleName = new TextField();
             mLastName = new TextField();
+
+            mFirstName.setMinWidth(150);
+            mFirstName.setMaxWidth(150);
+            mMiddleName.setMinWidth(150);
+            mMiddleName.setMaxWidth(150);
+            mLastName.setMinWidth(150);
+            mLastName.setMaxWidth(150);
 
             mFirstName.setPromptText("First Name*");
             mMiddleName.setPromptText("Middle Name*");
             mLastName.setPromptText("Last Name*");
 
             mAuxiliary = new ComboBox<>();
+            mAuxiliary.setStyle(CSSContract.STYLE_COMBO_BOX);
+            mAuxiliary.setMinWidth(85);
             mAuxiliary.getItems().addAll("N/A", "Sr", "Jr", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X");
             mAuxiliary.setValue("N/A");
+
 
             mRemoveButton = new ImageView();
             mRemoveButton.setFitWidth(25);
@@ -100,6 +116,10 @@ public class NodeNameHandler {
             mAddButton.setImage(new Image("res/ic_add_circle.png"));
 
             getChildren().addAll(mFirstName, mMiddleName, mLastName, mAuxiliary, mRemoveButton, mAddButton);
+            setMargin(mRemoveButton, new Insets(0, -10, 0 , -10));
+            setMargin(mAddButton, new Insets(0, 0, 0, -10));
+
+            setAlignment(Pos.CENTER_LEFT);
 
             // Tell the Node Name Handler to remove this node if this' remove button is
             // clicked.
@@ -131,6 +151,7 @@ public class NodeNameHandler {
          */
         public void setRemoveButtonVisible(boolean bool) {
             mRemoveButton.setVisible(bool);
+            mRemoveButton.setManaged(bool);
         }
 
         /**
@@ -141,6 +162,7 @@ public class NodeNameHandler {
          */
         public void setAddButtonVisible(boolean bool) {
             mAddButton.setVisible(bool);
+            mAddButton.setManaged(bool);
         }
 
         /**
@@ -187,6 +209,14 @@ public class NodeNameHandler {
     }
 
     /**
+     * Determines whether this Node Name Handler will produce a Node Name of
+     * One-To-Many or Zero-To-Many.
+     */
+    public static final byte
+            OPERATION_ONE_TO_MANY = 1,
+            OPERATION_ZERO_TO_MANY = 2;
+
+    /**
      * A Vbox passed to this Node Name Handler by constructor where all Node Names are
      * added.
      */
@@ -210,31 +240,27 @@ public class NodeNameHandler {
      * An integer that represents the highest position from the Node Names Position
      * array. Initial value is 1, since at least one node should be visible.
      */
-    private int mNodeNameHighestPos = 1;
-
-
+    private int mNodeNameHighestPos;
 
     /**
-     * A contructor that takes hold of the mBox to be populated with a number of Node
+     * A constructor that takes hold of the mBox to be populated with a number of Node
      * names equal to the given Limit.
      *
      * @param box
      *        The vertical box to be populated with node names.
      * @param size
      *        The total number of node names to generate.
+     * @param operation
+     *        The operation of this Node Name Handler.
      *
      * @see NodeName
      */
-    public NodeNameHandler(VBox box, int size) {
+    public NodeNameHandler(VBox box, int size, byte operation) {
         mBox = box;
         mSize = size;
+
         mNodeNames = new NodeName[size];
         mNodeNamePositions = new int[size];
-
-        // At least one node name is visible by default.
-        box.getChildren().add(mNodeNames[0]);
-        mNodeNames[0].setRemoveButtonVisible(false);
-        mNodeNamePositions[0] = 1;
 
         for (int i = 0; i < size; i++) {
             NodeName nodeName = new NodeName();
@@ -253,46 +279,65 @@ public class NodeNameHandler {
                     // Get the Node Name position.
                     int position = mNodeNamePositions[j];
 
+                    // The Node Name position is set to 0, indicating that it is hidden.
+                    mNodeNamePositions[j] = 0;
+
                     // The node name index with the highest position.
                     int nodeNameHighPosIndex = -1;
 
                     for (int i = 0; i < size; i++) {
+                        // If a node name position is greater than the one removed, then move it backwards.
+                        if (mNodeNamePositions[i] >= position)
+                            mNodeNamePositions[i]--;
+
                         // Determine the index of the Node Name with the Highest Position.
                         if (mNodeNamePositions[i] == mNodeNameHighestPos)
                             nodeNameHighPosIndex = i;
 
-                        // If a node name position is greater than the one removed, then move it backwards.
-                        if (mNodeNamePositions[i] > position)
-                            mNodeNamePositions[i]--;
-
                     }
 
-                    // If only one Node Name is visible, then hide the remove button of that node name
-                    // to prevent removing all Node Names.
-                    if (mNodeNameHighestPos == 1)
+                    // If only one Node Name is visible and the operation of this Node Name Handler is
+                    // one-to-many, then hide the remove button of that node name to prevent removing
+                    // all Node Names.
+                    if (mNodeNameHighestPos == 1 && operation == OPERATION_ONE_TO_MANY)
                         mNodeNames[nodeNameHighPosIndex].setRemoveButtonVisible(false);
 
                     // Show the add button of the Node Name with the highest position, If the remove
                     // button is pressed, that is.
                     mNodeNames[nodeNameHighPosIndex].setAddButtonVisible(true);
 
-                    // The Node Name position is set to 0, indicating that it is hidden.
-                    mNodeNamePositions[j] = 0;
+
+                    System.out.println(Arrays.toString(mNodeNamePositions));
+                    System.out.println("Highest Position Index: " + nodeNameHighPosIndex);
                 }
 
                 @Override
                 public void onAddButtonClicked() {
-
+                    showNodeName();
                 }
             });
-
             mNodeNames[i] = nodeName;
+        }
+
+        switch (operation) {
+            case OPERATION_ONE_TO_MANY:
+                mNodeNameHighestPos = 1;
+
+                // At least one node name is visible by default.
+                box.getChildren().add(mNodeNames[0]);
+                mNodeNames[0].setRemoveButtonVisible(false);
+                mNodeNamePositions[0] = 1;
+                break;
+            default:
+                mNodeNameHighestPos = 0;
         }
     }
 
     /**
      * Set a non-visible Node Name visible from the Node Names Array by adding it to
-     * the mBox, given with the highest position.
+     * the mBox, given with the highest position. If a Node name with the second
+     * highest position exists, then hide its add button. Only the Node Name with
+     * the highest position is allowed to have an add button.
      *
      * @return the Node Name shown. Null if no other Node Names can be shown.
      */
@@ -301,29 +346,40 @@ public class NodeNameHandler {
         if (mNodeNameHighestPos == mSize)
             return null;
 
-        int nodeNameHighestPosIndex = -1;
         int nodeNameInvisibleIndex = -1;
 
-        for (int i = 0; i < mSize; i++) {
-            // Find the index of the Node Name with the preceding highest position.
-            if (mNodeNamePositions[i] == mNodeNameHighestPos)
-                nodeNameHighestPosIndex = i;
+        if (mNodeNameHighestPos == 0) {
+            nodeNameInvisibleIndex = 0;
 
-            // Find the closest invisible node name which will serve as the candidate to be
-            // shown. If the element of an array at a certain index is equal to 0, then that
-            // is an invisible node name.
-            if (mNodeNamePositions[i] == 0 && nodeNameInvisibleIndex == -1)
-                nodeNameInvisibleIndex = i;
+        // If there exists another visible Node Name, then find the one at the front of the
+        // VBox and remove its add button.
+        } else {
+            int nodeNameHighestPosIndex = -1;
 
-            // If both the Node Name Highest Index and Node Name Invisible Index is found,
-            // then cancel the loop.
-            if (nodeNameInvisibleIndex != -1 && nodeNameHighestPosIndex != -1)
-                break;
+            for (int i = 0; i < mSize; i++) {
+                // Find the index of the Node Name with the preceding highest position.
+                // If there is no Node Name with preceding highest position, then ignore.
+                if (mNodeNamePositions[i] == mNodeNameHighestPos)
+                    nodeNameHighestPosIndex = i;
+
+                // Find the closest invisible node name which will serve as the candidate to be
+                // shown. If the element of an array at a certain index is equal to 0, then that
+                // is an invisible node name.
+                if (mNodeNamePositions[i] == 0 && nodeNameInvisibleIndex == -1)
+                    nodeNameInvisibleIndex = i;
+
+                // If both the Node Name Highest Index and Node Name Invisible Index is found,
+                // then cancel the loop.
+                if (nodeNameInvisibleIndex != -1 && nodeNameHighestPosIndex != -1)
+                    break;
+            }
+
+            // Node Name with the preceding Highest Position will only have the remove button.
+            // Only used if a node name with preceding highest position exists.
+            mNodeNames[nodeNameHighestPosIndex].setAddButtonVisible(false);
+            mNodeNames[nodeNameHighestPosIndex].setRemoveButtonVisible(true);
+
         }
-
-        // Only show the remove button for the Node Name with the preceding Highest Position.
-        mNodeNames[nodeNameHighestPosIndex].setAddButtonVisible(false);
-        mNodeNames[nodeNameHighestPosIndex].setRemoveButtonVisible(true);
 
         // Increment the Node Name Highest Position index to pass to the Node Name to be
         // made visible, which is the first invisible Node Name.
@@ -338,6 +394,14 @@ public class NodeNameHandler {
 
         // Add the Node Name to the VBox to ensure that it is visible.
         mBox.getChildren().add(mNodeNames[nodeNameInvisibleIndex]);
+
+        System.out.println(Arrays.toString(mNodeNamePositions));
+        // The node name index with the highest position.
+        int nodeNameHighPosIndex = -1;
+        for (int i = 0; i < mSize; i++)
+            // Determine the index of the Node Name with the Highest Position.
+            if (mNodeNamePositions[i] == mNodeNameHighestPos)
+                nodeNameHighPosIndex = i;
 
         return mNodeNames[nodeNameInvisibleIndex];
     }
@@ -358,6 +422,7 @@ public class NodeNameHandler {
      *        The auxiliary of the name.
      */
     public void addName(String firstName, String middleName, String lastName, String auxiliary) {
+
         NodeName nodeName = showNodeName();
 
         if (nodeName == null) return;
@@ -372,7 +437,8 @@ public class NodeNameHandler {
      * Hide all the Node Names.
      */
     public void removeNames() {
-        for (int i = 0; i < mSize; i++) {
+        mNodeNameHighestPos = 0;
+        for (int i = 1; i < mSize; i++) {
             mNodeNamePositions[i] = 0;
             mNodeNames[i].clear();
         }

@@ -22,4 +22,6 @@ public class CSSContract {
             "-fx-background-color : #FF8600; " + "-fx-border-color : white; " + "-fx-border-width: 0 0 1 0";
 
     public static String STYLE_DATE_HEADER = "-fx-background-color: #F4F4F4; -fx-text-fill: chocolate; -fx-font-size: 20;";
+
+    public static String STYLE_COMBO_BOX = "-fx-background-color : white; -fx-border-color: #BEBEBE";
 }
