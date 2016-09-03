@@ -1,22 +1,20 @@
 package javah.controller;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javah.contract.CSSContract;
 import javah.model.PreferenceModel;
-import javah.container.KagawadHolder;
 import javah.contract.PreferenceContract;
 import javah.util.NodeNameHandler;
 
@@ -24,12 +22,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -134,6 +130,9 @@ public class BarangayAgentControl {
     /* Text Fields holding the chairman name. */
     @FXML private TextField mChmFirstName, mChmMiddleName, mChmLastName;
 
+    /* A ComboBox for the chairman name auxiliary. */
+    @FXML private ComboBox mChmAuxiliary;
+
     /**
      * A Label holding the chairman name error, which is set to visible when the name
      * of the chairman is invalid.
@@ -146,6 +145,9 @@ public class BarangayAgentControl {
     /* Text Fields holding the secretary name. */
     @FXML private TextField mSecFirstName, mSecMiddleName, mSecLastName;
 
+    /* A ComboBox for the secretary name auxiliary. */
+    @FXML private ComboBox mSecAuxiliary;
+
     /**
      * A Label holding the secretary name error, which is set to visible when the
      * name of the secretary is invalid.
@@ -154,6 +156,9 @@ public class BarangayAgentControl {
 
     /* Text Fields holding the treasurer name. */
     @FXML private TextField mTrsrFirstName, mTrsrMiddleName, mTrsrLastName;
+
+    /* A ComboBox for the secretary name auxiliary. */
+    @FXML private ComboBox mTrsrAuxiliary;
 
     /**
      * A Label holding the treasurer name error, which is set to visible when the
@@ -213,69 +218,146 @@ public class BarangayAgentControl {
      */
     private PreferenceModel mPreferences;
 
+    /* Handles the dynamic nodes of the kagawad names. */
+    private NodeNameHandler mNodeNameHandler;
+
+    /**
+     * Assign a Node Name Handler to the Kagawad Pane to handle the addition and
+     * removal of the name node for the kagawad.
+     *
+     * @see NodeNameHandler
+     */
     @FXML
     private void initialize() {
-        new NodeNameHandler(mKagawadPane, 7, NodeNameHandler.OPERATION_ONE_TO_MANY);
+        mNodeNameHandler = new NodeNameHandler(mKagawadPane, 7, NodeNameHandler.OPERATION_ONE_TO_MANY);
+
+        // Everytime the Kagawad Pane adjusts in height due to addition or removal of node
+        // names, then always set the vertical scroll pane at the bottom.
         mKagawadPane.heightProperty().addListener(observable -> mScrollPane.setVvalue(1));
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to capture an image for the
+     * chairman signature.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onChmSignatureCaptureButtonClicked(ActionEvent actionEvent) {
         mListener.onChmSignatureCaptureButtonClicked();
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to upload an image for the
+     * chairman signature.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onChmSignatureUploadButtonClicked(ActionEvent actionEvent) {
         mListener.onChmSignatureUploadButtonClicked();
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to capture an image for the
+     * chairman display photo.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onChmCaptureButtonClicked(ActionEvent actionEvent) {
         mListener.onChmCaptureButtonClicked();
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to upload an image for the
+     * chairman display photo.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onChmUploadButtonClicked(ActionEvent actionEvent) {
         mListener.onChmUploadButtonClicked();
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to capture an image for the
+     * secretary signature.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onSecSignatureCaptureButtonClicked(ActionEvent actionEvent) {
         mListener.onSecSignatureCaptureButtonClicked();
     }
 
+    /**
+     * Tell the Main Control to show the Photoshop scene to upload an image for the
+     * secretary signature.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onSecSignatureUploadButtonClicked(ActionEvent actionEvent) {
         mListener.onSecSignatureUploadButtonClicked();
     }
 
     /**
-     * Check if the data inputted is valid. If the data is valid, then save the data to Json. Hey, Json!
+     * Check if the data inputted are valid. If the data is valid, then save the data
+     * to Json. Hey, Json!
+     *
      * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
      */
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         boolean isDataValid = true;
 
         Function<Node[], Boolean> validateName = (name) -> {
-            boolean isValid;
+            boolean isValid = true;
 
             TextField firstName = (TextField) name[0];
             TextField middleName = (TextField) name[1];
             TextField lastName = (TextField) name[2];
 
-            firstName.setStyle(firstName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
-            middleName.setStyle(middleName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
-            lastName.setStyle(lastName.getText().matches("[a-zA-Z\\s]+") ? null : "-fx-border-color: #FF3F3F;");
+            if (firstName.getText().trim().isEmpty()) {
+                firstName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                isValid = false;
+            } else
+                firstName.setStyle(null);
 
-            isValid = firstName.getText().matches("[a-zA-Z\\s]+") &&
-                    middleName.getText().matches("[a-zA-Z\\s]+") &&
-                    lastName.getText().matches("[a-zA-Z\\s]+");
+            if (middleName.getText().trim().isEmpty()) {
+                middleName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                isValid = false;
+            } else
+                firstName.setStyle(null);
 
-            if (name.length > 3) {
-                Label nameError = (Label) name[3];
-                nameError.setVisible(!isValid);
-            }
+            if (lastName.getText().trim().isEmpty()) {
+                lastName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                isValid = false;
+            } else
+                firstName.setStyle(null);
+
+            Label nameError = (Label) name[3];
+            nameError.setVisible(!isValid);
 
             return isValid;
         };
@@ -293,28 +375,55 @@ public class BarangayAgentControl {
         isDataValid = result? isDataValid : false;
 
         // Test the input of the visible kagawad holders.
-        mKagawadNameError.setVisible(false);
+        boolean isKagawadNamesValid = mNodeNameHandler.validateNodeNames();
+        mKagawadNameError.setVisible(!isKagawadNamesValid);
+        isDataValid = isKagawadNamesValid ? isDataValid : false;
 
         if (isDataValid) {
             // Save chairman name.
             mPreferences.put(PreferenceContract.CHAIRMAN_FIRST_NAME, mChmFirstName.getText());
             mPreferences.put(PreferenceContract.CHAIRMAN_MIDDLE_NAME, mChmMiddleName.getText());
             mPreferences.put(PreferenceContract.CHAIRMAN_LAST_NAME, mChmLastName.getText());
+            mPreferences.put(PreferenceContract.CHAIRMAN_AUXILIARY,
+                    mChmAuxiliary.getValue().equals("N/A") ? null : mChmAuxiliary.getValue().toString());
 
             // Save secretary name.
             mPreferences.put(PreferenceContract.SECRETARY_FIRST_NAME, mSecFirstName.getText());
             mPreferences.put(PreferenceContract.SECRETARY_MIDDLE_NAME, mSecMiddleName.getText());
             mPreferences.put(PreferenceContract.SECRETARY_LAST_NAME, mSecLastName.getText());
+            mPreferences.put(PreferenceContract.SECRETARY_AUXILIARY,
+                    mSecAuxiliary.getValue().equals("N/A") ? null : mSecAuxiliary.getValue().toString());
 
             // Save Treasurer name.
             mPreferences.put(PreferenceContract.TREASURER_FIRST_NAME, mTrsrFirstName.getText());
             mPreferences.put(PreferenceContract.TREASURER_MIDDLE_NAME, mTrsrMiddleName.getText());
             mPreferences.put(PreferenceContract.TREASURER_LAST_NAME, mTrsrLastName.getText());
+            mPreferences.put(PreferenceContract.TREASURER_AUXILIARY,
+                    mTrsrAuxiliary.getValue().equals("N/A") ? null : mTrsrAuxiliary.getValue().toString());
+
+            // Save Kagawad Names.
+            for (int i = 0; i < 7; i++) {
+                String[] name = mNodeNameHandler.getName(i + 1);
+
+                System.out.println(Arrays.toString(name));
+
+                // Array[k][0] = kagawad k first name.
+                // Array[k][1] = kagawad k middle name.
+                // Array[k][2] = kagawad k last name.
+                // Array[k][3] = kagawad k auxiliary.
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][0], name == null ? null : name[0]);
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][1], name == null ? null : name[1]);
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][2], name == null ? null : name[2]);
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][3], name == null ? null : name[3]);
+            }
 
             /**
              * Create image and store its path to the corresponding preference.
-             * @param prefKey is where the path is stored.
-             * @Param image is the image to be created.
+             *
+             * @param prefKey
+             *        The preference where the path is stored.
+             * @param image
+             *        The image to be created. Either a display photo or a signature.
              */
             BiConsumer<String, WritableImage> writeImage = (prefKey, image) -> {
                 try {
@@ -373,9 +482,86 @@ public class BarangayAgentControl {
         }
     }
 
+    /**
+     * Reset the values of the nodes if the cancel button is clicked.
+     *
+     * @param actionEvent
+     *        The event fired when the button is clicked. No usage.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
+        resetData();
         mListener.onFinished();
+    }
+md
+    private void resetData() {
+        // Reset chairman data.
+        mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, null));
+        mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, null));
+        mChmLastName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_LAST_NAME, null));
+
+        mChmFirstName.setStyle(null);
+        mChmMiddleName.setStyle(null);
+        mChmLastName.setStyle(null);
+
+        mChmNameError.setVisible(false);
+
+        String mChmPhotoPath = mPreferences.get(PreferenceContract.CHAIRMAN_PHOTO_PATH);
+        if (mChmPhotoPath != null)
+            mChmPhotoView.setImage(new Image("file:" + mChmPhotoPath));
+
+        String mChmSignaturePath = mPreferences.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
+        if (mChmSignaturePath != null)
+            mChmSignatureView.setImage(new Image("file:" + mChmSignaturePath));
+
+        // Reset secretary data.
+        mSecFirstName.setText(mPreferences.get(PreferenceContract.SECRETARY_FIRST_NAME, null));
+        mSecMiddleName.setText(mPreferences.get(PreferenceContract.SECRETARY_MIDDLE_NAME, null));
+        mSecLastName.setText(mPreferences.get(PreferenceContract.SECRETARY_LAST_NAME, null));
+
+        mSecFirstName.setStyle(null);
+        mSecMiddleName.setStyle(null);
+        mSecLastName.setStyle(null);
+
+        mSecNameError.setVisible(false);
+
+        String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
+        if (mSecSignaturePath != null)
+            mSecSignatureView.setImage(new Image("file:" + mSecSignaturePath));
+
+        // Reset treasurer data.
+        mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, null));
+        mTrsrMiddleName.setText(mPreferences.get(PreferenceContract.TREASURER_MIDDLE_NAME, null));
+        mTrsrLastName.setText(mPreferences.get(PreferenceContract.TREASURER_LAST_NAME, null));
+
+        mTrsrFirstName.setStyle(null);
+        mTrsrMiddleName.setStyle(null);
+        mTrsrLastName.setStyle(null);
+
+        mTrsrNameError.setVisible(false);
+
+        mKagawadNameError.setVisible(false);
+
+        mNodeNameHandler.removeNodeNames();
+        // Reset Kagawad data.
+        for (int i = 0; i < 7; i++) {
+            String firstName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][0], null);
+
+            if (firstName == null) {
+                if (i == 0)
+                    mNodeNameHandler.addName(null, null, null, null);
+
+                break;
+            }
+
+            String middleName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][1], null);
+            String lastName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][2], null);
+            String auxiliary = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][3], null);
+
+            System.out.println(firstName + " " + middleName + " " + lastName);
+
+            mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
+        }
     }
 
     public void setListener(OnBarangayAgentListener listener) {
@@ -425,56 +611,6 @@ public class BarangayAgentControl {
      */
     public void setPreferenceModel(PreferenceModel preferenceModel) {
         mPreferences = preferenceModel;
-    }
-
-    /**
-     * Populate the scene with the barangay data.
-     */
-    public void resetScene() {
-        // Reset chairman data.
-        mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, ""));
-        mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, ""));
-        mChmLastName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_LAST_NAME, ""));
-
-        mChmFirstName.setStyle(null);
-        mChmMiddleName.setStyle(null);
-        mChmLastName.setStyle(null);
-
-        mChmNameError.setVisible(false);
-
-        String mChmPhotoPath = mPreferences.get(PreferenceContract.CHAIRMAN_PHOTO_PATH);
-        if (mChmPhotoPath != null)
-            mChmPhotoView.setImage(new Image("file:" + mChmPhotoPath));
-
-        String mChmSignaturePath = mPreferences.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
-        if (mChmSignaturePath != null)
-            mChmSignatureView.setImage(new Image("file:" + mChmSignaturePath));
-
-        // Reset secretary data.
-        mSecFirstName.setText(mPreferences.get(PreferenceContract.SECRETARY_FIRST_NAME, ""));
-        mSecMiddleName.setText(mPreferences.get(PreferenceContract.SECRETARY_MIDDLE_NAME, ""));
-        mSecLastName.setText(mPreferences.get(PreferenceContract.SECRETARY_LAST_NAME, ""));
-
-        mSecFirstName.setStyle(null);
-        mSecMiddleName.setStyle(null);
-        mSecLastName.setStyle(null);
-
-        mSecNameError.setVisible(false);
-
-        String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
-        if (mSecSignaturePath != null)
-            mSecSignatureView.setImage(new Image("file:" + mSecSignaturePath));
-
-        // Reset treasurer data.
-        mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, ""));
-        mTrsrMiddleName.setText(mPreferences.get(PreferenceContract.TREASURER_MIDDLE_NAME, ""));
-        mTrsrLastName.setText(mPreferences.get(PreferenceContract.TREASURER_LAST_NAME, ""));
-
-        mTrsrFirstName.setStyle(null);
-        mTrsrMiddleName.setStyle(null);
-        mTrsrLastName.setStyle(null);
-
-        mTrsrNameError.setVisible(false);
-
+        resetData();
     }
 }

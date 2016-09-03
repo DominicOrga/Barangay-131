@@ -14,7 +14,7 @@ import javah.contract.CSSContract;
 import java.util.Arrays;
 
 /**
- * A class that will handle the generation of name nodes within a certain
+ * A class that handles the generation of name nodes within a certain
  * mBox container.
  */
 public class NodeNameHandler {
@@ -26,7 +26,7 @@ public class NodeNameHandler {
      *
      * @see NodeNameHandler
      */
-    public static class NodeName extends HBox {
+    private static class NodeName extends HBox {
 
         /**
          * An interface to set a listener, the Node Name Handler, for the NodeName Class.
@@ -174,37 +174,6 @@ public class NodeNameHandler {
             mMiddleName.clear();
             mLastName.clear();
             mAuxiliary.setValue("N/A");
-        }
-
-        public String getAuxiliary() {
-            return mAuxiliary.getValue();
-        }
-
-        public void setAuxiliary(String aux) {
-            mAuxiliary.setValue(aux);
-        }
-
-        public String getLastName() {
-            return mLastName.getText();
-        }
-
-        public void setLastName(String name) {
-            mLastName.setText(name);
-        }
-
-        public String getMiddleName() {
-            return mMiddleName.getText();
-        }
-
-        public void setMiddleName(String name) {
-            mMiddleName.setText(name);
-        }
-
-        public String getFirstName() {
-            return mFirstName.getText();
-        }
-        public void setFirstName(String name) {
-            mFirstName.setText(name);
         }
     }
 
@@ -395,14 +364,6 @@ public class NodeNameHandler {
         // Add the Node Name to the VBox to ensure that it is visible.
         mBox.getChildren().add(mNodeNames[nodeNameInvisibleIndex]);
 
-        System.out.println(Arrays.toString(mNodeNamePositions));
-        // The node name index with the highest position.
-        int nodeNameHighPosIndex = -1;
-        for (int i = 0; i < mSize; i++)
-            // Determine the index of the Node Name with the Highest Position.
-            if (mNodeNamePositions[i] == mNodeNameHighestPos)
-                nodeNameHighPosIndex = i;
-
         return mNodeNames[nodeNameInvisibleIndex];
     }
 
@@ -419,24 +380,57 @@ public class NodeNameHandler {
      * @param lastName
      *        The last name.
      * @param auxiliary
-     *        The auxiliary of the name.
+     *        The auxiliary of the name. If null, then value is set to M/A.
      */
     public void addName(String firstName, String middleName, String lastName, String auxiliary) {
-
         NodeName nodeName = showNodeName();
+        nodeName.setStyle(null);
 
         if (nodeName == null) return;
 
-        nodeName.setFirstName(firstName);
-        nodeName.setMiddleName(middleName);
-        nodeName.setLastName(lastName);
-        nodeName.setAuxiliary(auxiliary);
+        nodeName.mFirstName.setText(firstName == null ? "" : firstName);
+        nodeName.mMiddleName.setText(middleName == null ? "" : middleName);
+        nodeName.mLastName.setText(lastName == null ? "" : lastName);
+        nodeName.mAuxiliary.setValue(auxiliary == null ? "N/A" : auxiliary);
+    }
+
+    /**
+     * Get the name from a Node Name based on the given position. Return null if
+     * the Node Name at the given position is empty.
+     *
+     * @param position
+     *        The position of the Node Name in which to extract the name.
+     *
+     * @return a string array of size 4 which contains the name.
+     *         Array[0] = first name
+     *         Array[1] = middle name
+     *         Array[2] = last name
+     *         Array[3] = auxiliary
+     */
+    public String[] getName(int position) {
+        if (position > mNodeNameHighestPos)
+            return null;
+
+        for (int i = 0; i < mSize; i++)
+            if (mNodeNamePositions[i] == position) {
+                String[] name = new String[4];
+                name[0] = mNodeNames[i].mFirstName.getText().trim();
+                name[1] = mNodeNames[i].mMiddleName.getText().trim();
+                name[2] = mNodeNames[i].mLastName.getText().trim();
+                name[3] = mNodeNames[i].mAuxiliary.getValue();
+
+                name[3] = name[3].equals("N/A") ? null : name[3];
+
+                return name;
+            }
+
+        return null;
     }
 
     /**
      * Hide all the Node Names.
      */
-    public void removeNames() {
+    public void removeNodeNames() {
         mNodeNameHighestPos = 0;
         for (int i = 1; i < mSize; i++) {
             mNodeNamePositions[i] = 0;
@@ -446,4 +440,43 @@ public class NodeNameHandler {
         mBox.getChildren().clear();
     }
 
+    /**
+     * Validate whether the data within the Node Names are allowed or not. If a Node
+     * Name text field contains an illegal input, then change the style of the text
+     * field to the unselected style.
+     *
+     * @return true if all Node Name inputs are legal. Otherwise, return false.
+     */
+    public boolean validateNodeNames() {
+        boolean isValid = true;
+
+        for (int i = 0; i < mSize; i++)
+            if (mNodeNamePositions[i] != 0) {
+                NodeName nodeName = mNodeNames[i];
+
+                TextField firstName = nodeName.mFirstName;
+                TextField middleName = nodeName.mMiddleName;
+                TextField lastName = nodeName.mLastName;
+
+                if (firstName.getText().trim().isEmpty()) {
+                    firstName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                    isValid = false;
+                } else
+                    firstName.setStyle(null);
+
+                if (middleName.getText().trim().isEmpty()) {
+                    middleName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                    isValid = false;
+                } else
+                    middleName.setStyle(null);
+
+                if (lastName.getText().trim().isEmpty()) {
+                    lastName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                    isValid = false;
+                } else
+                    lastName.setStyle(null);
+            }
+
+        return isValid;
+    }
 }

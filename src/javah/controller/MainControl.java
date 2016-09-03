@@ -696,8 +696,6 @@ public class MainControl {
      */
     public void onSettingsButtonClicked(MouseEvent mouseEvent) {
         showPopupScene(mBarangayAgentScene, false);
-        // Initialize the data first.
-        mBarangayAgentControl.resetScene();
 
         switch (mMenuSelected) {
             case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;

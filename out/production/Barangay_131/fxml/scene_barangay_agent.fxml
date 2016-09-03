@@ -160,7 +160,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="mAuxiliary" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
+                        <ComboBox fx:id="mChmAuxiliary" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
@@ -296,7 +296,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="mAuxiliary1" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
+                        <ComboBox fx:id="mSecAuxiliary" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
@@ -439,7 +439,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="mAuxiliary2" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
+                        <ComboBox fx:id="mTrsrAuxiliary" minWidth="-Infinity" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
