@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javah.Main;
 import javah.contract.CSSContract;
 import javah.model.PreferenceModel;
 import javah.contract.PreferenceContract;
@@ -30,7 +31,9 @@ import java.util.function.Function;
 
 /**
  * A controller that setups the barangay officials for use in information
- * generation.
+ * generation. This controller has access to the Preference Model to store the
+ * non-binary data of the barangay officials and the Photoshop control to
+ * manage the photo and signatures of the chairman and secretary.
  */
 public class BarangayAgentControl {
 
@@ -428,16 +431,16 @@ public class BarangayAgentControl {
             BiConsumer<String, WritableImage> writeImage = (prefKey, image) -> {
                 try {
                     // Save the image in the appropriate directory with a unique uuid name.
-                    String imagePath = System.getenv("PUBLIC");
+                    String targetImage = null;
                     switch (prefKey) {
                         case PreferenceContract.CHAIRMAN_PHOTO_PATH :
-                            imagePath += "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                            targetImage += Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
                             break;
                         default:
-                            imagePath += "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
+                            targetImage += Main.SIGNATURE_DIR_PATH + "/" + UUID.randomUUID() + ".png";
                     }
 
-                    File file = new File(imagePath);
+                    File file = new File(targetImage);
                     RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
                     ImageIO.write(
                             renderedImage,
@@ -445,7 +448,7 @@ public class BarangayAgentControl {
                             file);
 
                     // Save the photo of the chairman.
-                    mPreferences.put(prefKey, imagePath);
+                    mPreferences.put(prefKey, targetImage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -493,7 +496,10 @@ public class BarangayAgentControl {
         resetData();
         mListener.onFinished();
     }
-md
+
+    /**
+     * Reset the scene with the stored data to remove any unsaved changes made.
+     */
     private void resetData() {
         // Reset chairman data.
         mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, null));
@@ -558,8 +564,6 @@ md
             String lastName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][2], null);
             String auxiliary = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][3], null);
 
-            System.out.println(firstName + " " + middleName + " " + lastName);
-
             mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
         }
     }
@@ -569,17 +573,24 @@ md
     }
 
     /**
-     * Disable or enable the ResidentFormControl.
-     * Used when the photoshop popup scene is displayed.
+     * Disable or enable the ResidentFormControl. Used when the photoshop popup scene
+     * is displayed.
+     *
      * @param disable
+     *        Determines whether to enable or disable the Root Pane.
      */
     public void setDisable(boolean disable) {
         mRootPane.setDisable(disable);
     }
 
     /**
-     * Update the display photo of the chairman from the photoshop process callback function.
+     * Update the display photo of the chairman from the photoshop process callback
+     * function.
+     *
      * @param image
+     *        Image requested from the Photoshop Control.
+     *
+     * @see PhotoshopControl
      */
     public void setChmPhoto(WritableImage image) {
         mChmPhoto = image;
@@ -587,8 +598,13 @@ md
     }
 
     /**
-     * Update the signature photo of the chairman from the photoshop process callback function.
+     * Update the signature photo of the chairman from the photoshop process callback
+     * function.
+     *
      * @param image
+     *        Image requested from the Photoshop Control.
+     *
+     * @see PhotoshopControl
      */
     public void setChmSignature(WritableImage image) {
         mChmSignature = image;
@@ -596,8 +612,13 @@ md
     }
 
     /**
-     * Update the signature photo of the secretary from the photoshop process callback function.
+     * Update the signature photo of the secretary from the photoshop process callback
+     * function.
+     *
      * @param image
+     *        Image requested from the Photoshop Control.
+     *
+     * @see PhotoshopControl
      */
     public void setSecSignature(WritableImage image) {
         mSecSignature = image;
@@ -607,7 +628,11 @@ md
     /**
      * Pass the preference model to this controller from the Main control.
      * Also, immediately resetScene the scene with the data from the preference model.
+     *
      * @param preferenceModel
+     *        The universal Preference Model acquired from the Main Control.
+     *
+     * @see MainControl
      */
     public void setPreferenceModel(PreferenceModel preferenceModel) {
         mPreferences = preferenceModel;

@@ -20,17 +20,6 @@ public class DatabaseModel {
     private MysqlDataSource dataSource;
 
     /**
-     * Determines what type of data are to be stored.
-     */
-    private byte BINARY_PHOTO = 0,
-                 BINARY_SIGNATURE = 1;
-
-    /**
-     * The path pointing to the data directories of the application.
-     */
-    private String mPhotoDirectoryPath, mSignatureDirectoryPath;
-
-    /**
      * Bug: Apparently, using parametarized query with a data source connection to allow connection pooling converts the
      * expected results to their corresponding column names. (e.g. 131-005 == resident_id).
      */
@@ -40,22 +29,6 @@ public class DatabaseModel {
         dataSource.setURL("jdbc:mysql://localhost/BarangayDB");
         dataSource.setUser("root");
         dataSource.setPassword("horizon");
-
-        // Make path towards the root folder 'Barangay131' at C:\Users\Public and its sub-folders - 'Photos' and 'Signature'.
-        String dataDirectoryPath = System.getenv("PUBLIC") + "/Barangay131";
-
-        mPhotoDirectoryPath = dataDirectoryPath + "/Photos";
-        mSignatureDirectoryPath = dataDirectoryPath + "/Signatures";
-
-        // Create the directories if not yet created.
-        File photoDirectory = new File(mPhotoDirectoryPath);
-        if(!photoDirectory.exists())
-            photoDirectory.mkdir();
-
-        File signatureDirectory = new File(mSignatureDirectoryPath);
-        if(!signatureDirectory.exists())
-            signatureDirectory.mkdir();
-
     }
 
     /**

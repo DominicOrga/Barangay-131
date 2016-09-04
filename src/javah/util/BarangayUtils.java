@@ -19,13 +19,13 @@ public class BarangayUtils {
     }
 
     /**
-     * Filter the lists in ascending order, priority level not ignored,with regards to the keywords.
-     * @param residentIds
-     * @param residentNames
+     * Filter the lists in ascending order, priority level not ignored with regards to the keywords.
+     * @param ids
+     * @param names
      * @param keywords
-     * @return a new filtered lists of resident IDs List[0] and resident names List[1].
+     * @return a new filtered lists of IDs List.
      */
-    public static List getFilteredIDs(List<String> residentIds, List<String> residentNames, String[] keywords) {
+    public static List getFilteredIDs(List<String> ids, List<String> names, String[] keywords) {
         // Lower case all keywords.
         int keywordLength = keywords.length;
         for (int i = 0; i < keywordLength; i++)
@@ -44,9 +44,9 @@ public class BarangayUtils {
         // Match each resident names with the keywords. If at least one match is found,
         // then store its ID to the filtered IDs list and store the number of matches to
         // the priority list.
-        int listSize = residentIds.size();
+        int listSize = ids.size();
         for (int i = 0; i < listSize; i++) {
-            String residentName = residentNames.get(i).toLowerCase();
+            String residentName = names.get(i).toLowerCase();
             int matchCount = 0;
 
             for (int j = 0; j < keywordLength; j++)
@@ -54,7 +54,7 @@ public class BarangayUtils {
                     matchCount++;
 
             if (matchCount > 0) {
-                filteredIDs.add(residentIds.get(i));
+                filteredIDs.add(ids.get(i));
                 priorityList.add(matchCount);
             }
         }

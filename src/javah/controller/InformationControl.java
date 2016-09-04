@@ -452,6 +452,8 @@ public class InformationControl {
             int index = mResidentIDs.indexOf(mReportResidentIDs.get(barangayIDIndex));
             currentLabel.setText(mResidentNames.get(index));
 
+            currentLabel.setText(mResidentNames.get(barangayIDIndex));
+
             labelPosition++;
             barangayIDIndex++;
         }

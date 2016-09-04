@@ -16,14 +16,11 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
 import javah.Main;
 import javah.container.BarangayClearance;
-import javah.container.BarangayID;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.standard.MediaPrintableArea;
 import java.util.Calendar;
 
 public class BarangayClearanceReportControl {
@@ -188,7 +185,7 @@ public class BarangayClearanceReportControl {
 
             // Disable the report dialog when the print dialog is open.
             mRootPane.setDisable(true);
-            boolean result = job.showPrintDialog(Main.mPrimaryStage); // Window must be your main Stage
+            boolean result = job.showPrintDialog(Main.PRIMARY_STAGE); // Window must be your main Stage
             mRootPane.setDisable(false);
 
             // If the client cancels the printing, then no printing will occur.

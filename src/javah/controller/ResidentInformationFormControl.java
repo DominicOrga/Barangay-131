@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javah.Main;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
@@ -299,9 +300,9 @@ public class ResidentInformationFormControl {
                 if (mSignatureImage != null) {
                     try {
                         // Save the photo in the approriate directory with a unique uuid name.
-                        String imagePath = System.getenv("PUBLIC") + "/Barangay131/Signatures/" + UUID.randomUUID() + ".png";
+                        String targetImage = Main.SIGNATURE_DIR_PATH + "/" + UUID.randomUUID() + ".png";
 
-                        File file = new File(imagePath);
+                        File file = new File(targetImage);
                         RenderedImage renderedImage = SwingFXUtils.fromFXImage(mSignatureImage, null);
                         ImageIO.write(
                                 renderedImage,
@@ -309,7 +310,7 @@ public class ResidentInformationFormControl {
                                 file);
 
                         // Store the path of the signature to the barangay ID.
-                        mBarangayID.setResidentSignature(imagePath);
+                        mBarangayID.setResidentSignature(targetImage);
                         mBarangayID.setResidentSignatureDimension(null);
 
                         mSignatureImage = null;

@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javah.Main;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.util.BarangayUtils;
@@ -231,9 +232,9 @@ public class ResidentFormControl {
             if (mResidentPhoto != null) {
                 try {
                     // Save the photo in the approriate directory with a unique uuid name.
-                    String imagePath = System.getenv("PUBLIC") + "/Barangay131/Photos/" + UUID.randomUUID() + ".png";
+                    String targetImage = Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
 
-                    File file = new File(imagePath);
+                    File file = new File(targetImage);
                     RenderedImage renderedImage = SwingFXUtils.fromFXImage(mResidentPhoto, null);
                     ImageIO.write(
                             renderedImage,
@@ -241,7 +242,7 @@ public class ResidentFormControl {
                             file);
 
                     // Store the path of the photo to the resident to be saved in the database.
-                    mResident.setPhotoPath(imagePath);
+                    mResident.setPhotoPath(targetImage);
 
                     mResidentPhoto = null;
 
