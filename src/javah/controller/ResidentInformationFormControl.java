@@ -29,13 +29,12 @@ import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.function.Consumer;
 
 /**
- *  This class will handle all the information forms of the residents.
+ *  A class that will handle the information forms of the residents.
  */
 public class ResidentInformationFormControl {
 
@@ -586,7 +585,7 @@ public class ResidentInformationFormControl {
                         }
 
                         // If the resident has a previous barangay ID, then check if it has a signature and get it.
-                        Object[] result = mDatabaseModel.getResidentSignatureFromBarangayID(mResidentIDs.get(mResidentSelectedIndex));
+                        Object[] result = mDatabaseModel.getResidentSignatureFromBarangayID(mResidentSelected.getId());
 
                         // If a signature is found, then store it to mBarangayID.
                         if (result != null) {
@@ -601,6 +600,8 @@ public class ResidentInformationFormControl {
                         }
 
                         // mSignatureImage is set to null every time a new resident is selected or unselected.
+                        // This is to ensure that no new Image will be stored at the Application directory,
+                        // since we already have a reference to the same image.
                         mSignatureImage = null;
                         break;
 
@@ -618,6 +619,11 @@ public class ResidentInformationFormControl {
                         }
 
                         mBrgyClearancePurpose.setDisable(false);
+
+                        // Check if the resident has a previous barangay clearance. If there is, then get its purpose
+                        // and display it.
+                        String purpose = mDatabaseModel.getResidentBarangayClearancePurpose(mResidentSelected.getId());
+                        mBrgyClearancePurpose.setText(purpose);
                         break;
 
                     case INFORMATION_BUSINESS_CLEARANCE :

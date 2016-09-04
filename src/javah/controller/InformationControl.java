@@ -20,7 +20,6 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -451,8 +450,6 @@ public class InformationControl {
             // Get the name of the resident applicant of the barangay ID.
             int index = mResidentIDs.indexOf(mReportResidentIDs.get(barangayIDIndex));
             currentLabel.setText(mResidentNames.get(index));
-
-            currentLabel.setText(mResidentNames.get(barangayIDIndex));
 
             labelPosition++;
             barangayIDIndex++;

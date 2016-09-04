@@ -704,6 +704,40 @@ public class DatabaseModel {
         return null;
     }
 
+    public String getResidentBarangayClearancePurpose(String residentId) {
+        try {
+            Connection dbConnection = dataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s FROM %s WHERE %s = ? ORDER BY %s DESC LIMIT 1",
+                            BarangayClearanceEntry.COLUMN_PURPOSE,
+                            BarangayClearanceEntry.TABLE_NAME,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            BarangayClearanceEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String purpose = resultSet.getString(BarangayClearanceEntry.COLUMN_PURPOSE);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return purpose;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     /**
      * Generate a unique id for the given table.
      * @param tableName
