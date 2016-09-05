@@ -695,7 +695,7 @@ public class ResidentInformationFormControl {
                     mResidentSelectedIndex = -1;
                     setDisplayResidentInfo.accept(false);
 
-                    // Unselect the previously selcted resident, then select the currently selected resident.
+                        // Unselect the previously selcted resident, then select the currently selected resident.
                 } else {
                     mResidentLabels[mLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_UNSELECTED_WHITE);
                     mResidentLabels[newLabelSelectedIndex].setStyle(CSSContract.STYLE_LABEL_SELECTED);
