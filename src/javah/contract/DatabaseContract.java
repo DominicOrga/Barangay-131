@@ -125,6 +125,5 @@ public class DatabaseContract {
         public static final String COLUMN_SECRETARY_NAME = "secretary_name";
         public static final String COLUMN_SECRETARY_SIGNATURE = "secretary_signature";
         public static final String COLUMN_SECRETARY_SIGNATURE_DIMENSION = "sec_sign_dim";
-
     }
 }
