@@ -585,7 +585,7 @@ public class ResidentInformationFormControl {
                         }
 
                         // If the resident has a previous barangay ID, then check if it has a signature and get it.
-                        Object[] result = mDatabaseModel.getResidentSignatureFromBarangayID(mResidentSelected.getId());
+                        Object[] result = mDatabaseModel.getBarangayIDProperties(mResidentSelected.getId());
 
                         // If a signature is found, then store it to mBarangayID.
                         if (result != null) {
@@ -622,7 +622,7 @@ public class ResidentInformationFormControl {
 
                         // Check if the resident has a previous barangay clearance. If there is, then get its purpose
                         // and display it.
-                        String purpose = mDatabaseModel.getResidentBarangayClearancePurpose(mResidentSelected.getId());
+                        String purpose = mDatabaseModel.getBarangayClearanceProperties(mResidentSelected.getId());
                         mBrgyClearancePurpose.setText(purpose);
                         break;
 

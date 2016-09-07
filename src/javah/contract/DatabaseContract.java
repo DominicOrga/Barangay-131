@@ -66,8 +66,8 @@ public class DatabaseContract {
         public static final String COLUMN_KAGAWAD_7_NAME = "kagawad7_name";
     }
 
-    public static class Business extends RowColumn {
-        public static final String TABLE_NAME = "BarangayDB.Business";
+    public static class BusinessEntry extends RowColumn {
+        public static final String TABLE_NAME = "BarangayDB.BusinessEntry";
 
         public static final String COLUMN_BUSINESS_NAME = "business_name";
         public static final String COLUMN_BUSINESS_TYPE = "business_type";
@@ -113,6 +113,7 @@ public class DatabaseContract {
     public static class BusinessClearanceEntry extends RowColumn {
         public static final String TABLE_NAME = "BarangayDB.Business_clearance";
 
+        public static final String COLUMN_BUSINESS_ID = "business_id";
         public static final String COLUMN_BUSINESS_NAME = "business_name";
         public static final String COLUMN_BUSINESS_TYPE = "business_type";
         public static final String COLUMN_BUSINESS_ADDRESS = "business_address";

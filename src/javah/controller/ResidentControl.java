@@ -599,7 +599,7 @@ public class ResidentControl {
      * cached data.
      */
     public void deleteSelectedResident() {
-        mDatabaseModel.archiveResident(mResidentSelected.getId());
+        mDatabaseModel.deleteResident(mResidentSelected.getId());
 
         String id = mResidentIDs.get(mResidentSelectedIndex);
         int index = mCacheModel.getResidentIDsCache().indexOf(id);

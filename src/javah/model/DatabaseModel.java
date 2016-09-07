@@ -5,36 +5,42 @@ import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
 import javah.contract.DatabaseContract.*;
 
-
+/**
+ * A class that that is connected to the system's database. It has the capability
+ * to create, read, update and delete data from the database.
+ */
 public class DatabaseModel {
-    private MysqlDataSource dataSource;
+
+    /* A variable that holds the a cacheable connection the the database. */
+    private MysqlDataSource mDataSource;
 
     /**
-     * Bug: Apparently, using parametarized query with a data source connection to allow connection pooling converts the
-     * expected results to their corresponding column names. (e.g. 131-005 == resident_id).
+     * A constructor that establishes the connection.
+     *
+     * Bug: Apparently, using parametarized query with a data source connection to
+     * allow connection pooling converts the expected results to their corresponding
+     * column names. (e.g. 131-005 == resident_id).
      */
     public DatabaseModel() {
         // Initialize the data source.
-        dataSource = new MysqlDataSource();
-        dataSource.setURL("jdbc:mysql://localhost/BarangayDB");
-        dataSource.setUser("root");
-        dataSource.setPassword("horizon");
+        mDataSource = new MysqlDataSource();
+        mDataSource.setURL("jdbc:mysql://localhost/BarangayDB");
+        mDataSource.setUser("root");
+        mDataSource.setPassword("horizon");
     }
 
     /**
      * Return the non-archived residents IDs and Names.
-     * @return an array of lists, where List[0] contains the resident IDs, while List[1] contains the concatenated
-     * resident names.
+     *
+     * @return an array of lists with elements:
+     *         List[0] =  The resident IDs.
+     *         List[1] = Formatted resident names.
      */
     public List[] getResidentEssentials() {
 
@@ -43,7 +49,7 @@ public class DatabaseModel {
         List<String> residentNameList = new ArrayList<>();
 
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
@@ -91,89 +97,164 @@ public class DatabaseModel {
         return returnList;
     }
 
-    public Resident getResident(String residentId) {
+    /**
+     * Return the Barangay ID Ids, resident ids and the issued date.
+     *
+     * @return an array of lists with elements:
+     *         array[0] = Barangay ID IDs, used to specify a Barangay ID.
+     *         array[1] = Resident IDs of the Barangay IDs, used to update the barangay ID
+     *                    cached data when a specific resident is modified or dropped.
+     *         array[2] = Issued date of each Barangay ID, used to sort the Barangay IDs within
+     *                    the list paging.
+     */
+    public List[] getBarangayIDEssentials() {
+        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
 
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             // Use String.format as a workaround to the bug when using parameterized query.
+            // Only query the barangay ID data with applicants that are not archived.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
-                            ResidentEntry.COLUMN_FIRST_NAME,
-                            ResidentEntry.COLUMN_MIDDLE_NAME,
-                            ResidentEntry.COLUMN_LAST_NAME,
-                            ResidentEntry.COLUMN_AUXILIARY,
-                            ResidentEntry.COLUMN_BIRTH_DATE,
-                            ResidentEntry.COLUMN_PHOTO,
-                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_ADDRESS_1,
-                            ResidentEntry.COLUMN_ADDRESS_2,
+                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_ID,
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_DATE_ISSUED,
+                            BarangayIdEntry.TABLE_NAME,
                             ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_ID
-                    )
-            );
-
-            preparedStatement.setString(1, residentId);
+                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                Resident resident = new Resident();
-
-                resident.setId(residentId);
-                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
-                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
-                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
-                resident.setAuxiliary(resultSet.getString(ResidentEntry.COLUMN_AUXILIARY));
-                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
-                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
-                resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
-                resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
-                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
-                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
-
-                dbConnection.close();
-                preparedStatement.close();
-                resultSet.close();
-
-                return resident;
+            while (resultSet.next()) {
+                result[0].add(resultSet.getString(BarangayIdEntry.COLUMN_ID));
+                result[1].add(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
+                result[2].add(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_ISSUED));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public void archiveResident(String residentId) {
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("UPDATE %s SET %s = 1 WHERE %s = ?",
-                            ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_IS_ARCHIVED,
-                            ResidentEntry.COLUMN_ID
-                    )
-            );
-
-            preparedStatement.setString(1, residentId);
-            preparedStatement.executeUpdate();
 
             dbConnection.close();
             preparedStatement.close();
+            resultSet.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 
+    /**
+     * Return the Barangay Clearance Ids, resident ids and the issued date.
+     *
+     * @return an array of lists with elements:
+     *         array[0] = Barangay clearance IDs, used to specify a barangay clearance.
+     *         array[1] = Resident IDs of the barangay clearances, used to update the barangay
+     *                    clearance cached data when a specific resident is modified or dropped.
+     *         array[2] = Issued date of each barangay clearance, used to sort the barangay
+     *                    clearance within the list paging.
+     */
+    public List[] getBarangayClearanceEssentials() {
+        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            // Only query the barangay ID data with applicants that are not archived.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
+                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_ID,
+                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_DATE_ISSUED,
+                            BarangayClearanceEntry.TABLE_NAME,
+                            ResidentEntry.TABLE_NAME,
+                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
+                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
+                            BarangayClearanceEntry.COLUMN_DATE_ISSUED));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                result[0].add(resultSet.getString(BarangayClearanceEntry.COLUMN_ID));
+                result[1].add(resultSet.getString(BarangayClearanceEntry.COLUMN_RESIDENT_ID));
+                result[2].add(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_ISSUED));
+            }
+
+            dbConnection.close();
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    /**
+     * Return the business IDs and Names.
+     *
+     * @return an array of lists with elements:
+     *         List[0] =  The resident IDs.
+     *         List[1] = Formatted resident names.
+     */
+    public List[] getBusinessEssentials() {
+
+        List[] returnList = new List[2];
+        List<String> businessIDList = new ArrayList<>();
+        List<String> businessNameList = new ArrayList<>();
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s FROM %s ORDER BY %s",
+                            BusinessEntry.COLUMN_ID, BusinessEntry.COLUMN_BUSINESS_NAME,
+                            BusinessEntry.TABLE_NAME,
+                            BusinessEntry.COLUMN_BUSINESS_NAME)
+            );
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                businessIDList.add(resultSet.getString(BusinessEntry.COLUMN_ID));
+                businessNameList.add(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_NAME));
+            }
+
+            returnList[0] = businessIDList;
+            returnList[1] = businessNameList;
+
+            dbConnection.close();
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return returnList;
+    }
+
+
+    /**
+     * Create a resident and store it in the database.
+     *
+     * @param resident
+     *        The resident data holding containing the information about the resident to be
+     *        created.
+     *
+     * @return the generated resident ID for the resident. If the resident was not created,
+     *         then return null.
+     */
     public String createResident(Resident resident) {
 
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             String residentID = generateID(ResidentEntry.TABLE_NAME);
 
@@ -219,100 +300,19 @@ public class DatabaseModel {
         return null;
     }
 
-    public void updateResident(Resident resident) {
-
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            PreparedStatement statement = dbConnection.prepareStatement(
-                    String.format("UPDATE %s SET " +
-                            "%s = ?, %s = ?, %s = ?, %s = ?, " +
-                            "%s = ?, %s = ?, %s = ?, " +
-                            "%s = ?, %s = ?, %s = ? " +
-                            "WHERE %s = ?",
-                            ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_FIRST_NAME,
-                            ResidentEntry.COLUMN_MIDDLE_NAME,
-                            ResidentEntry.COLUMN_LAST_NAME,
-                            ResidentEntry.COLUMN_AUXILIARY,
-                            ResidentEntry.COLUMN_BIRTH_DATE,
-                            ResidentEntry.COLUMN_PHOTO,
-                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_ADDRESS_1,
-                            ResidentEntry.COLUMN_ADDRESS_2,
-                            ResidentEntry.COLUMN_ID));
-
-            statement.setString(1, resident.getFirstName());
-            statement.setString(2, resident.getMiddleName());
-            statement.setString(3, resident.getLastName());
-            statement.setString(4, resident.getAuxiliary());
-            statement.setDate(5, resident.getBirthDate());
-            statement.setString(6, resident.getPhotoPath());
-            statement.setInt(7, resident.getYearOfResidency());
-            statement.setInt(8, resident.getMonthOfResidency());
-            statement.setString(9, resident.getAddress1());
-            statement.setString(10, resident.getAddress2());
-            statement.setString(11, resident.getId());
-
-            statement.executeUpdate();
-            statement.close();
-            dbConnection.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
-     * Returns the Barangay ID's Ids, resident ids, and their issued date.
-     * @return an array of lists, where List[0] contains the Barangay ID's IDs, List[1] contains the resident IDs
-     * of each Barangay ID, while List[2] is the issued date of each barangay ID.
+     * Create a barangay ID and store it into the database.
+     *
+     * @param barangayID
+     *        The barangay ID containing the data about a specific resident to be created.
+     *
+     * @return the generated ID for the barangay ID. If the barangay ID creation fails, then
+     *         return null.
      */
-    public List[] getBarangayIDEssentials() {
-        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
-
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            // Only query the barangay ID data with applicants that are not archived.
-
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_ID,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_DATE_ISSUED,
-                            BarangayIdEntry.TABLE_NAME,
-                            ResidentEntry.TABLE_NAME,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
-                            BarangayIdEntry.COLUMN_DATE_ISSUED));
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                result[0].add(resultSet.getString(BarangayIdEntry.COLUMN_ID));
-                result[1].add(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
-                result[2].add(resultSet.getDate(BarangayIdEntry.COLUMN_DATE_ISSUED));
-            }
-
-            dbConnection.close();
-            preparedStatement.close();
-            resultSet.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
     public String createBarangayID(BarangayID barangayID) {
 
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
@@ -341,10 +341,10 @@ public class DatabaseModel {
             double[] signatureDimension = barangayID.getResidentSignatureDimension();
             statement.setString(7, signatureDimension != null ?
                     String.format("%.5f %.5f %.5f %.5f",
-                    signatureDimension[0],
-                    signatureDimension[1],
-                    signatureDimension[2],
-                    signatureDimension[3]) : null);
+                            signatureDimension[0],
+                            signatureDimension[1],
+                            signatureDimension[2],
+                            signatureDimension[3]) : null);
 
             statement.setString(8, barangayID.getChmName());
             statement.setString(9, barangayID.getChmSignature());
@@ -370,172 +370,19 @@ public class DatabaseModel {
         return null;
     }
 
-    public BarangayID getBarangayID(String id) {
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
-                            BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            BarangayIdEntry.COLUMN_RESIDENT_NAME,
-                            BarangayIdEntry.COLUMN_ADDRESS,
-                            BarangayIdEntry.COLUMN_PHOTO,
-                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
-                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
-                            BarangayIdEntry.COLUMN_CHAIRMAN_NAME,
-                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
-                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
-                            BarangayIdEntry.COLUMN_DATE_ISSUED,
-                            BarangayIdEntry.COLUMN_DATE_VALID,
-                            BarangayIdEntry.TABLE_NAME,
-                            BarangayIdEntry.COLUMN_ID
-                    )
-            );
-
-            preparedStatement.setString(1, id);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                BarangayID barangayID = new BarangayID();
-
-                barangayID.setID(id);
-                barangayID.setResidentID(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
-                barangayID.setResidentName(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_NAME));
-                barangayID.setAddress(resultSet.getString(BarangayIdEntry.COLUMN_ADDRESS));
-                barangayID.setPhoto(resultSet.getString(BarangayIdEntry.COLUMN_PHOTO));
-                barangayID.setResidentSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
-
-                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
-                barangayID.setResidentSignatureDimension(signatureDimension != null ?
-                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
-                        null);
-
-                barangayID.setChmName(resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_NAME));
-                barangayID.setChmSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
-
-                signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
-                barangayID.setChmSignatureDimension(signatureDimension != null ?
-                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
-                        null);
-
-                barangayID.setDateIssued(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_ISSUED));
-                barangayID.setDateValid(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_VALID));
-
-                dbConnection.close();
-                preparedStatement.close();
-                resultSet.close();
-
-                return barangayID;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     /**
-     * Get the signature of the resident from his/her latest barangay ID.
-     * @param residentId
-     * @return null if no barangay ID exists for the resident.
-     *         Else, return the Object[2] index: [0] = String 'signature path' and [1] = Double[4] 'signature dimension'.
-     *         Where Double[4] index: [0] = x, [1] = y, [2] = width, [3] height;
+     * Create a barangay clearance and store it into the database.
+     *
+     * @param barangayClearance
+     *        The barangay clearance to be created.
+     *
+     * @return the generated ID for the barangay clearance. If the barangay clearance creation
+     *         fails, then return null.
      */
-    public Object[] getResidentSignatureFromBarangayID(String residentId) {
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s FROM %s WHERE %s = ? ORDER BY %s DESC LIMIT 1",
-                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
-                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
-                            BarangayIdEntry.TABLE_NAME,
-                            BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            BarangayIdEntry.COLUMN_ID
-                    )
-            );
-
-            preparedStatement.setString(1, residentId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE);
-                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
-
-                dbConnection.close();
-                preparedStatement.close();
-                resultSet.close();
-
-                // If no signature is stores in the latest barangay ID of the resident, then return null.
-                if (signaturePath == null || signaturePath == "") return null;
-
-                String[] dimensionParsed = signatureDimension.split(" ");
-                double[] dimension = new double[4];
-
-                for (int i = 0; i < 4; i++)
-                    dimension[i] = Double.parseDouble(dimensionParsed[i]);
-
-                return new Object[]{signaturePath, dimension};
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the Barangay Clearance's Ids, resident ids, and their issued date.
-     * @return an array of lists, where List[0] contains the Barangay clearance's IDs, List[1] contains the resident IDs
-     * of each Barangay clearance, while List[2] is the issued date of each barangay clearance.
-     */
-    public List[] getBarangayClearanceEssentials() {
-        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
-
-        try {
-            Connection dbConnection = dataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            // Only query the barangay ID data with applicants that are not archived.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_ID,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_DATE_ISSUED,
-                            BarangayClearanceEntry.TABLE_NAME,
-                            ResidentEntry.TABLE_NAME,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
-                            BarangayClearanceEntry.COLUMN_DATE_ISSUED));
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                result[0].add(resultSet.getString(BarangayClearanceEntry.COLUMN_ID));
-                result[1].add(resultSet.getString(BarangayClearanceEntry.COLUMN_RESIDENT_ID));
-                result[2].add(resultSet.getDate(BarangayClearanceEntry.COLUMN_DATE_ISSUED));
-            }
-
-            dbConnection.close();
-            preparedStatement.close();
-            resultSet.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
     public String createBarangayClearance(BarangayClearance barangayClearance) {
 
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             PreparedStatement statement = dbConnection.prepareStatement(
                     String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, " +
@@ -616,9 +463,150 @@ public class DatabaseModel {
         return null;
     }
 
+    /**
+     * Create a resident and store it in the database.
+     *
+     * @param resident
+     *        The resident data holding containing the information about the resident to be
+     *        created.
+     *
+     * @return the generated resident ID for the resident. If the resident was not created,
+     *         then return null.
+     */
+    public String createBusiness(Business business) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            String residentID = generateID(ResidentEntry.TABLE_NAME);
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_ID,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.COLUMN_IS_ARCHIVED));
+
+            statement.setString(1, residentID);
+            statement.setString(2, resident.getFirstName());
+            statement.setString(3, resident.getMiddleName());
+            statement.setString(4, resident.getLastName());
+            statement.setString(5, resident.getAuxiliary());
+            statement.setDate(6, resident.getBirthDate());
+            statement.setString(7, resident.getPhotoPath());
+            statement.setInt(8, resident.getYearOfResidency());
+            statement.setInt(9, resident.getMonthOfResidency());
+            statement.setString(10, resident.getAddress1());
+            statement.setString(11, resident.getAddress2());
+
+            statement.execute();
+            statement.close();
+            dbConnection.close();
+
+            return residentID;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a specific barangay ID from the database.
+     *
+     * @param id
+     *        The ID of the barangay ID to be fetched.
+     *
+     * @return the barangay ID having the specified ID. Return null if no match is found.
+     */
+    public BarangayID getBarangayID(String id) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_RESIDENT_NAME,
+                            BarangayIdEntry.COLUMN_ADDRESS,
+                            BarangayIdEntry.COLUMN_PHOTO,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_NAME,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED,
+                            BarangayIdEntry.COLUMN_DATE_VALID,
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BarangayID barangayID = new BarangayID();
+
+                barangayID.setID(id);
+                barangayID.setResidentID(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_ID));
+                barangayID.setResidentName(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_NAME));
+                barangayID.setAddress(resultSet.getString(BarangayIdEntry.COLUMN_ADDRESS));
+                barangayID.setPhoto(resultSet.getString(BarangayIdEntry.COLUMN_PHOTO));
+                barangayID.setResidentSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
+
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+                barangayID.setResidentSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
+                        null);
+
+                barangayID.setChmName(resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_NAME));
+                barangayID.setChmSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
+
+                signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
+                barangayID.setChmSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() :
+                        null);
+
+                barangayID.setDateIssued(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_ISSUED));
+                barangayID.setDateValid(resultSet.getTimestamp(BarangayIdEntry.COLUMN_DATE_VALID));
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return barangayID;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a specific barangay ID from the database.
+     *
+     * @param id
+     *        The ID of the barangay ID to be fetched.
+     *
+     * @return the barangay ID having the specified ID. Return null if no match is found.
+     */
     public BarangayClearance getBarangayClearance(String id) {
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
@@ -685,7 +673,7 @@ public class DatabaseModel {
 
                 String signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
                 brgyClearance.setChmSignatureDimension(signatureDimension != null ?
-                Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
 
                 signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION);
                 brgyClearance.setSecSignatureDimension(signatureDimension != null ?
@@ -704,9 +692,147 @@ public class DatabaseModel {
         return null;
     }
 
-    public String getResidentBarangayClearancePurpose(String residentId) {
+    /**
+     * Get a specific resident from the database.
+     *
+     * @param residentId
+     *        The ID of the resident to be fetched.
+     *
+     * @return the resident having the specified resident Id. Return null if no match is found.
+     */
+    public Resident getResident(String residentId) {
+
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Resident resident = new Resident();
+
+                resident.setId(residentId);
+                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
+                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
+                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
+                resident.setAuxiliary(resultSet.getString(ResidentEntry.COLUMN_AUXILIARY));
+                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
+                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
+                resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
+                resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
+                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
+                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return resident;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Fetch all the specified barangay ID reusable data properties. Get the signature of the
+     * resident from his/her latest barangay ID. Essential for determining the path, and
+     * coordinate and dimension of the resulting barangay ID which will be used when creating a
+     * new ID for the specific resident.
+     *
+     * @param residentId
+     *        The resident ID of the resident which we want to get the previous signature from
+     *        his/her latest barangay ID.
+     *
+     * @return an object array with elements:
+     *         array[0] = The signature path of the resulting barangay ID.
+     *         array[1] = an array containing the coordinates and dimension of the resulting
+     *                    barangay ID with elements:
+     *                    array[0] = x coordinate.
+     *                    array[1] = y coordinate.
+     *                    array[2] = width.
+     *                    array[3] = height.
+     *         Return null if the resident has not applied any barangay ID yet.
+     */
+    public Object[] getBarangayIDProperties(String residentId) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s FROM %s WHERE %s = ? ORDER BY %s DESC LIMIT 1",
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE,
+                            BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION,
+                            BarangayIdEntry.TABLE_NAME,
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String signaturePath = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE);
+                String signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE_DIMENSION);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                // If no signature is stores in the latest barangay ID of the resident, then return null.
+                if (signaturePath == null || signaturePath == "") return null;
+
+                String[] dimensionParsed = signatureDimension.split(" ");
+                double[] dimension = new double[4];
+
+                for (int i = 0; i < 4; i++)
+                    dimension[i] = Double.parseDouble(dimensionParsed[i]);
+
+                return new Object[]{signaturePath, dimension};
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Fetch all the specified barangay clearance reusable data properties. Get the
+     * purpose of the resident from his/her latest barangay clearance.
+     *
+     * @param residentId
+     *        The resident ID of the resident which we want to get the previous signature from
+     *        his/her latest barangay clearance.
+     *
+     * @return the purpose from the resulting barangay clearance.
+     */
+    public String getBarangayClearanceProperties(String residentId) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
@@ -739,13 +865,96 @@ public class DatabaseModel {
     }
 
     /**
+     * Update a resident information from the database.
+     *
+     * @param resident
+     *        The resident with the information to be updated.
+     */
+    public void updateResident(Resident resident) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("UPDATE %s SET " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ? " +
+                                    "WHERE %s = ?",
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.COLUMN_ID));
+
+            statement.setString(1, resident.getFirstName());
+            statement.setString(2, resident.getMiddleName());
+            statement.setString(3, resident.getLastName());
+            statement.setString(4, resident.getAuxiliary());
+            statement.setDate(5, resident.getBirthDate());
+            statement.setString(6, resident.getPhotoPath());
+            statement.setInt(7, resident.getYearOfResidency());
+            statement.setInt(8, resident.getMonthOfResidency());
+            statement.setString(9, resident.getAddress1());
+            statement.setString(10, resident.getAddress2());
+            statement.setString(11, resident.getId());
+
+            statement.executeUpdate();
+            statement.close();
+            dbConnection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete a resident record from the database.
+     *
+     * @param residentId
+     *        The resident ID of the resident to be deleted.
+     */
+    public void deleteResident(String residentId) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("DELETE FROM %s WHERE %s = ?",
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+            preparedStatement.executeUpdate();
+
+            dbConnection.close();
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Generate a unique id for the given table.
+     *
      * @param tableName
+     *        The table name to generate a unique ID from.
+     *
      * @return the uniquely generated id.
      */
     public String generateID(String tableName) {
         try {
-            Connection dbConnection = dataSource.getConnection();
+            Connection dbConnection = mDataSource.getConnection();
 
             // Generate a unique resident id.
             String residentId = "";
