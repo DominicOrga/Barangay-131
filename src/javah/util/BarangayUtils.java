@@ -84,6 +84,14 @@ public class BarangayUtils {
         return filteredIDs;
     }
 
+    /**
+     * Format the string wherein the character of every word in the string is
+     * capitalized, while living the other characters in lower cased letter.
+     *
+     * @param str
+     *        The string to format.
+     * @return the formatted string.
+     */
     public static String capitalizeString(String str) {
         str = str.toLowerCase().trim();
         String[] subStr = str.split(" ");
@@ -93,6 +101,17 @@ public class BarangayUtils {
             strFormatted += subStr[i].substring(0, 1).toUpperCase() + subStr[i].substring(1);
 
         return strFormatted;
+    }
+
+    public static String formatName(String firstName, String middleName, String lastName, String auxiliary) {
+        firstName = capitalizeString(firstName);
+        middleName = capitalizeString(middleName);
+        lastName = capitalizeString(lastName);
+
+        String formattedName = firstName + " " + middleName.charAt(0) + ". " + lastName;
+        formattedName += auxiliary == null ? "" : " " + auxiliary;
+
+        return formattedName;
     }
 
     /**

@@ -252,6 +252,8 @@ public class BarangayAgentControl {
                 mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, null));
                 mChmLastName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_LAST_NAME, null));
 
+                mChmAuxiliary.setValue(mPreferences.get(PreferenceContract.CHAIRMAN_AUXILIARY, "N/A"));
+
                 mChmFirstName.setStyle(null);
                 mChmMiddleName.setStyle(null);
                 mChmLastName.setStyle(null);
@@ -271,6 +273,8 @@ public class BarangayAgentControl {
                 mSecMiddleName.setText(mPreferences.get(PreferenceContract.SECRETARY_MIDDLE_NAME, null));
                 mSecLastName.setText(mPreferences.get(PreferenceContract.SECRETARY_LAST_NAME, null));
 
+                mSecAuxiliary.setValue(mPreferences.get(PreferenceContract.SECRETARY_AUXILIARY, "N/A"));
+
                 mSecFirstName.setStyle(null);
                 mSecMiddleName.setStyle(null);
                 mSecLastName.setStyle(null);
@@ -285,6 +289,8 @@ public class BarangayAgentControl {
                 mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, null));
                 mTrsrMiddleName.setText(mPreferences.get(PreferenceContract.TREASURER_MIDDLE_NAME, null));
                 mTrsrLastName.setText(mPreferences.get(PreferenceContract.TREASURER_LAST_NAME, null));
+
+                mTrsrAuxiliary.setValue(mPreferences.get(PreferenceContract.TREASURER_AUXILIARY, "N/A"));
 
                 mTrsrFirstName.setStyle(null);
                 mTrsrMiddleName.setStyle(null);

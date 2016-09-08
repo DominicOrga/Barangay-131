@@ -38,6 +38,8 @@ public class InformationControl {
         Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance);
     }
 
+    @FXML private Pane mNoReportSelectedPane;
+
     /**
      * Used for resident list paging. *Each page contains 40 residents.
      */
@@ -268,7 +270,9 @@ public class InformationControl {
         Consumer<Boolean> showSelectedReportDetails = (show) -> {
             mViewButton.setVisible(show);
 
-            if (show)
+            if (show) {
+                mNoReportSelectedPane.toBack();
+
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
                         // Get the label selected.
@@ -298,7 +302,7 @@ public class InformationControl {
 
                         break;
 
-                    case INFORMATION_BARANGAY_CLEARANCE :
+                    case INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
                         System.out.println(mBrgyClearanceSelected.getID());
                         Image image = mListener.OnRequestBarangayClearanceSnapshot(mBrgyClearanceSelected);
@@ -306,20 +310,10 @@ public class InformationControl {
                         break;
                 }
 
-            else
-                switch (mInformation) {
-                    case INFORMATION_BARANGAY_ID:
-                        mIDImageView.setImage(BarangayUtils.getDefaultDisplayPhoto());
-                        mBarangayIDCode.setText("00-000");
-                        mIDNameLabel.setText(null);
-                        mIDResSignatureView.setImage(null);
-                        mIDDateIssued.setText(null);
-                        mIDDateValid.setText(null);
-                        break;
+            } else {
+                mNoReportSelectedPane.toFront();
+            }
 
-                    case INFORMATION_BARANGAY_CLEARANCE:
-
-                }
         };
 
         // If newLabelSelectedIndex is equal to -1, then clear the details.

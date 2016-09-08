@@ -261,6 +261,7 @@ public class BarangayClearanceReportControl {
 
         if (mBarangayClearance.getKagawadName(3) != null) {
             mKagawad4Text.setText(mBarangayClearance.getKagawadName(3).toUpperCase());
+            System.out.println("3: " + mBarangayClearance.getKagawadName(3));
             mKagawad4Text.setVisible(true);
             mKagawad4Text.setManaged(true);
         } else {
@@ -270,6 +271,7 @@ public class BarangayClearanceReportControl {
 
         if (mBarangayClearance.getKagawadName(4) != null) {
             mKagawad5Text.setText(mBarangayClearance.getKagawadName(4).toUpperCase());
+            System.out.println("4: " + mBarangayClearance.getKagawadName(4));
             mKagawad5Text.setVisible(true);
             mKagawad5Text.setManaged(true);
         } else {
@@ -278,6 +280,7 @@ public class BarangayClearanceReportControl {
         }
 
         if (mBarangayClearance.getKagawadName(5) != null) {
+            System.out.println("6: " + mBarangayClearance.getKagawadName(5));
             mKagawad6Text.setText(mBarangayClearance.getKagawadName(5).toUpperCase());
             mKagawad6Text.setVisible(true);
             mKagawad6Text.setManaged(true);
@@ -287,6 +290,7 @@ public class BarangayClearanceReportControl {
         }
 
         if (mBarangayClearance.getKagawadName(6) != null) {
+            System.out.println("7: " + mBarangayClearance.getKagawadName(6));
             mKagawad7Text.setText(mBarangayClearance.getKagawadName(6).toUpperCase());
             mKagawad7Text.setVisible(true);
             mKagawad7Text.setManaged(true);

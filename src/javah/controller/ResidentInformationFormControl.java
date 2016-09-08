@@ -285,10 +285,13 @@ public class ResidentInformationFormControl {
                 mBarangayID.setID(mDatabaseModel.generateID(DatabaseContract.BarangayIdEntry.TABLE_NAME));
 
                 mBarangayID.setResidentID(mResidentSelected.getId());
-                mBarangayID.setResidentName(String.format("%s %s. %s",
+
+                mBarangayID.setResidentName(BarangayUtils.formatName(
                         mResidentSelected.getFirstName(),
-                        mResidentSelected.getMiddleName().charAt(0),
-                        mResidentSelected.getLastName()));
+                        mResidentSelected.getMiddleName(),
+                        mResidentSelected.getLastName(),
+                        mResidentSelected.getAuxiliary())
+                );
 
                 mBarangayID.setAddress(mAddress1RadioButton.isSelected() ?
                         mResidentSelected.getAddress1() : mResidentSelected.getAddress2());
@@ -320,11 +323,12 @@ public class ResidentInformationFormControl {
                 }
 
                 // Get the current chairman name and signature from the preferences.
-
-                mBarangayID.setChmName(String.format("%s %s. %s",
+                mBarangayID.setChmName(BarangayUtils.formatName(
                         mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME)));
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY))
+                );
 
                 mBarangayID.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
 
@@ -350,6 +354,7 @@ public class ResidentInformationFormControl {
                 break;
 
             case INFORMATION_BARANGAY_CLEARANCE :
+
                 if (mBrgyClearancePurpose.getText() == null || mBrgyClearancePurpose.getText().isEmpty()) {
                     mPurposeError.setVisible(true);
                     mBrgyClearancePurpose.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
@@ -363,10 +368,12 @@ public class ResidentInformationFormControl {
                 mBarangayClearance.setID(mDatabaseModel.generateID(DatabaseContract.BarangayClearanceEntry.TABLE_NAME));
 
                 mBarangayClearance.setResidentID(mResidentSelected.getId());
-                mBarangayClearance.setResidentName(String.format("%s %s. %s",
+
+                mBarangayClearance.setResidentName(BarangayUtils.formatName(
                         mResidentSelected.getFirstName(),
-                        mResidentSelected.getMiddleName().charAt(0),
-                        mResidentSelected.getLastName())
+                        mResidentSelected.getMiddleName(),
+                        mResidentSelected.getLastName(),
+                        mResidentSelected.getAuxiliary())
                 );
 
                 mBarangayClearance.setAddress(mBrgyClearanceAddress1RadioButton.isSelected() ?
@@ -413,12 +420,13 @@ public class ResidentInformationFormControl {
 
                 mBarangayClearance.setDateValid(new Timestamp(calendar.getTimeInMillis()));
 
-                // Set the chairman data.
-                mBarangayClearance.setChmName(String.format("%s %s. %s",
+                mBarangayClearance.setChmName(BarangayUtils.formatName(
                         mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME).charAt(0),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME))
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY))
                 );
+
 
                 mBarangayClearance.setChmPhoto(mPrefModel.get(PreferenceContract.CHAIRMAN_PHOTO_PATH));
                 mBarangayClearance.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
@@ -427,11 +435,11 @@ public class ResidentInformationFormControl {
                         BarangayUtils.parseSignatureDimension(
                                 mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION)));
 
-                mBarangayClearance.setSecName(String.format("%s %s. %s",
+                mBarangayClearance.setSecName(BarangayUtils.formatName(
                         mPrefModel.get(PreferenceContract.SECRETARY_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.SECRETARY_MIDDLE_NAME).charAt(0),
-                        mPrefModel.get(PreferenceContract.SECRETARY_LAST_NAME))
-                );
+                        mPrefModel.get(PreferenceContract.SECRETARY_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_AUXILIARY)));
 
                 mBarangayClearance.setSecSignature(mPrefModel.get(PreferenceContract.SECRETARY_SIGNATURE_PATH));
 
@@ -439,27 +447,23 @@ public class ResidentInformationFormControl {
                         BarangayUtils.parseSignatureDimension(
                                 mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION)));
 
-                mBarangayClearance.setTreasurerName(String.format("%s  %s. %s",
+                mBarangayClearance.setTreasurerName(BarangayUtils.formatName(
                         mPrefModel.get(PreferenceContract.TREASURER_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.TREASURER_MIDDLE_NAME).charAt(0),
-                        mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME))
+                        mPrefModel.get(PreferenceContract.TREASURER_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_AUXILIARY))
                 );
 
                 for (int i = 0; i < 7; i++) {
                     if (mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]) != null) {
-                        String firstName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]);
-                        String middleName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]);
-                        String lastName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]);
-                        String auxiliary = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3]);
+                        String name = BarangayUtils.formatName(
+                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]),
+                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]),
+                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]),
+                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3])
+                        );
 
-                        firstName = BarangayUtils.capitalizeString(firstName);
-                        middleName = BarangayUtils.capitalizeString(middleName);
-                        lastName = BarangayUtils.capitalizeString(lastName);
-
-                        String fullName = String.format("%s %s. %s", firstName, middleName.charAt(0), lastName);
-                        fullName += auxiliary == null ? "" : " " + auxiliary;
-
-                        mBarangayClearance.setKagawadName(i, fullName);
+                        mBarangayClearance.setKagawadName(i, name);
                     }
                 }
 
