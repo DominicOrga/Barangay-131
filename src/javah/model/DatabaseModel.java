@@ -463,64 +463,64 @@ public class DatabaseModel {
         return null;
     }
 
-    /**
-     * Create a resident and store it in the database.
-     *
-     * @param resident
-     *        The resident data holding containing the information about the resident to be
-     *        created.
-     *
-     * @return the generated resident ID for the resident. If the resident was not created,
-     *         then return null.
-     */
-    public String createBusiness(Business business) {
-
-        try {
-            Connection dbConnection = mDataSource.getConnection();
-
-            String residentID = generateID(ResidentEntry.TABLE_NAME);
-
-            PreparedStatement statement = dbConnection.prepareStatement(
-                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
-                            ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_ID,
-                            ResidentEntry.COLUMN_FIRST_NAME,
-                            ResidentEntry.COLUMN_MIDDLE_NAME,
-                            ResidentEntry.COLUMN_LAST_NAME,
-                            ResidentEntry.COLUMN_AUXILIARY,
-                            ResidentEntry.COLUMN_BIRTH_DATE,
-                            ResidentEntry.COLUMN_PHOTO,
-                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_ADDRESS_1,
-                            ResidentEntry.COLUMN_ADDRESS_2,
-                            ResidentEntry.COLUMN_IS_ARCHIVED));
-
-            statement.setString(1, residentID);
-            statement.setString(2, resident.getFirstName());
-            statement.setString(3, resident.getMiddleName());
-            statement.setString(4, resident.getLastName());
-            statement.setString(5, resident.getAuxiliary());
-            statement.setDate(6, resident.getBirthDate());
-            statement.setString(7, resident.getPhotoPath());
-            statement.setInt(8, resident.getYearOfResidency());
-            statement.setInt(9, resident.getMonthOfResidency());
-            statement.setString(10, resident.getAddress1());
-            statement.setString(11, resident.getAddress2());
-
-            statement.execute();
-            statement.close();
-            dbConnection.close();
-
-            return residentID;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
+//    /**
+//     * Create a resident and store it in the database.
+//     *
+//     * @param resident
+//     *        The resident data holding containing the information about the resident to be
+//     *        created.
+//     *
+//     * @return the generated resident ID for the resident. If the resident was not created,
+//     *         then return null.
+//     */
+//    public String createBusiness(Business business) {
+//
+//        try {
+//            Connection dbConnection = mDataSource.getConnection();
+//
+//            String residentID = generateID(ResidentEntry.TABLE_NAME);
+//
+//            PreparedStatement statement = dbConnection.prepareStatement(
+//                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+//                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+//                            ResidentEntry.TABLE_NAME,
+//                            ResidentEntry.COLUMN_ID,
+//                            ResidentEntry.COLUMN_FIRST_NAME,
+//                            ResidentEntry.COLUMN_MIDDLE_NAME,
+//                            ResidentEntry.COLUMN_LAST_NAME,
+//                            ResidentEntry.COLUMN_AUXILIARY,
+//                            ResidentEntry.COLUMN_BIRTH_DATE,
+//                            ResidentEntry.COLUMN_PHOTO,
+//                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+//                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+//                            ResidentEntry.COLUMN_ADDRESS_1,
+//                            ResidentEntry.COLUMN_ADDRESS_2,
+//                            ResidentEntry.COLUMN_IS_ARCHIVED));
+//
+//            statement.setString(1, residentID);
+//            statement.setString(2, resident.getFirstName());
+//            statement.setString(3, resident.getMiddleName());
+//            statement.setString(4, resident.getLastName());
+//            statement.setString(5, resident.getAuxiliary());
+//            statement.setDate(6, resident.getBirthDate());
+//            statement.setString(7, resident.getPhotoPath());
+//            statement.setInt(8, resident.getYearOfResidency());
+//            statement.setInt(9, resident.getMonthOfResidency());
+//            statement.setString(10, resident.getAddress1());
+//            statement.setString(11, resident.getAddress2());
+//
+//            statement.execute();
+//            statement.close();
+//            dbConnection.close();
+//
+//            return residentID;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
     /**
      * Get a specific barangay ID from the database.
