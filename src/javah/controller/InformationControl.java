@@ -555,9 +555,9 @@ public class InformationControl {
                 mBrgyIDDetailsPane.setVisible(true);
 
                 // The volatile cache should hold the cached data pertaining to the barangay id.
-                mReportIDs = mCacheModel.getBarangayIDIDsCache();
-                mReportResidentIDs = mCacheModel.getBarangayIDResidentIDCache();
-                mReportDateIssuedList = mCacheModel.getBarangayIDdateIssuedCache();
+                mReportIDs = mCacheModel.getBrgyIDIDsCache();
+                mReportResidentIDs = mCacheModel.getBrgyIDResidentIDsCache();
+                mReportDateIssuedList = mCacheModel.getBrgyIDDateIssuedCache();
 
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :

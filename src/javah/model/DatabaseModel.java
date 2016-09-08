@@ -53,14 +53,13 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s FROM %s WHERE %s = 0 ORDER BY %s, %s, %s",
+                    String.format("SELECT %s, %s, %s, %s, %s FROM %s ORDER BY %s, %s, %s",
                             ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME,
                             ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.COLUMN_AUXILIARY,
                             ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_IS_ARCHIVED,
                             ResidentEntry.COLUMN_LAST_NAME,
                             ResidentEntry.COLUMN_FIRST_NAME,
                             ResidentEntry.COLUMN_MIDDLE_NAME)
@@ -74,11 +73,11 @@ public class DatabaseModel {
                 String name = String.format("%s, %s %s.",
                         resultSet.getString(ResidentEntry.COLUMN_LAST_NAME),
                         resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME),
-                        resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).toUpperCase().charAt(0));
+                        Character.toUpperCase(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME).charAt(0))
+                );
 
-                String auxiliary;
-                if ((auxiliary = resultSet.getString(ResidentEntry.COLUMN_AUXILIARY)) != null)
-                    name += " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "");
+                String auxiliary = resultSet.getString(ResidentEntry.COLUMN_AUXILIARY);
+                name += auxiliary == null ? "" : " " + auxiliary;
 
                 residentNameList.add(name);
             }
@@ -116,15 +115,11 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             // Only query the barangay ID data with applicants that are not archived.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_ID,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_DATE_ISSUED,
+                    String.format("SELECT %s, %s, %s FROM %s ORDER BY %s DESC",
+                            BarangayIdEntry.COLUMN_ID,
+                            BarangayIdEntry.COLUMN_RESIDENT_ID,
+                            BarangayIdEntry.COLUMN_DATE_ISSUED,
                             BarangayIdEntry.TABLE_NAME,
-                            ResidentEntry.TABLE_NAME,
-                            BarangayIdEntry.TABLE_NAME, BarangayIdEntry.COLUMN_RESIDENT_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
                             BarangayIdEntry.COLUMN_DATE_ISSUED));
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -165,15 +160,11 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             // Only query the barangay ID data with applicants that are not archived.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=0 ORDER BY %s DESC",
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_ID,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_DATE_ISSUED,
+                    String.format("SELECT %s, %s, %s FROM %s ORDER BY %s DESC",
+                            BarangayClearanceEntry.COLUMN_ID,
+                            BarangayClearanceEntry.COLUMN_RESIDENT_ID,
+                            BarangayClearanceEntry.COLUMN_DATE_ISSUED,
                             BarangayClearanceEntry.TABLE_NAME,
-                            ResidentEntry.TABLE_NAME,
-                            BarangayClearanceEntry.TABLE_NAME, BarangayClearanceEntry.COLUMN_RESIDENT_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_ID,
-                            ResidentEntry.TABLE_NAME, ResidentEntry.COLUMN_IS_ARCHIVED,
                             BarangayClearanceEntry.COLUMN_DATE_ISSUED));
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -259,8 +250,8 @@ public class DatabaseModel {
             String residentID = generateID(ResidentEntry.TABLE_NAME);
 
             PreparedStatement statement = dbConnection.prepareStatement(
-                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                             ResidentEntry.TABLE_NAME,
                             ResidentEntry.COLUMN_ID,
                             ResidentEntry.COLUMN_FIRST_NAME,
@@ -272,8 +263,8 @@ public class DatabaseModel {
                             ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
                             ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
                             ResidentEntry.COLUMN_ADDRESS_1,
-                            ResidentEntry.COLUMN_ADDRESS_2,
-                            ResidentEntry.COLUMN_IS_ARCHIVED));
+                            ResidentEntry.COLUMN_ADDRESS_2)
+            );
 
             statement.setString(1, residentID);
             statement.setString(2, resident.getFirstName());

@@ -236,10 +236,10 @@ public class BusinessClearance {
     }
 
     /**
-     * Sets the chairman name registered in this barangay clearance.
+     * Sets the chairman name registered in this business clearance.
      *
      * @param name
-     *        The chairman name of this barangay clearance.
+     *        The chairman name of this business clearance.
      */
     public void setChmName(String name) {
         mChmName = name;
@@ -248,17 +248,17 @@ public class BusinessClearance {
     /**
      * Get the chairman name of this business clearance.
      *
-     * @return the chairman name of this barangay clearance.
+     * @return the chairman name of this business clearance.
      */
     public String getChmName() {
         return mChmName;
     }
 
     /**
-     * Set the chairman signature path registered in this barangay clearance.
+     * Set the chairman signature path registered in this business clearance.
      *
      * @param signature
-     *        The chairman signature path of this barangay clearance.
+     *        The chairman signature path of this business clearance.
      */
     public void setChmSignature(String signature) {
         mChmSignature = signature;
@@ -267,17 +267,17 @@ public class BusinessClearance {
     /**
      * Get the chairman signature path of this business clearance.
      *
-     * @return the chairman signature path of this barangay clearance.
+     * @return the chairman signature path of this business clearance.
      */
     public String getChmSignature() {
         return mChmSignature;
     }
 
     /**
-     * Set the secretary name registered in this barangay clearance.
+     * Set the secretary name registered in this business clearance.
      *
      * @param name
-     *        The secretary name of this barangay clearance.
+     *        The secretary name of this business clearance.
      */
     public void setSecName(String name) {
         mSecName = name;
@@ -286,17 +286,17 @@ public class BusinessClearance {
     /**
      * Get the secretary name of this business clearance.
      *
-     * @return the secretary name of this barangay clearance.
+     * @return the secretary name of this business clearance.
      */
     public String getSecName() {
         return mSecName;
     }
 
     /**
-     * Set the secretary signature path registered in this barangay clearance.
+     * Set the secretary signature path registered in this business clearance.
      *
      * @param signature
-     *        The secretary signature path of this barangay clearance.
+     *        The secretary signature path of this business clearance.
      */
     public void setSecSignature(String signature) {
         mSecSignature = signature;
@@ -305,17 +305,17 @@ public class BusinessClearance {
     /**
      * Get the secretary signature path of this business clearance.
      *
-     * @return the secretary signature path of this barangay clearance.
+     * @return the secretary signature path of this business clearance.
      */
     public String getSecSignature() {
         return mSecSignature;
     }
 
     /**
-     * Set the chairman signature coordinate and dimension of this barangay clearance.
+     * Set the chairman signature coordinate and dimension of this business clearance.
      *
      * @param chmSignatureDimension
-     *        The chairman signature coordinate and dimension of this barangay clearance.
+     *        The chairman signature coordinate and dimension of this business clearance.
      *
      *        Coordinates and dimensions are based from the mDocumentPane of the
      *        Business Clearance Report Control.
@@ -332,18 +332,18 @@ public class BusinessClearance {
     /**
      * Get the chairman signature coordinate and dimension.
      *
-     * @return the chairman signature coordinate and dimension of this barangay clearance.
+     * @return the chairman signature coordinate and dimension of this business clearance.
      */
     public double[] getChmSignatureDimension() {
         return mChmSignatureDim;
     }
 
     /**
-     * Set the secretary signature coordinate and dimension of this barangay
+     * Set the secretary signature coordinate and dimension of this business
      * clearance.
      *
      * @param secSignatureDimension
-     *        The secretary signature coordinate and dimension of this barangay clearance.
+     *        The secretary signature coordinate and dimension of this business clearance.
      *
      *        Coordinates and dimensions are based from the mDocumentPane of the
      *        Business Clearance Report Control.
@@ -362,7 +362,7 @@ public class BusinessClearance {
     /**
      * Get the secretary signature coordinate and dimension.
      *
-     * @return the secretary signature coordinate and dimension of this barangay clearance.
+     * @return the secretary signature coordinate and dimension of this business clearance.
      */
     public double[] getSecSignatureDimension() {
         return  mSecSignatureDim;

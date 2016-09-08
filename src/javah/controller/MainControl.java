@@ -129,7 +129,9 @@ public class MainControl {
 
         mDatabaseModel = new DatabaseModel();
         mCacheModel = new CacheModel();
+        mCacheModel.startCache(mDatabaseModel);
         mPreferenceModel = new PreferenceModel();
+
 
         // Initialize the mRectAnimTransitioner.
         // *Used in updateMenuSelected() to aid in animation.

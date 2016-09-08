@@ -601,15 +601,7 @@ public class ResidentControl {
     public void deleteSelectedResident() {
         mDatabaseModel.deleteResident(mResidentSelected.getId());
 
-        String id = mResidentIDs.get(mResidentSelectedIndex);
-        int index = mCacheModel.getResidentIDsCache().indexOf(id);
-
-        // Note: mResidentIDs does not always reference the cached resident IDs. So, make
-        // sure to remove the ID of the deleted resident from the cache model.
-        mResidentIDs.remove(mResidentSelectedIndex);
-        mCacheModel.getResidentIDsCache().remove(id);
-
-        mResidentNames.remove(index);
+        mCacheModel.uncacheResident(mResidentSelected.getId());
 
         updateListPaging(true);
     }
@@ -624,28 +616,12 @@ public class ResidentControl {
     public void createResident(Resident resident) {
         // Create the resident and get its corresponding unique id.
         String residentId = mDatabaseModel.createResident(resident);
+        resident.setId(residentId);
 
-        // Format the resident name to be inserted in the list.
-        String residentName = String.format("%s, %s %s.",
-                resident.getLastName(),
-                resident.getFirstName(),
-                resident.getMiddleName().toUpperCase().charAt(0));
+        // Cache the newly created resident.
+        int index = mCacheModel.cacheResident(resident);
 
-        String auxiliary = resident.getAuxiliary();
-        residentName += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
-
-        // Add the resident name to the resident names list and then sort it
-        // alphabetically.
-        mResidentNames.add(residentName);
-        Collections.sort(mResidentNames, String.CASE_INSENSITIVE_ORDER);
-
-        // Get the index of the resident name within the list after insertion.
-        int index = mResidentNames.indexOf(residentName);
-
-        // Use the acquired index to insert the resident ID to the resident IDs list.
-        // Make sure that mResidentIDs is a reference to the Resident IDs Cached data.
         mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentIDs.add(index, residentId);
 
         // Once the resident is created, the current page must be placed where the newly
         // created resident is inserted and must be auto selected.
@@ -679,22 +655,13 @@ public class ResidentControl {
     public void updateResident(Resident resident) {
         mDatabaseModel.updateResident(resident);
 
-        // Update the name of the Resident from the Resident Names cached data.
-        int index = mCacheModel.getResidentIDsCache().indexOf(resident.getId());
-        mResidentNames.remove(index);
-
-        String name = String.format("%s, %s %s.",
-                resident.getLastName(), resident.getFirstName(), resident.getMiddleName().charAt(0));
-
-        String auxiliary = resident.getAuxiliary();
-        name += auxiliary != null ? " " + auxiliary + (auxiliary.matches("(Sr|Jr)") ? "." : "") : "";
-
-        mResidentNames.add(index, name);
-
-        updateCurrentPage();
+        // Cache the resident to update.
+        mCacheModel.cacheResident(resident);
 
         // Make a copy of the label selected index for reselecting.
         int labelSelectedIndex = mLabelSelectedIndex;
+
+        updateCurrentPage();
 
         // Unselect the resident and select it again to update its displayed data.
         setResidentToLabelSelected(mLabelSelectedIndex);
