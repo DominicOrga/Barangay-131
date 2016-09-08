@@ -82,8 +82,7 @@ public class InformationControl {
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
             INFORMATION_BARANGAY_CLEARANCE = 2,
-            INFORMATION_BUSINESS_CLEARANCE = 3,
-            INFORMATION_BLOTTER = 4;
+            INFORMATION_BUSINESS_CLEARANCE = 3;
 
     /**
      * The current information to be displayed.
@@ -93,16 +92,6 @@ public class InformationControl {
     private DatabaseModel mDatabaseModel;
 
     private CacheModel mCacheModel;
-
-    /**
-     * A volatile copy of the mResidentIDsCache used to search for non-archived residents.
-     */
-    private List<String> mResidentIDs;
-
-    /**
-     * A volatile copy of the mResidentNamesCache used to display the residents in the list paging.
-     */
-    private List<String> mResidentNames;
 
     /**
      * Volatile copy of the cached data based on the information displayed.
@@ -184,15 +173,29 @@ public class InformationControl {
      */
     @FXML
     public void onSearchButtonClicked(Event event) {
-        String keywords = mSearchField.getText();
+        String keywords = mSearchField.getText().trim();
 
-        if (keywords.trim().equals("")) {
-            mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getResidentNamesCache();
+        if (keywords.isEmpty()) {
+            switch (mInformation) {
+                case INFORMATION_BARANGAY_ID:
+                    mReportIDs = mCacheModel.getBrgyIDIDsCache();
+                    break;
+                case INFORMATION_BARANGAY_CLEARANCE:
+                    break;
+                case INFORMATION_BUSINESS_CLEARANCE:
+            }
         } else {
-            String[] keywordsArray = keywords.split(" ");
-
-
+            switch (mInformation) {
+                case INFORMATION_BARANGAY_ID:
+                    mReportIDs = BarangayUtils.getFilteredIDs(
+                            mCacheModel.getBrgyIDIDsCache(),
+                            mCacheModel.getBrgyIDResidentNamesCache(),
+                            keywords.split(" "));
+                    break;
+                case INFORMATION_BARANGAY_CLEARANCE:
+                    break;
+                case INFORMATION_BUSINESS_CLEARANCE:
+            }
         }
 
         updateListPaging(false);
@@ -362,7 +365,7 @@ public class InformationControl {
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
         setReportToLabelSelectedIndex(-1);
-        int barangayIDIndex = 0;
+        int reportIDIndex = 0;
         int precedingMonth = -1;
         int labelPosition = 0;
         int page = 1;
@@ -370,7 +373,7 @@ public class InformationControl {
 
         // Find the index of the barangayID to be first displayed to the list paging current page.
         while (page < mCurrentPage) {
-            calendar.setTime(mReportDateIssuedList.get(barangayIDIndex));
+            calendar.setTime(mReportDateIssuedList.get(reportIDIndex));
             int month = calendar.get(Calendar.MONTH);
 
             if (precedingMonth != month) {
@@ -379,11 +382,11 @@ public class InformationControl {
             }
 
             labelPosition++;
-            barangayIDIndex++;
+            reportIDIndex++;
 
             if (labelPosition > 40) {
                 // Move to the next Page.
-                barangayIDIndex--;
+                reportIDIndex--;
                 page++;
                 labelPosition = 0;
                 precedingMonth = -1;
@@ -403,8 +406,8 @@ public class InformationControl {
         Arrays.fill(mReportIDToLabelLocation, null);
 
         // Determine the barangay ID placement within the labels.
-        while (labelPosition <= 40 && barangayIDIndex < mReportIDs.size()) {
-            calendar.setTime(mReportDateIssuedList.get(barangayIDIndex));
+        while (labelPosition <= 40 && reportIDIndex < mReportIDs.size()) {
+            calendar.setTime(mReportDateIssuedList.get(reportIDIndex));
             int month = calendar.get(Calendar.MONTH);
 
             if (precedingMonth != month) {
@@ -439,14 +442,23 @@ public class InformationControl {
             Label currentLabel = mGridLabels[labelIndex];
 
             // Store the barangay ID in mReportIDToLabelLocation which corresponds to the label location.
-            mReportIDToLabelLocation[labelIndex] = mReportIDs.get(barangayIDIndex);
+            mReportIDToLabelLocation[labelIndex] = mReportIDs.get(reportIDIndex);
 
             // Get the name of the resident applicant of the barangay ID.
-            int index = mResidentIDs.indexOf(mReportResidentIDs.get(barangayIDIndex));
-            currentLabel.setText(mResidentNames.get(index));
+            switch (mInformation) {
+                case INFORMATION_BARANGAY_ID:
+                    String id = mReportIDs.get(reportIDIndex);
+                    int index = mCacheModel.getBrgyIDIDsCache().indexOf(id);
+                    currentLabel.setText(mCacheModel.getBrgyIDResidentNamesCache().get(index));
+                    break;
+                case INFORMATION_BARANGAY_CLEARANCE: break;
+                case INFORMATION_BUSINESS_CLEARANCE:
+            }
+            int index = mCacheModel.getResidentIDsCache().indexOf(mReportResidentIDs.get(reportIDIndex));
+            currentLabel.setText(mCacheModel.getResidentNamesCache().get(index));
 
             labelPosition++;
-            barangayIDIndex++;
+            reportIDIndex++;
         }
     }
 
@@ -526,8 +538,8 @@ public class InformationControl {
      */
     public void setInformation(byte information){
         // Reset the resident volatile cache.
-        mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
+//        mResidentIDs = mCacheModel.getResidentIDsCache();
+//        mResidentNames = mCacheModel.getResidentNamesCache();
 
         // Hide the previous Information details pane used.
         switch (mInformation) {
@@ -539,7 +551,6 @@ public class InformationControl {
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
                 break;
-            case INFORMATION_BLOTTER :
         }
 
         // Update the scene to match the information.
@@ -566,7 +577,6 @@ public class InformationControl {
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
                 break;
-            case INFORMATION_BLOTTER :
         }
 
         mInformation = information;

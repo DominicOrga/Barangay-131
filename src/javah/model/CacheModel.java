@@ -171,6 +171,10 @@ public class CacheModel {
 
     public List<String> getBrgyIDResidentIDsCache() { return mBarangayIDResidentIDsCache; }
 
+    public List<String> getBrgyIDResidentNamesCache() {
+        return mBarangayIDNamesCache;
+    }
+
     public List<Timestamp> getBrgyIDDateIssuedCache() { return mBarangayIDDateIssuedCache; }
 
     public List<String> getBrgyClearanceIDsCache() {
@@ -179,6 +183,10 @@ public class CacheModel {
 
     public List<String> getBrgyClearanceResidentIDsCache() {
         return mBrgyClearanceResidentIDsCache;
+    }
+
+    public List<String> getBrgyClearanceResidentNamesCache() {
+        return mBrgyClearanceResidentNamesCache;
     }
 
     public List<Timestamp> getBrgyClearanceDateIssuedCache() {

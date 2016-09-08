@@ -103,8 +103,7 @@ public class MainControl {
     public final byte MENU_RESIDENT = 1,
             MENU_BARANGAY_ID = 2,
             MENU_BARANGAY_CLEARANCE = 3,
-            MENU_BUSINESS_CLEARANCE = 4,
-            MENU_BLOTTER = 5;
+            MENU_BUSINESS_CLEARANCE = 4;
 
     /**
      * Holds the value of the currently selected menu.
@@ -204,7 +203,6 @@ public class MainControl {
                         mResidentInformationFormControl.setInformation(ResidentInformationFormControl.INFORMATION_BARANGAY_CLEARANCE);
                         break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
-                    case InformationControl.INFORMATION_BLOTTER :
                 }
 
                 mResidentInformationFormControl.reset();
@@ -226,7 +224,6 @@ public class MainControl {
                         showPopupScene(mBrgyClearanceReportScene, false);
                         break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE: break;
-                    case InformationControl.INFORMATION_BLOTTER:
                 }
             }
 
@@ -580,12 +577,6 @@ public class MainControl {
             updateMenuSelected(MENU_BUSINESS_CLEARANCE);
     }
 
-    @FXML
-    public void onBlotterMenuClicked(Event event) {
-        if(mMenuSelected != MENU_BLOTTER)
-            updateMenuSelected(MENU_BLOTTER);
-    }
-
     /**
      * Update the current menu selected.
      * @param menu clicked.
@@ -651,8 +642,6 @@ public class MainControl {
 
                 case MENU_BUSINESS_CLEARANCE:
                     playMenuSlideAnimation.accept(mBusinessClearanceMenu, isSelected); break;
-                case MENU_BLOTTER:
-                    playMenuSlideAnimation.accept(mBlotterMenu, isSelected);
             }
         };
 
