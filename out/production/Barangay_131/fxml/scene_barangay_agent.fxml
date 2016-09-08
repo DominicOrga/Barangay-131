@@ -164,8 +164,8 @@
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
-                                 <String fx:value="Sr" />
-                                 <String fx:value="Jr" />
+                                 <String fx:value="Sr." />
+                                 <String fx:value="Jr." />
                                  <String fx:value="I" />
                                  <String fx:value="II" />
                                  <String fx:value="III" />
@@ -300,8 +300,8 @@
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
-                                 <String fx:value="Sr" />
-                                 <String fx:value="Jr" />
+                                 <String fx:value="Sr." />
+                                 <String fx:value="Jr." />
                                  <String fx:value="I" />
                                  <String fx:value="II" />
                                  <String fx:value="III" />
@@ -443,8 +443,8 @@
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
-                                 <String fx:value="Sr" />
-                                 <String fx:value="Jr" />
+                                 <String fx:value="Sr." />
+                                 <String fx:value="Jr." />
                                  <String fx:value="I" />
                                  <String fx:value="II" />
                                  <String fx:value="III" />

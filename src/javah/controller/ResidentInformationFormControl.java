@@ -445,47 +445,23 @@ public class ResidentInformationFormControl {
                         mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME))
                 );
 
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_1_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(0, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_1_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_1_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_1_LAST_NAME)));
+                for (int i = 0; i < 7; i++) {
+                    if (mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]) != null) {
+                        String firstName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]);
+                        String middleName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]);
+                        String lastName = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]);
+                        String auxiliary = mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3]);
 
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_2_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(1, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_2_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_2_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_2_LAST_NAME)));
+                        firstName = BarangayUtils.capitalizeString(firstName);
+                        middleName = BarangayUtils.capitalizeString(middleName);
+                        lastName = BarangayUtils.capitalizeString(lastName);
 
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_3_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(2, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_3_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_3_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_3_LAST_NAME)));
+                        String fullName = String.format("%s %s. %s", firstName, middleName.charAt(0), lastName);
+                        fullName += auxiliary == null ? "" : " " + auxiliary;
 
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_4_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(3, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_4_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_4_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_4_LAST_NAME)));
-
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_5_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(4, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_5_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_5_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_5_LAST_NAME)));
-
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_6_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(5, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_6_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_6_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_6_LAST_NAME)));
-
-                if (!mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME).isEmpty())
-                    mBarangayClearance.setKagawadName(6, String.format("%s %s. %s",
-                            mPrefModel.get(PreferenceContract.KAGAWAD_7_FIRST_NAME),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_7_MIDDLE_NAME).charAt(0),
-                            mPrefModel.get(PreferenceContract.KAGAWAD_7_LAST_NAME)));
+                        mBarangayClearance.setKagawadName(i, fullName);
+                    }
+                }
 
                 // Pass the generated barangay clearance to the Main Control in order to be processed into a report.
                 mListener.onCreateButtonClicked(mBarangayClearance, INFORMATION_BARANGAY_CLEARANCE);

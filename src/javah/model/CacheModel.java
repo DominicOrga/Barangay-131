@@ -1,5 +1,7 @@
 package javah.model;
 
+import javah.container.BarangayClearance;
+import javah.container.BarangayID;
 import javah.container.Resident;
 
 import java.sql.Timestamp;
@@ -224,15 +226,11 @@ public class CacheModel {
             // Check if the updated resident has a barangay ID or a barangay clearance. If
             // there is, then update the mBarangayIDNamesCache or mBrgyClearanceNamesCache.
             for (int i = 0; i < count; i++) {
-                if (i < barangayIDCount && mBarangayIDResidentIDsCache.get(i) == id) {
-                    mBarangayIDNamesCache.remove(i);
-                    mBarangayIDNamesCache.add(i, name);
-                }
+                if (i < barangayIDCount && mBarangayIDResidentIDsCache.get(i) == id)
+                    mBarangayIDNamesCache.set(i, name);
 
-                if (i < barangayClearanceCount && mBrgyClearanceResidentIDsCache.get(i) == id) {
-                    mBrgyClearanceResidentNamesCache.remove(i);
-                    mBrgyClearanceResidentNamesCache.add(i, name);
-                }
+                if (i < barangayClearanceCount && mBrgyClearanceResidentIDsCache.get(i) == id)
+                    mBrgyClearanceResidentNamesCache.set(i, name);
             }
 
             return index;
@@ -294,5 +292,34 @@ public class CacheModel {
         }
     }
 
+    /**
+     * Cache the specified barangay ID.
+     *
+     * @param barangayID
+     *        The barangay ID to be cached.
+     */
+    public void cacheBarangayID(BarangayID barangayID) {
 
+        mBarangayIDIDsCache.add(0, barangayID.getID());
+        mBarangayIDResidentIDsCache.add(0, barangayID.getResidentID());
+        mBarangayIDDateIssuedCache.add(0, barangayID.getDateIssued());
+
+        int index = mResidentIDsCache.indexOf(barangayID.getResidentID());
+        mBarangayIDNamesCache.add(0, mResidentNamesCache.get(index));
+    }
+
+    /**
+     * Cache the specified barangay clearance.
+     *
+     * @param barangayClearance
+     *        The barangay clearance to be cached.
+     */
+    public void cacheBarangayClearance(BarangayClearance barangayClearance) {
+        mBrgyClearanceIDsCache.add(0, barangayClearance.getID());
+        mBrgyClearanceResidentIDsCache.add(0, barangayClearance.getResidentID());
+        mBrgyClearanceDateIssuedCache.add(0, barangayClearance.getDateIssued());
+
+        int index = mResidentIDsCache.indexOf(barangayClearance.getResidentID());
+        mBarangayIDNamesCache.add(0, mResidentNamesCache.get(index));
+    }
 }

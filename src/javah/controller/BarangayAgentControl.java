@@ -1,5 +1,7 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javah.Main;
 import javah.contract.CSSContract;
 import javah.model.PreferenceModel;
 import javah.contract.PreferenceContract;
+import javah.util.BarangayUtils;
 import javah.util.NodeNameHandler;
 
 import javax.imageio.ImageIO;
@@ -237,6 +240,80 @@ public class BarangayAgentControl {
         // Everytime the Kagawad Pane adjusts in height due to addition or removal of node
         // names, then always set the vertical scroll pane at the bottom.
         mKagawadPane.heightProperty().addListener(observable -> mScrollPane.setVvalue(1));
+
+        /**
+         * Add listener to the root pane visibility properties. If the root pane is set
+         * to visible, then reset the data.
+         */
+        mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                // Reset chairman data.
+                mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, null));
+                mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, null));
+                mChmLastName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_LAST_NAME, null));
+
+                mChmFirstName.setStyle(null);
+                mChmMiddleName.setStyle(null);
+                mChmLastName.setStyle(null);
+
+                mChmNameError.setVisible(false);
+
+                String mChmPhotoPath = mPreferences.get(PreferenceContract.CHAIRMAN_PHOTO_PATH);
+                if (mChmPhotoPath != null)
+                    mChmPhotoView.setImage(new Image("file:" + mChmPhotoPath));
+
+                String mChmSignaturePath = mPreferences.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
+                if (mChmSignaturePath != null)
+                    mChmSignatureView.setImage(new Image("file:" + mChmSignaturePath));
+
+                // Reset secretary data.
+                mSecFirstName.setText(mPreferences.get(PreferenceContract.SECRETARY_FIRST_NAME, null));
+                mSecMiddleName.setText(mPreferences.get(PreferenceContract.SECRETARY_MIDDLE_NAME, null));
+                mSecLastName.setText(mPreferences.get(PreferenceContract.SECRETARY_LAST_NAME, null));
+
+                mSecFirstName.setStyle(null);
+                mSecMiddleName.setStyle(null);
+                mSecLastName.setStyle(null);
+
+                mSecNameError.setVisible(false);
+
+                String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
+                if (mSecSignaturePath != null)
+                    mSecSignatureView.setImage(new Image("file:" + mSecSignaturePath));
+
+                // Reset treasurer data.
+                mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, null));
+                mTrsrMiddleName.setText(mPreferences.get(PreferenceContract.TREASURER_MIDDLE_NAME, null));
+                mTrsrLastName.setText(mPreferences.get(PreferenceContract.TREASURER_LAST_NAME, null));
+
+                mTrsrFirstName.setStyle(null);
+                mTrsrMiddleName.setStyle(null);
+                mTrsrLastName.setStyle(null);
+
+                mTrsrNameError.setVisible(false);
+
+                mKagawadNameError.setVisible(false);
+
+                mNodeNameHandler.removeNodeNames();
+                // Reset Kagawad data.
+                for (int i = 0; i < 7; i++) {
+                    String firstName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][0], null);
+
+                    if (firstName == null) {
+                        if (i == 0)
+                            mNodeNameHandler.addName(null, null, null, null);
+
+                        break;
+                    }
+
+                    String middleName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][1], null);
+                    String lastName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][2], null);
+                    String auxiliary = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][3], null);
+
+                    mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
+                }
+            }
+        });
     }
 
     /**
@@ -384,23 +461,32 @@ public class BarangayAgentControl {
 
         if (isDataValid) {
             // Save chairman name.
-            mPreferences.put(PreferenceContract.CHAIRMAN_FIRST_NAME, mChmFirstName.getText());
-            mPreferences.put(PreferenceContract.CHAIRMAN_MIDDLE_NAME, mChmMiddleName.getText());
-            mPreferences.put(PreferenceContract.CHAIRMAN_LAST_NAME, mChmLastName.getText());
+            mPreferences.put(PreferenceContract.CHAIRMAN_FIRST_NAME,
+                    BarangayUtils.capitalizeString(mChmFirstName.getText()));
+            mPreferences.put(PreferenceContract.CHAIRMAN_MIDDLE_NAME,
+                    BarangayUtils.capitalizeString(mChmMiddleName.getText()));
+            mPreferences.put(PreferenceContract.CHAIRMAN_LAST_NAME,
+                    BarangayUtils.capitalizeString(mChmLastName.getText()));
             mPreferences.put(PreferenceContract.CHAIRMAN_AUXILIARY,
                     mChmAuxiliary.getValue().equals("N/A") ? null : mChmAuxiliary.getValue().toString());
 
             // Save secretary name.
-            mPreferences.put(PreferenceContract.SECRETARY_FIRST_NAME, mSecFirstName.getText());
-            mPreferences.put(PreferenceContract.SECRETARY_MIDDLE_NAME, mSecMiddleName.getText());
-            mPreferences.put(PreferenceContract.SECRETARY_LAST_NAME, mSecLastName.getText());
+            mPreferences.put(PreferenceContract.SECRETARY_FIRST_NAME,
+                    BarangayUtils.capitalizeString(mSecFirstName.getText()));
+            mPreferences.put(PreferenceContract.SECRETARY_MIDDLE_NAME,
+                    BarangayUtils.capitalizeString(mSecMiddleName.getText()));
+            mPreferences.put(PreferenceContract.SECRETARY_LAST_NAME,
+                    BarangayUtils.capitalizeString(mSecLastName.getText()));
             mPreferences.put(PreferenceContract.SECRETARY_AUXILIARY,
                     mSecAuxiliary.getValue().equals("N/A") ? null : mSecAuxiliary.getValue().toString());
 
             // Save Treasurer name.
-            mPreferences.put(PreferenceContract.TREASURER_FIRST_NAME, mTrsrFirstName.getText());
-            mPreferences.put(PreferenceContract.TREASURER_MIDDLE_NAME, mTrsrMiddleName.getText());
-            mPreferences.put(PreferenceContract.TREASURER_LAST_NAME, mTrsrLastName.getText());
+            mPreferences.put(PreferenceContract.TREASURER_FIRST_NAME,
+                    BarangayUtils.capitalizeString(mTrsrFirstName.getText()));
+            mPreferences.put(PreferenceContract.TREASURER_MIDDLE_NAME,
+                    BarangayUtils.capitalizeString(mTrsrMiddleName.getText()));
+            mPreferences.put(PreferenceContract.TREASURER_LAST_NAME,
+                    BarangayUtils.capitalizeString(mTrsrLastName.getText()));
             mPreferences.put(PreferenceContract.TREASURER_AUXILIARY,
                     mTrsrAuxiliary.getValue().equals("N/A") ? null : mTrsrAuxiliary.getValue().toString());
 
@@ -408,16 +494,18 @@ public class BarangayAgentControl {
             for (int i = 0; i < 7; i++) {
                 String[] name = mNodeNameHandler.getName(i + 1);
 
-                System.out.println(Arrays.toString(name));
-
                 // Array[k][0] = kagawad k first name.
                 // Array[k][1] = kagawad k middle name.
                 // Array[k][2] = kagawad k last name.
                 // Array[k][3] = kagawad k auxiliary.
-                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][0], name == null ? null : name[0]);
-                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][1], name == null ? null : name[1]);
-                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][2], name == null ? null : name[2]);
-                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][3], name == null ? null : name[3]);
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][0],
+                        name == null ? null : BarangayUtils.capitalizeString(name[0]));
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][1],
+                        name == null ? null : BarangayUtils.capitalizeString(name[1]));
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][2],
+                        name == null ? null : BarangayUtils.capitalizeString(name[2]));
+                mPreferences.put(PreferenceContract.KAGAWAD_NAMES[i][3],
+                        name == null ? null : name[3]);
             }
 
             /**
@@ -493,79 +581,7 @@ public class BarangayAgentControl {
      */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-        resetData();
         mListener.onFinished();
-    }
-
-    /**
-     * Reset the scene with the stored data to remove any unsaved changes made.
-     */
-    private void resetData() {
-        // Reset chairman data.
-        mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, null));
-        mChmMiddleName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME, null));
-        mChmLastName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_LAST_NAME, null));
-
-        mChmFirstName.setStyle(null);
-        mChmMiddleName.setStyle(null);
-        mChmLastName.setStyle(null);
-
-        mChmNameError.setVisible(false);
-
-        String mChmPhotoPath = mPreferences.get(PreferenceContract.CHAIRMAN_PHOTO_PATH);
-        if (mChmPhotoPath != null)
-            mChmPhotoView.setImage(new Image("file:" + mChmPhotoPath));
-
-        String mChmSignaturePath = mPreferences.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
-        if (mChmSignaturePath != null)
-            mChmSignatureView.setImage(new Image("file:" + mChmSignaturePath));
-
-        // Reset secretary data.
-        mSecFirstName.setText(mPreferences.get(PreferenceContract.SECRETARY_FIRST_NAME, null));
-        mSecMiddleName.setText(mPreferences.get(PreferenceContract.SECRETARY_MIDDLE_NAME, null));
-        mSecLastName.setText(mPreferences.get(PreferenceContract.SECRETARY_LAST_NAME, null));
-
-        mSecFirstName.setStyle(null);
-        mSecMiddleName.setStyle(null);
-        mSecLastName.setStyle(null);
-
-        mSecNameError.setVisible(false);
-
-        String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
-        if (mSecSignaturePath != null)
-            mSecSignatureView.setImage(new Image("file:" + mSecSignaturePath));
-
-        // Reset treasurer data.
-        mTrsrFirstName.setText(mPreferences.get(PreferenceContract.TREASURER_FIRST_NAME, null));
-        mTrsrMiddleName.setText(mPreferences.get(PreferenceContract.TREASURER_MIDDLE_NAME, null));
-        mTrsrLastName.setText(mPreferences.get(PreferenceContract.TREASURER_LAST_NAME, null));
-
-        mTrsrFirstName.setStyle(null);
-        mTrsrMiddleName.setStyle(null);
-        mTrsrLastName.setStyle(null);
-
-        mTrsrNameError.setVisible(false);
-
-        mKagawadNameError.setVisible(false);
-
-        mNodeNameHandler.removeNodeNames();
-        // Reset Kagawad data.
-        for (int i = 0; i < 7; i++) {
-            String firstName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][0], null);
-
-            if (firstName == null) {
-                if (i == 0)
-                    mNodeNameHandler.addName(null, null, null, null);
-
-                break;
-            }
-
-            String middleName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][1], null);
-            String lastName = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][2], null);
-            String auxiliary = mPreferences.get(PreferenceContract.KAGAWAD_NAMES[i][3], null);
-
-            mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
-        }
     }
 
     public void setListener(OnBarangayAgentListener listener) {
@@ -636,6 +652,5 @@ public class BarangayAgentControl {
      */
     public void setPreferenceModel(PreferenceModel preferenceModel) {
         mPreferences = preferenceModel;
-        resetData();
     }
 }

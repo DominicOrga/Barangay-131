@@ -84,6 +84,17 @@ public class BarangayUtils {
         return filteredIDs;
     }
 
+    public static String capitalizeString(String str) {
+        str = str.toLowerCase().trim();
+        String[] subStr = str.split(" ");
+        String strFormatted = "";
+
+        for(int i = 0; i < subStr.length; i++)
+            strFormatted += subStr[i].substring(0, 1).toUpperCase() + subStr[i].substring(1);
+
+        return strFormatted;
+    }
+
     /**
      * Convert a string month to its corresponding int value.
      * @param monthStr

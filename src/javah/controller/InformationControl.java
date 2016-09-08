@@ -586,11 +586,9 @@ public class InformationControl {
         // Create the barangay id.
         mDatabaseModel.createBarangayID(barangayID);
 
-        // todo: before adding, make sure that the cache reference are pointing to the non-volatile cached data.
-        // Place the new barangay id in the cached data.
-        mReportDateIssuedList.add(0, barangayID.getDateIssued());
-        mReportResidentIDs.add(0, barangayID.getResidentID());
-        mReportIDs.add(0, barangayID.getID());
+        // Before adding, make sure that the cache reference are pointing to the non-volatile cached data.
+        mCacheModel.cacheBarangayID(barangayID);
+        mReportIDs = mCacheModel.getBrgyIDIDsCache();
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);
@@ -602,9 +600,8 @@ public class InformationControl {
 
         // todo: before adding, make sure that the cache reference are pointing to the non-volatile cached data.
         // Place the new barangay id in the cached data.
-        mReportDateIssuedList.add(0, barangayClearance.getDateIssued());
-        mReportResidentIDs.add(0, barangayClearance.getResidentID());
-        mReportIDs.add(0, barangayClearance.getID());
+        mCacheModel.cacheBarangayClearance(barangayClearance);
+        mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);

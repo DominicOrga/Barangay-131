@@ -194,7 +194,7 @@
             </Pane>
          </children>
          <rotationAxis>
-            <Point3D y="1.0" />
+            <Point3D />
          </rotationAxis>
       </GridPane>
    </children>
