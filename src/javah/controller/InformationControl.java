@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
+import javah.container.BusinessClearance;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
@@ -27,119 +28,202 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * A class that manages the barangay ID, barangay clearance and business clearance.
+ * Contains features such as report search, report sorting via date, creating and
+ * printing reports.
+ */
 public class InformationControl {
 
     /**
-     * An interface that tells the main scene to open up a manipulation resident dialog.
+     * An interface that tells the main control to open up a specified pop-up dialog.
      */
     public interface OnInformationControlListener {
+        /**
+         * Either launch the Resident Information Form or the Business Form dialogs
+         * to create a report depending on the specified information.
+         *
+         * @param information
+         *        Determines the type of form to show. Allowed values are:
+         *        INFORMATION_BARANGAY_ID = 1
+         *        INFORMATION_BARANGAY_CLEARANCE = 2
+         *        INFORMATION_BUSINESS_CLEARANCE = 3
+         *
+         * @see ResidentInformationFormControl
+         * @see BusinessFormControl
+         */
         void onCreateReportButtonClicked(byte information);
+
+        /**
+         * Show the specified report for viewing and printing purposes.
+         *
+         * @param information
+         *        Determines the type of report to show. Allowed values are:
+         *        INFORMATION_BARANGAY_ID = 1
+         *        INFORMATION_BARANGAY_CLEARANCE = 2
+         *        INFORMATION_BUSINESS_CLEARANCE = 3
+         * @param reportData
+         *        The data of a specified report, used for populating the specified report pop-up.
+         *
+         * @see BarangayIDReportControl
+         * @see BarangayClearanceReportControl
+         * @see BusinessClearanceReportControl
+         */
         void onViewButtonClicked(byte information, Object reportData);
+
+        /**
+         * todo: Update the method to cater for all report snap shot.
+         *
+         * @param barangayClearance
+         * @return
+         */
         Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance);
     }
 
-    @FXML private Pane mNoReportSelectedPane;
-
     /**
-     * Used for resident list paging. *Each page contains 40 residents.
+     * A contant representation of all type of information to distinguish what
+     * information to handle. Used by the main control to determine what type of
+     * information will be displayed by this controller. Furthermore, it is used
+     * by this' listener to process callback events correctly.
      */
-    @FXML private GridPane mListGridPane;
-
-    /**
-     * The current page label of the resident list paging.
-     */
-    @FXML private Label mCurrentPageLabel;
-
-    /**
-     * The total number of pages of the resident list paging.
-     */
-    @FXML private Label mPageCountLabel;
-
-    /**
-     * The search field used for specialized resident query.
-     */
-    @FXML private TextField mSearchField;
-
-    @FXML private Button mCreateButton;
-    @FXML private Button mBackPageButton, mNextPageButton;
-
-    @FXML private Button mViewButton;
-
-    /**
-     * FXML components of the barangay ID details.
-     */
-    @FXML Pane mBrgyIDDetailsPane;
-    @FXML ImageView mIDImageView, mIDResSignatureView;
-    @FXML Label mBarangayIDCode, mIDNameLabel;
-    @FXML Label mIDDateIssued, mIDDateValid;
-
-    /**
-     * FXML components of the barangay clearance details.
-     */
-    @FXML Pane mBrgyClearanceDetailsPane;
-    @FXML ImageView mBrgyClearanceImage;
-
     public static final byte
             INFORMATION_BARANGAY_ID = 1,
             INFORMATION_BARANGAY_CLEARANCE = 2,
             INFORMATION_BUSINESS_CLEARANCE = 3;
 
     /**
-     * The current information to be displayed.
+     * A grid pane used to display the reports in a form of list paging. Total number
+     * of reports to be displayed per page is 40.
      */
+    @FXML private GridPane mListGridPane;
+
+    /* Holds the current page label of the list paging. */
+    @FXML private Label mCurrentPageLabel;
+
+    /* Holds the total number of pages of the list paging. */
+    @FXML private Label mPageCountLabel;
+
+    /* A text field used for filtering the list paging. */
+    @FXML private TextField mSearchField;
+
+    /* A button to create a report based on the mInformation. */
+    @FXML private Button mCreateButton;
+
+    /* Buttons for navigating the list page. */
+    @FXML private Button mBackPageButton, mNextPageButton;
+
+    /* A pane to be displayed when no report is selected. */
+    @FXML private Pane mNoReportSelectedPane;
+
+    /* A button to view the report. */
+    @FXML private Button mViewButton;
+
+    /* Components of the barangay ID details. */
+    @FXML Pane mBrgyIDDetailsPane;
+    @FXML ImageView mIDImageView, mIDResSignatureView;
+    @FXML Label mBarangayIDCode, mIDNameLabel;
+    @FXML Label mIDDateIssued, mIDDateValid;
+
+    /* FXML components of the barangay clearance details. */
+    @FXML Pane mBrgyClearanceDetailsPane;
+    @FXML ImageView mBrgyClearanceImage;
+
+    /* The current type of information to be displayed. */
     private byte mInformation;
 
+    /**
+     * A reference to the universal database model. Used for creating or updating
+     * reports.
+     */
     private DatabaseModel mDatabaseModel;
 
+    /**
+     * A reference to the cache model. Used for getting the cached data to be
+     * displayed in the list paging.
+     */
     private CacheModel mCacheModel;
 
     /**
-     * Volatile copy of the cached data based on the information displayed.
+     * A volatile list which contains the all the report IDs available to be
+     * displayed in the list paging.
      */
     private List<String> mReportIDs;
-    private List<String> mReportResidentIDs;
+
+    /**
+     * A volatile list which contains foreign IDs of all the reports with regards
+     * to mInformation.
+     */
+    private List<String> mReportForeignIDs;
+
+    /**
+     * A volatile list which contains the names of all the reports with regards to
+     * mInformation.
+     */
+    private List<String> mReportNames;
+
+    /**
+     * A volatile list which contains date Issuance of all the reports with regards
+     * to mInformation.
+     */
     private List<Timestamp> mReportDateIssuedList;
 
     /**
      * The value representing which label is selected from the list paging.
-     * Value range is between 0 - 39.
+     * Value range is between 0 - 39. Value of -1 means no Label is selected.
      */
     private int mLabelSelectedIndex = -1;
 
-    /**
-     * The array containing all the labels of the list paging.
-     */
+    /* The array containing all the labels of the list paging. */
     private Label[] mGridLabels;
 
     /**
-     * Holds to report ID assigned to a label.
+     * Holds the report ID assigned to a label.
      * Index is between 0 - 39, representing the label positions.
      */
     private String[] mReportIDToLabelLocation;
 
-    /**
-     * Represents the current page of the resident list paging.
-     */
+    /* Represents to current page of the list paging. */
     private int mCurrentPage;
 
-    /**
-     * Represents the number of pages within the resident list paging.
-     */
+    /* Represents the number of pages within the list paging. */
     private int mPageCount;
 
     /**
-     * Represents the total number of labels to be used.
-     * *Does not reflect the total number of labels, but rather, it is the totality of the label use and re-use.
+     * Represents the total number of labels to be used. Note, this does not reflect
+     * the total number of labels, but rather, it is the totality of the label that are
+     * currently used in a specified list page.
      */
     private int mLabelUseCount;
 
+    /**
+     * A listener to this controller for launching information forms and taking
+     * snapshots of reports to be displayed in the details pane.
+     *
+     * @see OnInformationControlListener
+     */
     private OnInformationControlListener mListener;
 
+    /**
+     * The current barangay ID selected. Only usable when mInformation is set to
+     * Barangay ID.
+     */
     private BarangayID mBarangayIDSelected;
+
+    /**
+     * The current barangay clearance selected. Only usable when mInformation is set to
+     * Barangay Clearance.
+     */
     private BarangayClearance mBrgyClearanceSelected;
 
     /**
-     * Called before setCacheModel()
+     * The current barangay clearance selected. Only usable when mInformation is set to
+     * Business Clearance.
+     */
+    private BusinessClearance mBusiClearanceSelected;
+
+    /**
+     * Initialize the grid labels and assign a click listener to each labels.
+     * Called before setCacheModel().
      */
     @FXML
     private void initialize() {
@@ -167,9 +251,12 @@ public class InformationControl {
     }
 
     /**
-     * Update the resident list paging to display the residents that has a match with the text in the search field.
-     * A blank search field will result to displaying all the residents.
+     * Update the resident list paging to display the residents that has a match with
+     * the text in the search field. A blank search field will result to displaying
+     * all the residents.
+     *
      * @param event
+     *        The click event. Note used.
      */
     @FXML
     public void onSearchButtonClicked(Event event) {
@@ -202,8 +289,10 @@ public class InformationControl {
     }
 
     /**
-     * If the Enter key is pressed within the search field, then automatically click the search button.
+     * If the Enter key is pressed within the search field, then automatically click
+     * the search button.
      * @param event
+     *        The key event. Note used.
      */
     @FXML
     public void onSearchFieldKeyPressed(KeyEvent event) {
@@ -215,7 +304,9 @@ public class InformationControl {
 
     /**
      * Move the resident list paging to the previous page when possible.
+     *
      * @param event
+     *        The click event. Note used.
      */
     @FXML
     public void onBackPageButtonClicked(ActionEvent event) {
@@ -232,7 +323,9 @@ public class InformationControl {
 
     /**
      * Move the resident list paging to the next page when possible.
+     *
      * @param event
+     *        The click event. Note used.
      */
     @FXML
     public void onNextPageButtonClicked(ActionEvent event) {
@@ -248,14 +341,25 @@ public class InformationControl {
     }
 
     /**
-     * Tell the main scene to show the appropriate form dialog of the current information displayed.
+     * Tell the main control to show the appropriate form dialog of the current
+     * information displayed.
+     *
      * @param actionEvent
+     *        The click event. Note used.
      */
     @FXML
     public void onCreateReportButtonClicked(ActionEvent actionEvent) {
         mListener.onCreateReportButtonClicked(mInformation);
     }
 
+    /**
+     * Tell the main control to show the appropriate report dialog of the current
+     * information displayed, populated by the currently selected report data with
+     * regards to the current information.
+     *
+     * @param actionEvent
+     *        The click event. Note used.
+     */
     @FXML
     public void onViewButtonClicked(ActionEvent actionEvent) {
         switch (mInformation) {
@@ -265,16 +369,23 @@ public class InformationControl {
     }
 
     /**
-     * Update the barangay ID selected data displayed.
-     * @param newLabelSelectedIndex is the index of the label containing the barangay ID to be displayed. If it is equal
-     *                              to -1, then the example data is displayed.
+     * Update the report displayed with the currently selected report with regards to
+     * mInformation.
+     *
+     * @param newLabelSelectedIndex
+     *        The index of the label containing the report to be displayed. If it is
+     *        equal to -1, then the mNoReportSelectedPane is displayed.
      */
     private void setReportToLabelSelectedIndex(int newLabelSelectedIndex) {
+
+        /**
+         * Either show a report details pane or the mNoReportSelectedPane.
+         */
         Consumer<Boolean> showSelectedReportDetails = (show) -> {
             mViewButton.setVisible(show);
 
             if (show) {
-                mNoReportSelectedPane.toBack();
+                mNoReportSelectedPane.setVisible(false);
 
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
@@ -314,7 +425,7 @@ public class InformationControl {
                 }
 
             } else {
-                mNoReportSelectedPane.toFront();
+                mNoReportSelectedPane.setVisible(true);
             }
 
         };
@@ -358,8 +469,49 @@ public class InformationControl {
     }
 
     /**
-     * Update current page with respect to mCurrentPage. That is, the value of mCurrentPage will determine the displayed
-     * residents.
+     * Updates the list paging, mLabelUseCount and mPageCount.
+     *
+     * @param stayOnPage
+     *        Determines whether current page should be maintained or not after the update.
+     *        If the current page is no longer available, then move back, if possible.
+     */
+    private void updateListPaging(boolean stayOnPage) {
+        mLabelUseCount = 0;
+        int size = mReportIDs.size();
+
+        int precedingMonth = -1;
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < size; i++) {
+            calendar.setTime(mReportDateIssuedList.get(i));
+            int month = calendar.get(Calendar.MONTH);
+
+            if (precedingMonth != month) {
+                precedingMonth = month;
+                mLabelUseCount += (mLabelUseCount % 2 == 0) ? 2 : 3;
+            }
+
+            mLabelUseCount++;
+        }
+
+        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
+        mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
+
+        mCurrentPageLabel.setText(mCurrentPage + "");
+        mPageCountLabel.setText(mPageCount + "");
+
+        // Disable the back page button if the current page is the first one.
+        mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+        // Disable the next page button if the current page is the last one.
+        mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
+
+        updateCurrentPage();
+    }
+
+    /**
+     * Update current page with respect to mCurrentPage. That is, the value of
+     * mCurrentPage will determine the displayed report.
      * Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
@@ -454,7 +606,7 @@ public class InformationControl {
                 case INFORMATION_BARANGAY_CLEARANCE: break;
                 case INFORMATION_BUSINESS_CLEARANCE:
             }
-            int index = mCacheModel.getResidentIDsCache().indexOf(mReportResidentIDs.get(reportIDIndex));
+            int index = mCacheModel.getResidentIDsCache().indexOf(mReportForeignIDs.get(reportIDIndex));
             currentLabel.setText(mCacheModel.getResidentNamesCache().get(index));
 
             labelPosition++;
@@ -462,43 +614,7 @@ public class InformationControl {
         }
     }
 
-    /**
-     * Updates the list paging, mLabelUseCount and mPageCount.
-     * @param stayOnPage determines whether current page should be maintained or not after the update.
-     */
-    private void updateListPaging(boolean stayOnPage) {
-        mLabelUseCount = 0;
-        int size = mReportDateIssuedList.size();
 
-        int precedingMonth = -1;
-        Calendar calendar = Calendar.getInstance();
-
-        for (int i = 0; i < size; i++) {
-            calendar.setTime(mReportDateIssuedList.get(i));
-            int month = calendar.get(Calendar.MONTH);
-
-            if (precedingMonth != month) {
-                precedingMonth = month;
-                mLabelUseCount += (mLabelUseCount % 2 == 0) ? 2 : 3;
-            }
-
-            mLabelUseCount++;
-        }
-
-        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
-        mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
-
-        mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
-
-        // Disable the back page button if the current page is the first one.
-        mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
-
-        // Disable the next page button if the current page is the last one.
-        mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
-
-        updateCurrentPage();
-    }
 
     /**
      * Called after initialize() and is called in the MainControl.
@@ -561,7 +677,8 @@ public class InformationControl {
 
                 // The volatile cache should hold the cached data pertaining to the barangay id.
                 mReportIDs = mCacheModel.getBrgyIDIDsCache();
-                mReportResidentIDs = mCacheModel.getBrgyIDResidentIDsCache();
+                mReportForeignIDs = mCacheModel.getBrgyIDResidentIDsCache();
+                mReportNames = mCacheModel.getBrgyIDResidentNamesCache();
                 mReportDateIssuedList = mCacheModel.getBrgyIDDateIssuedCache();
 
                 break;
@@ -571,7 +688,8 @@ public class InformationControl {
 
                 // The volatile cache should hold the cached data pertaining to the barangay clearance.
                 mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
-                mReportResidentIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
+                mReportForeignIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
+                mReportNames = mCacheModel.getBrgyIDResidentNamesCache();
                 mReportDateIssuedList = mCacheModel.getBrgyClearanceDateIssuedCache();
 
                 break;
