@@ -59,6 +59,8 @@ public class BarangayUtils {
             }
         }
 
+        System.out.println("BarangayUtils - filtered ID first: " + filteredIDs.get(0));
+
         // Use Selection Sorting to sort the Filtered ID List with the help of sorting
         // the Priority List.
         listSize = filteredIDs.size();
@@ -66,7 +68,7 @@ public class BarangayUtils {
             int highestPriorityIndex = i;
 
             for (int j = i; j < listSize; j++) {
-                if (priorityList.get(j) > priorityList.get(highestPriorityIndex));
+                if (priorityList.get(j) > priorityList.get(highestPriorityIndex))
                     highestPriorityIndex = j;
             }
 
@@ -79,6 +81,9 @@ public class BarangayUtils {
 
             filteredIDs.set(highestPriorityIndex, filteredIDs.get(i));
             filteredIDs.set(i, highestID);
+
+            System.out.println("BarangayUtils - Highest ID per Loop: " + highestID);
+
         }
 
         return filteredIDs;

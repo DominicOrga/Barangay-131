@@ -156,9 +156,6 @@ public class CacheModel {
                 mBrgyClearanceResidentNamesCache.add(mResidentNamesCache.get(index));
             }
         }
-        System.out.println("CacheModel - Barangay ID Count: " + mBarangayIDNamesCache);
-        System.out.println("CacheModel - Barangay ID Names: " + mBarangayIDNamesCache);
-        System.out.println("CacheModel - Barangay ID Names: " + mBarangayIDNamesCache);
     }
 
     public List<String> getResidentIDsCache() {

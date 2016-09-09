@@ -192,7 +192,7 @@ public class InformationControl {
      * The element will be the index of the mReportIDs, signifying the first
      * IDs to display on a specified page.
      */
-    private List<Integer> mFirstReportIDPerPage;
+    private List<Integer> mFirstReportIDIndexPerPage;
 
     /* Represents to current page of the list paging. */
     private int mCurrentPage;
@@ -277,6 +277,9 @@ public class InformationControl {
         mReportIDs = keywords.isEmpty() ?
                 mActualReportIDs : BarangayUtils.getFilteredIDs(mActualReportIDs, mReportNames, keywords.split(" "));
 
+        System.out.println(mReportIDs);
+
+        setReportToLabelSelectedIndex(mLabelSelectedIndex);
         updateListPaging(false);
     }
 
@@ -474,19 +477,17 @@ public class InformationControl {
         int precedingMonth = -1;
         Calendar calendar = Calendar.getInstance();
 
-        // Re-initialize the mFirstReportIDPerPage and its first elements is equal to 0,
+        // Re-initialize the mFirstReportIDIndexPerPage and its first elements is equal to 0,
         // to signify that the first page starts with index 0.
-        mFirstReportIDPerPage = new ArrayList<>();
-        mFirstReportIDPerPage.add(0);
-
-        mPageCount = 1;
+        mFirstReportIDIndexPerPage = new ArrayList<>();
+        mPageCount = 0;
 
         for (int i = 0; i < size; i++) {
             // Check if the label count is stepping on another page. If it is, then i index is
             // holding the index of the first ID of the other page.
             if (mLabelUseCount == 40 * mPageCount) {
                 // Move to the next page.
-                mFirstReportIDPerPage.add(i);
+                mFirstReportIDIndexPerPage.add(i);
                 mPageCount++;
                 // Make sure that the month is displayed first in every page.
                 precedingMonth = -1;
@@ -512,7 +513,7 @@ public class InformationControl {
 
                     if (mLabelUseCount == 40 * mPageCount) {
                         // Move to the next page.
-                        mFirstReportIDPerPage.add(i);
+                        mFirstReportIDIndexPerPage.add(i);
                         mPageCount++;
                     }
                 }
@@ -525,6 +526,8 @@ public class InformationControl {
             // Consume a single label.
             mLabelUseCount++;
         }
+
+//        System.out.println("InformationControl - Label Used Count = " + mLabelUseCount);
 
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
 
@@ -547,101 +550,91 @@ public class InformationControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setReportToLabelSelectedIndex(-1);
-        int reportIDIndex = 0;
-        int precedingMonth = -1;
-        int labelPosition = 0;
-        int page = 1;
-        Calendar calendar = Calendar.getInstance();
-
-        // Find the index of the barangayID to be first displayed to the list paging current page.
-        while (page < mCurrentPage) {
-            calendar.setTime(mReportDateIssuedList.get(reportIDIndex));
-            int month = calendar.get(Calendar.MONTH);
-
-            if (precedingMonth != month) {
-                precedingMonth = month;
-                labelPosition += (labelPosition % 2 == 0) ? 2 : 3;
-            }
-
-            labelPosition++;
-            reportIDIndex++;
-
-            if (labelPosition > 40) {
-                // Move to the next Page.
-                reportIDIndex--;
-                page++;
-                labelPosition = 0;
-                precedingMonth = -1;
-            }
-        }
+        setReportToLabelSelectedIndex(mLabelSelectedIndex);
 
         // Reset to default the label placements within the list paging.
         mListGridPane.getChildren().removeAll(mGridLabels);
 
-        for (int i = 0; i < 40; i++) {
-            mGridLabels[i].setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
-            mGridLabels[i].setText(null);
-            mListGridPane.add(mGridLabels[i], i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
+        // If no reports to be displayed, then populate the grid pane and be done with it.
+        if (mFirstReportIDIndexPerPage.size() == 0) {
+            for (int i = 0; i < 40; i++) {
+                mReportIDToLabelLocation[i] = null;
+                Label label = mGridLabels[i];
+                label.setText(null);
+                mListGridPane.add(label, i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
+            }
+            return;
         }
 
-        // Clear the Label references to the barangay ID's.
-        Arrays.fill(mReportIDToLabelLocation, null);
+        int reportIndex = mFirstReportIDIndexPerPage.get(mCurrentPage - 1);
 
-        // Determine the barangay ID placement within the labels.
-        while (labelPosition <= 40 && reportIDIndex < mReportIDs.size()) {
-            calendar.setTime(mReportDateIssuedList.get(reportIDIndex));
-            int month = calendar.get(Calendar.MONTH);
+        Calendar calendar = Calendar.getInstance();
+        int precedingMonth = -1;
 
-            if (precedingMonth != month) {
-                precedingMonth = month;
+        // Fill out all the labels of the current page.
+        for (int i = 0; i < 40; i++, reportIndex++) {
+            Label currentLabel;
 
-                labelPosition += (labelPosition % 2 == 0) ? 1 : 0;
+            if (reportIndex >= mReportIDs.size()) {
+                mReportIDToLabelLocation[i] = null;
+                currentLabel = mGridLabels[i];
+                currentLabel.setText(null);
+                mListGridPane.add(currentLabel, i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
+            } else {
+                int index = mReportIDs != mActualReportIDs ?
+                        mActualReportIDs.indexOf(mReportIDs.get(reportIndex)) : reportIndex;
 
-                // If the date label can no longer be placed or a single report for a specific date cannot be displayed,
-                // then break the operation since those reports are already for the next page.
-                if (labelPosition >= 39) return;
+                calendar.setTime(mReportDateIssuedList.get(index));
 
-                // Place the date month in the current label.
-                int labelIndex = labelPosition - 1;
-                Label currentLabel = mGridLabels[labelIndex];
+                int month = calendar.get(Calendar.MONTH);
 
-                // The date month label must span 2 columns.
-                mListGridPane.getChildren().remove(currentLabel);
-                mListGridPane.add(currentLabel, labelIndex % 2 == 0 ? 0 : 1, labelIndex / 2, 2, 1);
+                // Check if a month label needs to be displayed.
+                if (month != precedingMonth) {
+                    precedingMonth = month;
 
-                // The date month labels must have a background color of brown and text fill of white.
-                currentLabel.setStyle(CSSContract.STYLE_DATE_HEADER);
+                    // If the label index is at its peak that a month label together with a single
+                    // record cannot be displayed, then simply fill out the remaining labels with
+                    // null and break the loop.
+                    if (i >= 37) {
+                        for (int j = i; j < 40; j++) {
+//                            mReportIDToLabelLocation[j] = null;
+                            currentLabel = mGridLabels[j];
+                            currentLabel.setText(null);
+                            mListGridPane.add(currentLabel, j % 2 == 0 ? 0 : 1, j / 2, 1, 1);
+                        }
+                        break;
+                    }
 
-                // Set the date text to the label.
-                String date = BarangayUtils.convertMonthIntToString(calendar.get(Calendar.MONTH)) + " " +
-                        calendar.get(Calendar.YEAR);
-                currentLabel.setText(date);
+                    // Make sure that the month label must occupy both columns.
+                    if (i % 2 != 0) {
+                        mReportIDToLabelLocation[i] = null;
+                        currentLabel = mGridLabels[i];
+                        currentLabel.setText(null);
+                        mListGridPane.add(currentLabel, i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
+                        i++;
+                    }
 
-                labelPosition += 2;
+                    // The date month label must span 2 columns.
+                    mReportIDToLabelLocation[i] = null;
+                    currentLabel = mGridLabels[i];
+                    mListGridPane.add(currentLabel, i % 2 == 0 ? 0 : 1, i / 2, 2, 1);
+                    i += 2;
+
+                    // The date month labels must have a background color of brown and text fill of white.
+                    currentLabel.setStyle(CSSContract.STYLE_DATE_HEADER);
+
+                    // Set the date text to the label.
+                    String date = BarangayUtils.convertMonthIntToString(calendar.get(Calendar.MONTH)) + " " +
+                            calendar.get(Calendar.YEAR);
+                    currentLabel.setText(date);
+                }
+
+                mReportIDToLabelLocation[i] = mActualReportIDs.get(index);
+                currentLabel = mGridLabels[i];
+                mListGridPane.add(currentLabel, i % 2 == 0 ? 0 : 1, i / 2, 1, 1);
+                currentLabel.setText(mReportNames.get(index));
+                currentLabel.setStyle(CSSContract.STYLE_LABEL_UNSELECTED);
             }
-
-            int labelIndex = labelPosition - 1;
-            Label currentLabel = mGridLabels[labelIndex];
-
-            // Store the barangay ID in mReportIDToLabelLocation which corresponds to the label location.
-            mReportIDToLabelLocation[labelIndex] = mReportIDs.get(reportIDIndex);
-
-            // Get the name of the resident applicant of the barangay ID.
-            switch (mInformation) {
-                case INFORMATION_BARANGAY_ID:
-                    String id = mReportIDs.get(reportIDIndex);
-                    int index = mCacheModel.getBrgyIDIDsCache().indexOf(id);
-                    currentLabel.setText(mCacheModel.getBrgyIDResidentNamesCache().get(index));
-                    break;
-                case INFORMATION_BARANGAY_CLEARANCE: break;
-                case INFORMATION_BUSINESS_CLEARANCE:
-            }
-            int index = mCacheModel.getResidentIDsCache().indexOf(mReportForeignIDs.get(reportIDIndex));
-            currentLabel.setText(mCacheModel.getResidentNamesCache().get(index));
-
-            labelPosition++;
-            reportIDIndex++;
         }
     }
 
