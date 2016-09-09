@@ -151,12 +151,14 @@ public class CacheModel {
             }
 
             if (i < barangayClearanceCount) {
-
                 String residentId = mBrgyClearanceResidentIDsCache.get(i);
                 int index = mResidentIDsCache.indexOf(residentId);
                 mBrgyClearanceResidentNamesCache.add(mResidentNamesCache.get(index));
             }
         }
+        System.out.println("CacheModel - Barangay ID Count: " + mBarangayIDNamesCache);
+        System.out.println("CacheModel - Barangay ID Names: " + mBarangayIDNamesCache);
+        System.out.println("CacheModel - Barangay ID Names: " + mBarangayIDNamesCache);
     }
 
     public List<String> getResidentIDsCache() {

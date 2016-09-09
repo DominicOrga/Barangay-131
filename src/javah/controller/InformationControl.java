@@ -23,6 +23,7 @@ import javah.util.BarangayUtils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -143,9 +144,12 @@ public class InformationControl {
      */
     private CacheModel mCacheModel;
 
+    /* A non-volatile list which contains the all the report IDs of mInformation. */
+    private List<String> mActualReportIDs;
+
     /**
      * A volatile list which contains the all the report IDs available to be
-     * displayed in the list paging.
+     * displayed in the list paging with regards to the search filter.
      */
     private List<String> mReportIDs;
 
@@ -181,6 +185,14 @@ public class InformationControl {
      * Index is between 0 - 39, representing the label positions.
      */
     private String[] mReportIDToLabelLocation;
+
+    /**
+     * An array that contains the first report IDs per page. The index will
+     * serve as the representation of the pages. That is index 0 = page 1.
+     * The element will be the index of the mReportIDs, signifying the first
+     * IDs to display on a specified page.
+     */
+    private List<Integer> mFirstReportIDPerPage;
 
     /* Represents to current page of the list paging. */
     private int mCurrentPage;
@@ -262,28 +274,8 @@ public class InformationControl {
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText().trim();
 
-        if (keywords.isEmpty()) {
-            switch (mInformation) {
-                case INFORMATION_BARANGAY_ID:
-                    mReportIDs = mCacheModel.getBrgyIDIDsCache();
-                    break;
-                case INFORMATION_BARANGAY_CLEARANCE:
-                    break;
-                case INFORMATION_BUSINESS_CLEARANCE:
-            }
-        } else {
-            switch (mInformation) {
-                case INFORMATION_BARANGAY_ID:
-                    mReportIDs = BarangayUtils.getFilteredIDs(
-                            mCacheModel.getBrgyIDIDsCache(),
-                            mCacheModel.getBrgyIDResidentNamesCache(),
-                            keywords.split(" "));
-                    break;
-                case INFORMATION_BARANGAY_CLEARANCE:
-                    break;
-                case INFORMATION_BUSINESS_CLEARANCE:
-            }
-        }
+        mReportIDs = keywords.isEmpty() ?
+                mActualReportIDs : BarangayUtils.getFilteredIDs(mActualReportIDs, mReportNames, keywords.split(" "));
 
         updateListPaging(false);
     }
@@ -418,7 +410,6 @@ public class InformationControl {
 
                     case INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
-                        System.out.println(mBrgyClearanceSelected.getID());
                         Image image = mListener.OnRequestBarangayClearanceSnapshot(mBrgyClearanceSelected);
                         mBrgyClearanceImage.setImage(image);
                         break;
@@ -476,25 +467,65 @@ public class InformationControl {
      *        If the current page is no longer available, then move back, if possible.
      */
     private void updateListPaging(boolean stayOnPage) {
+
         mLabelUseCount = 0;
         int size = mReportIDs.size();
 
         int precedingMonth = -1;
         Calendar calendar = Calendar.getInstance();
 
+        // Re-initialize the mFirstReportIDPerPage and its first elements is equal to 0,
+        // to signify that the first page starts with index 0.
+        mFirstReportIDPerPage = new ArrayList<>();
+        mFirstReportIDPerPage.add(0);
+
+        mPageCount = 1;
+
         for (int i = 0; i < size; i++) {
-            calendar.setTime(mReportDateIssuedList.get(i));
+            // Check if the label count is stepping on another page. If it is, then i index is
+            // holding the index of the first ID of the other page.
+            if (mLabelUseCount == 40 * mPageCount) {
+                // Move to the next page.
+                mFirstReportIDPerPage.add(i);
+                mPageCount++;
+                // Make sure that the month is displayed first in every page.
+                precedingMonth = -1;
+            }
+
+            if (mReportIDs != mActualReportIDs) {
+                int index = mActualReportIDs.indexOf(mReportIDs.get(i));
+                calendar.setTime(mReportDateIssuedList.get(index));
+            } else
+                calendar.setTime(mReportDateIssuedList.get(i));
+
             int month = calendar.get(Calendar.MONTH);
 
-            if (precedingMonth != month) {
+            // Check if a month label needs to be displayed.
+            if (month != precedingMonth) {
+
+                // Check if the month label with at least one report will fit in the current page.
+                // If not, then move to the next page and the respective labels.
+                int pageEmptyLabelCount = 40 * mPageCount - mLabelUseCount;
+                if (pageEmptyLabelCount <= 3) {
+                    // Consume all left labels within the current page to move to the next page.
+                    mLabelUseCount += pageEmptyLabelCount;
+
+                    if (mLabelUseCount == 40 * mPageCount) {
+                        // Move to the next page.
+                        mFirstReportIDPerPage.add(i);
+                        mPageCount++;
+                    }
+                }
+
                 precedingMonth = month;
+                // Consume the right amount of labels for displaying the month.
                 mLabelUseCount += (mLabelUseCount % 2 == 0) ? 2 : 3;
             }
 
+            // Consume a single label.
             mLabelUseCount++;
         }
 
-        mPageCount = (int) Math.ceil(mLabelUseCount / 40.0);
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
@@ -511,7 +542,7 @@ public class InformationControl {
 
     /**
      * Update current page with respect to mCurrentPage. That is, the value of
-     * mCurrentPage will determine the displayed report.
+     * mCurrentPage will determine the displayed reports.
      * Moving from one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
@@ -614,8 +645,6 @@ public class InformationControl {
         }
     }
 
-
-
     /**
      * Called after initialize() and is called in the MainControl.
      * Set the main scene as the listener to this object.
@@ -677,6 +706,7 @@ public class InformationControl {
 
                 // The volatile cache should hold the cached data pertaining to the barangay id.
                 mReportIDs = mCacheModel.getBrgyIDIDsCache();
+                mActualReportIDs = mCacheModel.getBrgyIDIDsCache();
                 mReportForeignIDs = mCacheModel.getBrgyIDResidentIDsCache();
                 mReportNames = mCacheModel.getBrgyIDResidentNamesCache();
                 mReportDateIssuedList = mCacheModel.getBrgyIDDateIssuedCache();
@@ -688,8 +718,9 @@ public class InformationControl {
 
                 // The volatile cache should hold the cached data pertaining to the barangay clearance.
                 mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
+                mActualReportIDs = mCacheModel.getBrgyClearanceIDsCache();
                 mReportForeignIDs = mCacheModel.getBrgyClearanceResidentIDsCache();
-                mReportNames = mCacheModel.getBrgyIDResidentNamesCache();
+                mReportNames = mCacheModel.getBrgyClearanceResidentNamesCache();
                 mReportDateIssuedList = mCacheModel.getBrgyClearanceDateIssuedCache();
 
                 break;
