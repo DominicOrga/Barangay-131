@@ -20,6 +20,7 @@ import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
+import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
@@ -551,6 +552,11 @@ public class MainControl {
         addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);
         addToPopupPane.accept(mBrgyClearanceReportScene);
+
+        // Automatically tart the Barangay Agent form when the barangay agents have not
+        // been set yet.
+        if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
+            onSettingsButtonClicked(null);
     }
 
     @FXML

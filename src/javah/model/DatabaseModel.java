@@ -500,6 +500,69 @@ public class DatabaseModel {
     }
 
     /**
+     * Get a specific resident from the database.
+     *
+     * @param residentId
+     *        The ID of the resident to be fetched.
+     *
+     * @return the resident having the specified resident Id. Return null if no match is found.
+     */
+    public Resident getResident(String residentId) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            ResidentEntry.COLUMN_FIRST_NAME,
+                            ResidentEntry.COLUMN_MIDDLE_NAME,
+                            ResidentEntry.COLUMN_LAST_NAME,
+                            ResidentEntry.COLUMN_AUXILIARY,
+                            ResidentEntry.COLUMN_BIRTH_DATE,
+                            ResidentEntry.COLUMN_PHOTO,
+                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
+                            ResidentEntry.COLUMN_ADDRESS_1,
+                            ResidentEntry.COLUMN_ADDRESS_2,
+                            ResidentEntry.TABLE_NAME,
+                            ResidentEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, residentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Resident resident = new Resident();
+
+                resident.setId(residentId);
+                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
+                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
+                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
+                resident.setAuxiliary(resultSet.getString(ResidentEntry.COLUMN_AUXILIARY));
+                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
+                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
+                resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
+                resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
+                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
+                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return resident;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Get a specific barangay ID from the database.
      *
      * @param id
@@ -661,69 +724,6 @@ public class DatabaseModel {
                 resultSet.close();
 
                 return brgyClearance;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Get a specific resident from the database.
-     *
-     * @param residentId
-     *        The ID of the resident to be fetched.
-     *
-     * @return the resident having the specified resident Id. Return null if no match is found.
-     */
-    public Resident getResident(String residentId) {
-
-        try {
-            Connection dbConnection = mDataSource.getConnection();
-
-            // Use String.format as a workaround to the bug when using parameterized query.
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
-                            ResidentEntry.COLUMN_FIRST_NAME,
-                            ResidentEntry.COLUMN_MIDDLE_NAME,
-                            ResidentEntry.COLUMN_LAST_NAME,
-                            ResidentEntry.COLUMN_AUXILIARY,
-                            ResidentEntry.COLUMN_BIRTH_DATE,
-                            ResidentEntry.COLUMN_PHOTO,
-                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-                            ResidentEntry.COLUMN_ADDRESS_1,
-                            ResidentEntry.COLUMN_ADDRESS_2,
-                            ResidentEntry.TABLE_NAME,
-                            ResidentEntry.COLUMN_ID
-                    )
-            );
-
-            preparedStatement.setString(1, residentId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                Resident resident = new Resident();
-
-                resident.setId(residentId);
-                resident.setFirstName(resultSet.getString(ResidentEntry.COLUMN_FIRST_NAME));
-                resident.setMiddleName(resultSet.getString(ResidentEntry.COLUMN_MIDDLE_NAME));
-                resident.setLastName(resultSet.getString(ResidentEntry.COLUMN_LAST_NAME));
-                resident.setAuxiliary(resultSet.getString(ResidentEntry.COLUMN_AUXILIARY));
-                resident.setBirthDate(resultSet.getDate(ResidentEntry.COLUMN_BIRTH_DATE));
-                resident.setPhotoPath(resultSet.getString(ResidentEntry.COLUMN_PHOTO));
-                resident.setYearOfResidency(resultSet.getShort(ResidentEntry.COLUMN_YEAR_OF_RESIDENCY));
-                resident.setMonthOfResidency(resultSet.getShort(ResidentEntry.COLUMN_MONTH_OF_RESIDENCY));
-                resident.setAddress1(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_1));
-                resident.setAddress2(resultSet.getString(ResidentEntry.COLUMN_ADDRESS_2));
-
-                dbConnection.close();
-                preparedStatement.close();
-                resultSet.close();
-
-                return resident;
             }
         } catch (Exception e) {
             e.printStackTrace();

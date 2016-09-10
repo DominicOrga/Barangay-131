@@ -1,5 +1,6 @@
 package javah.model;
 
+import javah.contract.PreferenceContract;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -67,6 +68,8 @@ public class PreferenceModel {
      * Called after clicking the save button at mBarangayAgentScene.
      */
     public void save() {
+        mJson.put(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "1");
+
         try {
             FileWriter fileWriter = new FileWriter(mJsonPath);
             fileWriter.write(mJson.toJSONString());
