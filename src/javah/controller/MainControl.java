@@ -628,20 +628,28 @@ public class MainControl {
 
                 case MENU_BARANGAY_CLEARANCE:
                     playMenuSlideAnimation.accept(mBarangayClearanceMenu, isSelected);
-                    if (isSelected)
+                    if (isSelected) {
                         mInformationControl.setInformation(InformationControl.INFORMATION_BARANGAY_CLEARANCE);
-                    mInformationScene.toFront();
+                        mInformationScene.toFront();
+                    }
                     break;
 
                 case MENU_BARANGAY_ID:
                     playMenuSlideAnimation.accept(mBarangayIdMenu, isSelected);
-                    if (isSelected)
+                    if (isSelected) {
                         mInformationControl.setInformation(InformationControl.INFORMATION_BARANGAY_ID);
-                    mInformationScene.toFront();
+                        mInformationScene.toFront();
+                    }
                     break;
 
                 case MENU_BUSINESS_CLEARANCE:
-                    playMenuSlideAnimation.accept(mBusinessClearanceMenu, isSelected); break;
+                    playMenuSlideAnimation.accept(mBusinessClearanceMenu, isSelected);
+                    if (isSelected) {
+                        mInformationControl.setInformation(InformationControl.INFORMATION_BUSINESS_CLEARANCE);
+                        mInformationScene.toFront();
+                    }
+
+                    break;
             }
         };
 

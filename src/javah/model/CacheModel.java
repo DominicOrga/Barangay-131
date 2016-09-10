@@ -6,7 +6,6 @@ import javah.container.Resident;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,7 +95,7 @@ public class CacheModel {
 
     /**
      * A list containing the actual names of the applicant. That is, its elements is
-     * gathered from the mResidentNamesCache with the help of mBarangayIDResidentIDsCache.
+     * gathered from the mResidentNamesCache with the help of mBrgyClearanceResidentIDsCache.
      *
      * Cardinality |mBrgyClearanceIDsCache| == |mBrgyClearanceResidentIDsCache| ==
      *             |mBrgyClearanceNamesCache| == |mBrgyClearanceDateIssuedCache|
@@ -104,7 +103,7 @@ public class CacheModel {
     private List<String> mBrgyClearanceResidentNamesCache = new ArrayList<>();
 
     /**
-     * A list containing the Resident IDs of all the Barangay clearances, used to sort
+     * A list containing the date issuance of all the Barangay clearances, used to sort
      * the barangay clearance within the Information Control list paging.
      *
      * Cardinality |mBrgyClearanceIDsCache| == |mBrgyClearanceResidentIDsCache| ==
@@ -114,6 +113,64 @@ public class CacheModel {
      */
     private List<Timestamp> mBrgyClearanceDateIssuedCache;
 
+    /**
+     * A list containing all the IDs from the Business table, used to specify a
+     * business from the database.
+     *
+     * Cardinality |mBusinessIDsCache| == |mBusinessNamesCache|.
+     */
+    private List<String> mBusinessIDsCache;
+
+    /**
+     * A list containing all the names from the Business table. The names have a
+     * format of Last Name, First Name, Middle Initial. Used for displaying the
+     * businesses in the Information List Paging of the Information Control.
+     *
+     * Cardinality |mBusinessIDsCache| == |mBusinessNamesCache|.
+     *
+     * @see javah.controller.InformationControl
+     */
+    private List<String> mBusinessNamesCache;
+
+    /**
+     * A list containing the IDs of all the business clearance, used to specify a
+     * business clearance from the database.
+     *
+     * Cardinality |mBusiClearanceIDsCache| == |mBusiClearanceResidentIDsCache| ==
+     *             |mBusiClearanceBusiNamesCache| == |mBusiClearanceDateIssuedCache|
+     */
+    private List<String> mBusiClearanceIDsCache;
+
+    /**
+     * A list containing the business IDs of all the business clearances, used to
+     * determine the actual names of the business of the business clearance by getting
+     * a specified index from mBusiClearanceBusiIDsCache and using the resulting
+     * index to acquire the specified name.
+     *
+     * Cardinality |mBusiClearanceIDsCache| == |mBusiClearanceResidentIDsCache| ==
+     *             |mBusiClearanceBusiNamesCache| == |mBusiClearanceDateIssuedCache|
+     */
+    private List<String> mBusiClearanceBusiIDsCache;
+
+    /**
+     * A list containing the actual names of the business. That is, its elements is
+     * gathered from the mBusinessNamesCache with the help of mBusiClearanceBusiIDsCache.
+     *
+     * Cardinality |mBusiClearanceIDsCache| == |mBusiClearanceResidentIDsCache| ==
+     *             |mBusiClearanceBusiNamesCache| == |mBusiClearanceDateIssuedCache|
+     */
+    private List<String> mBusiClearanceBusiNamesCache = new ArrayList<>();
+
+    /**
+     * A list containing the date issuance of all the Barangay clearances, used to sort
+     * the business clearance within the Information Control list paging.
+     *
+     * Cardinality |mBusiClearanceIDsCache| == |mBusiClearanceResidentIDsCache| ==
+     *             |mBusiClearanceBusiNamesCache| == |mBusiClearanceDateIssuedCache|
+     *
+     * @see javah.controller.InformationControl
+     */
+    private List<Timestamp> mBusiClearanceDateIssuedCache;
 
     /**
      * Get a reference to the universal database model to start caching data.
@@ -136,11 +193,24 @@ public class CacheModel {
         mBrgyClearanceResidentIDsCache = lists[1];
         mBrgyClearanceDateIssuedCache = lists[2];
 
+        lists = databaseModel.getBusinessEssentials();
+        mBusinessIDsCache = lists[0];
+        mBusinessNamesCache = lists[1];
+
+        lists = databaseModel.getBusinessClearanceEssentials();
+        mBusiClearanceIDsCache = lists[0];
+        mBusiClearanceBusiIDsCache = lists[1];
+        mBusiClearanceDateIssuedCache = lists[2];
+
         int barangayIDCount = mBarangayIDIDsCache.size();
         int barangayClearanceCount = mBrgyClearanceIDsCache.size();
+        int businessClearanceCount = mBusiClearanceIDsCache.size();
 
-        // A variable taking the value of the highest count between the barangay ID and clearance.
-        int count = barangayIDCount >= barangayClearanceCount ? barangayIDCount : barangayClearanceCount;
+        // A variable taking the value of the highest count between the barangay ID,
+        // barangay clearance and business clearance..
+        int count = barangayIDCount >= barangayClearanceCount ?
+                (barangayIDCount >= businessClearanceCount ? barangayIDCount : businessClearanceCount ) :
+                (barangayClearanceCount >= businessClearanceCount ? barangayClearanceCount : businessClearanceCount);
 
         // Populate the barangay ID and clearance names cache.
         for (int i = 0; i < count; i++) {
@@ -154,6 +224,12 @@ public class CacheModel {
                 String residentId = mBrgyClearanceResidentIDsCache.get(i);
                 int index = mResidentIDsCache.indexOf(residentId);
                 mBrgyClearanceResidentNamesCache.add(mResidentNamesCache.get(index));
+            }
+
+            if (i < businessClearanceCount) {
+                String businessId = mBusiClearanceBusiIDsCache.get(i);
+                int index = mBusinessIDsCache.indexOf(businessId);
+                mBusiClearanceBusiNamesCache.add(mBusinessNamesCache.get(index));
             }
         }
     }
@@ -190,6 +266,30 @@ public class CacheModel {
 
     public List<Timestamp> getBrgyClearanceDateIssuedCache() {
         return mBrgyClearanceDateIssuedCache;
+    }
+
+    public List<String> getBusiIDsCache() {
+        return mBusinessIDsCache;
+    }
+
+    public List<String> getBusiNamesCaches() {
+        return mBusiClearanceBusiNamesCache;
+    }
+
+    public List<String> getBusiClearanceIDsCache() {
+        return mBusiClearanceIDsCache;
+    }
+
+    public List<String> getBusiClearanceBusiNamesCache() {
+        return mBusiClearanceBusiNamesCache;
+    }
+
+    public List<String> getBusiClearanceBusiIDsCache() {
+        return mBusiClearanceBusiIDsCache;
+    }
+
+    public List<Timestamp> getBusiClearanceDateIssuedCache() {
+        return mBusiClearanceDateIssuedCache;
     }
 
     /**

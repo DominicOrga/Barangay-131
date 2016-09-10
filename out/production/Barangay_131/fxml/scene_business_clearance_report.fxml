@@ -35,7 +35,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane fx:id="mScrollPane" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="1200.0" prefWidth="210.0" GridPane.rowIndex="1">
+      <ScrollPane fx:id="mScrollPane" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="675.0" prefWidth="210.0" GridPane.rowIndex="1">
          <content>
             <GridPane fx:id="mDocumentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="990.0" prefWidth="765.0">
               <columnConstraints>
@@ -72,49 +72,93 @@
                            <children>
                               <Label text="KATIBAYAN NG PAHINTULOT" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <font>
-                                    <Font name="System Bold" size="20.0" />
+                                    <Font name="System Bold" size="25.0" />
                                  </font>
                               </Label>
-                              <TextFlow fx:id="mTextFlow" lineSpacing="1.5" prefWidth="200.0" textAlignment="JUSTIFY">
+                              <TextFlow fx:id="mTextFlow" lineSpacing="10.0" prefWidth="200.0" textAlignment="JUSTIFY" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets top="125.0" />
+                                    <Insets left="50.0" right="50.0" top="100.0" />
                                  </GridPane.margin>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     Ito ay nagpapatunay na ang ">
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="     Ito ay nagpapatunay na ang " textAlignment="JUSTIFY">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IN THE CAB SALON FOR MEN AND WOMEN" underline="true">
+                                    <Text fx:id="mBusiName" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="IN THE CAB SALON FOR MEN AND WOMEN" textAlignment="JUSTIFY" underline="true">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" na pag-aari ">
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na pag-aari nina " textAlignment="JUSTIFY">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FRITZ DI L. EUGENIO" underline="true">
+                                    <Text fx:id="mBusiOwners" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="FRITZ DI L. EUGENIO" textAlignment="JUSTIFY" underline="true">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" na matatagpuan sa ">
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na matatagpuan sa " textAlignment="JUSTIFY">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="40-A&amp;B Cabatuan St. cor. Pag-Asa St.  Barangay. 131, Caloocan City" underline="true">
+                                    <Text fx:id="mBusiAddress" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="40-A&amp;B Cabatuan St. cor. Pag-Asa St.  Barangay. 131, Caloocan City" textAlignment="JUSTIFY" underline="true">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="na nasasakupan ng Barangay na ito ay pinahihintulutan na magbukas/magpatuloy ng  kanilang  negosyong,">
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na nasasakupan ng Barangay na ito ay pinahihintulutan na magbukas/magpatuloy ng kanilang negosyong, " textAlignment="JUSTIFY">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
+                                    <Text fx:id="mBusiType" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="SALON" textAlignment="JUSTIFY" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" at pagkilos na nangangailangan ng pahintulot." textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mLineBreak1" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="\\n\n\n" textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="    Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni " textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mBusiClient" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="FRITZ DI L. EUGENIO" textAlignment="JUSTIFY" underline="true">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" upang magamit sa kanilang inilahad na negosyo/hanapbuhay, ayon sa itinadhana ng seksyon bilang 17 ng bagong kodigo ng pamahalaang lokal." textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="mLineBreak2" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="\\n\n\n" textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font name="Times New Roman" size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="665.0">
+                                       <children>
+                                          <Text fx:id="mDateValid" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="(Valid until January 16, 2017)" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="Times New Roman" size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </TextFlow>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.rowIndex="1">
@@ -127,7 +171,7 @@
                                           <Insets left="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextArea fx:id="mSecPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
+                                    <TextArea fx:id="mSecName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
@@ -144,6 +188,9 @@
                                        </VBox.margin>
                                     </Label>
                                  </children>
+                                 <GridPane.margin>
+                                    <Insets left="40.0" />
+                                 </GridPane.margin>
                               </VBox>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass=".exception" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                  <children>
@@ -172,15 +219,18 @@
                                        </VBox.margin>
                                     </Label>
                                  </children>
+                                 <GridPane.margin>
+                                    <Insets right="40.0" />
+                                 </GridPane.margin>
                               </VBox>
                               <Pane layoutX="10.0" layoutY="585.0" minWidth="-Infinity" prefHeight="150.0" prefWidth="550.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                  <children>
-                                    <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" layoutX="-25.0" pickOnBounds="true" preserveRatio="true" x="25.0" y="25.0">
+                                    <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" layoutX="-5.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" x="25.0" y="25.0">
                                        <image>
                                           <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" layoutX="211.0" pickOnBounds="true" preserveRatio="true" x="265.0" y="25.0">
+                                    <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" layoutX="219.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" x="265.0" y="25.0">
                                        <image>
                                           <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
                                        </image>
@@ -204,14 +254,14 @@
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="mBrgyClearanceIDLabel" text="131-16-001">
+                        <Label fx:id="mIDLabel" text="131-16-001">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </Label>
                      </children>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="40.0" />
                      </GridPane.margin>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="950.0" GridPane.rowIndex="2">
@@ -220,11 +270,11 @@
                            <font>
                               <Font size="12.0" />
                            </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
                         </Label>
                      </children>
+                     <GridPane.margin>
+                        <Insets right="40.0" />
+                     </GridPane.margin>
                   </HBox>
                </children>
             </GridPane>
@@ -232,7 +282,7 @@
       </ScrollPane>
       <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;">
          <children>
-            <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
+            <Label text="Business Clearance Report" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>

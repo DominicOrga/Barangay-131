@@ -67,7 +67,7 @@ public class DatabaseContract {
     }
 
     public static class BusinessEntry extends RowColumn {
-        public static final String TABLE_NAME = "BarangayDB.BusinessEntry";
+        public static final String TABLE_NAME = "BarangayDB.Business";
 
         public static final String COLUMN_BUSINESS_NAME = "business_name";
         public static final String COLUMN_BUSINESS_TYPE = "business_type";

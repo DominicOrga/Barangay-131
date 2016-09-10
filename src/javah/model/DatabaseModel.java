@@ -1,9 +1,7 @@
 package javah.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import javah.container.BarangayClearance;
-import javah.container.BarangayID;
-import javah.container.Resident;
+import javah.container.*;
 
 import java.sql.*;
 import java.sql.Date;
@@ -190,14 +188,14 @@ public class DatabaseModel {
      * Return the business IDs and Names.
      *
      * @return an array of lists with elements:
-     *         List[0] =  The resident IDs.
+     *         List[0] =  The business IDs.
      *         List[1] = Formatted resident names.
      */
     public List[] getBusinessEssentials() {
 
         List[] returnList = new List[2];
-        List<String> businessIDList = new ArrayList<>();
-        List<String> businessNameList = new ArrayList<>();
+        List<String> businessIDs = new ArrayList<>();
+        List<String> businessNames = new ArrayList<>();
 
         try {
             Connection dbConnection = mDataSource.getConnection();
@@ -205,7 +203,8 @@ public class DatabaseModel {
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
                     String.format("SELECT %s, %s FROM %s ORDER BY %s",
-                            BusinessEntry.COLUMN_ID, BusinessEntry.COLUMN_BUSINESS_NAME,
+                            BusinessEntry.COLUMN_ID,
+                            BusinessEntry.COLUMN_BUSINESS_NAME,
                             BusinessEntry.TABLE_NAME,
                             BusinessEntry.COLUMN_BUSINESS_NAME)
             );
@@ -213,12 +212,12 @@ public class DatabaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
-                businessIDList.add(resultSet.getString(BusinessEntry.COLUMN_ID));
-                businessNameList.add(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_NAME));
+                businessIDs.add(resultSet.getString(BusinessEntry.COLUMN_ID));
+                businessNames.add(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_NAME));
             }
 
-            returnList[0] = businessIDList;
-            returnList[1] = businessNameList;
+            returnList[0] = businessIDs;
+            returnList[1] = businessNames;
 
             dbConnection.close();
             preparedStatement.close();
@@ -229,6 +228,52 @@ public class DatabaseModel {
         }
 
         return returnList;
+    }
+
+    /**
+     * Return the business clearance Ids, resident ids and the issued date.
+     *
+     * @return an array of lists with elements:
+     *         array[0] = Business clearance IDs, used to specify a business clearance.
+     *         array[1] = Business IDs of the business clearances, used to update the business
+     *                    clearance cached data when a specific business is modified or dropped.
+     *         array[2] = Issued date of each business clearance, used to sort the business
+     *                    clearance within the list paging.
+     */
+    public List[] getBusinessClearanceEssentials() {
+        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Date>()};
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            // Only query the barangay ID data with applicants that are not archived.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s FROM %s ORDER BY %s DESC",
+                            BusinessClearanceEntry.COLUMN_ID,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_ID,
+                            BusinessClearanceEntry.COLUMN_DATE_ISSUED,
+                            BusinessClearanceEntry.TABLE_NAME,
+                            BusinessClearanceEntry.COLUMN_DATE_ISSUED)
+            );
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                result[0].add(resultSet.getString(BusinessClearanceEntry.COLUMN_ID));
+                result[1].add(resultSet.getString(BusinessClearanceEntry.COLUMN_BUSINESS_ID));
+                result[2].add(resultSet.getDate(BusinessClearanceEntry.COLUMN_DATE_ISSUED));
+            }
+
+            dbConnection.close();
+            preparedStatement.close();
+            resultSet.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 
@@ -453,65 +498,6 @@ public class DatabaseModel {
 
         return null;
     }
-
-//    /**
-//     * Create a resident and store it in the database.
-//     *
-//     * @param resident
-//     *        The resident data holding containing the information about the resident to be
-//     *        created.
-//     *
-//     * @return the generated resident ID for the resident. If the resident was not created,
-//     *         then return null.
-//     */
-//    public String createBusiness(Business business) {
-//
-//        try {
-//            Connection dbConnection = mDataSource.getConnection();
-//
-//            String residentID = generateID(ResidentEntry.TABLE_NAME);
-//
-//            PreparedStatement statement = dbConnection.prepareStatement(
-//                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-//                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)",
-//                            ResidentEntry.TABLE_NAME,
-//                            ResidentEntry.COLUMN_ID,
-//                            ResidentEntry.COLUMN_FIRST_NAME,
-//                            ResidentEntry.COLUMN_MIDDLE_NAME,
-//                            ResidentEntry.COLUMN_LAST_NAME,
-//                            ResidentEntry.COLUMN_AUXILIARY,
-//                            ResidentEntry.COLUMN_BIRTH_DATE,
-//                            ResidentEntry.COLUMN_PHOTO,
-//                            ResidentEntry.COLUMN_YEAR_OF_RESIDENCY,
-//                            ResidentEntry.COLUMN_MONTH_OF_RESIDENCY,
-//                            ResidentEntry.COLUMN_ADDRESS_1,
-//                            ResidentEntry.COLUMN_ADDRESS_2,
-//                            ResidentEntry.COLUMN_IS_ARCHIVED));
-//
-//            statement.setString(1, residentID);
-//            statement.setString(2, resident.getFirstName());
-//            statement.setString(3, resident.getMiddleName());
-//            statement.setString(4, resident.getLastName());
-//            statement.setString(5, resident.getAuxiliary());
-//            statement.setDate(6, resident.getBirthDate());
-//            statement.setString(7, resident.getPhotoPath());
-//            statement.setInt(8, resident.getYearOfResidency());
-//            statement.setInt(9, resident.getMonthOfResidency());
-//            statement.setString(10, resident.getAddress1());
-//            statement.setString(11, resident.getAddress2());
-//
-//            statement.execute();
-//            statement.close();
-//            dbConnection.close();
-//
-//            return residentID;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
 
     /**
      * Get a specific barangay ID from the database.

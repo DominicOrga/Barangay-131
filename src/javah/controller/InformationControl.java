@@ -716,6 +716,15 @@ public class InformationControl {
 
                 break;
             case INFORMATION_BUSINESS_CLEARANCE :
+                mCreateButton.setText("New Business Clearance");
+//                mBrgyClearanceDetailsPane.setVisible(true);
+
+                // The volatile cache should hold the cached data pertaining to the barangay clearance.
+                mReportIDs = mCacheModel.getBusiClearanceIDsCache();
+                mActualReportIDs = mCacheModel.getBusiClearanceIDsCache();
+                mReportForeignIDs = mCacheModel.getBusiClearanceBusiIDsCache();
+                mReportNames = mCacheModel.getBusiClearanceBusiNamesCache();
+                mReportDateIssuedList = mCacheModel.getBusiClearanceDateIssuedCache();
                 break;
         }
 
