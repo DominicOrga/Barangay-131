@@ -24,7 +24,6 @@ import javah.util.BarangayUtils;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.function.Consumer;
@@ -149,7 +148,8 @@ public class InformationControl {
 
     /**
      * A volatile list which contains the all the report IDs available to be
-     * displayed in the list paging with regards to the search filter.
+     * displayed in the list paging with regards to the search filter. The IDs
+     * stored in the list will determine the allowed reports to be displayed.
      */
     private List<String> mReportIDs;
 
@@ -188,9 +188,9 @@ public class InformationControl {
 
     /**
      * An array that contains the first report IDs per page. The index will
-     * serve as the representation of the pages. That is index 0 = page 1.
-     * The element will be the index of the mReportIDs, signifying the first
-     * IDs to display on a specified page.
+     * serve as the representation of each page report start. That is,
+     * index 0 = page 1. The element will be the index of the mReportIDs,
+     * signifying the first IDs to display on a specified page.
      */
     private List<Integer> mFirstReportIDIndexPerPage;
 
@@ -276,8 +276,6 @@ public class InformationControl {
 
         mReportIDs = keywords.isEmpty() ?
                 mActualReportIDs : BarangayUtils.getFilteredIDs(mActualReportIDs, mReportNames, keywords.split(" "));
-
-        System.out.println(mReportIDs);
 
         setReportToLabelSelectedIndex(mLabelSelectedIndex);
         updateListPaging(false);
