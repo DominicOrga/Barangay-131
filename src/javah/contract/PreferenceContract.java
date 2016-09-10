@@ -1,16 +1,20 @@
 package javah.contract;
 
-import javah.Main;
-
 /**
  * This class holds the keys and the context of the system's preference. The
  * Context where the preference will be stored. This is unfortunate, it turns
- * out that preferences are stored in the
- * registry - /HKEY_LOCAL_MACHINE/Software/Javasoft and a new key named 'Pref'
- * must be created for the preferences to work. Also, context must be an empty
- * string so that 'Pref' will be used, since other strings fail to work.
+ * out that preferences are stored in the registry -
+ * /HKEY_LOCAL_MACHINE/Software/Javasoft and a new key named 'Pref' must be
+ * created for the preferences to work. Also, context must be an empty string
+ * so that 'Pref' will be used, since other strings fail to work.
  */
 public class PreferenceContract {
+
+    /**
+     * A key to make sure that the barangay agents are initialized during the first
+     * installation of the application.
+     */
+    public static final String BARANGAY_AGENTS_INITIALIZED = "barangay_agents_initialized";
 
     public static final String CHAIRMAN_FIRST_NAME = "chairman_first_name";
     public static final String CHAIRMAN_MIDDLE_NAME = "chairman_middle_name";
@@ -102,6 +106,4 @@ public class PreferenceContract {
         KAGAWAD_NAMES[6][2] = KAGAWAD_7_LAST_NAME;
         KAGAWAD_NAMES[6][3] = KAGAWAD_7_AUXILIARY;
     }
-
-
 }
