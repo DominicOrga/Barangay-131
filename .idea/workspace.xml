@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_barangay_agent.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_barangay_agent.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/MainControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,11 +64,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ConfirmationDialogControl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PhotoshopControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="335" column="35" selection-start-line="335" selection-start-column="35" selection-end-line="335" selection-end-column="35" />
+              <folding>
+                <element signature="docComment;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mUploadedImage#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mCapturedImage#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mModifiedImage#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mDraggableRectangle#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mWebcamPanel#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mWebcamNode#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;field#mIsImageCaptured#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="method#initialize#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="e#4615#4716#0" expanded="false" />
+                <element signature="e#5259#5360#0" expanded="false" />
+                <element signature="e#5997#6099#0" expanded="false" />
+                <element signature="e#6793#6898#0" expanded="false" />
+                <element signature="docComment;method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="e#8954#8978#0" expanded="false" />
+                <element signature="e#9657#9742#0" expanded="false" />
+                <element signature="e#10603#10705#0" expanded="false" />
+                <element signature="e#11909#11963#0" expanded="false" />
+                <element signature="docComment;method#onFilterSignatureCheckboxClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="method#onMirrorCamCheckBoxClicked#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="docComment;method#setClient#0;class#PhotoshopControl#0" expanded="false" />
+                <element signature="e#14789#14832#0" expanded="false" />
+                <element signature="e#15889#15967#0" expanded="false" />
+                <element signature="e#16349#16412#0" expanded="false" />
+                <element signature="e#18632#18686#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfirmationDialogControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="721">
-              <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+            <state relative-caret-position="39">
+              <caret line="128" column="47" selection-start-line="128" selection-start-column="47" selection-end-line="128" selection-end-column="47" />
               <folding>
                 <element signature="docComment;class#ConfirmationDialogControl#0" expanded="false" />
                 <element signature="docComment;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
@@ -83,21 +120,7 @@
                 <element signature="docComment;method#onCancelButtonClicked#0;class#ConfirmationDialogControl#0" expanded="false" />
                 <element signature="docComment;method#setListener#0;class#ConfirmationDialogControl#0" expanded="false" />
                 <element signature="docComment;method#setClient#0;class#ConfirmationDialogControl#0" expanded="false" />
-                <element signature="method#setClient#0;class#ConfirmationDialogControl#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scene_confirmation_dialog.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -105,8 +128,8 @@
       <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1249">
-              <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
+            <state relative-caret-position="205">
+              <caret line="316" column="61" selection-start-line="316" selection-start-column="61" selection-end-line="316" selection-end-column="61" />
               <folding>
                 <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
@@ -128,212 +151,29 @@
                 <element signature="method#onEditResidentButtonClicked#0;class#5088:5962" expanded="false" />
                 <element signature="method#onViewButtonClicked#0;class#6343:8963" expanded="false" />
                 <element signature="method#OnRequestBarangayClearanceSnapshot#0;class#6343:8963" expanded="false" />
-                <element signature="class#9832:12261" expanded="false" />
-                <element signature="method#onAcceptButtonClicked#0;class#9832:12261" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#9832:12261" expanded="false" />
-                <element signature="method#onFinished#0;class#12610:15190" expanded="false" />
-                <element signature="e#14807#14891#0" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#17340:18814" expanded="false" />
-                <element signature="e#17549#17643#0" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#17340:18814" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#19348:21405" expanded="false" />
-                <element signature="method#onCreateButtonClicked#0;class#19348:21405" expanded="false" />
-                <element signature="class#21761:22334" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#21761:22334" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#21761:22334" expanded="false" />
-                <element signature="class#22717:23338" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#22717:23338" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#22717:23338" expanded="false" />
+                <element signature="method#onAcceptButtonClicked#0;class#9832:12517" expanded="false" />
+                <element signature="method#onFinished#0;class#12866:15446" expanded="false" />
+                <element signature="e#15063#15147#0" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#17635:19109" expanded="false" />
+                <element signature="e#17844#17938#0" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#17635:19109" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#19643:21700" expanded="false" />
+                <element signature="method#onCreateButtonClicked#0;class#19643:21700" expanded="false" />
+                <element signature="class#22056:22629" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#22056:22629" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#22056:22629" expanded="false" />
+                <element signature="class#23012:23633" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#23012:23633" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#23012:23633" expanded="false" />
                 <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-                <element signature="e#28138#28242#0" expanded="false" />
+                <element signature="e#28433#28537#0" expanded="false" />
                 <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
                 <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BarangayAgentControl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-              <folding>
-                <element signature="docComment;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onFinished#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mRootPane#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mScrollPane#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mKagawadPane#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mChmNameError#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mSecNameError#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mTrsrNameError#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mKagawadNameError#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mListener#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;field#mPreferences#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#initialize#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onChmUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="e#20232#20270#0" expanded="false" />
-                <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#setDisable#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
-                <element signature="docComment;method#setPreferenceModel#0;class#BarangayAgentControl#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="577">
-              <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PhotoshopControl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="561" column="0" selection-start-line="561" selection-start-column="0" selection-end-line="561" selection-end-column="0" />
-              <folding>
-                <element signature="docComment;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;method#onAcceptButtonClicked#0;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;method#onCancelButtonClicked#0;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mUploadedImage#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mCapturedImage#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mModifiedImage#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mDraggableRectangle#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mWebcamPanel#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mWebcamNode#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;field#mIsImageCaptured#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="method#initialize#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="e#4485#4586#0" expanded="false" />
-                <element signature="e#5129#5230#0" expanded="false" />
-                <element signature="e#5867#5969#0" expanded="false" />
-                <element signature="e#6663#6768#0" expanded="false" />
-                <element signature="docComment;method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="e#8824#8848#0" expanded="false" />
-                <element signature="e#9527#9612#0" expanded="false" />
-                <element signature="e#10473#10575#0" expanded="false" />
-                <element signature="e#11779#11833#0" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;method#onFilterSignatureCheckboxClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="method#onMirrorCamCheckBoxClicked#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="docComment;method#setClient#0;class#PhotoshopControl#0" expanded="false" />
-                <element signature="e#14621#14664#0" expanded="false" />
-                <element signature="e#15721#15799#0" expanded="false" />
-                <element signature="e#16181#16244#0" expanded="false" />
-                <element signature="e#18464#18518#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="462" column="39" selection-start-line="462" selection-start-column="39" selection-end-line="462" selection-end-column="39" />
-              <folding>
-                <element signature="docComment;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;class#OnResidentControlListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onNewResidentButtonClicked#0;class#OnResidentControlListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onEditResidentButtonClicked#0;class#OnResidentControlListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#OnResidentControlListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mSearchField#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mAddress2Label#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mAddress1#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mAddress2#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mBackPageButton#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mNextPageButton#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mNoResidentSelectedPane#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mDatabaseModel#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mCacheModel#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentIDs#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentNames#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentSelectedIndex#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentLabels#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mLabelSelectedIndex#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mCurrentPage#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mPageCount#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentCount#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mResidentSelected#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;field#mListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#initialize#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#initialize#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#onSearchButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#onSearchFieldKeyPressed#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#onBackPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#onNextPageButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onNewResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onEditResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#onDeleteResidentButtonClicked#0;class#ResidentControl#0" expanded="false" />
-                <element signature="e#12966#12967#0" expanded="true" />
-                <element signature="e#13023#13024#0" expanded="true" />
-                <element signature="docComment;method#setResidentToLabelSelected#0;class#ResidentControl#0" expanded="false" />
-                <element signature="e#14229#14307#0" expanded="false" />
-                <element signature="e#17355#17404#0" expanded="false" />
-                <element signature="docComment;method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#updateCurrentPage#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#updateListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#setListener#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#setDatabaseModel#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#setCacheModel#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#deleteSelectedResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#createResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#createResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="e#22573#22653#0" expanded="false" />
-                <element signature="docComment;method#updateResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#updateResident#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#setBlurListPaging#0;class#ResidentControl#0" expanded="false" />
-                <element signature="docComment;method#resetCachedData#0;class#ResidentControl#0" expanded="false" />
-                <element signature="method#resetCachedData#0;class#ResidentControl#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -412,10 +252,10 @@
         <option value="$PROJECT_DIR$/src/javah/util/NodeNameHandler.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml" />
-        <option value="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" />
       </list>
     </option>
   </component>
@@ -1701,26 +1541,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="721">
-          <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
-          <folding>
-            <element signature="docComment;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#onCancelButtonClicked#0;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#onConfirmButtonClicked#0;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;field#mWarningText#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#onConfirmButtonClicked#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#onCancelButtonClicked#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#setListener#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="docComment;method#setClient#0;class#ConfirmationDialogControl#0" expanded="false" />
-            <element signature="method#setClient#0;class#ConfirmationDialogControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -1802,48 +1622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="561" column="0" selection-start-line="561" selection-start-column="0" selection-end-line="561" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;method#onAcceptButtonClicked#0;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;method#onCancelButtonClicked#0;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mUploadedImage#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mCapturedImage#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mModifiedImage#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mDraggableRectangle#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mWebcamPanel#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mWebcamNode#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;field#mIsImageCaptured#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="method#initialize#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="e#4485#4586#0" expanded="false" />
-            <element signature="e#5129#5230#0" expanded="false" />
-            <element signature="e#5867#5969#0" expanded="false" />
-            <element signature="e#6663#6768#0" expanded="false" />
-            <element signature="docComment;method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="e#8824#8848#0" expanded="false" />
-            <element signature="e#9527#9612#0" expanded="false" />
-            <element signature="e#10473#10575#0" expanded="false" />
-            <element signature="e#11779#11833#0" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;method#onFilterSignatureCheckboxClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="method#onMirrorCamCheckBoxClicked#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="docComment;method#setClient#0;class#PhotoshopControl#0" expanded="false" />
-            <element signature="e#14621#14664#0" expanded="false" />
-            <element signature="e#15721#15799#0" expanded="false" />
-            <element signature="e#16181#16244#0" expanded="false" />
-            <element signature="e#18464#18518#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="577">
@@ -1852,64 +1630,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1249">
-          <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
-          <folding>
-            <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mUserLabel#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentMenu#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mConfirmationDialogScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mPhotoshopScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mBarangayIDReportScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mConfirmationDialogControl#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#MENU_RESIDENT#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;field#mRectAnimTransitioner#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
-            <element signature="e#3929#3969#0" expanded="false" />
-            <element signature="method#onNewResidentButtonClicked#0;class#5088:5962" expanded="false" />
-            <element signature="method#onEditResidentButtonClicked#0;class#5088:5962" expanded="false" />
-            <element signature="method#onViewButtonClicked#0;class#6343:8963" expanded="false" />
-            <element signature="method#OnRequestBarangayClearanceSnapshot#0;class#6343:8963" expanded="false" />
-            <element signature="class#9832:12261" expanded="false" />
-            <element signature="method#onAcceptButtonClicked#0;class#9832:12261" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#9832:12261" expanded="false" />
-            <element signature="method#onFinished#0;class#12610:15190" expanded="false" />
-            <element signature="e#14807#14891#0" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#17340:18814" expanded="false" />
-            <element signature="e#17549#17643#0" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#17340:18814" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#19348:21405" expanded="false" />
-            <element signature="method#onCreateButtonClicked#0;class#19348:21405" expanded="false" />
-            <element signature="class#21761:22334" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#21761:22334" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#21761:22334" expanded="false" />
-            <element signature="class#22717:23338" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#22717:23338" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#22717:23338" expanded="false" />
-            <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="e#28138#28242#0" expanded="false" />
-            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
-            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
-            <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
+        <state relative-caret-position="946">
+          <caret line="425" column="61" selection-start-line="425" selection-start-column="61" selection-end-line="425" selection-end-column="61" />
           <folding>
             <element signature="docComment;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
@@ -1934,6 +1658,9 @@
             <element signature="docComment;field#mListener#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;field#mPreferences#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;method#initialize#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#initialize#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="e#8588#8670#0" expanded="false" />
+            <element signature="e#9492#9571#0" expanded="false" />
             <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
@@ -1945,6 +1672,7 @@
             <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="e#20232#20270#0" expanded="false" />
             <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;method#setDisable#0;class#BarangayAgentControl#0" expanded="false" />
@@ -1955,6 +1683,115 @@
             <element signature="docComment;method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
             <element signature="docComment;method#setPreferenceModel#0;class#BarangayAgentControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="316" column="61" selection-start-line="316" selection-start-column="61" selection-end-line="316" selection-end-column="61" />
+          <folding>
+            <element signature="docComment;field#mPopupStackPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMainGridPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mUserLabel#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentMenu#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mConfirmationDialogScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mPhotoshopScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mBarangayIDReportScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mConfirmationDialogControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#MENU_RESIDENT#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mRectAnimTransitioner#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
+            <element signature="e#3929#3969#0" expanded="false" />
+            <element signature="method#onNewResidentButtonClicked#0;class#5088:5962" expanded="false" />
+            <element signature="method#onEditResidentButtonClicked#0;class#5088:5962" expanded="false" />
+            <element signature="method#onViewButtonClicked#0;class#6343:8963" expanded="false" />
+            <element signature="method#OnRequestBarangayClearanceSnapshot#0;class#6343:8963" expanded="false" />
+            <element signature="method#onAcceptButtonClicked#0;class#9832:12517" expanded="false" />
+            <element signature="method#onFinished#0;class#12866:15446" expanded="false" />
+            <element signature="e#15063#15147#0" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#17635:19109" expanded="false" />
+            <element signature="e#17844#17938#0" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#17635:19109" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#19643:21700" expanded="false" />
+            <element signature="method#onCreateButtonClicked#0;class#19643:21700" expanded="false" />
+            <element signature="class#22056:22629" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#22056:22629" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#22056:22629" expanded="false" />
+            <element signature="class#23012:23633" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#23012:23633" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#23012:23633" expanded="false" />
+            <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
+            <element signature="e#28433#28537#0" expanded="false" />
+            <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/PhotoshopControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="335" column="35" selection-start-line="335" selection-start-column="35" selection-end-line="335" selection-end-column="35" />
+          <folding>
+            <element signature="docComment;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;class#OnPhotoshopListener#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mUploadedImage#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mCapturedImage#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mModifiedImage#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mDraggableRectangle#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mWebcamPanel#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mWebcamNode#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;field#mIsImageCaptured#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="method#initialize#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="method#onAcceptButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="e#4615#4716#0" expanded="false" />
+            <element signature="e#5259#5360#0" expanded="false" />
+            <element signature="e#5997#6099#0" expanded="false" />
+            <element signature="e#6793#6898#0" expanded="false" />
+            <element signature="docComment;method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="method#onCaptureButtonClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="e#8954#8978#0" expanded="false" />
+            <element signature="e#9657#9742#0" expanded="false" />
+            <element signature="e#10603#10705#0" expanded="false" />
+            <element signature="e#11909#11963#0" expanded="false" />
+            <element signature="docComment;method#onFilterSignatureCheckboxClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="method#onMirrorCamCheckBoxClicked#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="docComment;method#setClient#0;class#PhotoshopControl#0" expanded="false" />
+            <element signature="e#14789#14832#0" expanded="false" />
+            <element signature="e#15889#15967#0" expanded="false" />
+            <element signature="e#16349#16412#0" expanded="false" />
+            <element signature="e#18632#18686#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="39">
+          <caret line="128" column="47" selection-start-line="128" selection-start-column="47" selection-end-line="128" selection-end-column="47" />
+          <folding>
+            <element signature="docComment;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#onCancelButtonClicked#0;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#onConfirmButtonClicked#0;class#OnConfirmationDialogListener#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;field#mWarningText#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#onConfirmButtonClicked#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#onCancelButtonClicked#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#ConfirmationDialogControl#0" expanded="false" />
+            <element signature="docComment;method#setClient#0;class#ConfirmationDialogControl#0" expanded="false" />
           </folding>
         </state>
       </provider>

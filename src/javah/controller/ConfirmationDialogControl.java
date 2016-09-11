@@ -115,11 +115,11 @@ public class ConfirmationDialogControl {
             case CLIENT_BUSINESS_DELETION:
 
                 mActionLabel.setText(client == CLIENT_RESIDENT_DELETION ? "Delete Resident" : "Delete Business");
+                mActionIcon.setImage(new Image("res/ic_trash_bin.png"));
 
                 mWarningText.setText("\nDeleted " + (client == CLIENT_RESIDENT_DELETION ? "resident" : "business") +
                         " cannot be recovered.");
 
-                mActionIcon.setImage(new Image("res/ic_trash_bin.png"));
 
                 mMessage.setText("Are you sure?");
                 mWarningText.setVisible(true);
@@ -132,7 +132,9 @@ public class ConfirmationDialogControl {
 
             case CLIENT_WEBCAM_FAILURE:
                 mActionLabel.setText("Webcam Failure");
-                mMessage.setText("Webcam cannot be initialized. Either no webcam is connected or is being used by " +
+                mActionIcon.setImage(new Image("res/ic_error.png"));
+
+                mMessage.setText("Webcam cannot be initialized.\nEither no webcam is connected or it is being used by " +
                         "another application");
 
                 mWarningText.setVisible(false);

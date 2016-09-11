@@ -55,6 +55,11 @@ public class PhotoshopControl {
          *        The client requesting the image.
          */
         void onCancelButtonClicked(byte client);
+
+        /**
+         * Tell the client that the webcam failed to initialize.
+         */
+        void onWebcamInitializeError();
     }
 
     /* The possible clients requesting a photo from the PhotoshopControl. */
@@ -330,6 +335,8 @@ public class PhotoshopControl {
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked(mClient);
 
+        mRootPane.setDisable(false);
+
         // Remove any photo placed in mPhotoView.
         mPhotoView.setImage(null);
 
@@ -544,14 +551,9 @@ public class PhotoshopControl {
             } catch (Exception e) {
                 e.printStackTrace();
 
-                JOptionPane.showConfirmDialog(null,
-                        "Camera is open in another Application",
-                        "Warning",
-                        JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.PLAIN_MESSAGE);
-
-                // Close this dialog.
-                mListener.onCancelButtonClicked(mClient);
+                // Disable the photoshop while the confirmation dialog is displayed.
+                mListener.onWebcamInitializeError();
+                mRootPane.setDisable(true);
             }
         }
     }

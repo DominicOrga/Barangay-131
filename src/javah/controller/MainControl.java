@@ -311,6 +311,12 @@ public class MainControl {
                         break;
                 }
             }
+
+            @Override
+            public void onWebcamInitializeError() {
+                showPopupScene(mConfirmationDialogScene, true);
+                mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE);
+            }
         });
 
         // Initialize the barangay agent setup dialog.
@@ -394,7 +400,7 @@ public class MainControl {
                         break;
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
                         hidePopupScene(mConfirmationDialogScene, true);
-                        // todo
+                        mPhotoshopControl.onCancelButtonClicked(null);
                 }
 
             }
