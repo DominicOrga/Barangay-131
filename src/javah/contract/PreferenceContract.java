@@ -12,7 +12,9 @@ public class PreferenceContract {
 
     /**
      * A key to make sure that the barangay agents are initialized during the first
-     * installation of the application.
+     * installation of the application. The value can either be 0 or 1, where 0
+     * represents that the barangay agents have not been initialized yet. Otherwise,
+     * 1 is the value.
      */
     public static final String BARANGAY_AGENTS_INITIALIZED = "barangay_agents_initialized";
 

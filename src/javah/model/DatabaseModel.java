@@ -406,6 +406,7 @@ public class DatabaseModel {
         return null;
     }
 
+
     /**
      * Create a barangay clearance and store it into the database.
      *
@@ -491,6 +492,154 @@ public class DatabaseModel {
             dbConnection.close();
 
             return barangayClearance.getID();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    /**
+     * Create a business and store it in the database.
+     *
+     * @param business
+     *        The business data holding containing the information about the business to be
+     *        created.
+     *
+     * @return the generated business ID of the business. If the business was not created,
+     *         then return null.
+     */
+    public String createBusiness(Business business) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            String id = generateID(BusinessEntry.TABLE_NAME);
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, " +
+                                    "%s, %s, %s, %s, %s, %s, %s) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            BusinessEntry.TABLE_NAME,
+                            BusinessEntry.COLUMN_ID,
+                            BusinessEntry.COLUMN_BUSINESS_NAME,
+                            BusinessEntry.COLUMN_BUSINESS_TYPE,
+                            BusinessEntry.COLUMN_BUSINESS_ADDRESS,
+                            BusinessEntry.COLUMN_OWNER_1_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_2_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_3_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_4_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_5_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_AUXILIARY)
+            );
+
+            statement.setString(1, id);
+            statement.setString(2, business.getName());
+            statement.setString(3, business.getType());
+            statement.setString(4, business.getAddress());
+
+            int x = 5;
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 4; j++)
+                    statement.setString(x++, business.getOwners()[i][j]);
+
+            statement.execute();
+            statement.close();
+            dbConnection.close();
+
+            return id;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Create a business clearance and store it into the database.
+     *
+     * @param businessClearance
+     *        The business clearance to be created.
+     *
+     * @return the generated ID for the business clearance. If the business clearance creation
+     *         fails, then return null.
+     */
+    public String createBusinessClearance(BusinessClearance businessClearance) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            BusinessClearanceEntry.TABLE_NAME,
+                            BusinessClearanceEntry.COLUMN_ID,
+                            BusinessClearanceEntry.COLUMN_DATE_ISSUED,
+                            BusinessClearanceEntry.COLUMN_DATE_VALID,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_NAME,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_ID,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_NAME,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_TYPE,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_ADDRESS,
+                            BusinessClearanceEntry.COLUMN_OWNERS,
+                            BusinessClearanceEntry.COLUMN_CLIENT)
+            );
+
+            statement.setString(1, businessClearance.getID());
+            statement.setTimestamp(2, businessClearance.getDateIssued());
+            statement.setTimestamp(3, businessClearance.getDateValid());
+            statement.setString(4, businessClearance.getChmName());
+            statement.setString(5, businessClearance.getChmSignature());
+            statement.setString(7, businessClearance.getSecName());
+            statement.setString(8, businessClearance.getSecSignature());
+            statement.setString(10, businessClearance.getID());
+            statement.setString(11, businessClearance.getBusinessName());
+            statement.setString(12, businessClearance.getBusinessType());
+            statement.setString(13, businessClearance.getBusinessAddress());
+            statement.setString(14, businessClearance.getOwners());
+            statement.setString(15, businessClearance.getClient());
+
+            double[] signatureDimension = businessClearance.getChmSignatureDimension();
+            statement.setString(6, signatureDimension != null ?
+                    String.format("%.5f %.5f %.5f %.5f",
+                            signatureDimension[0],
+                            signatureDimension[1],
+                            signatureDimension[2],
+                            signatureDimension[3]) : null);
+
+            signatureDimension = businessClearance.getSecSignatureDimension();
+            statement.setString(9, signatureDimension != null ?
+                    String.format("%.5f %.5f %.5f %.5f",
+                            signatureDimension[0],
+                            signatureDimension[1],
+                            signatureDimension[2],
+                            signatureDimension[3]) : null);
+
+            statement.execute();
+            statement.close();
+            dbConnection.close();
+
+            return businessClearance.getID();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -733,6 +882,160 @@ public class DatabaseModel {
     }
 
     /**
+     * Get the specified business from the database.
+     *
+     * @param id
+     *        The ID of the business to be fetched.
+     *
+     * @return the business having the specified ID. Return null if no match is found.
+     */
+    public Business getBusiness(String id) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, " +
+                                    "%s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+                            BusinessEntry.COLUMN_ID,
+                            BusinessEntry.COLUMN_BUSINESS_NAME,
+                            BusinessEntry.COLUMN_BUSINESS_TYPE,
+                            BusinessEntry.COLUMN_BUSINESS_ADDRESS,
+                            BusinessEntry.COLUMN_OWNER_1_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_2_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_3_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_4_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_5_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_AUXILIARY,
+                            BusinessEntry.TABLE_NAME,
+                            BusinessEntry.COLUMN_ID)
+            );
+
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Business business = new Business();
+
+                business.setID(resultSet.getString(BusinessEntry.COLUMN_ID));
+                business.setName(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_NAME));
+                business.setType(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_TYPE));
+                business.setAddress(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_ADDRESS));
+
+                String[][] owners = new String[5][4];
+                for (int i = 0; i < 5; i++)
+                    for (int j = 0; j < 4; j++)
+                        owners[i][j] = resultSet.getString(BusinessEntry.OWNER_NAMES[i][j]);
+
+                business.setOwners(owners);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return business;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a specific business ID from the database.
+     *
+     * @param id
+     *        The ID of the barangay ID to be fetched.
+     *
+     * @return the barangay ID having the specified ID. Return null if no match is found.
+     */
+    public BusinessClearance getBusinessClearance(String id) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s " +
+                                    "FROM %s WHERE %s = ?",
+                            BusinessClearanceEntry.COLUMN_ID,
+                            BusinessClearanceEntry.COLUMN_DATE_ISSUED,
+                            BusinessClearanceEntry.COLUMN_DATE_VALID,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_NAME,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
+                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_ID,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_NAME,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_TYPE,
+                            BusinessClearanceEntry.COLUMN_BUSINESS_ADDRESS,
+                            BusinessClearanceEntry.COLUMN_OWNERS,
+                            BusinessClearanceEntry.COLUMN_CLIENT
+                    )
+            );
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BusinessClearance businessClearance = new BusinessClearance();
+
+                businessClearance.setID(resultSet.getString(BusinessClearanceEntry.COLUMN_ID));
+                businessClearance.setDateIssued(resultSet.getTimestamp(BusinessClearanceEntry.COLUMN_DATE_ISSUED));
+                businessClearance.setDateValid(resultSet.getTimestamp(BusinessClearanceEntry.COLUMN_DATE_VALID));
+                businessClearance.setChmName(resultSet.getString(BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME));
+                businessClearance.setChmSignature(resultSet.getString(BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE));
+                businessClearance.setSecName(resultSet.getString(BusinessClearanceEntry.COLUMN_SECRETARY_NAME));
+                businessClearance.setSecSignature(resultSet.getString(BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE));
+                businessClearance.setBusinessID(resultSet.getString(BusinessClearanceEntry.COLUMN_BUSINESS_ID));
+                businessClearance.setBusinessName(resultSet.getString(BusinessClearanceEntry.COLUMN_BUSINESS_NAME));
+                businessClearance.setBusinessType(resultSet.getString(BusinessClearanceEntry.COLUMN_BUSINESS_TYPE));
+                businessClearance.setBusinessAddress(resultSet.getString(BusinessClearanceEntry.COLUMN_BUSINESS_ADDRESS));
+                businessClearance.setOwners(resultSet.getString(BusinessClearanceEntry.COLUMN_OWNERS));
+                businessClearance.setClient(resultSet.getString(BusinessClearanceEntry.COLUMN_CLIENT));
+
+                String signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
+                businessClearance.setChmSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
+
+                signatureDimension = resultSet.getString(BarangayClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION);
+                businessClearance.setSecSignatureDimension(signatureDimension != null ?
+                        Arrays.asList(signatureDimension.split(" ")).stream().mapToDouble(Double::parseDouble).toArray() : null);
+
+                dbConnection.close();
+                preparedStatement.close();
+                resultSet.close();
+
+                return businessClearance;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Fetch all the specified barangay ID reusable data properties. Get the signature of the
      * resident from his/her latest barangay ID. Essential for determining the path, and
      * coordinate and dimension of the resulting barangay ID which will be used when creating a
@@ -779,7 +1082,8 @@ public class DatabaseModel {
                 preparedStatement.close();
                 resultSet.close();
 
-                // If no signature is stores in the latest barangay ID of the resident, then return null.
+                // If no signature is stored in the latest barangay ID of the resident, then
+                // return null.
                 if (signaturePath == null || signaturePath == "") return null;
 
                 String[] dimensionParsed = signatureDimension.split(" ");
@@ -893,6 +1197,72 @@ public class DatabaseModel {
     }
 
     /**
+     * Update a business information from the database.
+     *
+     * @param business
+     *        The business with the information to be updated.
+     */
+    public void updateBusiness(Business business) {
+
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            PreparedStatement statement = dbConnection.prepareStatement(
+                    String.format("UPDATE %s SET " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ?, %s = ?, " +
+                                    "%s = ?, %s = ?, %s = ? " +
+                                    "WHERE %s = ?",
+                            BusinessEntry.TABLE_NAME,
+                            BusinessEntry.COLUMN_BUSINESS_NAME,
+                            BusinessEntry.COLUMN_BUSINESS_TYPE,
+                            BusinessEntry.COLUMN_BUSINESS_ADDRESS,
+                            BusinessEntry.COLUMN_OWNER_1_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_1_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_2_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_2_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_3_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_3_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_4_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_4_AUXILIARY,
+                            BusinessEntry.COLUMN_OWNER_5_FIRST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_MIDDLE_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_LAST_NAME,
+                            BusinessEntry.COLUMN_OWNER_5_AUXILIARY,
+                            BusinessEntry.COLUMN_ID));
+
+            statement.setString(1, business.getName());
+            statement.setString(2, business.getType());
+            statement.setString(3, business.getAddress());
+
+            int x = 4;
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 4; j++)
+                    statement.setString(x++, business.getOwners()[i][j]);
+
+            statement.setString(24, business.getID());
+
+            statement.executeUpdate();
+            statement.close();
+            dbConnection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Delete a resident record from the database.
      *
      * @param residentId
@@ -911,6 +1281,35 @@ public class DatabaseModel {
             );
 
             preparedStatement.setString(1, residentId);
+            preparedStatement.executeUpdate();
+
+            dbConnection.close();
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete the specified business record from the database.
+     *
+     * @param businessID
+     *        The ID of the business to be deleted.
+     */
+    public void deleteBusiness(String businessID) {
+        try {
+            Connection dbConnection = mDataSource.getConnection();
+
+            // Use String.format as a workaround to the bug when using parameterized query.
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(
+                    String.format("DELETE FROM %s WHERE %s = ?",
+                            BusinessEntry.TABLE_NAME,
+                            BusinessEntry.COLUMN_ID
+                    )
+            );
+
+            preparedStatement.setString(1, businessID);
             preparedStatement.executeUpdate();
 
             dbConnection.close();

@@ -75,37 +75,47 @@ public class DatabaseContract {
         public static final String COLUMN_OWNER_1_FIRST_NAME = "owner_1_first_name";
         public static final String COLUMN_OWNER_1_MIDDLE_NAME = "owner_1_middle_name";
         public static final String COLUMN_OWNER_1_LAST_NAME = "owner_1_last_name";
-        public static final String COLUMN_OWNER_2_FIRST_NAME = "owner_1_first_name";
-        public static final String COLUMN_OWNER_2_MIDDLE_NAME = "owner_1_middle_name";
-        public static final String COLUMN_OWNER_2_LAST_NAME = "owner_1_last_name";
-        public static final String COLUMN_OWNER_3_FIRST_NAME = "owner_1_first_name";
-        public static final String COLUMN_OWNER_3_MIDDLE_NAME = "owner_1_middle_name";
-        public static final String COLUMN_OWNER_3_LAST_NAME = "owner_1_last_name";
-        public static final String COLUMN_OWNER_4_FIRST_NAME = "owner_1_first_name";
-        public static final String COLUMN_OWNER_4_MIDDLE_NAME = "owner_1_middle_name";
-        public static final String COLUMN_OWNER_4_LAST_NAME = "owner_1_last_name";
-        public static final String COLUMN_OWNER_5_FIRST_NAME = "owner_1_first_name";
-        public static final String COLUMN_OWNER_5_MIDDLE_NAME = "owner_1_middle_name";
-        public static final String COLUMN_OWNER_5_LAST_NAME = "owner_1_last_name";
+        public static final String COLUMN_OWNER_1_AUXILIARY = "owner_1_auxiliary";
+        public static final String COLUMN_OWNER_2_FIRST_NAME = "owner_2_first_name";
+        public static final String COLUMN_OWNER_2_MIDDLE_NAME = "owner_2_middle_name";
+        public static final String COLUMN_OWNER_2_LAST_NAME = "owner_2_last_name";
+        public static final String COLUMN_OWNER_2_AUXILIARY = "owner_2_auxiliary";
+        public static final String COLUMN_OWNER_3_FIRST_NAME = "owner_3_first_name";
+        public static final String COLUMN_OWNER_3_MIDDLE_NAME = "owner_3_middle_name";
+        public static final String COLUMN_OWNER_3_LAST_NAME = "owner_3_last_name";
+        public static final String COLUMN_OWNER_3_AUXILIARY = "owner_3_auxiliary";
+        public static final String COLUMN_OWNER_4_FIRST_NAME = "owner_4_first_name";
+        public static final String COLUMN_OWNER_4_MIDDLE_NAME = "owner_4_middle_name";
+        public static final String COLUMN_OWNER_4_LAST_NAME = "owner_4_last_name";
+        public static final String COLUMN_OWNER_4_AUXILIARY = "owner_4_auxiliary";
+        public static final String COLUMN_OWNER_5_FIRST_NAME = "owner_5_first_name";
+        public static final String COLUMN_OWNER_5_MIDDLE_NAME = "owner_5_middle_name";
+        public static final String COLUMN_OWNER_5_LAST_NAME = "owner_5_last_name";
+        public static final String COLUMN_OWNER_5_AUXILIARY = "owner_5_auxiliary";
 
-        public static final String[][] OWNER_NAMES = new String[5][3];
+        public static final String[][] OWNER_NAMES = new String[5][4];
 
         static {
             OWNER_NAMES[0][0] = COLUMN_OWNER_1_FIRST_NAME;
             OWNER_NAMES[0][1] = COLUMN_OWNER_1_MIDDLE_NAME;
             OWNER_NAMES[0][2] = COLUMN_OWNER_1_LAST_NAME;
+            OWNER_NAMES[0][3] = COLUMN_OWNER_1_AUXILIARY;
             OWNER_NAMES[1][0] = COLUMN_OWNER_2_FIRST_NAME;
             OWNER_NAMES[1][1] = COLUMN_OWNER_2_MIDDLE_NAME;
             OWNER_NAMES[1][2] = COLUMN_OWNER_2_LAST_NAME;
+            OWNER_NAMES[1][3] = COLUMN_OWNER_2_AUXILIARY;
             OWNER_NAMES[2][0] = COLUMN_OWNER_3_FIRST_NAME;
             OWNER_NAMES[2][1] = COLUMN_OWNER_3_MIDDLE_NAME;
             OWNER_NAMES[2][2] = COLUMN_OWNER_3_LAST_NAME;
+            OWNER_NAMES[2][3] = COLUMN_OWNER_3_AUXILIARY;
             OWNER_NAMES[3][0] = COLUMN_OWNER_4_FIRST_NAME;
             OWNER_NAMES[3][1] = COLUMN_OWNER_4_MIDDLE_NAME;
             OWNER_NAMES[3][2] = COLUMN_OWNER_4_LAST_NAME;
+            OWNER_NAMES[3][2] = COLUMN_OWNER_4_AUXILIARY;
             OWNER_NAMES[4][0] = COLUMN_OWNER_5_FIRST_NAME;
             OWNER_NAMES[4][1] = COLUMN_OWNER_5_MIDDLE_NAME;
             OWNER_NAMES[4][2] = COLUMN_OWNER_5_LAST_NAME;
+            OWNER_NAMES[4][3] = COLUMN_OWNER_5_AUXILIARY;
         }
 
     }
@@ -117,6 +127,7 @@ public class DatabaseContract {
         public static final String COLUMN_BUSINESS_NAME = "business_name";
         public static final String COLUMN_BUSINESS_TYPE = "business_type";
         public static final String COLUMN_BUSINESS_ADDRESS = "business_address";
+        public static final String COLUMN_CLIENT = "client";
         public static final String COLUMN_OWNERS = "owners";
         public static final String COLUMN_DATE_ISSUED = "date_issued";
         public static final String COLUMN_DATE_VALID = "date_valid";

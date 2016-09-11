@@ -12,12 +12,27 @@ import java.util.Arrays;
  */
 public class DraggableRectangle extends Rectangle {
 
+    /* The radius of the handles to manipulate the rectangle. */
     protected double handleRadius = 10;
 
+    /* Circles used to manipulate the rectangle. */
     protected Circle mResizeHandleNW, mResizeHandleSE, mMoveHandle;
 
+    /**
+     * The aspect ratio of the rectangle, so that resizing the rectangle will always
+     * maintain the given ratio.
+     */
     protected double mAspectRatio;
 
+    /**
+     * A constructor that takes the containing boundary of the rectangle. Initializes
+     * the handles and binds it to this rectangle.
+     *
+     * @param boundaryWidth
+     *        The width boundary of this rectangle's parent node.
+     * @param boundaryHeight
+     *        This height boundary of this rectangle's parent node.
+     */
     public DraggableRectangle(int boundaryWidth, int boundaryHeight) {
         super(0, 0, 50, 50);
 
@@ -115,8 +130,11 @@ public class DraggableRectangle extends Rectangle {
 
     /**
      * Assign the aspect ratio of the rectangle for resizing.
+     *
      * @param width
+     *        The width of the rectangle.
      * @param height
+     *        The height of the rectangle.
      */
     public void setAspectRatio(double width, double height) {
         mAspectRatio = width / height;

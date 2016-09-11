@@ -7,8 +7,11 @@ import java.sql.Timestamp;
  */
 public class BusinessClearance {
 
-    /* Holds the ID of this business clerance. */
+    /* Holds the ID of this business clearance. */
     private String mID;
+
+    /* Holds the client of this business clearance. */
+    private String mClient;
 
     /**
      * A long string containing the concatenated names of the owners. The format
@@ -98,6 +101,25 @@ public class BusinessClearance {
      */
     public String getID() {
         return mID;
+    }
+
+    /**
+     * Set the client of this business clearance.
+     *
+     * @param client
+     *        The client or applicant owner of the business.
+     */
+    public void setClient(String client) {
+        mClient = client;
+    }
+
+    /**
+     * Fetch the client, which is another owner from the business clearance.
+     *
+     * @return the client.
+     */
+    public String getClient() {
+        return mClient;
     }
 
     /**

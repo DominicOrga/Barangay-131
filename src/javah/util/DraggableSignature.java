@@ -4,12 +4,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
- * This class will allow the resizing and displacing of the signature views.
+ * This class will allow the resizing and displacing of the signature views
+ * by binding it to a Draggable Rectangle.
+ *
+ * @see DraggableRectangle
  */
 public class DraggableSignature extends DraggableRectangle {
 
+    /**
+     * A view containing the signature itself.
+     */
     private ImageView mSignatureView;
 
+    /**
+     *
+     * @param signatureView
+     */
     public DraggableSignature(ImageView signatureView) {
         // Pass the boundary of the containing pane to DraggableRectangle.
         super((int) ((Pane) signatureView.getParent()).getPrefWidth(), (int) ((Pane) signatureView.getParent()).getPrefHeight());

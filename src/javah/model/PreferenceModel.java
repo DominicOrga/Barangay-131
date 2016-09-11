@@ -10,22 +10,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class will handle the create, read and update of values with regards to Json.
+ * This class will handle the create, read and update of values with regards to
+ * Json. The JSON file is stored in the user's public directory -
+ * Users/public/Barangay131/pref.json
+ *
+ * All information stored in the JSON file are related to the Barangay Officials.
  */
 public class PreferenceModel {
 
-    /**
-     * Its Json himself! Wait, did I just assume its gender?
-     */
+    /* Its Json himself! Wait, did I just assume its gender? */
     private JSONObject mJson;
 
-    /**
-     * The path of the mJson file.
-     */
+    /* A path of the mJson file */
     private String mJsonPath = System.getenv("PUBLIC") + "/Barangay131/pref.json";
 
+    /**
+     * A constructor that makes the connection to the JSON file. The JSON file is
+     * created if it hasn't been yet.
+     */
     public PreferenceModel() {
-
         // Initially, try to create the mJson file if it is not yet created.
         try {
             File jsonFile = new File(mJsonPath);
@@ -49,23 +52,49 @@ public class PreferenceModel {
         }
     }
 
+    /**
+     * Get a specified data from the preference.
+     *
+     * @param key
+     *        The key to determine the data to be fetched.
+     *
+     * @return the value based on the key.
+     */
     public String get(String key) {
         Object obj = mJson.get(key);
         return obj == null ? null : (String) obj;
     }
 
+    /**
+     * Get a specified data from the preference.
+     *
+     * @param key
+     *        The key to determine the data to be fetched.
+     * @param defValue
+     *        The default value of no value was fetched.
+     *
+     * @return the value based on the key.
+     */
     public String get(String key, String defValue) {
         Object obj = mJson.get(key);
         return obj == null ? defValue : (String) obj;
     }
 
+    /**
+     * Store the specified data to the Preference.
+     *
+     * @param key
+     *        The key to determine where to store the value.
+     * @param value
+     *        The value to be stored in the specified key.
+     */
     public void put(String key, String value) {
         mJson.put(key, value);
     }
 
     /**
-     * Save the changes made with the Json file.
-     * Called after clicking the save button at mBarangayAgentScene.
+     * Save the changes made with the Json file. Called after clicking the save button
+     * at mBarangayAgentScene.
      */
     public void save() {
         mJson.put(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "1");
