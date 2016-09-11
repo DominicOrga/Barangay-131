@@ -5,25 +5,42 @@ import com.sun.javafx.tk.Toolkit;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that contains the commonly used function throughout the application.
+ * Due to the common usage of the functions across the application, they are
+ * declared static.
+ */
 public class BarangayUtils {
 
+    /** The default display photo. */
     private static Image mDefaultDisplayPhoto;
 
+    /**
+     * Initialize the default display photo.
+     */
     static {
         mDefaultDisplayPhoto = new Image("res/ic_default_resident_white_bg.png");
     }
 
     /**
-     * Filter the lists in ascending order, priority level not ignored with regards to the keywords.
+     * Filter the IDs list in descending order with the use of priority level.
+     * Priority level is calculated by how many keywords exists in the given name.
+     *
      * @param ids
+     *        The IDs to be filtered.
      * @param names
+     *        The names which will determine the order of the IDs by matching it to the
+     *        keywords.
      * @param keywords
-     * @return a new filtered lists of IDs List.
+     *        The keywords for filtering the IDs list.
+     *
+     * @return a new filtered list of IDs List.
      */
     public static List getFilteredIDs(List<String> ids, List<String> names, String[] keywords) {
         // Lower case all keywords.
@@ -108,6 +125,21 @@ public class BarangayUtils {
         return strFormatted;
     }
 
+    /**
+     * Format the specified name in the following format -
+     * FIRST_NAME MIDDLE_INITIAL. LAST_NAME AUX
+     *
+     * @param firstName
+     *        The first name.
+     * @param middleName
+     *        The middle name.
+     * @param lastName
+     *        The last name.
+     * @param auxiliary
+     *        The auxiliary of the name.
+     *
+     * @return the formatted name.
+     */
     public static String formatName(String firstName, String middleName, String lastName, String auxiliary) {
         firstName = capitalizeString(firstName);
         middleName = capitalizeString(middleName);
@@ -121,8 +153,11 @@ public class BarangayUtils {
 
     /**
      * Convert a string month to its corresponding int value.
+     *
      * @param monthStr
-     * @return
+     *        The month in string.
+     *
+     * @return the month in int.
      */
     public static int convertMonthStringToInt(String monthStr) {
         switch(monthStr) {
@@ -143,8 +178,11 @@ public class BarangayUtils {
 
     /**
      * Convert an int month to its corresponding string value.
+     *
      * @param monthValue
-     * @return
+     *        The month in int.
+     *
+     * @return the month in String.
      */
     public static String convertMonthIntToString(int monthValue) {
         switch (monthValue) {
@@ -163,10 +201,29 @@ public class BarangayUtils {
         }
     }
 
+    /**
+     * Fetch the default display photo.
+     *
+     * @return the default display photo.
+     */
     public static Image getDefaultDisplayPhoto() {
         return mDefaultDisplayPhoto;
     }
 
+    /**
+     * Parse the signature dimension into an array of double, since signature
+     * dimensions are in string value when extracted from the database.
+     *
+     * @param signatureDimension
+     *        The array containing the parsed signature dimension.
+     *        The array contains the elements:
+     *        array[0] = x coordinate.
+     *        array[1] = y coordinate.
+     *        array[2] = width.
+     *        array[3] = height.
+     *
+     * @return the array containing the parsed signature dimension.
+     */
     public static double[] parseSignatureDimension(String signatureDimension) {
         if (signatureDimension == null) return null;
 
@@ -180,9 +237,12 @@ public class BarangayUtils {
     }
 
     /**
-     * Auto resize text areas.
+     * Auto resize text areas vertically when the text do not fit the width limit.
+     *
      * @param textArea
-     * @param widthLimit the width limit given to the text area.
+     *        The text area to be manipulated.
+     * @param widthLimit
+     *        The width limit given to the text area.
      */
     public static void addAutoResizeListener(TextArea textArea, double widthLimit) {
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -195,6 +255,21 @@ public class BarangayUtils {
 
             textArea.setPrefHeight(30 + newLine * 20);
             textArea.setMinHeight(textArea.getPrefHeight());
+        });
+    }
+
+    /**
+     * Limit the text within a text field to a certain length.
+     *
+     * @param textField
+     *        The text field to be handled.
+     * @param length
+     *        The maximum length of text allowed within the specified text field.
+     */
+    public static void addTextLimitListener(TextField textField, double length) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 30)
+                textField.setText(oldValue);
         });
     }
 

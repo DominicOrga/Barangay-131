@@ -241,10 +241,19 @@ public class BarangayAgentControl {
         // names, then always set the vertical scroll pane at the bottom.
         mKagawadPane.heightProperty().addListener(observable -> mScrollPane.setVvalue(1));
 
-        /**
-         * Add listener to the root pane visibility properties. If the root pane is set
-         * to visible, then reset the data.
-         */
+        // Limit the text length within the text fields to a maximum of 25.
+        BarangayUtils.addTextLimitListener(mChmFirstName, 25);
+        BarangayUtils.addTextLimitListener(mChmMiddleName, 25);
+        BarangayUtils.addTextLimitListener(mChmLastName, 25);
+        BarangayUtils.addTextLimitListener(mSecFirstName, 25);
+        BarangayUtils.addTextLimitListener(mSecMiddleName, 25);
+        BarangayUtils.addTextLimitListener(mSecLastName, 25);
+        BarangayUtils.addTextLimitListener(mTrsrFirstName, 25);
+        BarangayUtils.addTextLimitListener(mTrsrMiddleName, 25);
+        BarangayUtils.addTextLimitListener(mTrsrLastName, 25);
+
+        // Add listener to the root pane visibility properties. If the root pane is set
+        // to visible, then reset the data.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 // Reset chairman data.

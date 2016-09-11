@@ -12,13 +12,16 @@ import javafx.scene.layout.Pane;
 public class DraggableSignature extends DraggableRectangle {
 
     /**
-     * A view containing the signature itself.
+     * A reference to the specified signature Image View itself.
      */
     private ImageView mSignatureView;
 
     /**
+     * A constructor that takes a signature image view and binds it to a Draggable
+     * Rectangle.
      *
      * @param signatureView
+     *        The signature image view.
      */
     public DraggableSignature(ImageView signatureView) {
         // Pass the boundary of the containing pane to DraggableRectangle.
