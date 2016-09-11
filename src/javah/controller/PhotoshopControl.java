@@ -32,10 +32,38 @@ import java.io.IOException;
  */
 public class PhotoshopControl {
 
+    /**
+     * An interface that listens to the Photoshop control for action events.
+     *
+     * @see PhotoshopControl
+     */
     public interface OnPhotoshopListener {
+        /**
+         * Once an image has been accepted, send the image to the requesting client.
+         *
+         * @param client
+         *        The client requesting the image.
+         * @param image
+         *        The image to be sent to the client.
+         */
         void onAcceptButtonClicked(byte client, WritableImage image);
+
+        /**
+         * Tell the client that the Photoshop was cancelled.
+         *
+         * @param client
+         *        The client requesting the image.
+         */
         void onCancelButtonClicked(byte client);
     }
+
+    /* The possible clients requesting a photo from the PhotoshopControl. */
+    public static final byte
+            CLIENT_RESIDENT_PHOTO = 1,
+            CLIENT_CHAIRMAN_PHOTO = 2,
+            CLIENT_CHAIRMAN_SIGNATURE = 3,
+            CLIENT_SECRETARY_SIGNATURE = 4,
+            CLIENT_ID_SIGNATURE = 5;
 
     @FXML private Label mActionLabel;
     @FXML private Pane mRootPane;
@@ -47,14 +75,6 @@ public class PhotoshopControl {
 
     @FXML private HBox mFilterSignatureBox, mMirrorCamBox;
     @FXML private CheckBox mFilterSignatureCheckbox, mMirrorCamCheckbox;
-
-    // The possible clients requesting a photo from the PhotoshopControl.
-    public static final byte
-            CLIENT_RESIDENT_PHOTO = 0,
-            CLIENT_CHAIRMAN_PHOTO = 1,
-            CLIENT_CHAIRMAN_SIGNATURE = 2,
-            CLIENT_SECRETARY_SIGNATURE = 3,
-            CLIENT_ID_SIGNATURE = 4;
 
     // The possible requests of the clients.
     public static final byte
@@ -350,6 +370,12 @@ public class PhotoshopControl {
         mClient = client;
         mRequest = request;
 
+        mDraggableRectangle.setVisible(false);
+        mPhotoView.setVisible(false);
+
+        mFilterSignatureBox.setVisible(false);
+        mMirrorCamBox.setVisible(false);
+
         // By default, the mDraggableRectangle should be white.
         mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
 
@@ -534,11 +560,4 @@ public class PhotoshopControl {
         mListener = listener;
     }
 
-    public void reset() {
-        mDraggableRectangle.setVisible(false);
-        mPhotoView.setVisible(false);
-
-        mFilterSignatureBox.setVisible(false);
-        mMirrorCamBox.setVisible(false);
-    }
 }

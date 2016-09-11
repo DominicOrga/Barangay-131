@@ -71,7 +71,7 @@ public class MainControl {
     /**
      * The popup scenes. (CONFIRMATION)
      */
-    private Pane mResidentDeletionScene;
+    private Pane mConfirmationDialogScene;
 
     /**
      * The popup scenes. (FORMS)
@@ -174,10 +174,10 @@ public class MainControl {
             }
 
             @Override
-            public void onDeleteResidentButtonClicked(Resident resident) {
+            public void onDeleteResidentButtonClicked() {
                 mResidentControl.setBlurListPaging(true);
-                mConfirmationDialogControl.setNameLabel(resident.getFirstName());
-                showPopupScene(mResidentDeletionScene, false);
+                mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_RESIDENT_DELETION);
+                showPopupScene(mConfirmationDialogScene, false);
             }
         });
 
@@ -322,7 +322,6 @@ public class MainControl {
         mBarangayAgentControl.setListener(new BarangayAgentControl.OnBarangayAgentListener() {
             @Override
             public void onChmUploadButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -330,7 +329,6 @@ public class MainControl {
 
             @Override
             public void onChmCaptureButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -338,7 +336,6 @@ public class MainControl {
 
             @Override
             public void onChmSignatureUploadButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -346,7 +343,6 @@ public class MainControl {
 
             @Override
             public void onChmSignatureCaptureButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_CHAIRMAN_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -354,7 +350,6 @@ public class MainControl {
 
             @Override
             public void onSecSignatureUploadButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -362,7 +357,6 @@ public class MainControl {
 
             @Override
             public void onSecSignatureCaptureButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mBarangayAgentControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_SECRETARY_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -383,21 +377,43 @@ public class MainControl {
 
         // Initialize the resident deletion confirmation dialog.
         resetFXMLLoader.accept("fxml/scene_confirmation_dialog.fxml");
-        mResidentDeletionScene = fxmlLoader.load();
+        mConfirmationDialogScene = fxmlLoader.load();
         mConfirmationDialogControl = fxmlLoader.getController();
 
-        mConfirmationDialogControl.setListener(new ConfirmationDialogControl.OnResidentDeletionListener() {
+        mConfirmationDialogControl.setListener(new ConfirmationDialogControl.OnConfirmationDialogListener() {
             @Override
-            public void onDeleteButtonClicked() {
-                hidePopupScene(mResidentDeletionScene, false);
-                mResidentControl.deleteSelectedResident();
-                mResidentControl.setBlurListPaging(false);
+            public void onConfirmButtonClicked(byte client) {
+                switch (client) {
+                    case ConfirmationDialogControl.CLIENT_RESIDENT_DELETION:
+                        hidePopupScene(mConfirmationDialogScene, false);
+                        mResidentControl.deleteSelectedResident();
+                        mResidentControl.setBlurListPaging(false);
+                        break;
+                    case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
+                        // todo
+                        break;
+                    case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
+                        hidePopupScene(mConfirmationDialogScene, true);
+                        // todo
+                }
+
             }
 
             @Override
-            public void onCancelButtonClicked() {
-                hidePopupScene(mResidentDeletionScene, false);
-                mResidentControl.setBlurListPaging(false);
+            public void onCancelButtonClicked(byte client) {
+                switch (client) {
+                    case ConfirmationDialogControl.CLIENT_RESIDENT_DELETION:
+                        hidePopupScene(mConfirmationDialogScene, false);
+                        mResidentControl.setBlurListPaging(false);
+                        break;
+                    case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
+                        // todo
+                        break;
+                    case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
+                        hidePopupScene(mConfirmationDialogScene, true);
+                        // todo
+                }
+
             }
         });
 
@@ -429,7 +445,6 @@ public class MainControl {
 
             @Override
             public void onTakePhotoButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -437,7 +452,6 @@ public class MainControl {
 
             @Override
             public void onUploadButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_RESIDENT_PHOTO, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -456,7 +470,6 @@ public class MainControl {
         mResidentInformationFormControl.setListener(new ResidentInformationFormControl.OnResidentInfoFormListener() {
             @Override
             public void onUploadButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentInformationFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_UPLOAD);
@@ -464,7 +477,6 @@ public class MainControl {
 
             @Override
             public void onCaptureButtonClicked() {
-                mPhotoshopControl.reset();
                 showPopupScene(mPhotoshopScene, true);
                 mResidentInformationFormControl.setDisable(true);
                 mPhotoshopControl.setClient(PhotoshopControl.CLIENT_ID_SIGNATURE, PhotoshopControl.REQUEST_PHOTO_CAPTURE);
@@ -547,7 +559,7 @@ public class MainControl {
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
-        addToPopupPane.accept(mResidentDeletionScene);
+        addToPopupPane.accept(mConfirmationDialogScene);
         addToPopupPane.accept(mResidentFormScene);
         addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);

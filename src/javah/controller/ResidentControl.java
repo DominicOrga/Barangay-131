@@ -82,7 +82,7 @@ public class ResidentControl {
          * @see MainControl
          * @see ConfirmationDialogControl
          */
-        void onDeleteResidentButtonClicked(Resident resident);
+        void onDeleteResidentButtonClicked();
     }
 
     /**
@@ -274,6 +274,8 @@ public class ResidentControl {
             final int labelIndex = i;
             label.setOnMouseClicked(event -> setResidentToLabelSelected(labelIndex));
         }
+
+
     }
 
     /**
@@ -388,7 +390,7 @@ public class ResidentControl {
      */
     @FXML
     public void onDeleteResidentButtonClicked(Event event) {
-        mListener.onDeleteResidentButtonClicked(mResidentSelected);
+        mListener.onDeleteResidentButtonClicked();
     }
 
     /**

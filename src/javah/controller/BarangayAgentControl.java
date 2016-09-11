@@ -537,14 +537,15 @@ public class BarangayAgentControl {
                     String targetImage = null;
                     switch (prefKey) {
                         case PreferenceContract.CHAIRMAN_PHOTO_PATH :
-                            targetImage += Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
+                            targetImage = Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
                             break;
                         default:
-                            targetImage += Main.SIGNATURE_DIR_PATH + "/" + UUID.randomUUID() + ".png";
+                            targetImage = Main.SIGNATURE_DIR_PATH + "/" + UUID.randomUUID() + ".png";
                     }
 
                     File file = new File(targetImage);
                     RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
+
                     ImageIO.write(
                             renderedImage,
                             "png",
