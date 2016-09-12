@@ -266,7 +266,7 @@ public class BarangayUtils {
      */
     public static void addTextLimitListener(TextInputControl textField, double length) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > length)
+            if (newValue != null && newValue.length() > length)
                 textField.setText(oldValue);
         });
     }

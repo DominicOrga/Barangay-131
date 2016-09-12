@@ -227,6 +227,8 @@ public class ResidentFormControl {
 
         // Reset the resident form every time it is set to visible.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            mResident = null;
+
             mResidentPhotoView.setImage(null);
 
             mFirstName.setStyle(null);
@@ -263,7 +265,6 @@ public class ResidentFormControl {
     @FXML
     public void onCancelButtonClicked(ActionEvent event) {
         mListener.onCancelButtonClicked();
-        mResident = null;
     }
 
     /**
@@ -278,13 +279,12 @@ public class ResidentFormControl {
         boolean isDataValid = true;
 
         // Check name input.
-        mFirstName.setStyle(mFirstName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-        mMiddleName.setStyle(mMiddleName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-        mLastName.setStyle(mLastName.getText().matches("[a-zA-Z\\s]+") ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mFirstName.setStyle(!mFirstName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mMiddleName.setStyle(!mMiddleName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mLastName.setStyle(!mLastName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
 
-        if (mFirstName.getText().matches("[a-zA-Z\\s]+") &&
-            mMiddleName.getText().matches("[a-zA-Z\\s]+") &&
-            mLastName.getText().matches("[a-zA-Z\\s]+")) {
+        if (!mFirstName.getText().trim().isEmpty() && !mMiddleName.getText().trim().isEmpty() &&
+                !mLastName.getText().trim().isEmpty()) {
 
             mNameError.setVisible(false);
         } else {
@@ -293,7 +293,7 @@ public class ResidentFormControl {
         }
 
         // Check address 1 input.
-        if(mAddress1.getText().matches("([a-zA-Z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
+        if(!mAddress1.getText().trim().isEmpty()) {
             mAddress1Error.setVisible(false);
             mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
         } else {
@@ -302,24 +302,14 @@ public class ResidentFormControl {
             isDataValid = false;
         }
 
-        // Check address 2 input.
-        if(mAddress2.getText().matches("([A-Za-z0-9\\.,'\\s-\\s#\\s~\\s]+)?")) {
-            mAddress2Error.setVisible(false);
-            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-        } else {
-            mAddress2Error.setVisible(true);
-            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
-            isDataValid = false;
-        }
-
         // If all the data are all valid, then create a Resident object and pass the data to it, then send it to the
         // main control.
         if(isDataValid) {
             if (mResident == null) mResident = new Resident();
 
-            mResident.setFirstName(mFirstName.getText());
-            mResident.setLastName(mLastName.getText());
-            mResident.setMiddleName(mMiddleName.getText());
+            mResident.setFirstName(BarangayUtils.capitalizeString(mFirstName.getText()));
+            mResident.setLastName(BarangayUtils.capitalizeString(mLastName.getText()));
+            mResident.setMiddleName(BarangayUtils.capitalizeString(mMiddleName.getText()));
 
 
             String auxiliary = mAuxiliary.getValue().toString();
@@ -374,28 +364,41 @@ public class ResidentFormControl {
             }
 
             mListener.onSaveButtonClicked(mResident);
-            mResident = null;
         }
     }
 
     /**
-     * Reference a photo to the resident.
+     * Call the Photoshop control to upload an image for the resident photo.
+     *
      * @param event
+     *        The callback event. Never used.
+     *
+     * @see PhotoshopControl
      */
     @FXML
     public void onUploadPhotoButtonClicked(ActionEvent event) {
        mListener.onUploadButtonClicked();
     }
 
+    /**
+     * Call the Photoshop control to capture a photo for the resident photo.
+     *
+     * @param actionEvent
+     *        The callback event. Never used.
+     *
+     * @see PhotoshopControl
+     */
     @FXML
     public void onTakePhotoButtonClicked(ActionEvent actionEvent) {
         mListener.onTakePhotoButtonClicked();
     }
 
     /**
-     * When setResident is used(), we assume that we are editing the resident.
-     * Populate the form with the resident's data.
+     * When setResident() is used, we assume that we are editing the resident.
+     * Thus, populate the form with the resident's data and update the scene.
+     *
      * @param resident
+     *        The resident to be updated.
      */
     public void setResident(Resident resident) {
         // Update the form UI suitable for Updating a resident.
@@ -411,6 +414,7 @@ public class ResidentFormControl {
         mFirstName.setText(resident.getFirstName());
         mMiddleName.setText(resident.getMiddleName());
         mLastName.setText(resident.getLastName());
+        mAuxiliary.setValue(resident.getAuxiliary() == null ? "N/A" : resident.getAuxiliary());
         mAddress1.setText(resident.getAddress1());
 
         if (resident.getAddress2() != null)
@@ -433,17 +437,20 @@ public class ResidentFormControl {
     }
 
     /**
-     * Set MainControl as the listener to this form.
+     * Set the listener to this controller.
+     *
      * @param listener
+     *        The listener to this controller.
      */
     public void setListener(OnResidentFormListener listener) {
         mListener = listener;
     }
 
     /**
-     * Disable or enable the BarangayAgentControl.
-     * Used when the photoshop popup scene is displayed.
+     * Disable or enable this form. Used when the photoshop control is visible.
+     *
      * @param disable
+     *        The boolean to determine whether to enable or disable the form.
      */
     public void setDisable(boolean disable) {
         mRootPane.setDisable(disable);
@@ -451,7 +458,11 @@ public class ResidentFormControl {
 
     /**
      * Called by PhotoshopControl to pass the requested photo back to the resident form.
+     *
      * @param residentPhoto
+     *        The image coming from the Photoshop control.
+     *
+     * @see PhotoshopControl
      */
     public void setPhoto(WritableImage residentPhoto) {
         mResidentPhoto = residentPhoto;

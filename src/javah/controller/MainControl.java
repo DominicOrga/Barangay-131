@@ -163,22 +163,22 @@ public class MainControl {
         mResidentControl.setListener(new ResidentControl.OnResidentControlListener() {
             @Override
             public void onNewResidentButtonClicked() {
-                mResidentControl.setBlurListPaging(true);
                 showPopupScene(mResidentFormScene, false);
+                mResidentControl.setBlurListPaging(true);
             }
 
             @Override
             public void onEditResidentButtonClicked(Resident resident) {
+                showPopupScene(mResidentFormScene, false);
                 mResidentControl.setBlurListPaging(true);
                 mResidentFormControl.setResident(resident);
-                showPopupScene(mResidentFormScene, false);
             }
 
             @Override
             public void onDeleteResidentButtonClicked() {
+                showPopupScene(mConfirmationDialogScene, false);
                 mResidentControl.setBlurListPaging(true);
                 mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_RESIDENT_DELETION);
-                showPopupScene(mConfirmationDialogScene, false);
             }
         });
 
