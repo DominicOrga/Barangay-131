@@ -120,7 +120,6 @@ public class ConfirmationDialogControl {
                 mWarningText.setText("\nDeleted " + (client == CLIENT_RESIDENT_DELETION ? "resident" : "business") +
                         " cannot be recovered.");
 
-
                 mMessage.setText("Are you sure?");
                 mWarningText.setVisible(true);
                 mWarningText.setManaged(true);

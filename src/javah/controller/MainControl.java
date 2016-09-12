@@ -25,6 +25,7 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
+import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 

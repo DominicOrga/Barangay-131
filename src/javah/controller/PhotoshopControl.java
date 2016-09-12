@@ -1,8 +1,6 @@
 package javah.controller;
 
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamUtils;
+import com.github.sarxos.webcam.*;
 import com.github.sarxos.webcam.util.ImageUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.embed.swing.SwingNode;
@@ -17,10 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javah.Main;
 import javah.util.DraggableRectangle;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -70,67 +68,104 @@ public class PhotoshopControl {
             CLIENT_SECRETARY_SIGNATURE = 4,
             CLIENT_ID_SIGNATURE = 5;
 
-    @FXML private Label mActionLabel;
-    @FXML private Pane mRootPane;
-    @FXML private ImageView mPhotoView;
-    @FXML private Pane mImagePane;
-
-    @FXML private ImageView mAcceptButton;
-    @FXML private ImageView mCaptureButton;
-
-    @FXML private HBox mFilterSignatureBox, mMirrorCamBox;
-    @FXML private CheckBox mFilterSignatureCheckbox, mMirrorCamCheckbox;
-
-    // The possible requests of the clients.
+    /* The possible requests of the clients. */
     public static final byte
             REQUEST_PHOTO_CAPTURE = 0,
             REQUEST_PHOTO_UPLOAD = 1;
 
+    /**
+     * A label signifying the request of a certain client, which can either be Photo
+     * Upload or Photo Capture.
+     */
+    @FXML private Label mActionLabel;
+
+    /* Disables the whole photoshop scene during an image uploading process. */
+    @FXML private Pane mRootPane;
+
+    /* An Image View holding the uploaded or captured image. */
+    @FXML private ImageView mPhotoView;
+
+    /**
+     * A Pane containing the photo view, used to set the boundaries for the draggable
+     * rectangle.
+     */
+    @FXML private Pane mImagePane;
+
+    /**
+     * Sends the captured image to the respective client.
+     */
+    @FXML private ImageView mAcceptButton;
+
+    /**
+     * Note: used only for REQUEST_PHOTO_CAPTURE
+     * Captures a photo with the help of a webcam.
+     */
+    @FXML private ImageView mCaptureButton;
+
+    /**
+     * Note: used only for CLIENT_?_SIGNATURE.
+     * A checkbox together with its container, used to filter the light background of a
+     * signature.
+     */
+    @FXML private HBox mFilterSignatureBox;
+    @FXML private CheckBox mFilterSignatureCheckbox;
+
+    /**
+     * Note: used only for REQUEST_PHOTO_CAPTURE
+     * A checkbox together with its container, used to mirror the webcam.
+     */
+    @FXML private HBox mMirrorCamBox;
+    @FXML private CheckBox mMirrorCamCheckbox;
+
+    /* A reference to the client and the request of the client. */
     private byte mClient, mRequest;
 
     /**
-     * Used for : REQUEST_PHOTO_UPLOAD.
-     * Holds the uploaded image.
+     * Note: used only for REQUEST_PHOTO_UPLOAD
+     * The uploaded image.
      */
     private Image mUploadedImage;
 
     /**
-     * Used for : REQUEST_PHOTO_CAPTURE
-     * Captured image is flipped, so we need to mirror it and make a reference out of it.
+     * Note: used only for REQUEST_PHOTO_CAPTURE
+     * The mirrored captured image, since the original captured image is flipped,
+     * we need to mirror it.
      */
     private WritableImage mCapturedImage;
 
     /**
-     * This is the image to be passed to the clients. This image are the cropped images and can either be filtered
-     * depending on the client's request.
+     * An image to be passed to the clients. This image is the cropped image of the
+     * mUploadedImage or the mCapturedImage. Also, if the client is CLIENT_?_SIGNATURE,
+     * then the image can be filtered.
      */
     private WritableImage mModifiedImage;
 
-    /**
-     * The rectangle used for cropping the images.
-     */
+    /* The rectangle used for cropping the images. */
     private DraggableRectangle mDraggableRectangle;
 
+    /* A reference to the listener for this class. */
     private OnPhotoshopListener mListener;
 
-    /**
-     * The main window of the web cam.
-     */
+    /* The main window of the webcam. */
     private WebcamPanel mWebcamPanel;
 
     /**
-     * In JavaFX, Panels cannot be added to a pane. It must be first converted to a node. Thus, this serves as a container
-     * for mWebcamPanel;
+     * In JavaFX, Panels cannot be added to a pane. It must be first converted to a
+     * node. Thus, this serves as a container for mWebcamPanel.
      */
     private SwingNode mWebcamNode;
 
     /**
-     * Used for : REQUEST_PHOTO_CAPTURE
-     * Determines whether the capture button is pressed and when the client wants to recapture another photo.
-     * Value is false if an image is not yet captured and true if an image is captured.
+     * Note: used only REQUEST_PHOTO_CAPTURE
+     * Determines whether the capture button is pressed and when the client wants to
+     * recapture another photo. Value is false if an image is not yet captured and
+     * true if an image is captured.
      */
     private boolean mIsImageCaptured = false;
 
+    /**
+     * A constructor which initializes the Draggable Rectangle.
+     */
     @FXML
     private void initialize() {
         mDraggableRectangle = new DraggableRectangle(
@@ -141,8 +176,10 @@ public class PhotoshopControl {
     }
 
     /**
-     * mModifiedImage is first cropped before being sent to the client.
+     * Send the client the requested image.
+     *
      * @param mouseEvent
+     *        The callback event. Never used.
      */
     @FXML
     public void onAcceptButtonClicked(MouseEvent mouseEvent) {
@@ -151,9 +188,9 @@ public class PhotoshopControl {
 
         switch (mRequest) {
             case REQUEST_PHOTO_UPLOAD:
-
-                // Crop the mUploadedImage or mModified image itself based on the mDraggableRectangle and store it in
-                // mModifiedImage before being sent to the client.
+                // Crop the mUploadedImage or mModifiedImage itself based on the
+                // mDraggableRectangle and store it in mModifiedImage before being sent to the
+                // client.
                 int rectWidth = (int) mDraggableRectangle.getWidth();
                 int rectHeight = (int) mDraggableRectangle.getHeight();
                 int rectX = (int) mDraggableRectangle.getX();
@@ -163,9 +200,9 @@ public class PhotoshopControl {
 
                 PixelReader pixelReader;
 
-                // If the uploaded photo is a signature and the signature filter is marked, then the image to crop is
-                // the filtered image, mModifiedImage.
-                // Else, make use of the mUploadedImage.
+                // If the uploaded photo is a signature and the signature filter is marked, then
+                // the image to crop is the filtered image, mModifiedImage. Else, make use of the
+                // mUploadedImage.
                 if (mFilterSignatureCheckbox.isSelected() && mFilterSignatureBox.isVisible()) {
                     pixelReader = mModifiedImage.getPixelReader();
                     mModifiedImage = new WritableImage(rectWidth, rectHeight);
@@ -176,8 +213,8 @@ public class PhotoshopControl {
 
                 PixelWriter pixelWriter = mModifiedImage.getPixelWriter();
 
-                // If ever the draggable rectangle goes out of bounds from the width and height of the uploaded image,
-                // then assign transparent pixels on to the out of bounds area.
+                // If ever the draggable rectangle goes out of bounds from the width and height of
+                // the uploaded image, then assign transparent pixels on the out of bounds area.
                 for (int x = rectX; x < rectWidth + rectX; x++)
                     for (int y = rectY; y < rectHeight + rectY; y++)
 
@@ -192,8 +229,8 @@ public class PhotoshopControl {
                 pixelReader = !mFilterSignatureCheckbox.isSelected() ?
                         mCapturedImage.getPixelReader() : mModifiedImage.getPixelReader();
 
-                // No out of bounds will occur when cropping an image captured by the web cam, since it is a perfect fit.
-                // Thus, this simple function will suffice.
+                // No out of bounds will occur when cropping an image captured by the web cam,
+                // since it is a perfect fit. Thus, this simple function will suffice.
                 mModifiedImage = new WritableImage(
                         pixelReader,
                         (int) mDraggableRectangle.getX(),
@@ -213,16 +250,20 @@ public class PhotoshopControl {
     }
 
     /**
-     * Used for : REQUEST_PHOTO_CAPTURE
-     * A Button that acts as a way to take and retake a picture.
+     * Note: used for REQUEST_PHOTO_CAPTURE
+     * A Button that acts as a way to take and retake a picture. Captured images are
+     * stored in fixed temporary path.
+     *
      * @param mouseEvent
+     *        The callback event. Never used.
      */
     @FXML
     public void onCaptureButtonClicked(MouseEvent mouseEvent) {
         // If an image is already captured, then recapture an image.
         if (mIsImageCaptured) {
 
-            // While no image is captured by the web cam, only display the web cam capture button.
+            // While no image is captured by the web cam, only display the web cam capture
+            // button.
             mAcceptButton.setVisible(false);
             mAcceptButton.setManaged(false);
             mMirrorCamBox.setVisible(true);
@@ -231,7 +272,8 @@ public class PhotoshopControl {
             mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
             mFilterSignatureCheckbox.setSelected(false);
 
-            // Send the mPhotoView and mDraggableRectangle to the back to show the web cam pane again.
+            // Send the mPhotoView and mDraggableRectangle to the back to show the web cam
+            // pane again.
             mWebcamNode.toFront();
             mPhotoView.setVisible(false);
             mDraggableRectangle.setVisible(false);
@@ -247,14 +289,14 @@ public class PhotoshopControl {
             // Capture an image. . .
 
             // Create a temp file to hold the captured photo.
-            String tempFilePath = System.getenv("PUBLIC") + "/Barangay131/Photos/2d6aeb19-b1ab-4e40-b8af-cfe62a05c431.png";
+            String tempFilePath = Main.PHOTO_DIR_PATH + "/2d6aeb19-b1ab-4e40-b8af-cfe62a05c431.png";
             File tempFile = new File(tempFilePath);
 
             // Store photo as a temporary file. Sadly, captured photo is mirrored.
             WebcamUtils.capture(mWebcamPanel.getWebcam(), tempFile, ImageUtils.FORMAT_PNG);
 
             try {
-                // Read the captured image of the web cam.
+                // Read the captured image of the webcam.
                 BufferedImage tempImage = ImageIO.read(tempFile);
                 int height = tempImage.getHeight();
                 int width = tempImage.getWidth();
@@ -275,8 +317,8 @@ public class PhotoshopControl {
                 } else
                     mCapturedImage = SwingFXUtils.toFXImage(tempImage, mCapturedImage);
 
-                // If the client is requesting a signature, make a filtered copy of the mCapturedImage and store it in
-                // mModifiedImage.
+                // If the client is requesting a signature, make a filtered copy of the
+                // mCapturedImage and store it in mModifiedImage.
                 switch (mClient) {
                     case CLIENT_SECRETARY_SIGNATURE:
                     case CLIENT_CHAIRMAN_SIGNATURE:
@@ -319,7 +361,7 @@ public class PhotoshopControl {
                 e.printStackTrace();
             }
 
-            // Update the GUI after a web cam capture is made.
+            // Update the GUI after a webcam capture is made.
             mAcceptButton.setVisible(true);
             mAcceptButton.setManaged(true);
             mMirrorCamBox.setVisible(false);
@@ -331,6 +373,12 @@ public class PhotoshopControl {
         }
     }
 
+    /**
+     * Cancel the processing of the request and close the photoshop.
+     *
+     * @param actionEvent
+     *        The callback even. Never used.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked(mClient);
@@ -349,8 +397,11 @@ public class PhotoshopControl {
     }
 
     /**
-     * Filter the photo if the photo is a signature type.
+     * Note: used for CLIENT_?_SIGNATURE
+     * Show the filtered signature photo.
+     *
      * @param actionEvent
+     *        The callback event. Never used.
      */
     @FXML
     public void onFilterSignatureCheckboxClicked(ActionEvent actionEvent) {
@@ -363,6 +414,12 @@ public class PhotoshopControl {
         }
     }
 
+    /**
+     * Note: used for CLIENT_?_SIGNATURE
+     *
+     * @param actionEvent
+     *        The callback event. Never used.
+     */
     @FXML
     public void onMirrorCamCheckBoxClicked(ActionEvent actionEvent) {
         mWebcamPanel.setMirrored(mMirrorCamCheckbox.isSelected());
@@ -370,8 +427,11 @@ public class PhotoshopControl {
 
     /**
      * Update the scene depending on the client and their request.
+     *
      * @param client
+     *        The client requesting an image.
      * @param request
+     *        The request of the client to either upload or capture an image.
      */
     public void setClient(byte client, byte request) {
         mClient = client;
@@ -548,6 +608,7 @@ public class PhotoshopControl {
 
                 // Add the web cam panel to the root pane.
                 mImagePane.getChildren().add(mWebcamNode);
+
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -555,11 +616,17 @@ public class PhotoshopControl {
                 mListener.onWebcamInitializeError();
                 mRootPane.setDisable(true);
             }
+
         }
     }
 
+    /**
+     * Set the listener for this object.
+     *
+     * @param listener
+     *        The listener of this object.
+     */
     public void setListener(OnPhotoshopListener listener) {
         mListener = listener;
     }
-
 }
