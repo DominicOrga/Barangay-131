@@ -34,21 +34,50 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- *  A class that will handle the information forms of the residents.
+ *  A class that handles the form forms of the residents, such as the
+ *  Barangay Clearance Form and Barangay ID Form.
  */
 public class ResidentInformationFormControl {
 
+    /**
+     * A listener for the ResidentInformaionFormControl.
+     *
+     * @see ResidentInformationFormControl
+     */
     public interface OnResidentInfoFormListener {
+        /**
+         * Note: used for FORM_BARANGAY_ID
+         *
+         * Call the photoshop control to upload a signature image for the barangay ID.
+         *
+         * @see PhotoshopControl
+         */
         void onUploadButtonClicked();
+
+        /**
+         * Note: used for FORM_BARANGAY_ID
+         *
+         * Call the photoshop control to capture a signature image for the barangay ID.
+         *
+         * @see PhotoshopControl
+         */
         void onCaptureButtonClicked();
+
+        /**
+         * Tell the main control to close the Resident Information form.
+         */
         void onCancelButtonClicked();
 
         /**
-         * Create a report for the information requested with the data.
-         * @param data to be inserted to the information report.
-         * @param information report to be created.
+         * Generate a report based on the data given on the form.
+         *
+         * @param data
+         *        To be used in the report generation.
+         * @param formType
+         *        The form used to determine what type of report to generate, which can either
+         *        be a barangay clearance or a barangay ID report.
          */
-        void onCreateButtonClicked(Object data, byte information);
+        void onCreateButtonClicked(Object data, byte formType);
     }
 
     @FXML Pane mRootPane;
@@ -76,24 +105,22 @@ public class ResidentInformationFormControl {
      */
     @FXML Pane mBrgyClearancePane;
     @FXML RadioButton mBrgyClearanceAddress1RadioButton, mBrgyClearanceAddress2RadioButton;
-    @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text, mBrgyClearancePurpose;
+    @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text;
+    @FXML TextField mBrgyClearancePurpose;
     @FXML Label mPurposeError;
 
     @FXML Button mCreateButton;
 
     /**
-     * Determines what information form to create.
+     * Determines what form form to create.
      */
     public static final byte
-            INFORMATION_BARANGAY_ID = 1,
-            INFORMATION_BARANGAY_CLEARANCE = 2,
-            INFORMATION_BUSINESS_CLEARANCE = 3,
-            INFORMATION_BLOTTER = 4;
+            FORM_BARANGAY_ID = 1, FORM_BARANGAY_CLEARANCE = 2;
 
     /**
-     * The type of information form to create.
+     * The type of form form to create.
      */
-    private byte mInformation;
+    private byte mFormType;
 
     /**
      * The labels in the resident grid pane.
@@ -105,7 +132,7 @@ public class ResidentInformationFormControl {
     private PreferenceModel mPrefModel;
 
     /**
-     * Get the database model to query the information of the resident selected.
+     * Get the database model to query the form of the resident selected.
      */
     private DatabaseModel mDatabaseModel;
 
@@ -279,8 +306,8 @@ public class ResidentInformationFormControl {
     }
 
     @FXML void onCreateButtonClicked(ActionEvent actionEvent) {
-        switch (mInformation) {
-            case INFORMATION_BARANGAY_ID :
+        switch (mFormType) {
+            case FORM_BARANGAY_ID:
                 // Generate a temporary unique id for the barangay id.
                 mBarangayID.setID(mDatabaseModel.generateID(DatabaseContract.BarangayIdEntry.TABLE_NAME));
 
@@ -350,10 +377,10 @@ public class ResidentInformationFormControl {
                 mBarangayID.setDateValid(new Timestamp(calendar.getTimeInMillis()));
 
                 // Pass the generated barangay ID to the Main Control in order to be processed into a report.
-                mListener.onCreateButtonClicked(mBarangayID, INFORMATION_BARANGAY_ID);
+                mListener.onCreateButtonClicked(mBarangayID, FORM_BARANGAY_ID);
                 break;
 
-            case INFORMATION_BARANGAY_CLEARANCE :
+            case FORM_BARANGAY_CLEARANCE:
 
                 if (mBrgyClearancePurpose.getText() == null || mBrgyClearancePurpose.getText().isEmpty()) {
                     mPurposeError.setVisible(true);
@@ -468,12 +495,8 @@ public class ResidentInformationFormControl {
                 }
 
                 // Pass the generated barangay clearance to the Main Control in order to be processed into a report.
-                mListener.onCreateButtonClicked(mBarangayClearance, INFORMATION_BARANGAY_CLEARANCE);
+                mListener.onCreateButtonClicked(mBarangayClearance, FORM_BARANGAY_CLEARANCE);
                 break;
-
-            case INFORMATION_BUSINESS_CLEARANCE :
-                break;
-            case INFORMATION_BLOTTER :
         }
     }
 
@@ -544,9 +567,9 @@ public class ResidentInformationFormControl {
                 mCreateButton.setDisable(false);
 
 
-                // A resident is selected, display their date required for the information creation.
-                switch (mInformation) {
-                    case INFORMATION_BARANGAY_ID :
+                // A resident is selected, display their date required for the form creation.
+                switch (mFormType) {
+                    case FORM_BARANGAY_ID:
                         // Enable the upload and capture buttons.
                         mSignatureUploadButton.setDisable(false);
                         mSignatureCaptureButton.setDisable(false);
@@ -585,7 +608,7 @@ public class ResidentInformationFormControl {
                         mSignatureImage = null;
                         break;
 
-                    case INFORMATION_BARANGAY_CLEARANCE :
+                    case FORM_BARANGAY_CLEARANCE:
                         mBrgyClearanceAddress1RadioButton.setDisable(false);
                         mBrgyClearanceAddress1RadioButton.setSelected(true);
                         mBrgyClearanceAddress1Text.setText(mResidentSelected.getAddress1());
@@ -605,17 +628,13 @@ public class ResidentInformationFormControl {
                         String purpose = mDatabaseModel.getBarangayClearanceProperties(mResidentSelected.getId());
                         mBrgyClearancePurpose.setText(purpose);
                         break;
-
-                    case INFORMATION_BUSINESS_CLEARANCE :
-                        break;
-                    case INFORMATION_BLOTTER :
                 }
 
             } else {
                 mCreateButton.setDisable(true);
                 // No resident is selected, so update the UI.
-                switch (mInformation) {
-                    case INFORMATION_BARANGAY_ID :
+                switch (mFormType) {
+                    case FORM_BARANGAY_ID:
                         // Disable the address buttons.
                         mAddress1RadioButton.setSelected(true);
                         mAddress1RadioButton.setDisable(true);
@@ -635,7 +654,7 @@ public class ResidentInformationFormControl {
                         mSignatureImage = null;
                         break;
 
-                    case INFORMATION_BARANGAY_CLEARANCE :
+                    case FORM_BARANGAY_CLEARANCE:
                         mBrgyClearanceAddress1RadioButton.setDisable(true);
                         mBrgyClearanceAddress2RadioButton.setDisable(true);
                         mBrgyClearancePurpose.setDisable(true);
@@ -645,9 +664,6 @@ public class ResidentInformationFormControl {
                         mBrgyClearancePurpose.setText(null);
 
                         break;
-                    case INFORMATION_BUSINESS_CLEARANCE :
-                        break;
-                    case INFORMATION_BLOTTER :
                 }
             }
         };
@@ -739,25 +755,23 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * Update the view of the form, depending on the requested information.
-     * @param information
+     * Update the view of the form, depending on the requested form.
+     * @param form
      */
-    public void setInformation(byte information) {
-        mInformation = information;
-        switch (mInformation) {
-            case INFORMATION_BARANGAY_ID :
+    public void setFormType(byte form) {
+        mFormType = form;
+        switch (mFormType) {
+            case FORM_BARANGAY_ID:
                 mBarangayIDPane.toFront();
                 mActionLabel.setText("Barangay ID Form");
                 mBarangayID = new BarangayID();
                 break;
-            case INFORMATION_BARANGAY_CLEARANCE :
+            case FORM_BARANGAY_CLEARANCE:
                 mBrgyClearancePane.toFront();
                 mActionLabel.setText("Barangay Clearance Form");
                 mBarangayClearance = new BarangayClearance();
                 break;
-            case INFORMATION_BUSINESS_CLEARANCE :
-                break;
-            case INFORMATION_BLOTTER :
+
         }
     }
 

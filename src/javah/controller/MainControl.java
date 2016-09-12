@@ -25,7 +25,6 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
-import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -198,11 +197,11 @@ public class MainControl {
 
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
-                        mResidentInformationFormControl.setInformation(ResidentInformationFormControl.INFORMATION_BARANGAY_ID);
+                        mResidentInformationFormControl.setFormType(ResidentInformationFormControl.FORM_BARANGAY_ID);
 
                         break;
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE :
-                        mResidentInformationFormControl.setInformation(ResidentInformationFormControl.INFORMATION_BARANGAY_CLEARANCE);
+                        mResidentInformationFormControl.setFormType(ResidentInformationFormControl.FORM_BARANGAY_CLEARANCE);
                         break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
                 }
@@ -496,23 +495,20 @@ public class MainControl {
             }
 
             @Override
-            public void onCreateButtonClicked(Object data, byte information) {
+            public void onCreateButtonClicked(Object data, byte formType) {
                 hidePopupScene(mResidentInfoFormScene, false);
 
-                switch (information) {
-                    case ResidentInformationFormControl.INFORMATION_BARANGAY_ID :
+                switch (formType) {
+                    case ResidentInformationFormControl.FORM_BARANGAY_ID:
                         mBarangayIDReportControl.setBarangayID((BarangayID) data, BarangayIDReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBarangayIDReportScene, false);
                         break;
 
-                    case ResidentInformationFormControl.INFORMATION_BARANGAY_CLEARANCE:
+                    case ResidentInformationFormControl.FORM_BARANGAY_CLEARANCE:
                         mBrgyClearanceReportControl.setBarangayClearance(
                                 (BarangayClearance) data, BarangayClearanceReportControl.REQUEST_CREATE_REPORT);
                         showPopupScene(mBrgyClearanceReportScene, false);
                         break;
-
-                    case ResidentInformationFormControl.INFORMATION_BUSINESS_CLEARANCE: break;
-                    case ResidentInformationFormControl.INFORMATION_BLOTTER: break;
                 }
 
             }

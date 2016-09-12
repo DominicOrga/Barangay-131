@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -18,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInformationFormControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="/css/main_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInformationFormControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="420.0" prefWidth="420.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -159,9 +166,9 @@
       </HBox>
       <VBox fx:id="mBarangayIDPane" prefHeight="470.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <children>
-            <Label text="Address:" textFill="#ff861b">
+            <Label text="Address:">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font size="20.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -271,9 +278,34 @@
       </VBox>
       <VBox fx:id="mBrgyClearancePane" layoutX="450.0" layoutY="80.0" prefHeight="470.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <children>
-            <Label text="Address:" textFill="#ff861b">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <Label text="Purpose:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mPurposeError" text="What is your purpose?" textFill="#ff3f3f" visible="false">
+                     <font>
+                        <Font name="Helvetica Neue Light" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TextField fx:id="mBrgyClearancePurpose">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" right="30.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Address:">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font size="20.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -328,42 +360,9 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </RadioButton>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="25.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
-               <children>
-                  <Label text="Purpose:" textFill="#ff861b">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="mPurposeError" text="What is your purpose?" textFill="#ff3f3f" visible="false">
-                     <font>
-                        <Font name="Helvetica Neue Light" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #F4F4F4;">
                <children>
                   <StackPane prefHeight="100.0" prefWidth="500.0">
-                     <children>
-                        <TextArea fx:id="mBrgyClearancePurpose" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
-                           <cursor>
-                              <Cursor fx:constant="DEFAULT" />
-                           </cursor>
-                           <font>
-                              <Font name="Microsoft YaHei UI Light" size="15.0" />
-                           </font>
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </TextArea>
-                     </children>
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>

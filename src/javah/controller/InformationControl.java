@@ -45,8 +45,8 @@ public class InformationControl {
          *
          * @param information
          *        Determines the type of form to show. Allowed values are:
-         *        INFORMATION_BARANGAY_ID = 1
-         *        INFORMATION_BARANGAY_CLEARANCE = 2
+         *        FORM_BARANGAY_ID = 1
+         *        FORM_BARANGAY_CLEARANCE = 2
          *        INFORMATION_BUSINESS_CLEARANCE = 3
          *
          * @see ResidentInformationFormControl
@@ -59,8 +59,8 @@ public class InformationControl {
          *
          * @param information
          *        Determines the type of report to show. Allowed values are:
-         *        INFORMATION_BARANGAY_ID = 1
-         *        INFORMATION_BARANGAY_CLEARANCE = 2
+         *        FORM_BARANGAY_ID = 1
+         *        FORM_BARANGAY_CLEARANCE = 2
          *        INFORMATION_BUSINESS_CLEARANCE = 3
          * @param reportData
          *        The data of a specified report, used for populating the specified report pop-up.

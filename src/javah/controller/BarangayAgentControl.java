@@ -438,23 +438,23 @@ public class BarangayAgentControl {
             TextField middleName = (TextField) name[1];
             TextField lastName = (TextField) name[2];
 
-            if (firstName.getText().trim().isEmpty()) {
+            if (firstName.getText() == null || firstName.getText().trim().isEmpty()) {
                 firstName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                 isValid = false;
             } else
                 firstName.setStyle(null);
 
-            if (middleName.getText().trim().isEmpty()) {
+            if (middleName.getText() == null || middleName.getText().trim().isEmpty()) {
                 middleName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                 isValid = false;
             } else
-                firstName.setStyle(null);
+                middleName.setStyle(null);
 
-            if (lastName.getText().trim().isEmpty()) {
+            if (lastName.getText() == null || lastName.getText().trim().isEmpty()) {
                 lastName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                 isValid = false;
             } else
-                firstName.setStyle(null);
+                lastName.setStyle(null);
 
             Label nameError = (Label) name[3];
             nameError.setVisible(!isValid);

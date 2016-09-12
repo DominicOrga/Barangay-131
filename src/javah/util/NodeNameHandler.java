@@ -359,11 +359,12 @@ public class NodeNameHandler {
         // made visible, which is the first invisible Node Name.
         mNodeNameHighestPos++;
 
-        // Assign the Highest Position to the first invisible Node Name, and make sure to show its remove button, and
-        // add button if some of the Node Names are still invisible.
+        // Assign the Highest Position to the first invisible Node Name, and make sure to
+        // show its remove button if and only if more than one node name is visible, and
+        // show the add button if some of the Node Names are still invisible.
         mNodeNamePositions[nodeNameInvisibleIndex] = mNodeNameHighestPos;
 
-        mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(true);
+        mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(mNodeNameHighestPos > 1);
         mNodeNames[nodeNameInvisibleIndex].setAddButtonVisible(!(mNodeNameHighestPos == mSize));
 
         // Add the Node Name to the VBox to ensure that it is visible.
@@ -463,19 +464,19 @@ public class NodeNameHandler {
                 TextField middleName = nodeName.mMiddleName;
                 TextField lastName = nodeName.mLastName;
 
-                if (firstName.getText().trim().isEmpty()) {
+                if (firstName.getText() == null || firstName.getText().trim().isEmpty()) {
                     firstName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                     isValid = false;
                 } else
                     firstName.setStyle(null);
 
-                if (middleName.getText().trim().isEmpty()) {
+                if (middleName.getText() == null || middleName.getText().trim().isEmpty()) {
                     middleName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                     isValid = false;
                 } else
                     middleName.setStyle(null);
 
-                if (lastName.getText().trim().isEmpty()) {
+                if (lastName.getText() == null || lastName.getText().trim().isEmpty()) {
                     lastName.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
                     isValid = false;
                 } else

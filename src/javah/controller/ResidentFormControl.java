@@ -278,13 +278,18 @@ public class ResidentFormControl {
     public void onCreateButtonClicked(ActionEvent event) {
         boolean isDataValid = true;
 
-        // Check name input.
-        mFirstName.setStyle(!mFirstName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-        mMiddleName.setStyle(!mMiddleName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-        mLastName.setStyle(!mLastName.getText().trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        String firstName = mFirstName.getText();
+        String middleName = mMiddleName.getText();
+        String lastName = mLastName.getText();
 
-        if (!mFirstName.getText().trim().isEmpty() && !mMiddleName.getText().trim().isEmpty() &&
-                !mLastName.getText().trim().isEmpty()) {
+        // Check name input.
+        mFirstName.setStyle(firstName != null && !firstName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mMiddleName.setStyle(middleName != null && !middleName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mLastName.setStyle(lastName != null && !lastName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+
+        if (firstName != null && middleName != null && lastName != null &&
+                !firstName.trim().isEmpty() && !middleName.trim().isEmpty() &&
+                !lastName.trim().isEmpty()) {
 
             mNameError.setVisible(false);
         } else {
@@ -293,7 +298,7 @@ public class ResidentFormControl {
         }
 
         // Check address 1 input.
-        if(!mAddress1.getText().trim().isEmpty()) {
+        if(mAddress1.getText() != null && !mAddress1.getText().trim().isEmpty()) {
             mAddress1Error.setVisible(false);
             mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
         } else {
@@ -307,9 +312,9 @@ public class ResidentFormControl {
         if(isDataValid) {
             if (mResident == null) mResident = new Resident();
 
-            mResident.setFirstName(BarangayUtils.capitalizeString(mFirstName.getText()));
-            mResident.setLastName(BarangayUtils.capitalizeString(mLastName.getText()));
-            mResident.setMiddleName(BarangayUtils.capitalizeString(mMiddleName.getText()));
+            mResident.setFirstName(BarangayUtils.capitalizeString(firstName));
+            mResident.setLastName(BarangayUtils.capitalizeString(middleName));
+            mResident.setMiddleName(BarangayUtils.capitalizeString(lastName));
 
 
             String auxiliary = mAuxiliary.getValue().toString();
