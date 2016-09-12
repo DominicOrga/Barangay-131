@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
@@ -131,13 +132,13 @@ public class ResidentControl {
      * A text area displaying the address 1 of the resident selected. Note that
      * address 1 cannot be null.
      */
-    @FXML private TextArea mAddress1;
+    @FXML private Text mAddress1;
 
     /**
      * A text area displaying the address 2 of the resident selected. Unlike
      * address 1, the address 2 can be null.
      */
-    @FXML private TextArea mAddress2;
+    @FXML private Text mAddress2;
 
     /**
      * A button that decrements the current page value, if possible. Then
@@ -416,6 +417,8 @@ public class ResidentControl {
                 String residentSelectedID = mResidentIDs.get(mResidentSelectedIndex);
 
                 mResidentSelected = mDatabaseModel.getResident(residentSelectedID);
+
+                mResidentPhoto.setImage(null);
 
                 if (mResidentSelected.getPhotoPath() != null)
                     mResidentPhoto.setImage(new Image("file:" + mResidentSelected.getPhotoPath()));

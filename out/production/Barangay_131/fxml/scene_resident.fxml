@@ -180,48 +180,54 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="403.0" prefWidth="398.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="147.0" prefWidth="398.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="mResidentPhoto" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_default_resident_white_bg.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets bottom="-20.0" />
-                                 </VBox.margin>
-                              </ImageView>
-                              <HBox alignment="CENTER">
+                              <StackPane>
                                  <children>
-                                    <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../res/ic_edit.png" />
+                                          <Image url="@../res/ic_default_resident_white_bg.png" />
+                                       </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                    </ImageView>
+                                    <ImageView fx:id="mResidentPhoto" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../res/ic_default_resident_white_bg.png" />
                                        </image>
                                     </ImageView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="45.0" right="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <VBox alignment="TOP_CENTER" spacing="5.0">
+                                 <children>
                                     <ImageView fx:id="mDeleteButton" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/ic_delete.png" />
                                        </image>
                                     </ImageView>
+                                    <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditResidentButtonClicked" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../res/ic_edit.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
-                                 <padding>
-                                    <Insets left="75.0" />
-                                 </padding>
-                              </HBox>
-                              <Label fx:id="mResidentName" text="Name">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Label>
+                              </VBox>
                            </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </VBox>
+                        </HBox>
+                        <Label fx:id="mResidentName" text="Name">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Birthdate:">
+                              <Label minWidth="-Infinity" prefWidth="155.0" text="Birthdate:">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="20.0" />
@@ -229,7 +235,7 @@
                               </Label>
                               <Label fx:id="mBirthDate" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
                               </Label>
                            </children>
@@ -239,9 +245,9 @@
                         </HBox>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Age:">
+                              <Label minWidth="-Infinity" prefWidth="155.0" text="Age:">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="20.0" />
@@ -249,19 +255,19 @@
                               </Label>
                               <Label fx:id="mAge" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="20.0" />
                            </VBox.margin>
                         </HBox>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Resident Since:">
+                              <Label minWidth="-Infinity" prefWidth="155.0" text="Resident Since:">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="20.0" />
@@ -269,58 +275,69 @@
                               </Label>
                               <Label fx:id="mResidentSince">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox minHeight="-Infinity" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="mAddress1Label" minWidth="-Infinity" prefWidth="155.0" text="Address 1:">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextFlow prefWidth="450.0">
+                                 <children>
+                                    <Text fx:id="mAddress1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </TextFlow>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="273.0" minHeight="-Infinity" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="mAddress2Label" minWidth="-Infinity" prefWidth="155.0" text="Address 2:" visible="false">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextFlow prefWidth="450.0" visible="false">
+                                 <children>
+                                    <Text fx:id="mAddress2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </TextFlow>
                            </children>
                            <VBox.margin>
                               <Insets top="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="mAddress1Label" minWidth="-Infinity" prefWidth="150.0" text="Address 1:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea fx:id="mAddress1" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
-                                 <font>
-                                    <Font name="Calibri Light" size="20.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="MOVE" />
-                                 </cursor>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </HBox.margin>
-                              </TextArea>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="50.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="273.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="mAddress2Label" minWidth="-Infinity" prefWidth="150.0" text="Address 2:" visible="false">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea fx:id="mAddress2" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="450.0" text="484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal 484 M.H. Del Pilar Street, San Rafael, Rodriguez, Rizal" visible="false" wrapText="true">
-                                 <font>
-                                    <Font name="Calibri Light" size="20.0" />
-                                 </font>
-                              </TextArea>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="100.0" />
                            </VBox.margin>
                         </HBox>
                      </children>
@@ -328,7 +345,7 @@
                         <Insets left="20.0" right="20.0" />
                      </GridPane.margin>
                   </VBox>
-                  <VBox fx:id="mNoResidentSelectedPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" styleClass="agent-name">
+                  <VBox fx:id="mNoResidentSelectedPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" styleClass="agent-name" visible="false">
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>

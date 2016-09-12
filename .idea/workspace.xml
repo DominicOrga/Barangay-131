@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/PhotoshopControl$1.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/res/ic_add_circle.png" afterPath="$PROJECT_DIR$/src/res/ic_add_circle.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/res/ic_remove_circle.png" afterPath="$PROJECT_DIR$/src/res/ic_remove_circle.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_resident_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_resident_form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentFormControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentFormControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/util/NodeNameHandler.java" afterPath="$PROJECT_DIR$/src/javah/util/NodeNameHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_resident.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_resident.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -128,8 +123,52 @@
       <file leaf-file-name="ResidentControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-775">
-              <caret line="459" column="15" selection-start-line="459" selection-start-column="15" selection-end-line="459" selection-end-column="15" />
+            <state relative-caret-position="294">
+              <caret line="426" column="45" selection-start-line="426" selection-start-column="45" selection-end-line="426" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BarangayUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/util/BarangayUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+              <folding>
+                <element signature="docComment;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;field#mDefaultDisplayPhoto#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="e#1598#1679#0" expanded="false" />
+                <element signature="e#1791#1874#0" expanded="false" />
+                <element signature="e#2113#2192#0" expanded="false" />
+                <element signature="e#2877#2955#0" expanded="false" />
+                <element signature="docComment;method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#formatName#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#formatName#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#getDefaultDisplayPhoto#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#addAutoResizeListener#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#addAutoResizeListener#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="docComment;method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+                <element signature="method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CSSContract.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="25" column="101" selection-start-line="25" selection-start-column="101" selection-end-line="25" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -228,7 +267,6 @@
         <option value="$PROJECT_DIR$/src/javah/util/DraggableRectangle.java" />
         <option value="$PROJECT_DIR$/src/javah/util/DraggableSignature.java" />
         <option value="$PROJECT_DIR$/src/javah/util/BarangayUtils.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_confirmation_dialog.fxml" />
         <option value="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
@@ -236,6 +274,7 @@
         <option value="$PROJECT_DIR$/src/javah/util/NodeNameHandler.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ResidentFormControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/ResidentControl.java" />
       </list>
     </option>
   </component>
@@ -378,6 +417,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Barangay_131" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Barangay_131" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javah" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="contract" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -926,13 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="25" column="101" selection-start-line="25" selection-start-column="101" selection-end-line="25" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/container/KagawadHolder.java" />
     <entry file="file://$PROJECT_DIR$/src/javah/container/Resident.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1184,13 +1238,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/util/BarangayUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/lang/reflect/Field.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -1435,6 +1482,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/contract/CSSContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="25" column="101" selection-start-line="25" selection-start-column="101" selection-end-line="25" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/util/BarangayUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;field#mDefaultDisplayPhoto#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="e#1598#1679#0" expanded="false" />
+            <element signature="e#1791#1874#0" expanded="false" />
+            <element signature="e#2113#2192#0" expanded="false" />
+            <element signature="e#2877#2955#0" expanded="false" />
+            <element signature="docComment;method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#formatName#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#formatName#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#getDefaultDisplayPhoto#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#addAutoResizeListener#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#addAutoResizeListener#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
@@ -1493,8 +1580,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/ResidentControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-775">
-          <caret line="459" column="15" selection-start-line="459" selection-start-column="15" selection-end-line="459" selection-end-column="15" />
+        <state relative-caret-position="294">
+          <caret line="426" column="45" selection-start-line="426" selection-start-column="45" selection-end-line="426" selection-end-column="45" />
           <folding />
         </state>
       </provider>
