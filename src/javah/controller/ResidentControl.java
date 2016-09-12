@@ -109,8 +109,8 @@ public class ResidentControl {
     /* An Image view that displays the photo of the resident selected. */
     @FXML private ImageView mResidentPhoto;
 
-    /* A label displaying the name of the resident selected. */
-    @FXML private Label mResidentName;
+    /* A text displaying the name of the resident selected. */
+    @FXML private Text mResidentName;
 
     /* A label displaying the birth date of the resident selected. */
     @FXML private Label mBirthDate;

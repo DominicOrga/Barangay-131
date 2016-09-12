@@ -218,11 +218,15 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Label fx:id="mResidentName" text="Name">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Label>
+                        <TextFlow prefWidth="450.0" textAlignment="CENTER">
+                           <children>
+                              <Text fx:id="mResidentName" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </TextFlow>
                         <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
                            <children>
                               <Label minWidth="-Infinity" prefWidth="155.0" text="Birthdate:">

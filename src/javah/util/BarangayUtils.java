@@ -2,10 +2,8 @@ package javah.util;
 
 import com.sun.javafx.tk.FontLoader;
 import com.sun.javafx.tk.Toolkit;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -259,16 +257,16 @@ public class BarangayUtils {
     }
 
     /**
-     * Limit the text within a text field to a certain length.
+     * Limit the text within a any TextInputControl child classes to a certain length.
      *
      * @param textField
      *        The text field to be handled.
      * @param length
      *        The maximum length of text allowed within the specified text field.
      */
-    public static void addTextLimitListener(TextField textField, double length) {
+    public static void addTextLimitListener(TextInputControl textField, double length) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 30)
+            if (newValue.length() > length)
                 textField.setText(oldValue);
         });
     }

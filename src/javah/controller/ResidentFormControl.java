@@ -130,11 +130,7 @@ public class ResidentFormControl {
     @FXML private ImageView mActionIcon;
     @FXML private Label mActionLabel;
 
-    /**
-     * A resident container containing the data of the resident. If the resident has no
-     * ID, then we assume that we are creating a new resident. Otherwise, we are
-     * updating an existing resident.
-     */
+    /* A resident container containing the data of the resident. */
     private Resident mResident;
 
     /**
@@ -148,8 +144,17 @@ public class ResidentFormControl {
     /* A reference to the listener of this controller. */
     private OnResidentFormListener mListener;
 
+    /**
+     * Initialize the components of the scene.
+     */
     @FXML
     private void initialize() {
+        // Set name text fields to have a maximum input of 30.
+        BarangayUtils.addTextLimitListener(mFirstName, 30);
+        BarangayUtils.addTextLimitListener(mMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mLastName, 30);
+        BarangayUtils.addTextLimitListener(mAddress1, 150);
+        BarangayUtils.addTextLimitListener(mAddress2, 150);
 
         // Initialize birth year elements, which include the current year up to 1900.
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -221,35 +226,40 @@ public class ResidentFormControl {
         });
 
         // Reset the resident form every time it is set to visible.
-        mRootPane.visibleProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                mFirstName.setStyle(null);
-                mMiddleName.setStyle(null);
-                mLastName.setStyle(null);
-                mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-                mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+        mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            mResidentPhotoView.setImage(null);
 
-                mFirstName.setText("");
-                mMiddleName.setText("");
-                mLastName.setText("");
-                mAddress1.setText("");
-                mAddress2.setText("");
-                mBirthMonth.getSelectionModel().selectFirst();
-                mBirthDay.getSelectionModel().selectFirst();
-                mBirthYear.getSelectionModel().selectFirst();
-                mYearOfResidency.getSelectionModel().selectFirst();
-                mMonthOfResidency.setVisible(false);
-                mMonthOfResidency.getSelectionModel().selectFirst();
-                mResidentPhotoView.setImage(null);
+            mFirstName.setStyle(null);
+            mMiddleName.setStyle(null);
+            mLastName.setStyle(null);
+            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
 
-                // Update the form UI back to its former glory.
-                mActionLabel.setText("New Resident");
-                mActionIcon.setImage(new Image("res/ic_new_resident.png"));
-            }
+            mFirstName.setText(null);
+            mMiddleName.setText(null);
+            mLastName.setText(null);
+            mAuxiliary.setValue("N/A");
+            mAddress1.setText(null);
+            mAddress2.setText(null);
+            mBirthMonth.getSelectionModel().selectFirst();
+            mBirthDay.getSelectionModel().selectFirst();
+            mBirthYear.getSelectionModel().selectFirst();
+            mYearOfResidency.getSelectionModel().selectFirst();
+            mMonthOfResidency.setVisible(false);
+            mMonthOfResidency.getSelectionModel().selectFirst();
+
+            // Update the form UI back to its former glory.
+            mActionLabel.setText("New Resident");
+            mActionIcon.setImage(new Image("res/ic_new_resident.png"));
         });
     }
 
+    /**
+     * Tell the Resident Control that the cancel button was clicked.
+     *
+     * @param event
+     *        The callback event. Never used.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent event) {
         mListener.onCancelButtonClicked();
@@ -257,9 +267,11 @@ public class ResidentFormControl {
     }
 
     /**
-     * Verify whether the inputted data is valid. If the data is valid, then proceed to the MainControl to continue the
-     * creation process.
+     * Verify whether the inputted data is valid. If the data is valid, then proceed
+     * to send the Resident to the resident control for creation or update.
+     *
      * @param event
+     *        The callback event. Never used.
      */
     @FXML
     public void onCreateButtonClicked(ActionEvent event) {
