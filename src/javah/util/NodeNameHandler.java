@@ -86,10 +86,10 @@ public class NodeNameHandler {
             mMiddleName = new TextField();
             mLastName = new TextField();
 
-            // Limit the text allowed within the text fields to 25.
-            BarangayUtils.addTextLimitListener(mFirstName, 25);
-            BarangayUtils.addTextLimitListener(mMiddleName, 25);
-            BarangayUtils.addTextLimitListener(mLastName, 25);
+            // Limit the text allowed within the text fields to 30.
+            BarangayUtils.addTextLimitListener(mFirstName, 30);
+            BarangayUtils.addTextLimitListener(mMiddleName, 30);
+            BarangayUtils.addTextLimitListener(mLastName, 30);
 
             mFirstName.setMinWidth(150);
             mFirstName.setMaxWidth(150);

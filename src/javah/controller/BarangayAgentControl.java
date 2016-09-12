@@ -241,16 +241,16 @@ public class BarangayAgentControl {
         // names, then always set the vertical scroll pane at the bottom.
         mKagawadPane.heightProperty().addListener(observable -> mScrollPane.setVvalue(1));
 
-        // Limit the text length within the text fields to a maximum of 25.
-        BarangayUtils.addTextLimitListener(mChmFirstName, 25);
-        BarangayUtils.addTextLimitListener(mChmMiddleName, 25);
-        BarangayUtils.addTextLimitListener(mChmLastName, 25);
-        BarangayUtils.addTextLimitListener(mSecFirstName, 25);
-        BarangayUtils.addTextLimitListener(mSecMiddleName, 25);
-        BarangayUtils.addTextLimitListener(mSecLastName, 25);
-        BarangayUtils.addTextLimitListener(mTrsrFirstName, 25);
-        BarangayUtils.addTextLimitListener(mTrsrMiddleName, 25);
-        BarangayUtils.addTextLimitListener(mTrsrLastName, 25);
+        // Limit the text length within the text fields to a maximum of 30.
+        BarangayUtils.addTextLimitListener(mChmFirstName, 30);
+        BarangayUtils.addTextLimitListener(mChmMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mChmLastName, 30);
+        BarangayUtils.addTextLimitListener(mSecFirstName, 30);
+        BarangayUtils.addTextLimitListener(mSecMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mSecLastName, 30);
+        BarangayUtils.addTextLimitListener(mTrsrFirstName, 30);
+        BarangayUtils.addTextLimitListener(mTrsrMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mTrsrLastName, 30);
 
         // Add listener to the root pane visibility properties. If the root pane is set
         // to visible, then reset the data.
@@ -268,6 +268,9 @@ public class BarangayAgentControl {
                 mChmLastName.setStyle(null);
 
                 mChmNameError.setVisible(false);
+
+                mChmPhotoView.setImage(null);
+                mChmSignatureView.setImage(null);
 
                 String mChmPhotoPath = mPreferences.get(PreferenceContract.CHAIRMAN_PHOTO_PATH);
                 if (mChmPhotoPath != null)
@@ -289,6 +292,8 @@ public class BarangayAgentControl {
                 mSecLastName.setStyle(null);
 
                 mSecNameError.setVisible(false);
+
+                mSecSignatureView.setImage(null);
 
                 String mSecSignaturePath = mPreferences.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
                 if (mSecSignaturePath != null)

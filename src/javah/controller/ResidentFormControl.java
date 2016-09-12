@@ -1,5 +1,7 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -24,48 +26,130 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A controller class for managing the resident form, either for update or
+ * creation purposes.
+ */
 public class ResidentFormControl {
 
+    /**
+     * An interface listener for the Resident form control.
+     *
+     * @see ResidentFormControl
+     */
     public interface OnResidentFormListener {
+        /**
+         * Tell the Resident control to save the data of the specified resident when the
+         * Resident form control save button is clicked.
+         *
+         * @param resident
+         *        The resident to be saved.
+         *
+         * @see ResidentControl
+         */
         void onSaveButtonClicked(Resident resident);
+
+        /**
+         * Tell the Main Control to close the Resident Form.
+         */
         void onCancelButtonClicked();
+
+        /**
+         * Tell the Photoshop control to capture a profile photo for the Resident Form.
+         *
+         * @see PhotoshopControl
+         */
         void onTakePhotoButtonClicked();
+
+        /**
+         * Tell the Photoshop control to upload an image for the Resident Form.
+         *
+         * @see PhotoshopControl
+         */
         void onUploadButtonClicked();
     }
 
+    /* Disables the whole resident form while the photoshop is active. */
     @FXML Pane mRootPane;
 
-    @FXML
-    private ImageView mResidentPhotoView;
+    /* An Image view for the display photo of the resident. */
+    @FXML private ImageView mResidentPhotoView;
 
-    @FXML
-    private Label mNameError, mAddress1Error, mAddress2Error;
+    /* Labels to specify the data input errors. */
+    @FXML private Label mNameError, mAddress1Error, mAddress2Error;
 
-    @FXML
-    private TextField mFirstName, mMiddleName, mLastName;
+    /**
+     * Text fields and combo box to input the name of the resident.
+     * Max length for each text field is 30.
+     */
+    @FXML private TextField mFirstName, mMiddleName, mLastName;
+    @FXML private ComboBox mAuxiliary;
 
-    @FXML
-    private TextArea mAddress1, mAddress2;
+    /**
+     * Text areas for the address of the reaident.
+     * Max length for each text areas is 150.
+     */
+    @FXML private TextArea mAddress1, mAddress2;
 
-    @FXML
-    private ComboBox mBirthMonth, mBirthDay, mBirthYear, mYearOfResidency, mMonthOfResidency, mAuxiliary;
+    /**
+     * A combo box for the birth month of the resident.
+     * Months are displayed in string, such as January.
+     */
+    @FXML private ComboBox mBirthMonth;
 
-    @FXML
-    private ImageView mActionIcon;
+    /**
+     * A combo box for the day of birth of the resident.
+     * Days range varies depending on the birth month, which can either be 1 - 30,
+     * 1 - 31, 1 - 28 or 1-29.
+     */
+    @FXML private ComboBox mBirthDay;
 
-    @FXML
-    private Label mActionLabel;
+    /* A combo box with values of the year starting from 1900 to current year. */
+    @FXML private ComboBox mBirthYear;
 
+    /**
+     * A combo box to determine the year of residency of the resident.
+     * Values are string which include 'Birth' and years from 1900 to the current year.
+     * If the current value of the combo box is Birth, then the mMonthOfResidency is
+     * hidden, since the birth date will be used instead in determining the years of
+     * residency of the resident.
+     */
+    @FXML private ComboBox mYearOfResidency;
+
+    /**
+     * A combo box to determine the month of residency of the resident.
+     * The months are represented as strings, such as January. No usage
+     * if the mYearOfResidency's value is 'Birth'.
+     */
+    @FXML private ComboBox mMonthOfResidency;
+
+    /**
+     * Displays the actions of the this controller, which is to either update or create
+     * a resident.
+     */
+    @FXML private ImageView mActionIcon;
+    @FXML private Label mActionLabel;
+
+    /**
+     * A resident container containing the data of the resident. If the resident has no
+     * ID, then we assume that we are creating a new resident. Otherwise, we are
+     * updating an existing resident.
+     */
     private Resident mResident;
 
-    private OnResidentFormListener mListener;
-
+    /**
+     * Takes hold of the image captured or uploaded by the photoshop control. The image
+     * is null if the image was not changed.
+     *
+     * @see PhotoshopControl
+     */
     private WritableImage mResidentPhoto;
+
+    /* A reference to the listener of this controller. */
+    private OnResidentFormListener mListener;
 
     @FXML
     private void initialize() {
-
-        mResident = new Resident();
 
         // Initialize birth year elements, which include the current year up to 1900.
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -78,7 +162,8 @@ public class ResidentFormControl {
         // Set the birth year with the current year as the default value.
         mBirthYear.setValue(year);
 
-        // Initialize the default birth day elements (31 days, since default month is January).
+        // Initialize the default birth day elements
+        // (31 days, since default month is January).
         List<Integer> dayList = new ArrayList<>();
         for (int i = 1; i <= 31; i++)
         dayList.add(i);
@@ -87,7 +172,8 @@ public class ResidentFormControl {
         // Set the birth day to 1 as the default value.
         mBirthDay.setValue(1);
 
-        // Set a birth month listener to update the elements of the birth day in accordance to the selected birth month.
+        // Set a birth month listener to update the elements of the birth day in accordance
+        // to the selected birth month.
         mBirthMonth.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             int monthSelected = newValue.intValue();
 
@@ -116,8 +202,6 @@ public class ResidentFormControl {
 
             mBirthDay.setItems(FXCollections.observableArrayList(dayList1));
             mBirthDay.setValue(1);
-
-
         });
 
         // Initialize the year of residency elements.
@@ -136,14 +220,40 @@ public class ResidentFormControl {
             mMonthOfResidency.setVisible(newValue.intValue() != 0);
         });
 
+        // Reset the resident form every time it is set to visible.
+        mRootPane.visibleProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                mFirstName.setStyle(null);
+                mMiddleName.setStyle(null);
+                mLastName.setStyle(null);
+                mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
 
+                mFirstName.setText("");
+                mMiddleName.setText("");
+                mLastName.setText("");
+                mAddress1.setText("");
+                mAddress2.setText("");
+                mBirthMonth.getSelectionModel().selectFirst();
+                mBirthDay.getSelectionModel().selectFirst();
+                mBirthYear.getSelectionModel().selectFirst();
+                mYearOfResidency.getSelectionModel().selectFirst();
+                mMonthOfResidency.setVisible(false);
+                mMonthOfResidency.getSelectionModel().selectFirst();
+                mResidentPhotoView.setImage(null);
+
+                // Update the form UI back to its former glory.
+                mActionLabel.setText("New Resident");
+                mActionIcon.setImage(new Image("res/ic_new_resident.png"));
+            }
+        });
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent event) {
         mListener.onCancelButtonClicked();
         mResident = null;
-        resetScene();
     }
 
     /**
@@ -253,7 +363,6 @@ public class ResidentFormControl {
 
             mListener.onSaveButtonClicked(mResident);
             mResident = null;
-            resetScene();
         }
     }
 
@@ -337,31 +446,4 @@ public class ResidentFormControl {
         mResidentPhotoView.setImage(residentPhoto);
     }
 
-    /**
-     * Reset the form to its default values.
-     */
-    private void resetScene() {
-        mFirstName.setStyle(null);
-        mMiddleName.setStyle(null);
-        mLastName.setStyle(null);
-        mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-        mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-
-        mFirstName.setText("");
-        mMiddleName.setText("");
-        mLastName.setText("");
-        mAddress1.setText("");
-        mAddress2.setText("");
-        mBirthMonth.getSelectionModel().selectFirst();
-        mBirthDay.getSelectionModel().selectFirst();
-        mBirthYear.getSelectionModel().selectFirst();
-        mYearOfResidency.getSelectionModel().selectFirst();
-        mMonthOfResidency.setVisible(false);
-        mMonthOfResidency.getSelectionModel().selectFirst();
-        mResidentPhotoView.setImage(new Image("/res/ic_default_resident.png"));
-
-        // Update the form UI back to its former glory.
-        mActionLabel.setText("New Resident");
-        mActionIcon.setImage(new Image("res/ic_new_resident.png"));
-    }
 }
