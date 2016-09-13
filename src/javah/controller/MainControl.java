@@ -205,8 +205,6 @@ public class MainControl {
                         break;
                     case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
                 }
-
-                mResidentInformationFormControl.reset();
             }
 
             @Override

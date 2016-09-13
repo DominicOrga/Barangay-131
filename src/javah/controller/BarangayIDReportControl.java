@@ -185,7 +185,7 @@ public class BarangayIDReportControl {
     }
 
     /**
-     * When the scene is reset, it takes the state of simply displaying the report.
+     * When the scene is resetScene, it takes the state of simply displaying the report.
      * Must always be called before setBarangayID.
      */
     public void reset() {

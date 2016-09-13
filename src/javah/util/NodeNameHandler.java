@@ -171,7 +171,7 @@ public class NodeNameHandler {
         }
 
         /**
-         * Clear all the string within this Node Name's text fields. Also, reset the
+         * Clear all the string within this Node Name's text fields. Also, resetScene the
          * Auxiliary to N/A.
          */
         public void clear() {

@@ -275,8 +275,6 @@ public class ResidentControl {
             final int labelIndex = i;
             label.setOnMouseClicked(event -> setResidentToLabelSelected(labelIndex));
         }
-
-
     }
 
     /**
@@ -290,10 +288,9 @@ public class ResidentControl {
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText();
 
-        if (keywords.trim().equals("")) {
+        if (keywords.trim().equals(""))
             mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getResidentNamesCache();
-        } else {
+        else {
             String[] keywordsArray = keywords.split(" ");
 
             mResidentIDs = BarangayUtils.getFilteredIDs(
@@ -596,6 +593,7 @@ public class ResidentControl {
      */
     public void setCacheModel(CacheModel cacheModel) {
         mCacheModel = cacheModel;
+        mResidentNames = mCacheModel.getResidentNamesCache();
     }
 
     /**
@@ -691,7 +689,6 @@ public class ResidentControl {
      */
     public void resetCachedData() {
         mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
         updateListPaging(false);
     }
 }

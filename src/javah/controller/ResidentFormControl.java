@@ -227,32 +227,34 @@ public class ResidentFormControl {
 
         // Reset the resident form every time it is set to visible.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            mResident = null;
+            if (newValue) {
+                mResident = null;
 
-            mResidentPhotoView.setImage(null);
+                mResidentPhotoView.setImage(null);
 
-            mFirstName.setStyle(null);
-            mMiddleName.setStyle(null);
-            mLastName.setStyle(null);
-            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-            mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                mFirstName.setStyle(null);
+                mMiddleName.setStyle(null);
+                mLastName.setStyle(null);
+                mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
 
-            mFirstName.setText(null);
-            mMiddleName.setText(null);
-            mLastName.setText(null);
-            mAuxiliary.setValue("N/A");
-            mAddress1.setText(null);
-            mAddress2.setText(null);
-            mBirthMonth.getSelectionModel().selectFirst();
-            mBirthDay.getSelectionModel().selectFirst();
-            mBirthYear.getSelectionModel().selectFirst();
-            mYearOfResidency.getSelectionModel().selectFirst();
-            mMonthOfResidency.setVisible(false);
-            mMonthOfResidency.getSelectionModel().selectFirst();
+                mFirstName.setText(null);
+                mMiddleName.setText(null);
+                mLastName.setText(null);
+                mAuxiliary.setValue("N/A");
+                mAddress1.setText(null);
+                mAddress2.setText(null);
+                mBirthMonth.getSelectionModel().selectFirst();
+                mBirthDay.getSelectionModel().selectFirst();
+                mBirthYear.getSelectionModel().selectFirst();
+                mYearOfResidency.getSelectionModel().selectFirst();
+                mMonthOfResidency.setVisible(false);
+                mMonthOfResidency.getSelectionModel().selectFirst();
 
-            // Update the form UI back to its former glory.
-            mActionLabel.setText("New Resident");
-            mActionIcon.setImage(new Image("res/ic_new_resident.png"));
+                // Update the form UI back to its former glory.
+                mActionLabel.setText("New Resident");
+                mActionIcon.setImage(new Image("res/ic_new_resident.png"));
+            }
         });
     }
 

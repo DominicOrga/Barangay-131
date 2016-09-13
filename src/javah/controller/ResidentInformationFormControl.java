@@ -1,5 +1,7 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -13,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
 import javah.Main;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
@@ -26,6 +29,7 @@ import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 
 import javax.imageio.ImageIO;
+
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -80,45 +84,133 @@ public class ResidentInformationFormControl {
         void onCreateButtonClicked(Object data, byte formType);
     }
 
-    @FXML Pane mRootPane;
+    /* Updates this controller's UI, catering to what form to create. */
+    public static final byte FORM_BARANGAY_ID = 1, FORM_BARANGAY_CLEARANCE = 2;
 
     /**
-     * The grid pane containing the list of residents.
+     * Disables the resident info form while the photoshop control is open for an
+     * image signature request.
      */
+    @FXML Pane mRootPane;
+
+    /* The grid pane containing the list of residents. */
     @FXML GridPane mResidentGridPane;
+
+    /* A search field for filtering the resident list paging. */
     @FXML TextField mSearchField;
+
+    /* Page labels for the current page and page count. */
     @FXML Label mCurrentPageLabel, mPageCountLabel;
+
+    /* Buttons for the back page and next page. */
     @FXML Button mBackPageButton, mNextPageButton;
+
+    /* A label displaying what form is taking place. */
     @FXML Label mActionLabel;
 
     /**
-     * Nodes contained within the barangay ID pane.
+     * A button to create a report with the specified form.
+     *
+     * Note: Disabled when no resident is selected from the resident list paging.
      */
-    @FXML Pane mBarangayIDPane;
-    @FXML RadioButton mAddress1RadioButton, mAddress2RadioButton;
-    @FXML TextArea mAddress1TextArea, mAddress2TextArea;
-    @FXML ImageView mSignatureView;
-    @FXML Button mSignatureUploadButton, mSignatureCaptureButton;
-
-    /**
-     * Nodes contained within the barangay clearance pane.
-     */
-    @FXML Pane mBrgyClearancePane;
-    @FXML RadioButton mBrgyClearanceAddress1RadioButton, mBrgyClearanceAddress2RadioButton;
-    @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text;
-    @FXML TextField mBrgyClearancePurpose;
-    @FXML Label mPurposeError;
-
     @FXML Button mCreateButton;
 
     /**
-     * Determines what form form to create.
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * A node containing the child nodes for the barangay ID form.
      */
-    public static final byte
-            FORM_BARANGAY_ID = 1, FORM_BARANGAY_CLEARANCE = 2;
+    @FXML Pane mBarangayIDPane;
 
     /**
-     * The type of form form to create.
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * Radio buttons to choose what resident address will be used for the
+     * barangay ID.
+     */
+    @FXML RadioButton mAddress1RadioButton, mAddress2RadioButton;
+
+    /**
+     * Note: used for FORM_BARANGAY_ID
+     * Text area for the resident addresses for the barangay ID.
+     */
+    @FXML TextArea mAddress1TextArea, mAddress2TextArea;
+
+    /**
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * The image view used to hold the signature of the resident for the
+     * barangay ID.
+     */
+    @FXML ImageView mSignatureView;
+
+    /**
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * Buttons to call the photoshop control to either upload or capture a
+     * signature image for the barangay ID.
+     *
+     * @see PhotoshopControl
+     */
+    @FXML Button mSignatureUploadButton, mSignatureCaptureButton;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * A node containing the child nodes for the barangay ID form.
+     */
+    @FXML Pane mBrgyClearancePane;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * Radio buttons to choose what resident address will be used for the
+     * barangay clearance.
+     */
+    @FXML RadioButton mBrgyClearanceAddress1RadioButton, mBrgyClearanceAddress2RadioButton;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * Text area for the resident addresses for the barangay clearance.
+     */
+    @FXML TextArea mBrgyClearanceAddress1Text, mBrgyClearanceAddress2Text;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * A text field to input the barangay clearance purpose.
+     */
+    @FXML TextField mBrgyClearancePurpose;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * Shows an error if the purpose text field is null or empty.
+     */
+    @FXML Label mPurposeError;
+
+    /**
+     * A reference to the universal cache model. Used for getting the Residents cached
+     * data to display the residents in the list paging.
+     */
+    private CacheModel mCacheModel;
+
+    /**
+     * A reference to the universe preference model. Used for getting the barangay
+     * officials data and insert it to the form before being processed into a report.
+     */
+    private PreferenceModel mPrefModel;
+
+    /**
+     * A reference to the universe database model. Used to query the form of the
+     * resident selected.
+     */
+    private DatabaseModel mDatabaseModel;
+
+    /**
+     * Determines the type of form to be displayed, which can either be
+     * FORM_BARANGAY_ID or FORM_BARANGAY_CLEARANCE.
      */
     private byte mFormType;
 
@@ -128,27 +220,15 @@ public class ResidentInformationFormControl {
      */
     private Label[] mResidentLabels = new Label[10];
 
-    private CacheModel mCacheModel;
-    private PreferenceModel mPrefModel;
-
-    /**
-     * Get the database model to query the form of the resident selected.
-     */
-    private DatabaseModel mDatabaseModel;
-
-    /**
-     * Represents the current page of the resident list paging.
-     */
+    /* Represents the current page of the resident list paging. */
     private int mCurrentPage;
 
-    /**
-     * Represents the number of pages within the resident list paging.
-     */
+    /* Represents the number of pages within the resident list paging. */
     private int mPageCount;
 
     /**
-     * Represents the total number of residents within the resident list paging.
-     * *Does not reflect cached residents.
+     * Represents the total number of  filtered residents within the resident
+     * list paging.
      */
     private int mResidentCount;
 
@@ -165,24 +245,39 @@ public class ResidentInformationFormControl {
     private int mLabelSelectedIndex;
 
     /**
-     * A volatile copy of the mResidentIDsCache and mResidentNamesCache used to display the residents in the list paging.
-     * This list can be filtered with the search field. Thus, making it volatile.
+     * A volatile copy of the mResidentIDsCache used to display the residents in the
+     * list paging. This list can be filtered with the search field. Thus, making it
+     * volatile.
      */
     private List<String> mResidentIDs;
+
     private List<String> mResidentNames;
 
     /**
-     * Used for: Photo upload and photo capture.
-     * If this variable is not equal to null, then a signature image is to be permanently stored and passed to the
-     * mBarangayID.
+     * Note: used for FORM_BARANGAY_ID
+     * If this variable is not equal to null, then a signature image is to be
+     * permanently stored and passed to the mBarangayID.
      */
     private WritableImage mSignatureImage;
 
+    /* A listener for this controller. */
     private OnResidentInfoFormListener mListener;
 
+    /* The currently resident selected. */
     private Resident mResidentSelected;
 
+    /**
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * Holds the barangay ID of the selected resident.
+     */
     private BarangayID mBarangayID;
+
+    /**
+     * Note: used for FORM_BARANGAY_CLEARANCE
+     *
+     * Holds the barangay clearance of the selected resident.
+     */
     private BarangayClearance mBarangayClearance;
 
     @FXML
@@ -210,26 +305,67 @@ public class ResidentInformationFormControl {
         ToggleGroup brgyClearanceToggleGroup = new ToggleGroup();
         mBrgyClearanceAddress1RadioButton.setToggleGroup(brgyClearanceToggleGroup);
         mBrgyClearanceAddress2RadioButton.setToggleGroup(brgyClearanceToggleGroup);
+
+        // Reset the scene if the root pane is turned visible again.
+        mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                mSignatureImage = null;
+
+                mSearchField.setText(null);
+
+                // Disable the address buttons.
+                mAddress1RadioButton.setSelected(true);
+                mAddress1RadioButton.setDisable(true);
+                mAddress2RadioButton.setDisable(true);
+
+                // Clear the address text areas.
+                mAddress1TextArea.setText(null);
+                mAddress2TextArea.setText(null);
+
+                // Disable the upload and capture buttons.
+                mSignatureUploadButton.setDisable(true);
+                mSignatureCaptureButton.setDisable(true);
+
+                mSignatureView.setImage(null);
+
+                mCreateButton.setDisable(true);
+
+                mBrgyClearanceAddress1RadioButton.setSelected(true);
+                mBrgyClearanceAddress1RadioButton.setDisable(true);
+                mBrgyClearanceAddress2RadioButton.setDisable(true);
+
+                mBrgyClearanceAddress1Text.setText(null);
+                mBrgyClearanceAddress2Text.setText(null);
+
+                mBrgyClearancePurpose.setText(null);
+
+                // Update the volatile cache to make sure that they have the updated cache.
+                mResidentIDs = mCacheModel.getResidentIDsCache();
+
+                // Reset the list paging.
+                updateListPaging(false);
+            }
+        });
     }
 
     /**
-     * Update the resident list paging to display the residents that has a match with the text in the search field.
-     * A blank search field will result to displaying all the residents.
+     * Update the resident list paging to display the residents that has a match with
+     * the text in the search field. A blank search field will result to displaying all
+     * the residents.
+     *
      * @param event
      */
     @FXML
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText();
 
-        if (keywords.trim().equals("")) {
+        if (keywords.trim().equals(""))
             mResidentIDs = mCacheModel.getResidentIDsCache();
-            mResidentNames = mCacheModel.getResidentNamesCache();
-        } else {
+        else {
             String[] keywordsArray = keywords.split(" ");
 
             mResidentIDs = BarangayUtils.getFilteredIDs(
-                    mCacheModel.getResidentIDsCache(), mCacheModel.getResidentNamesCache(), keywordsArray);
-
+                    mCacheModel.getResidentIDsCache(), mResidentNames, keywordsArray);
         }
 
         updateListPaging(false);
@@ -237,8 +373,11 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * If the Enter key is pressed within the search field, then automatically click the search button.
+     * If the Enter key is pressed within the search field, then automatically click
+     * the search button.
+     *
      * @param event
+     *        The callback event. Not used.
      */
     @FXML
     public void onSearchFieldKeyPressed(KeyEvent event) {
@@ -248,7 +387,9 @@ public class ResidentInformationFormControl {
 
     /**
      * Move the resident list paging to the previous page when possible.
+     *
      * @param actionEvent
+     *        The callback event. Note used.
      */
     @FXML
     public void onBackPageButtonClicked(ActionEvent actionEvent) {
@@ -265,7 +406,9 @@ public class ResidentInformationFormControl {
 
     /**
      * Move the resident list paging to the next page when possible.
+     *
      * @param actionEvent
+     *        The callback event. Not used.
      */
     @FXML
     public void onNextPageButtonClicked(ActionEvent actionEvent) {
@@ -281,9 +424,14 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * USAGE : Barangay ID
-     * Upload signature.
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * Call the photoshop control to upload a signature image for the barangay ID.
+     *
      * @param actionEvent
+     *        The callback event. Not used.
+     *
+     * @see PhotoshopControl
      */
     @FXML
     public void onUploadButtonClicked(ActionEvent actionEvent) {
@@ -291,20 +439,40 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * USAGE : Barangay ID
-     * Capture signature.
+     * Note: used for Barangay_ID FORM
+     *
+     * Call the photoshop control to capture a signature image for the barangay ID.
+     *
      * @param actionEvent
+     *        The callback event. Not used.
+     *
+     * @see PhotoshopControl
      */
     @FXML
     public void onCaptureButtonClicked(ActionEvent actionEvent) {
         mListener.onCaptureButtonClicked();
     }
 
+    /**
+     * Close the form.
+     *
+     * @param actionEvent
+     *        The callback event. Not used.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
     }
 
+    /**
+     * Pass the gathered data to the correspoding report control, then close this form.
+     *
+     * @param actionEvent
+     *        The action event. Never used.
+     *
+     * @see BarangayClearanceReportControl
+     * @see BarangayIDReportControl
+     */
     @FXML void onCreateButtonClicked(ActionEvent actionEvent) {
         switch (mFormType) {
             case FORM_BARANGAY_ID:
@@ -325,7 +493,8 @@ public class ResidentInformationFormControl {
 
                 mBarangayID.setPhoto(mResidentSelected.getPhotoPath());
 
-                // Store the uploaded or captured signature (if any) permanently in Barangay131/Signatures/ and return the path.
+                // Store the uploaded or captured signature (if any) permanently in
+                // Barangay131/Signatures/ and return the path.
                 if (mSignatureImage != null) {
                     try {
                         // Save the photo in the approriate directory with a unique uuid name.
@@ -359,6 +528,7 @@ public class ResidentInformationFormControl {
 
                 mBarangayID.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
 
+                // If no chairman signature is set, then store null.
                 mBarangayID.setChmSignatureDimension(
                         BarangayUtils.parseSignatureDimension(
                                 mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION)));
@@ -366,6 +536,7 @@ public class ResidentInformationFormControl {
                 // The date issued will be the current date.
                 GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
                 mBarangayID.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
+
                 // Set the date validity of the barangay ID.
                 // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
                 calendar.add(Calendar.DATE, 364);
@@ -703,40 +874,6 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * Reset the whole scene, including having a fresh copy of the cached data.
-     */
-    public void reset() {
-        mBarangayID = new BarangayID();
-        mSignatureImage = null;
-
-        // Disable the address buttons.
-        mAddress1RadioButton.setSelected(true);
-        mAddress1RadioButton.setDisable(true);
-        mAddress2RadioButton.setDisable(true);
-
-        // Clear the address text areas.
-        mAddress1TextArea.setText(null);
-        mAddress2TextArea.setText(null);
-
-        // Disable the upload and capture buttons.
-        mSignatureUploadButton.setDisable(true);
-        mSignatureCaptureButton.setDisable(true);
-
-        mSignatureView.setImage(null);
-
-        mCreateButton.setDisable(true);
-
-        mSearchField.setText(null);
-
-        // Update the volatile cache to make sure that they have the updated cache.
-        mResidentIDs = mCacheModel.getResidentIDsCache();
-        mResidentNames = mCacheModel.getResidentNamesCache();
-
-        // Reset the list paging.
-        updateListPaging(false);
-    }
-
-    /**
      * USAGE : Barangay ID
      * A function to pass the generated signature from the PhotoshopControl.
      * @param image
@@ -760,6 +897,7 @@ public class ResidentInformationFormControl {
      */
     public void setFormType(byte form) {
         mFormType = form;
+
         switch (mFormType) {
             case FORM_BARANGAY_ID:
                 mBarangayIDPane.toFront();
@@ -777,6 +915,7 @@ public class ResidentInformationFormControl {
 
     public void setCacheModel(CacheModel cacheModel) {
         mCacheModel = cacheModel;
+        mResidentNames = mCacheModel.getResidentNamesCache();
     }
 
     public void setDatabaseModel(DatabaseModel databaseModel) {

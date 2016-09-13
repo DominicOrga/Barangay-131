@@ -253,7 +253,7 @@ public class BarangayAgentControl {
         BarangayUtils.addTextLimitListener(mTrsrLastName, 30);
 
         // Add listener to the root pane visibility properties. If the root pane is set
-        // to visible, then reset the data.
+        // to visible, then resetScene the data.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 // Reset chairman data.
