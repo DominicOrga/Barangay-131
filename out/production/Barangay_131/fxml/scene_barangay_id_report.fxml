@@ -1,31 +1,258 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<GridPane fx:id="mRootPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="660.0" style="-fx-background-color: white;" stylesheets="@../css/barangay_id_report.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayIDReportControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="690.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayIDReportControl">
   <columnConstraints>
-    <ColumnConstraints percentWidth="50.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="510.0" minHeight="510.0" prefHeight="510.0" valignment="CENTER" vgrow="NEVER" />
+    <RowConstraints maxHeight="510.0" minHeight="510.0" prefHeight="510.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
+      <GridPane fx:id="mBarangayIDPane" hgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="330.0" prefWidth="330.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="330.0" prefWidth="330.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <GridPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </GridPane.margin>
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); -fx-background-color: white;">
+               <top>
+                  <StackPane maxHeight="75.0" prefHeight="100.0" style="-fx-background-color: #FF861b;" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_caloocan_logo.png" />
+                           </image>
+                           <StackPane.margin>
+                              <Insets left="-250.0" />
+                           </StackPane.margin>
+                        </ImageView>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                           <StackPane.margin>
+                              <Insets right="-250.0" />
+                           </StackPane.margin>
+                           <image>
+                              <Image url="@../res/ic_barangay_logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Republic of the Philippines" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman" size="15.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets top="-30.0" />
+                           </StackPane.margin>
+                        </Label>
+                        <Label text="City of Caloocan" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Brgy. 131, Zone 11, District II" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman" size="15.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets top="30.0" />
+                           </StackPane.margin>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </top>
+               <center>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: black;">
+                           <children>
+                              <ImageView fx:id="mResPhoto" fitHeight="150.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
+                                 <image>
+                                    <Image url="@../../../../../../Public/Barangay131/Photos/1b1654b6-12ca-457b-b51b-462738f97028.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <TextFlow style="-fx-border-width: 0 0 1 0; -fx-border-color: FF861B;" textAlignment="CENTER">
+                           <children>
+                              <Text fx:id="mResName" strokeType="OUTSIDE" strokeWidth="0.0" text="DOMINIC R. ORGA">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="50.0" right="50.0" top="25.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                        <Label text="Name" />
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefWidth="230.0" style="-fx-border-width: 1 0 0 0; -fx-border-color: FF861B;" text="Signature" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="40.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="30.0" spacing="2.0" style="-fx-background-color: FF861B;">
+                           <children>
+                              <Label contentDisplay="RIGHT" text="ID NO: " textFill="WHITE" />
+                              <Label fx:id="mID" contentDisplay="RIGHT" text="16-001" textFill="WHITE" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);" GridPane.columnIndex="1">
+               <bottom>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextFlow style="-fx-border-width: 0 0 1 0; -fx-border-color: FF861B;" textAlignment="CENTER">
+                           <children>
+                              <Text fx:id="mChmName" strokeType="OUTSIDE" strokeWidth="0.0" text="Hon. JOEL L. LOPEZ">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="50.0" right="50.0" top="25.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                        <Label text="Barangay Captain">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </bottom>
+               <center>
+                  <TextFlow maxWidth="-Infinity" prefHeight="200.0" prefWidth="275.0" textAlignment="JUSTIFY" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    This is to certify that the bearer whose name, address and photo appears on this card is a bonafide resident of this Barangay. Bearer has no derogatory records as of the issuance of this card." textAlignment="JUSTIFY" />
+                        <Label prefWidth="275.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    Any courtesy and assistance extended to him/her is highly appreciated." />
+                     </children>
+                  </TextFlow>
+               </center>
+               <top>
+                  <VBox prefWidth="0.0" style="-fx-border-color: black;" BorderPane.alignment="TOP_CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+                           <VBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Text>
+                        <TextFlow maxHeight="-Infinity" prefHeight="90.0">
+                           <children>
+                              <Text fx:id="mAddress" strokeType="OUTSIDE" strokeWidth="0.0" text="484 M.H. Del Pilar Street, San rafael, Rodriguez, Rizal" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                        <TextFlow prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " />
+                              <Text fx:id="mDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                        <TextFlow prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Valid:    " />
+                              <Text fx:id="mDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </BorderPane.margin>
+                  </VBox>
+               </top>
+            </BorderPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fitHeight="300.0" fitWidth="300.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_mayor_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="300.0" fitWidth="300.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_mayor_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <Pane prefHeight="510.0" prefWidth="330.0">
+               <children>
+                  <ImageView fx:id="mResSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
+                     <image>
+                        <Image url="@../../../../../../Public/Barangay131/Signatures/9a468cdc-452f-49e6-9a45-58e3f2a75f33.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="510.0" prefWidth="330.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="385.0">
+                     <image>
+                        <Image url="@../../../../../../Public/Barangay131/Signatures/02c52184-ada2-4f3d-8c4d-d66bf20b016d.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
       <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
             <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
@@ -78,124 +305,11 @@
                </HBox.margin>
             </Button>
          </children>
-         <GridPane.margin>
-            <Insets top="-3.0" />
-         </GridPane.margin>
       </HBox>
-      <GridPane fx:id="mBarangayIDPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="660.0" rotate="180.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
-          <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ImageView fitHeight="510.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2">
-               <image>
-                  <Image url="@../res/report_barangay_id_low_res.png" />
-               </image>
-            </ImageView>
-            <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="510.0">
-               <children>
-                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="No.131 - ">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="mBarangayIDCode" text="16-001">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <StackPane.margin>
-                        <Insets top="275.0" />
-                     </StackPane.margin>
-                  </HBox>
-                  <ImageView fx:id="mPhotoView" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                     <StackPane.margin>
-                        <Insets top="100.0" />
-                     </StackPane.margin>
-                     <image>
-                        <Image url="@../res/ic_default_resident_white_bg.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="mResidentNameLabel" layoutX="118.0" layoutY="285.0" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <StackPane.margin>
-                        <Insets top="303.0" />
-                     </StackPane.margin>
-                  </Label>
-               </children>
-            </StackPane>
-            <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="510.0" GridPane.columnIndex="1">
-               <children>
-                  <TextArea fx:id="mAddressTextArea" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="290.0" text="Unit 704, 7/F Ivy Hill Residences 2350 Taft Ave Malate District, Manila Manila City" wrapText="true" StackPane.alignment="TOP_CENTER">
-                     <StackPane.margin>
-                        <Insets top="33.0" />
-                     </StackPane.margin>
-                     <font>
-                        <Font name="Microsoft YaHei UI Light" size="15.0" />
-                     </font>
-                  </TextArea>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="290.0" StackPane.alignment="TOP_CENTER">
-                     <StackPane.margin>
-                        <Insets top="33.0" />
-                     </StackPane.margin>
-                  </Pane>
-                  <Label fx:id="mDateIssuedLabel" text="October 15, 2016" StackPane.alignment="TOP_CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <StackPane.margin>
-                        <Insets left="75.0" top="95.0" />
-                     </StackPane.margin>
-                  </Label>
-                  <Label fx:id="mDateValidLabel" layoutX="144.0" layoutY="105.0" text="October 14, 2017" StackPane.alignment="TOP_CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <StackPane.margin>
-                        <Insets left="75.0" top="123.0" />
-                     </StackPane.margin>
-                  </Label>
-                  <Label fx:id="mChmNameLabel" text="Hon. ALAN J. TURING" StackPane.alignment="TOP_CENTER">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <StackPane.margin>
-                        <Insets top="453.0" />
-                     </StackPane.margin>
-                  </Label>
-               </children>
-            </StackPane>
-            <Pane prefHeight="510.0" prefWidth="330.0">
-               <children>
-                  <ImageView fx:id="mResSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
-                     <image>
-                        <Image url="@../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="mChmSignaturePane" prefHeight="510.0" prefWidth="330.0" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fx:id="mChmSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="85.0" y="400.0">
-                     <image>
-                        <Image url="@../../../../../../Public/Barangay131/Photos/0ac3bf17-954d-4dd2-a163-51408e8f0ba9.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-         </children>
-         <rotationAxis>
-            <Point3D />
-         </rotationAxis>
-      </GridPane>
+      <JFXCheckBox onAction="#onMirrorIDCheckBoxClicked" text="MIrror ID?" textFill="WHITE" GridPane.rowIndex="2">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXCheckBox>
    </children>
 </GridPane>

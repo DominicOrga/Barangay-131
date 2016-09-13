@@ -5,10 +5,11 @@ import javafx.fxml.FXML;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javah.Main;
 import javah.container.BarangayID;
@@ -17,8 +18,16 @@ import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
+/**
+ * A class that handles the generation of the Barangay ID reports and
+ * the viewing of already created reports. Has the functionality the
+ * barangay ID reports.
+ */
 public class BarangayIDReportControl {
 
     public interface OnBarangayIDReportListener {
@@ -33,22 +42,22 @@ public class BarangayIDReportControl {
 
     @FXML private Pane mRootPane;
 
-    @FXML private Label mBarangayIDCode;
-    @FXML private TextArea mAddressTextArea;
-    @FXML private Label mDateIssuedLabel, mDateValidLabel;
+    @FXML private Label mID;
+    @FXML private Text mAddress;
+    @FXML private Text mDateIssued, mDateValid;
 
     /**
      * The views for the resident.
      */
-    @FXML private Label mResidentNameLabel;
-    @FXML private ImageView mPhotoView;
-    @FXML private ImageView mResSignatureView;
+    @FXML private Text mResName;
+    @FXML private ImageView mResPhoto;
+    @FXML private ImageView mResSignature;
 
     /**
      * The views for the chairman.
      */
-    @FXML private Label mChmNameLabel;
-    @FXML private ImageView mChmSignatureView;
+    @FXML private Text mChmName;
+    @FXML private ImageView mChmSignature;
 
     @FXML private Button mPrintAndSaveButton, mPrintButton, mSaveButton;
 
@@ -68,10 +77,11 @@ public class BarangayIDReportControl {
 
     @FXML
     private void initialize() {
-        mResDraggableSignature = new DraggableSignature(mResSignatureView);
-        mChmDraggableSignature = new DraggableSignature(mChmSignatureView);
+        mResDraggableSignature = new DraggableSignature(mResSignature);
+        mChmDraggableSignature = new DraggableSignature(mChmSignature);
 
-        reset();
+        mResDraggableSignature.setStroke(Color.BLACK);
+        mChmDraggableSignature.setStroke(Color.BLACK);
     }
 
     @FXML
@@ -79,7 +89,6 @@ public class BarangayIDReportControl {
         if (printReport()) {
             saveSignatureDimensions();
             mListener.onSaveButtonClicked(mBarangayID);
-            reset();
         }
     }
 
@@ -89,23 +98,23 @@ public class BarangayIDReportControl {
      */
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-        if (printReport()) {
-            mListener.onSaveButtonClicked(mBarangayID);
-            reset();
-        }
+        printReport();
     }
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         saveSignatureDimensions();
         mListener.onSaveButtonClicked(mBarangayID);
-        reset();
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
-        reset();
+    }
+
+    @FXML
+    public void onMirrorIDCheckBoxClicked(ActionEvent actionEvent) {
+
     }
 
     public void setPreferenceModel(PreferenceModel prefModel) {
@@ -121,56 +130,119 @@ public class BarangayIDReportControl {
      */
     public void setBarangayID(BarangayID barangayID, byte request) {
         mBarangayID = barangayID;
+        mResSignature.setImage(null);
+        mChmSignature.setImage(null);
 
         // If on report creation state, then display the 'print & save' and 'print' buttons.
         if (request == REQUEST_CREATE_REPORT) {
             mPrintButton.setVisible(false);
+            mResDraggableSignature.setVisible(false);
+            mChmDraggableSignature.setVisible(false);
 
             mPrintAndSaveButton.setVisible(true);
             mPrintAndSaveButton.setManaged(true);
             mSaveButton.setVisible(true);
             mSaveButton.setManaged(true);
 
-            mChmDraggableSignature.setVisible(true);
+            // Set the chairman data. If the report has not been created, then get the data
+            // from the preference and pass it to the Barangay ID. Otherwise, simply display
+            // they chairman data.
+            String chmName = BarangayUtils.formatName(
+                    mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
+                    mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
+                    mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
+                    mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY)
+            );
+
+            mBarangayID.setChmName(chmName);
+
+            String chmSignature = mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
+
+            if (chmSignature != null) {
+                mBarangayID.setChmSignature(chmSignature);
+
+                String dimensionStr = mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION);
+
+                double[] dimension = (dimensionStr != null) ?
+                        BarangayUtils.parseSignatureDimension(dimensionStr) : new double[]{60, 400, 210, 90};
+
+                mChmDraggableSignature.setX(dimension[0]);
+                mChmDraggableSignature.setY(dimension[1]);
+                mChmDraggableSignature.setWidth(dimension[2]);
+                mChmDraggableSignature.setHeight(dimension[3]);
+
+                mBarangayID.setChmSignatureDimension(dimension);
+            }
+
+            // The date issued will be the current date.
+            GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
+            mBarangayID.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
+
+            // Set the date validity of the barangay ID.
+            // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
+            calendar.add(Calendar.DATE, 364);
+
+            // Add one more day to the calendar if it is a leap year.
+            if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
+                calendar.add(Calendar.DATE, 1);
+
+            mBarangayID.setDateValid(new Timestamp(calendar.getTimeInMillis()));
+
+
+        } else {
+            mResDraggableSignature.setVisible(false);
+            mChmDraggableSignature.setVisible(false);
+
+            mPrintAndSaveButton.setVisible(false);
+            mPrintAndSaveButton.setManaged(false);
+            mSaveButton.setVisible(false);
+            mSaveButton.setManaged(false);
+            mPrintButton.setVisible(true);
+
         }
 
         // Set the image of the barangay ID, if any.
-        mPhotoView.setImage(mBarangayID.getPhoto() != null ?
-                new Image("file:" + mBarangayID.getPhoto()) : BarangayUtils.getDefaultDisplayPhoto());
+        mResPhoto.setImage(mBarangayID.getPhoto() != null ? new Image("file:" + mBarangayID.getPhoto()) : null);
 
         // Set the applicant name and barangay ID code.
-        mBarangayIDCode.setText(mBarangayID.getID());
-        mResidentNameLabel.setText(mBarangayID.getResidentName().toUpperCase());
+        mID.setText(mBarangayID.getID());
+        mResName.setText(mBarangayID.getResidentName().toUpperCase());
 
         // Set the applicant signature, if any.
         if (mBarangayID.getResidentSignature() != null) {
-            mResSignatureView.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
+            mResSignature.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
+
             mResDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT);
-        }
 
+            if (mBarangayID.getResidentSignatureDimension() != null) {
+                double[] dimension = mBarangayID.getResidentSignatureDimension();
 
-        if (mBarangayID.getResidentSignatureDimension() != null) {
-            System.out.println("hey");
-            double[] dimension = mBarangayID.getResidentSignatureDimension();
-
-            mResDraggableSignature.setX(dimension[0]);
-            mResDraggableSignature.setY(dimension[1]);
-            mResDraggableSignature.setWidth(dimension[2]);
-            mResDraggableSignature.setHeight(dimension[3]);
+                mResDraggableSignature.setX(dimension[0]);
+                mResDraggableSignature.setY(dimension[1]);
+                mResDraggableSignature.setWidth(dimension[2]);
+                mResDraggableSignature.setHeight(dimension[3]);
+            } else {
+                mResDraggableSignature.setX(60);
+                mResDraggableSignature.setY(350);
+                mResDraggableSignature.setWidth(210);
+                mResDraggableSignature.setHeight(90);
+            }
         }
 
         // Set the applicant address.
-        mAddressTextArea.setText(mBarangayID.getAddress());
+        mAddress.setText(mBarangayID.getAddress());
 
-        // Set the date issued and validity of the barangay id.
+        mChmName.setText("Hon." + mBarangayID.getChmName().toUpperCase());
+
+        // Display the date issuance and validity.
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd yyyy");
-        mDateIssuedLabel.setText(dateFormat.format(mBarangayID.getDateIssued()));
-        mDateValidLabel.setText(dateFormat.format(mBarangayID.getDateValid()));
+        mDateIssued.setText(dateFormat.format(mBarangayID.getDateIssued()));
+        mDateValid.setText(dateFormat.format(mBarangayID.getDateValid()));
 
-        mChmNameLabel.setText("Hon. " + mBarangayID.getChmName().toUpperCase());
-        mChmSignatureView.setImage(new Image("file:" + mBarangayID.getChmSignature()));
+        if (mBarangayID.getChmSignature() != null) {
+            mChmSignature.setImage(new Image("file:" + mBarangayID.getChmSignature()));
+            mChmDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT);
 
-        if (mBarangayID.getChmSignatureDimension() != null) {
             double[] dimension = mBarangayID.getChmSignatureDimension();
 
             mChmDraggableSignature.setX(dimension[0]);
@@ -178,40 +250,11 @@ public class BarangayIDReportControl {
             mChmDraggableSignature.setWidth(dimension[2]);
             mChmDraggableSignature.setHeight(dimension[3]);
         }
+
     }
 
     public void setListener(OnBarangayIDReportListener listener) {
         mListener = listener;
-    }
-
-    /**
-     * When the scene is resetScene, it takes the state of simply displaying the report.
-     * Must always be called before setBarangayID.
-     */
-    public void reset() {
-        mPrintButton.setVisible(true);
-
-        mPrintAndSaveButton.setVisible(false);
-        mPrintAndSaveButton.setManaged(false);
-        mSaveButton.setVisible(false);
-        mSaveButton.setManaged(false);
-        mPrintButton.setVisible(true);
-
-        mResDraggableSignature.setVisible(false);
-        mChmDraggableSignature.setVisible(false);
-
-        // Place the resident and chairman signature back to its default coordinate and dimension.
-        // Note that mChmSignatureView always has an image.
-        mResSignatureView.setImage(null);
-        mResDraggableSignature.setX(60);
-        mResDraggableSignature.setY(350);
-        mResDraggableSignature.setWidth(210);
-        mResDraggableSignature.setHeight(90);
-
-        mChmDraggableSignature.setX(60);
-        mChmDraggableSignature.setY(400);
-        mChmDraggableSignature.setWidth(210);
-        mChmDraggableSignature.setHeight(90);
     }
 
     private void saveSignatureDimensions() {

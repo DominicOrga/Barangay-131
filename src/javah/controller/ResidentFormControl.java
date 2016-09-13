@@ -153,8 +153,8 @@ public class ResidentFormControl {
         BarangayUtils.addTextLimitListener(mFirstName, 30);
         BarangayUtils.addTextLimitListener(mMiddleName, 30);
         BarangayUtils.addTextLimitListener(mLastName, 30);
-        BarangayUtils.addTextLimitListener(mAddress1, 150);
-        BarangayUtils.addTextLimitListener(mAddress2, 150);
+        BarangayUtils.addTextLimitListener(mAddress1, 125);
+        BarangayUtils.addTextLimitListener(mAddress2, 125);
 
         // Initialize birth year elements, which include the current year up to 1900.
         int year = Calendar.getInstance().get(Calendar.YEAR);

@@ -469,7 +469,6 @@ public class MainControl {
 
         mResidentInformationFormControl.setCacheModel(mCacheModel);
         mResidentInformationFormControl.setDatabaseModel(mDatabaseModel);
-        mResidentInformationFormControl.setPreferenceModel(mPreferenceModel);
 
         mResidentInformationFormControl.setListener(new ResidentInformationFormControl.OnResidentInfoFormListener() {
             @Override

@@ -762,7 +762,7 @@ public class DatabaseModel {
                         null);
 
                 barangayID.setChmName(resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_NAME));
-                barangayID.setChmSignature(resultSet.getString(BarangayIdEntry.COLUMN_RESIDENT_SIGNATURE));
+                barangayID.setChmSignature(resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE));
 
                 signatureDimension = resultSet.getString(BarangayIdEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION);
                 barangayID.setChmSignatureDimension(signatureDimension != null ?

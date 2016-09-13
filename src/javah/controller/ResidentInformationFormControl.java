@@ -197,12 +197,6 @@ public class ResidentInformationFormControl {
     private CacheModel mCacheModel;
 
     /**
-     * A reference to the universe preference model. Used for getting the barangay
-     * officials data and insert it to the form before being processed into a report.
-     */
-    private PreferenceModel mPrefModel;
-
-    /**
      * A reference to the universe database model. Used to query the form of the
      * resident selected.
      */
@@ -251,6 +245,7 @@ public class ResidentInformationFormControl {
      */
     private List<String> mResidentIDs;
 
+    /* A reference to the resident names cache. */
     private List<String> mResidentNames;
 
     /**
@@ -280,6 +275,9 @@ public class ResidentInformationFormControl {
      */
     private BarangayClearance mBarangayClearance;
 
+    /**
+     * Initialize the components of the scene.
+     */
     @FXML
     private void initialize() {
         for (int i = 0; i < 10; i++) {
@@ -518,35 +516,6 @@ public class ResidentInformationFormControl {
                     }
                 }
 
-                // Get the current chairman name and signature from the preferences.
-                mBarangayID.setChmName(BarangayUtils.formatName(
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY))
-                );
-
-                mBarangayID.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
-
-                // If no chairman signature is set, then store null.
-                mBarangayID.setChmSignatureDimension(
-                        BarangayUtils.parseSignatureDimension(
-                                mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION)));
-
-                // The date issued will be the current date.
-                GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
-                mBarangayID.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
-
-                // Set the date validity of the barangay ID.
-                // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
-                calendar.add(Calendar.DATE, 364);
-
-                // Add one more day to the calendar if it is a leap year.
-                if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
-                    calendar.add(Calendar.DATE, 1);
-
-                mBarangayID.setDateValid(new Timestamp(calendar.getTimeInMillis()));
-
                 // Pass the generated barangay ID to the Main Control in order to be processed into a report.
                 mListener.onCreateButtonClicked(mBarangayID, FORM_BARANGAY_ID);
                 break;
@@ -604,66 +573,18 @@ public class ResidentInformationFormControl {
 
                 mBarangayClearance.setPurpose(mBrgyClearancePurpose.getText());
 
-                // The date issued will be the current date.
-                calendar = (GregorianCalendar) GregorianCalendar.getInstance();
-                mBarangayClearance.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
-
-                // Set the date validity of the barangay ID.
-                // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
-                calendar.add(Calendar.DATE, 364);
-
-                // Add one more day to the calendar if it is a leap year.
-                if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
-                    calendar.add(Calendar.DATE, 1);
-
-                mBarangayClearance.setDateValid(new Timestamp(calendar.getTimeInMillis()));
-
-                mBarangayClearance.setChmName(BarangayUtils.formatName(
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
-                        mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY))
-                );
-
-
-                mBarangayClearance.setChmPhoto(mPrefModel.get(PreferenceContract.CHAIRMAN_PHOTO_PATH));
-                mBarangayClearance.setChmSignature(mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH));
-
-                mBarangayClearance.setChmSignatureDimension(
-                        BarangayUtils.parseSignatureDimension(
-                                mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION)));
-
-                mBarangayClearance.setSecName(BarangayUtils.formatName(
-                        mPrefModel.get(PreferenceContract.SECRETARY_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.SECRETARY_MIDDLE_NAME),
-                        mPrefModel.get(PreferenceContract.SECRETARY_LAST_NAME),
-                        mPrefModel.get(PreferenceContract.SECRETARY_AUXILIARY)));
-
-                mBarangayClearance.setSecSignature(mPrefModel.get(PreferenceContract.SECRETARY_SIGNATURE_PATH));
-
-                mBarangayClearance.setSecSignatureDimension(
-                        BarangayUtils.parseSignatureDimension(
-                                mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION)));
-
-                mBarangayClearance.setTreasurerName(BarangayUtils.formatName(
-                        mPrefModel.get(PreferenceContract.TREASURER_FIRST_NAME),
-                        mPrefModel.get(PreferenceContract.TREASURER_MIDDLE_NAME),
-                        mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME),
-                        mPrefModel.get(PreferenceContract.TREASURER_AUXILIARY))
-                );
-
-                for (int i = 0; i < 7; i++) {
-                    if (mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]) != null) {
-                        String name = BarangayUtils.formatName(
-                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]),
-                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]),
-                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]),
-                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3])
-                        );
-
-                        mBarangayClearance.setKagawadName(i, name);
-                    }
-                }
+//                for (int i = 0; i < 7; i++) {
+//                    if (mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]) != null) {
+//                        String name = BarangayUtils.formatName(
+//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]),
+//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]),
+//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]),
+//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3])
+//                        );
+//
+//                        mBarangayClearance.setKagawadName(i, name);
+//                    }
+//                }
 
                 // Pass the generated barangay clearance to the Main Control in order to be processed into a report.
                 mListener.onCreateButtonClicked(mBarangayClearance, FORM_BARANGAY_CLEARANCE);
@@ -673,7 +594,9 @@ public class ResidentInformationFormControl {
 
     /**
      * Updates the list paging, mResidentCount and mPageCount.
-     * @param stayOnPage determines whether current page should be maintained or not after the update.
+     *
+     * @param stayOnPage
+     *        Determines whether current page should be maintained or not after the update.
      */
     private void updateListPaging(boolean stayOnPage) {
         mResidentCount = mResidentIDs.size();
@@ -693,9 +616,9 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * Update current page with respect to mCurrentPage. That is, the value of mCurrentPage will determine the displayed
-     * residents.
-     * Moving from one page to another removes the resident selected.
+     * Update current page with respect to mCurrentPage. That is, the value of
+     * mCurrentPage will determine the displayed residents. In addition, moving from
+     * one page to another removes the resident selected.
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
@@ -719,8 +642,10 @@ public class ResidentInformationFormControl {
 
     /**
      * Update the resident selected data displayed.
-     * @param newLabelSelectedIndex is the index of the label containing the resident to be displayed. If it is equal
-     *                              to -1, then the example data is displayed.
+     *
+     * @param newLabelSelectedIndex
+     *        The index of the label containing the resident to be displayed. If it is equal
+     *        to -1, then the example data is displayed.
      */
     private void setResidentSelected(int newLabelSelectedIndex) {
         // Determine the index of the resident in place of the currently selected label.
@@ -874,26 +799,48 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * USAGE : Barangay ID
-     * A function to pass the generated signature from the PhotoshopControl.
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * A function to pass the generated signature from the PhotoshopControl for the
+     * barangay ID.
+     *
      * @param image
+     *        The image returned by the photoshop control.
+     *
+     * @see PhotoshopControl
      */
     public void setSignature(WritableImage image) {
         mSignatureImage = image;
         mSignatureView.setImage(image);
     }
 
+    /**
+     * Set the listener for this controller.
+     *
+     * @param listener
+     *        The listener for this controller.
+     */
     public void setListener(OnResidentInfoFormListener listener) {
         mListener = listener;
     }
 
+    /**
+     * Note: used for FORM_BARANGAY_ID
+     *
+     * Disable this form if the photoshop is currently open.
+     *
+     * @param bool
+     *        Determines whether to disable or enabled the form.
+     */
     public void setDisable(boolean bool) {
         mRootPane.setDisable(bool);
     }
 
     /**
      * Update the view of the form, depending on the requested form.
+     *
      * @param form
+     *        The type of form to create.
      */
     public void setFormType(byte form) {
         mFormType = form;
@@ -913,16 +860,26 @@ public class ResidentInformationFormControl {
         }
     }
 
+    /**
+     * Set the universal cache model to this controller. Used to display the residents
+     * in the list paging.
+     *
+     * @param cacheModel
+     *        The universal cache model.
+     */
     public void setCacheModel(CacheModel cacheModel) {
         mCacheModel = cacheModel;
         mResidentNames = mCacheModel.getResidentNamesCache();
     }
 
+    /**
+     * Set the universal database model to this controller. Used to load the information
+     * of the currently selected resident.
+     *
+     * @param databaseModel
+     *        The universal database model.
+     */
     public void setDatabaseModel(DatabaseModel databaseModel) {
         mDatabaseModel = databaseModel;
-    }
-
-    public void setPreferenceModel(PreferenceModel preferenceModel) {
-        mPrefModel = preferenceModel;
     }
 }
