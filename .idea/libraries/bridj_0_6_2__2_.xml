@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="bridj-0.6.2 (2)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/bridj-0.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfoenix-0.0.0-SNAPSHOT-retrolambda.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/json-simple-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/logback-classic-1.0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/logback-core-1.0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.35-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/webcam-capture-0.3.12-20160507.091613-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

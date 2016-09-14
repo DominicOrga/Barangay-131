@@ -6,10 +6,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -178,6 +175,9 @@ public class BarangayAgentControl {
      */
     @FXML private Label mKagawadNameError;
 
+    /* A button to close the form. */
+    @FXML private Button mCancelButton;
+
     /**
      * A reference to the chairman image passed from the Photoshop Control. The
      * Chairman Photo Image is null if the chairman's photo wasn't changed starting
@@ -332,6 +332,14 @@ public class BarangayAgentControl {
 
                     mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
                 }
+            }
+
+            if (mPreferences.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0")) {
+                mCancelButton.setVisible(false);
+                mCancelButton.setManaged(false);
+            } else {
+                mCancelButton.setVisible(true);
+                mCancelButton.setManaged(true);
             }
         });
     }

@@ -45,6 +45,8 @@ public class PreferenceModel {
 
         // Parse the file and store it to mJson.
         try {
+
+
             JSONParser parser = new JSONParser();
             mJson = (JSONObject) parser.parse(new FileReader(mJsonPath));
         } catch (Exception e) {
