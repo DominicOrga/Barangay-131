@@ -1,5 +1,8 @@
 package javah.controller;
 
+import com.jfoenix.controls.JFXCheckBox;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.PrinterJob;
@@ -53,6 +56,8 @@ public class BarangayIDReportControl {
     @FXML private ImageView mResPhoto;
     @FXML private ImageView mResSignature;
 
+    @FXML private JFXCheckBox mMirrorIDCheckBox;
+
     /**
      * The views for the chairman.
      */
@@ -82,6 +87,9 @@ public class BarangayIDReportControl {
 
         mResDraggableSignature.setStroke(Color.BLACK);
         mChmDraggableSignature.setStroke(Color.BLACK);
+
+        mMirrorIDCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
+                mBarangayIDPane.setRotate(newValue ? 180 : 0));
     }
 
     @FXML
@@ -89,6 +97,7 @@ public class BarangayIDReportControl {
         if (printReport()) {
             saveSignatureDimensions();
             mListener.onSaveButtonClicked(mBarangayID);
+            mMirrorIDCheckBox.setSelected(false);
         }
     }
 
@@ -99,22 +108,20 @@ public class BarangayIDReportControl {
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
         printReport();
+        mMirrorIDCheckBox.setSelected(false);
     }
 
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         saveSignatureDimensions();
         mListener.onSaveButtonClicked(mBarangayID);
+        mMirrorIDCheckBox.setSelected(false);
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
         mListener.onCancelButtonClicked();
-    }
-
-    @FXML
-    public void onMirrorIDCheckBoxClicked(ActionEvent actionEvent) {
-
+        mMirrorIDCheckBox.setSelected(false);
     }
 
     public void setPreferenceModel(PreferenceModel prefModel) {
@@ -124,14 +131,19 @@ public class BarangayIDReportControl {
     /**
      * Pass the barangay ID to be displayed in the report.
      * Determine the state of the scene, whether to create or to simply display the data.
+     * Update the user interface based on the type of report.
+     *
      * @param barangayID contains the data to be displayed in the report.
      *                   If the barangayID does not have a unique ID, then state of scene is set to barangay ID creation.
      *                   Else, barangayID is already created and the state is simply to display the barangay ID.
      */
     public void setBarangayID(BarangayID barangayID, byte request) {
-        mBarangayID = barangayID;
+        // Reset the UI, first.
         mResSignature.setImage(null);
         mChmSignature.setImage(null);
+
+        mBarangayID = barangayID;
+
 
         // If on report creation state, then display the 'print & save' and 'print' buttons.
         if (request == REQUEST_CREATE_REPORT) {

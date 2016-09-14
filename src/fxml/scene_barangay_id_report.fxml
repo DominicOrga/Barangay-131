@@ -252,6 +252,9 @@
                </children>
             </Pane>
          </children>
+         <rotationAxis>
+            <Point3D y="1.0" />
+         </rotationAxis>
       </GridPane>
       <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
@@ -306,7 +309,7 @@
             </Button>
          </children>
       </HBox>
-      <JFXCheckBox onAction="#onMirrorIDCheckBoxClicked" text="MIrror ID?" textFill="WHITE" GridPane.rowIndex="2">
+      <JFXCheckBox fx:id="mMirrorIDCheckBox" text="MIrror ID?" textFill="WHITE" GridPane.rowIndex="2">
          <font>
             <Font size="20.0" />
          </font>
