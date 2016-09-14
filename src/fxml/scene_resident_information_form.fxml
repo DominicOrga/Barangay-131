@@ -285,7 +285,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="mPurposeError" text="What is your purpose?" textFill="#ff3f3f" visible="false">
+                  <Label fx:id="mPurposeError" text="Purpose cannot be empty." textFill="#ff3f3f" visible="false">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
@@ -300,7 +300,7 @@
             </HBox>
             <TextField fx:id="mBrgyClearancePurpose">
                <VBox.margin>
-                  <Insets bottom="20.0" left="30.0" right="30.0" />
+                  <Insets bottom="20.0" right="30.0" />
                </VBox.margin>
             </TextField>
             <Label text="Address:">

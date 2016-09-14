@@ -103,14 +103,17 @@ public class BarangayUtils {
      * @return the formatted string.
      */
     public static String capitalizeString(String str) {
+        if (str == null)
+            return null;
+
         str = str.toLowerCase().trim();
         String[] subStr = str.split(" ");
         String strFormatted = "";
 
         for(int i = 0; i < subStr.length; i++)
-            strFormatted += subStr[i].substring(0, 1).toUpperCase() + subStr[i].substring(1);
+            strFormatted += subStr[i].substring(0, 1).toUpperCase() + subStr[i].substring(1) + " ";
 
-        return strFormatted;
+        return strFormatted.trim();
     }
 
     /**
@@ -129,6 +132,9 @@ public class BarangayUtils {
      * @return the formatted name.
      */
     public static String formatName(String firstName, String middleName, String lastName, String auxiliary) {
+        if (firstName == null || middleName == null || lastName == null)
+            return null;
+
         firstName = capitalizeString(firstName);
         middleName = capitalizeString(middleName);
         lastName = capitalizeString(lastName);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -29,23 +30,6 @@
                 <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Pane minWidth="-Infinity" prefHeight="150.0" prefWidth="550.0" GridPane.halignment="RIGHT" GridPane.rowSpan="3">
-                     <children>
-                        <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="230.0" y="815.0">
-                           <image>
-                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="465.0" y="815.0">
-                           <image>
-                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets right="-30.0" />
-                     </GridPane.margin>
-                  </Pane>
                   <ImageView fitHeight="192.9" fitWidth="765.0" pickOnBounds="true" preserveRatio="true" GridPane.valignment="TOP">
                      <image>
                         <Image url="@../res/report_barangay_clearance_header.png" />
@@ -76,7 +60,7 @@
                                  <children>
                                     <Text fx:id="mChmName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -104,7 +88,7 @@
                                  <children>
                                     <Text fx:id="mKagawad1" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -116,72 +100,72 @@
                                  <children>
                                     <Text fx:id="mKagawad2" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <TextFlow textAlignment="CENTER">
                                  <children>
                                     <Text fx:id="mKagawad3" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <TextFlow textAlignment="CENTER">
                                  <children>
                                     <Text fx:id="mKagawad4" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <TextFlow textAlignment="CENTER">
                                  <children>
                                     <Text fx:id="mKagawad5" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <TextFlow textAlignment="CENTER">
                                  <children>
                                     <Text fx:id="mKagawad6" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <TextFlow textAlignment="CENTER">
                                  <children>
                                     <Text fx:id="mKagawad7" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </TextFlow>
                               <Label text="Barangay Treasurer">
@@ -196,7 +180,7 @@
                                  <children>
                                     <Text fx:id="mTrsrName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -216,7 +200,7 @@
                                  <children>
                                     <Text fx:id="mSecName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
                                        <font>
-                                          <Font name="Times New Roman" size="18.0" />
+                                          <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -367,7 +351,7 @@
                                        <children>
                                           <Text fx:id="mSecPrintedName" strokeType="OUTSIDE" strokeWidth="0.0" text="JOEL L. LOPEZ">
                                              <font>
-                                                <Font name="Times New Roman" size="18.0" />
+                                                <Font name="Times New Roman" size="16.0" />
                                              </font>
                                           </Text>
                                        </children>
@@ -399,7 +383,7 @@
                                        <children>
                                           <Text fx:id="mChmPrintedName" strokeType="OUTSIDE" strokeWidth="0.0" text="Hon. JOEL L. LOPEZ">
                                              <font>
-                                                <Font name="Times New Roman" size="18.0" />
+                                                <Font name="Times New Roman" size="16.0" />
                                              </font>
                                           </Text>
                                        </children>
@@ -453,6 +437,23 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="990.0" prefWidth="765.0" GridPane.halignment="RIGHT" GridPane.rowSpan="3">
+                     <children>
+                        <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="230.0" y="815.0">
+                           <image>
+                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="465.0" y="815.0">
+                           <image>
+                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Pane>
                </children>
             </GridPane>
          </content>

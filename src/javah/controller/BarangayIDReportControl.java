@@ -332,10 +332,10 @@ public class BarangayIDReportControl {
         // If on report creation, then update the UI and populate the barangay ID with
         // the required data from the preference model before displaying the barangay ID.
         if (request == REQUEST_CREATE_REPORT) {
-            mPrintButton.setVisible(false);
             mResDraggableSignature.setVisible(false);
             mChmDraggableSignature.setVisible(false);
 
+            mPrintButton.setVisible(false);
             mPrintAndSaveButton.setVisible(true);
             mPrintAndSaveButton.setManaged(true);
             mSaveButton.setVisible(true);
@@ -356,6 +356,8 @@ public class BarangayIDReportControl {
             String chmSignature = mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
 
             if (chmSignature != null) {
+                mChmDraggableSignature.setVisible(true);
+
                 mBarangayID.setChmSignature(chmSignature);
 
                 String dimensionStr = mPrefModel.get(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION);
@@ -363,12 +365,16 @@ public class BarangayIDReportControl {
                 double[] dimension = (dimensionStr != null) ?
                         BarangayUtils.parseSignatureDimension(dimensionStr) : new double[]{60, 400, 210, 90};
 
-                mChmDraggableSignature.setX(dimension[0]);
-                mChmDraggableSignature.setY(dimension[1]);
-                mChmDraggableSignature.setWidth(dimension[2]);
-                mChmDraggableSignature.setHeight(dimension[3]);
-
                 mBarangayID.setChmSignatureDimension(dimension);
+            }
+
+            if (mBarangayID.getResidentSignature() != null) {
+                mResDraggableSignature.setVisible(true);
+
+                double[] dimension = (mBarangayID.getResidentSignatureDimension() != null) ?
+                        mBarangayID.getResidentSignatureDimension() : new double[]{60, 350, 210, 90};
+
+                mBarangayID.setResidentSignatureDimension(dimension);
             }
 
             // The date issued will be the current date.
@@ -409,21 +415,12 @@ public class BarangayIDReportControl {
         if (mBarangayID.getResidentSignature() != null) {
             mResSignature.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
 
-            mResDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT);
+            double[] dimension = mBarangayID.getResidentSignatureDimension();
 
-            if (mBarangayID.getResidentSignatureDimension() != null) {
-                double[] dimension = mBarangayID.getResidentSignatureDimension();
-
-                mResDraggableSignature.setX(dimension[0]);
-                mResDraggableSignature.setY(dimension[1]);
-                mResDraggableSignature.setWidth(dimension[2]);
-                mResDraggableSignature.setHeight(dimension[3]);
-            } else {
-                mResDraggableSignature.setX(60);
-                mResDraggableSignature.setY(350);
-                mResDraggableSignature.setWidth(210);
-                mResDraggableSignature.setHeight(90);
-            }
+            mResDraggableSignature.setX(dimension[0]);
+            mResDraggableSignature.setY(dimension[1]);
+            mResDraggableSignature.setWidth(dimension[2]);
+            mResDraggableSignature.setHeight(dimension[3]);
         }
 
         // Set the applicant address.
@@ -438,7 +435,6 @@ public class BarangayIDReportControl {
 
         if (mBarangayID.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBarangayID.getChmSignature()));
-            mChmDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT);
 
             double[] dimension = mBarangayID.getChmSignatureDimension();
 

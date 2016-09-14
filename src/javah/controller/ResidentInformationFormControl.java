@@ -336,6 +336,7 @@ public class ResidentInformationFormControl {
                 mBrgyClearanceAddress2Text.setText(null);
 
                 mBrgyClearancePurpose.setText(null);
+                mBrgyClearancePurpose.setDisable(true);
 
                 // Update the volatile cache to make sure that they have the updated cache.
                 mResidentIDs = mCacheModel.getResidentIDsCache();
@@ -522,7 +523,7 @@ public class ResidentInformationFormControl {
 
             case FORM_BARANGAY_CLEARANCE:
 
-                if (mBrgyClearancePurpose.getText() == null || mBrgyClearancePurpose.getText().isEmpty()) {
+                if (mBrgyClearancePurpose.getText() == null || mBrgyClearancePurpose.getText().trim().isEmpty()) {
                     mPurposeError.setVisible(true);
                     mBrgyClearancePurpose.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
                     return;
@@ -571,20 +572,7 @@ public class ResidentInformationFormControl {
 
                 mBarangayClearance.setTotalYearsResidency(totalYears);
 
-                mBarangayClearance.setPurpose(mBrgyClearancePurpose.getText());
-
-//                for (int i = 0; i < 7; i++) {
-//                    if (mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]) != null) {
-//                        String name = BarangayUtils.formatName(
-//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]),
-//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]),
-//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]),
-//                                mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3])
-//                        );
-//
-//                        mBarangayClearance.setKagawadName(i, name);
-//                    }
-//                }
+                mBarangayClearance.setPurpose(mBrgyClearancePurpose.getText().trim());
 
                 // Pass the generated barangay clearance to the Main Control in order to be processed into a report.
                 mListener.onCreateButtonClicked(mBarangayClearance, FORM_BARANGAY_CLEARANCE);
@@ -675,7 +663,7 @@ public class ResidentInformationFormControl {
                         mAddress1RadioButton.setSelected(true);
                         mAddress1TextArea.setText(mResidentSelected.getAddress1());
 
-                        if (!mResidentSelected.getAddress2().isEmpty()) {
+                        if (mResidentSelected.getAddress2() != null && !mResidentSelected.getAddress2().trim().isEmpty()) {
                             mAddress2RadioButton.setDisable(false);
                             mAddress2TextArea.setText(mResidentSelected.getAddress2());
                         } else {
@@ -705,11 +693,12 @@ public class ResidentInformationFormControl {
                         break;
 
                     case FORM_BARANGAY_CLEARANCE:
+
                         mBrgyClearanceAddress1RadioButton.setDisable(false);
                         mBrgyClearanceAddress1RadioButton.setSelected(true);
                         mBrgyClearanceAddress1Text.setText(mResidentSelected.getAddress1());
 
-                        if (!mResidentSelected.getAddress2().isEmpty()) {
+                        if (mResidentSelected.getAddress2() != null && !mResidentSelected.getAddress2().trim().isEmpty()) {
                             mBrgyClearanceAddress2RadioButton.setDisable(false);
                             mBrgyClearanceAddress2Text.setText(mResidentSelected.getAddress2());
                         } else {
@@ -751,15 +740,19 @@ public class ResidentInformationFormControl {
                         break;
 
                     case FORM_BARANGAY_CLEARANCE:
+                        // Disable the address buttons.
+                        mBrgyClearanceAddress1RadioButton.setSelected(true);
                         mBrgyClearanceAddress1RadioButton.setDisable(true);
                         mBrgyClearanceAddress2RadioButton.setDisable(true);
                         mBrgyClearancePurpose.setDisable(true);
 
+                        // Clear the text input controls.
                         mBrgyClearanceAddress1Text.setText(null);
                         mBrgyClearanceAddress2Text.setText(null);
                         mBrgyClearancePurpose.setText(null);
 
                         break;
+
                 }
             }
         };
@@ -856,7 +849,6 @@ public class ResidentInformationFormControl {
                 mActionLabel.setText("Barangay Clearance Form");
                 mBarangayClearance = new BarangayClearance();
                 break;
-
         }
     }
 

@@ -21,7 +21,9 @@ import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class BarangayClearanceReportControl {
 
@@ -71,7 +73,7 @@ public class BarangayClearanceReportControl {
     private DraggableSignature mChmDraggableSignature, mSecDraggableSignature;
     private OnBarangayClearanceReportListener mListener;
 
-
+    private Text[] mKagawads;
 
     @FXML
     private void initialize() {
@@ -87,6 +89,8 @@ public class BarangayClearanceReportControl {
         // This is needed since \n only works programmatically.
         mTextLineBreak1.setText("\n\n");
         mTextLineBreak2.setText("\n\n");
+
+        mKagawads = new Text[]{mKagawad1, mKagawad2, mKagawad3, mKagawad4, mKagawad5, mKagawad6, mKagawad7};
     }
 
     @FXML
@@ -209,122 +213,163 @@ public class BarangayClearanceReportControl {
      */
     public Image setBarangayClearance(BarangayClearance barangayClearance, byte request) {
         mBarangayClearance = barangayClearance;
+        mChmSignature.setImage(null);
+        mSecSignature.setImage(null);
 
+        // Update the UI of the report based on the request. Also, of the request is report creation,
+        // then get the required data from the Preference Model.
+        switch (request) {
+            case REQUEST_CREATE_REPORT:
+                mSecDraggableSignature.setVisible(false);
+                mChmDraggableSignature.setVisible(false);
+
+                mPrintAndSaveButton.setVisible(true);
+                mPrintAndSaveButton.setManaged(true);
+                mSaveButton.setVisible(true);
+                mSaveButton.setManaged(true);
+                mPrintButton.setVisible(false);
+
+                // Get the required data from the preference model.
+
+                // Set the date issued.
+                GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
+                mBarangayClearance.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
+
+                // Set the date validity of the barangay clearance.
+                // Date validity is equal to (date of creation) + 364 days || 365 day (leap year).
+                calendar.add(Calendar.DATE, 364);
+
+                // Add one more day to the calendar if it is a leap year.
+                if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))
+                    calendar.add(Calendar.DATE, 1);
+
+                mBarangayClearance.setDateValid(new Timestamp(calendar.getTimeInMillis()));
+
+                // Set the chairman name.
+                mBarangayClearance.setChmName(BarangayUtils.formatName(
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.CHAIRMAN_AUXILIARY))
+                );
+
+                // Set the chairman photo.
+                mBarangayClearance.setChmPhoto(mPrefModel.get(PreferenceContract.CHAIRMAN_PHOTO_PATH));
+
+                // Set the chairman signature and dimension, if any.
+                String signature = mPrefModel.get(PreferenceContract.CHAIRMAN_SIGNATURE_PATH);
+
+                if (signature != null) {
+                    mChmDraggableSignature.setVisible(true);
+                    mBarangayClearance.setChmSignature(signature);
+
+                    String dimensionStr = mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_CHM_SIGNATURE_DIMENSION);
+
+                    double[] dimension = (dimensionStr != null) ?
+                            BarangayUtils.parseSignatureDimension(dimensionStr) : new double[]{465, 815, 210, 90};
+
+                    mBarangayClearance.setChmSignatureDimension(dimension);
+                }
+
+                // Set the secretary name.
+                mBarangayClearance.setSecName(BarangayUtils.formatName(
+                        mPrefModel.get(PreferenceContract.SECRETARY_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.SECRETARY_AUXILIARY))
+                );
+
+                // Set the secretary signature and dimension, if any.
+                signature = mPrefModel.get(PreferenceContract.SECRETARY_SIGNATURE_PATH);
+
+                if (signature != null) {
+                    mSecDraggableSignature.setVisible(true);
+                    mBarangayClearance.setSecSignature(signature);
+
+                    String dimensionStr = mPrefModel.get(PreferenceContract.BRGY_CLEARANCE_SEC_SIGNATURE_DIMENSION);
+
+                    double[] dimension = (dimensionStr != null) ?
+                            BarangayUtils.parseSignatureDimension(dimensionStr) : new double[]{230, 815, 210, 90};
+
+                    mBarangayClearance.setSecSignatureDimension(dimension);
+                }
+
+                // Set the treasurer name.
+                mBarangayClearance.setTreasurerName(BarangayUtils.formatName(
+                        mPrefModel.get(PreferenceContract.TREASURER_FIRST_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_MIDDLE_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_LAST_NAME),
+                        mPrefModel.get(PreferenceContract.TREASURER_AUXILIARY))
+                );
+
+                // Set the kagawad names.
+                for (int i = 0; i < 7; i++) {
+                    mBarangayClearance.setKagawadName(i, BarangayUtils.formatName(
+                            mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][0]),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][1]),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][2]),
+                            mPrefModel.get(PreferenceContract.KAGAWAD_NAMES[i][3]))
+                    );
+                }
+
+                break;
+
+            default:
+                mSecDraggableSignature.setVisible(false);
+                mChmDraggableSignature.setVisible(false);
+
+                mPrintAndSaveButton.setVisible(false);
+                mPrintAndSaveButton.setManaged(false);
+                mSaveButton.setVisible(false);
+                mSaveButton.setManaged(false);
+                mPrintButton.setVisible(true);
+        }
+
+        // Start populating the report with data.
+
+        // Show the chairman photo, if any.
         mChmPhoto.setImage(mBarangayClearance.getChmPhoto() != null ?
                 new Image("file:" + mBarangayClearance.getChmPhoto()) : null);
+
 
         mChmName.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
         mSecName.setText(mBarangayClearance.getSecName().toUpperCase());
         mTrsrName.setText(mBarangayClearance.getTreasurerName().toUpperCase());
         mBrgyClearanceIDLabel.setText("131-" + mBarangayClearance.getID());
 
-        if (mBarangayClearance.getKagawadName(0) != null) {
-            mKagawad1.setText(mBarangayClearance.getKagawadName(0).toUpperCase());
-            mKagawad1.setVisible(true);
-            mKagawad1.setManaged(true);
-        } else {
-            mKagawad1.setVisible(false);
-            mKagawad1.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(1) != null) {
-            mKagawad2.setText(mBarangayClearance.getKagawadName(1).toUpperCase());
-            mKagawad2.setVisible(true);
-            mKagawad2.setManaged(true);
-        } else {
-            mKagawad2.setVisible(false);
-            mKagawad2.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(2) != null) {
-            mKagawad3.setVisible(true);
-            mKagawad3.setManaged(true);
-        } else {
-            mKagawad3.setVisible(false);
-            mKagawad3.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(3) != null) {
-            mKagawad4.setText(mBarangayClearance.getKagawadName(3).toUpperCase());
-            mKagawad4.setVisible(true);
-            mKagawad4.setManaged(true);
-        } else {
-            mKagawad4.setVisible(false);
-            mKagawad4.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(4) != null) {
-            mKagawad5.setText(mBarangayClearance.getKagawadName(4).toUpperCase());
-            mKagawad5.setVisible(true);
-            mKagawad5.setManaged(true);
-        } else {
-            mKagawad5.setVisible(false);
-            mKagawad5.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(5) != null) {
-            mKagawad6.setText(mBarangayClearance.getKagawadName(5).toUpperCase());
-            mKagawad6.setVisible(true);
-            mKagawad6.setManaged(true);
-        } else {
-            mKagawad6.setVisible(false);
-            mKagawad6.setManaged(false);
-        }
-
-        if (mBarangayClearance.getKagawadName(6) != null) {
-            mKagawad7.setText(mBarangayClearance.getKagawadName(6).toUpperCase());
-            mKagawad7.setVisible(true);
-            mKagawad7.setManaged(true);
-        } else {
-            mKagawad7.setVisible(false);
-            mKagawad7.setManaged(false);
-        }
-
         mSecPrintedName.setText(mBarangayClearance.getSecName().toUpperCase());
         mChmPrintedName.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
 
+        // Show the chairman signature, if any.
         if (mBarangayClearance.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBarangayClearance.getChmSignature()));
-            mChmDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT ? true : false);
-        } else {
-            mChmSignature.setImage(null);
-            mChmDraggableSignature.setVisible(false);
+
+            double[] dimension = mBarangayClearance.getChmSignatureDimension();
+
+            mChmDraggableSignature.setX(dimension[0]);
+            mChmDraggableSignature.setY(dimension[1]);
+            mChmDraggableSignature.setWidth(dimension[2]);
+            mChmDraggableSignature.setHeight(dimension[3]);
         }
 
-        double[] signatureDimension = mBarangayClearance.getChmSignatureDimension();
-
-        if (signatureDimension != null) {
-            mChmDraggableSignature.setX(signatureDimension[0]);
-            mChmDraggableSignature.setY(signatureDimension[1]);
-            mChmDraggableSignature.setWidth(signatureDimension[2]);
-            mChmDraggableSignature.setHeight(signatureDimension[3]);
-        } else {
-            mChmDraggableSignature.setX(265);
-            mChmDraggableSignature.setY(25);
-            mChmDraggableSignature.setWidth(210);
-            mChmDraggableSignature.setHeight(90);
-        }
-
+        // Show the secretary signature, if any.
         if (mBarangayClearance.getSecSignature() != null) {
             mSecSignature.setImage(new Image("file:" + mBarangayClearance.getSecSignature()));
-            mSecDraggableSignature.setVisible(request == REQUEST_CREATE_REPORT ? true : false);
-        } else {
-            mSecSignature.setImage(null);
-            mSecDraggableSignature.setVisible(false);
+
+            double[] dimension = mBarangayClearance.getSecSignatureDimension();
+
+            mSecDraggableSignature.setX(dimension[0]);
+            mSecDraggableSignature.setY(dimension[1]);
+            mSecDraggableSignature.setWidth(dimension[2]);
+            mSecDraggableSignature.setHeight(dimension[3]);
         }
 
-        signatureDimension = mBarangayClearance.getSecSignatureDimension();
+        // Show the kagawad names.
+        for (int i = 0; i < 7; i++) {
+            mKagawads[i].setText(mBarangayClearance.getKagawadName(i));
+            mKagawads[i].setManaged(mKagawads[i].getText() != null && !mKagawads[i].getText().trim().isEmpty());
 
-        if (signatureDimension != null) {
-            mSecDraggableSignature.setX(signatureDimension[0]);
-            mSecDraggableSignature.setY(signatureDimension[1]);
-            mSecDraggableSignature.setWidth(signatureDimension[2]);
-            mSecDraggableSignature.setHeight(signatureDimension[3]);
-        } else {
-            mSecDraggableSignature.setX(25);
-            mSecDraggableSignature.setY(25);
-            mSecDraggableSignature.setWidth(210);
-            mSecDraggableSignature.setHeight(90);
+            System.out.println(mKagawads[i].isManaged());
         }
 
         // Fill out the document body.
@@ -352,30 +397,7 @@ public class BarangayClearanceReportControl {
         mBrgyClearanceDate.setText(
                 BarangayUtils.convertMonthIntToString(dateIssued.get(Calendar.MONTH)) + ", " + dateIssued.get(Calendar.YEAR));
 
-        switch (request) {
-            case REQUEST_CREATE_REPORT :
-                mPrintAndSaveButton.setVisible(true);
-                mPrintAndSaveButton.setManaged(true);
-                mSaveButton.setVisible(true);
-                mSaveButton.setManaged(true);
-
-                mPrintButton.setVisible(false);
-                mPrintButton.setManaged(false);
-                break;
-            case REQUEST_DISPLAY_REPORT :
-                mPrintAndSaveButton.setVisible(false);
-                mPrintAndSaveButton.setManaged(false);
-                mSaveButton.setVisible(false);
-                mSaveButton.setManaged(false);
-
-                mPrintButton.setVisible(true);
-                mPrintButton.setManaged(true);
-                break;
-            case REQUEST_SNAPSHOT_REPORT :
-                return mDocumentPane.snapshot(null, null);
-        }
-
-        return null;
+        return request == REQUEST_SNAPSHOT_REPORT ? mDocumentPane.snapshot(null, null) : null;
     }
 
     public void setListener(OnBarangayClearanceReportListener listener) {

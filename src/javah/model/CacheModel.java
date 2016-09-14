@@ -506,7 +506,7 @@ public class CacheModel {
         mBrgyClearanceDateIssuedCache.add(0, barangayClearance.getDateIssued());
 
         int index = mResidentIDsCache.indexOf(barangayClearance.getResidentID());
-        mBarangayIDNamesCache.add(0, mResidentNamesCache.get(index));
+        mBrgyClearanceResidentNamesCache.add(0, mResidentNamesCache.get(index));
     }
 
     /**
