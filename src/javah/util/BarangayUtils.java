@@ -215,27 +215,6 @@ public class BarangayUtils {
         return dimension;
     }
 
-    /**
-     * Auto resize text areas vertically when the text do not fit the width limit.
-     *
-     * @param textArea
-     *        The text area to be manipulated.
-     * @param widthLimit
-     *        The width limit given to the text area.
-     */
-    public static void addAutoResizeListener(TextArea textArea, double widthLimit) {
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Get the width of the text area.
-            FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-            double width = fontLoader.computeStringWidth(newValue, textArea.getFont());
-
-            // Each line has a maximum legth of 220. Add a new line to fit the text.
-            int newLine = (int) (width / widthLimit);
-
-            textArea.setPrefHeight(30 + newLine * 20);
-            textArea.setMinHeight(textArea.getPrefHeight());
-        });
-    }
 
     /**
      * Limit the text within a any TextInputControl child classes to a certain length.

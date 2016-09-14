@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -18,7 +25,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayClearanceReportControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayClearanceReportControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
@@ -40,6 +47,23 @@
                 <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <Pane minWidth="-Infinity" prefHeight="150.0" prefWidth="550.0" GridPane.halignment="RIGHT" GridPane.rowSpan="3">
+                     <children>
+                        <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="230.0" y="815.0">
+                           <image>
+                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="465.0" y="815.0">
+                           <image>
+                              <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets right="-30.0" />
+                     </GridPane.margin>
+                  </Pane>
                   <ImageView fitHeight="192.9" fitWidth="765.0" pickOnBounds="true" preserveRatio="true" GridPane.valignment="TOP">
                      <image>
                         <Image url="@../res/report_barangay_clearance_header.png" />
@@ -57,22 +81,33 @@
                      <children>
                         <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" styleClass="agent-name" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <children>
-                              <ImageView fx:id="mChmPhoto" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_default_resident_white_bg.png" />
-                                 </image>
-                              </ImageView>
-                              <TextArea fx:id="mChmNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="220.0" styleClass="agent-name" text="Hon. JOEL L. LOPEZ" wrapText="true" VBox.vgrow="ALWAYS">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
-                              </TextArea>
+                              <StackPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color: black;">
+                                 <children>
+                                    <ImageView fx:id="mChmPhoto" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../res/ic_default_resident_white_bg.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mChmName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextFlow>
                               <Label alignment="CENTER" layoutX="16.0" layoutY="210.0" prefWidth="220.0" text="Barangay Chairman">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="-5.0" />
+                                    <Insets />
                                  </VBox.margin>
                               </Label>
                               <Label layoutX="38.0" layoutY="255.0" text="K A G A W A D" underline="true">
@@ -83,62 +118,90 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea fx:id="mKagawad1Text" editable="false" layoutX="10.0" layoutY="210.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" styleClass="agent-name" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad1" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad2Text" editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad2" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad3Text" editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad3" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad4Text" editable="false" layoutX="10.0" layoutY="303.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" styleClass="agent-names" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad4" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad5Text" editable="false" layoutX="10.0" layoutY="353.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad5" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad6Text" editable="false" layoutX="10.0" layoutY="328.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad6" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
-                              <TextArea fx:id="mKagawad7Text" editable="false" layoutX="10.0" layoutY="428.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="ORLANDO D. LINTAG" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
+                              </TextFlow>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mKagawad7" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
-                              </TextArea>
+                              </TextFlow>
                               <Label text="Barangay Treasurer">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
@@ -147,11 +210,18 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea fx:id="mTrsrNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="0.0" text="CONSTANTE RODRIGO A. ESTIGOY" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
-                              </TextArea>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mTrsrName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextFlow>
                               <Label text="Barangay Secretary">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
@@ -160,11 +230,18 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea fx:id="mSecNameText" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="0.0" text="CONSTANTE A. ESTIGOY" wrapText="true">
-                                 <font>
-                                    <Font name="Times New Roman" size="16.0" />
-                                 </font>
-                              </TextArea>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mSecName" strokeType="OUTSIDE" strokeWidth="0.0" text=" JOEL L. LOPEZ">
+                                       <font>
+                                          <Font name="Times New Roman" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </TextFlow>
                            </children>
                            <GridPane.margin>
                               <Insets />
@@ -175,8 +252,8 @@
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                            <RowConstraints percentHeight="79.0" vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="BARANGAY CLEARANCE" GridPane.halignment="CENTER" GridPane.valignment="TOP">
@@ -294,79 +371,70 @@
                                     </Text>
                                  </children>
                               </TextFlow>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.rowIndex="1">
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <children>
                                     <Label text="Certified Correct:">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <TextArea fx:id="mSecPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
+                                    <TextFlow>
+                                       <children>
+                                          <Text fx:id="mSecPrintedName" strokeType="OUTSIDE" strokeWidth="0.0" text="JOEL L. LOPEZ">
+                                             <font>
+                                                <Font name="Times New Roman" size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
                                        <VBox.margin>
                                           <Insets top="50.0" />
                                        </VBox.margin>
-                                    </TextArea>
+                                    </TextFlow>
                                     <Label text="Barangay Secretary">
                                        <font>
                                           <Font name="Times New Roman Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" top="-5.0" />
+                                          <Insets top="-5.0" />
                                        </VBox.margin>
                                     </Label>
                                  </children>
                               </VBox>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass=".exception" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass=".exception" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <children>
                                     <Label text="Attested by:">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <TextArea fx:id="mChmPrintedName" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="DOM ORGA" wrapText="true">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
+                                    <TextFlow>
+                                       <children>
+                                          <Text fx:id="mChmPrintedName" strokeType="OUTSIDE" strokeWidth="0.0" text="Hon. JOEL L. LOPEZ">
+                                             <font>
+                                                <Font name="Times New Roman" size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
                                        <VBox.margin>
                                           <Insets top="50.0" />
                                        </VBox.margin>
-                                    </TextArea>
+                                    </TextFlow>
                                     <Label text="Barangay Chairman">
                                        <font>
                                           <Font name="Times New Roman Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="10.0" top="-5.0" />
+                                          <Insets top="-5.0" />
                                        </VBox.margin>
                                     </Label>
                                  </children>
                               </VBox>
-                              <Pane layoutX="10.0" layoutY="585.0" minWidth="-Infinity" prefHeight="150.0" prefWidth="550.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                 <children>
-                                    <ImageView fx:id="mSecSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="25.0" y="25.0">
-                                       <image>
-                                          <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="265.0" y="25.0">
-                                       <image>
-                                          <Image url="@../../../../../../Public/Barangay131/Signatures/0e1ccc8a-1934-4bfd-858a-44bf1b9f080d.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets right="-30.0" />
-                                 </GridPane.margin>
-                              </Pane>
                            </children>
                            <GridPane.margin>
                               <Insets right="50.0" />
@@ -409,7 +477,7 @@
       </ScrollPane>
       <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;">
          <children>
-            <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
+            <Label text="Barangay Clearance Report" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>

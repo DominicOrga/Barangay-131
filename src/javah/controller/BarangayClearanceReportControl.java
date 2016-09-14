@@ -33,12 +33,12 @@ public class BarangayClearanceReportControl {
     @FXML Pane mRootPane;
 
     @FXML ImageView mChmPhoto;
-    @FXML TextArea mChmNameText;
-    @FXML TextArea mKagawad1Text, mKagawad2Text, mKagawad3Text,
-            mKagawad4Text, mKagawad5Text, mKagawad6Text,
-            mKagawad7Text;
-    @FXML TextArea mTrsrNameText;
-    @FXML TextArea mSecNameText;
+    @FXML Text mChmName;
+    @FXML Text mKagawad1, mKagawad2, mKagawad3,
+            mKagawad4, mKagawad5, mKagawad6,
+            mKagawad7;
+    @FXML Text mTrsrName;
+    @FXML Text mSecName;
     @FXML Label mBrgyClearanceIDLabel;
 
     /**
@@ -46,7 +46,7 @@ public class BarangayClearanceReportControl {
      */
     @FXML Pane mDocumentPane;
     @FXML ImageView mChmSignature, mSecSignature;
-    @FXML TextArea mChmPrintedName, mSecPrintedName;
+    @FXML Text mChmPrintedName, mSecPrintedName;
     @FXML TextFlow mTextFlow;
     /**
      * The line breaks used to seperate the paragraphs.
@@ -83,20 +83,6 @@ public class BarangayClearanceReportControl {
 
         mChmDraggableSignature.setStroke(Color.BLACK);
         mSecDraggableSignature.setStroke(Color.BLACK);
-
-        // All text areas are assigned a listener to auto adjust their height when the text no longer fits.
-        BarangayUtils.addAutoResizeListener(mChmNameText, 220);
-        BarangayUtils.addAutoResizeListener(mSecNameText, 220);
-        BarangayUtils.addAutoResizeListener(mTrsrNameText, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad1Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad2Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad3Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad4Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad5Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad6Text, 220);
-        BarangayUtils.addAutoResizeListener(mKagawad7Text, 220);
-        BarangayUtils.addAutoResizeListener(mChmPrintedName, 220);
-        BarangayUtils.addAutoResizeListener(mSecPrintedName, 220);
 
         // This is needed since \n only works programmatically.
         mTextLineBreak1.setText("\n\n");
@@ -227,71 +213,71 @@ public class BarangayClearanceReportControl {
         mChmPhoto.setImage(mBarangayClearance.getChmPhoto() != null ?
                 new Image("file:" + mBarangayClearance.getChmPhoto()) : null);
 
-        mChmNameText.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
-        mSecNameText.setText(mBarangayClearance.getSecName().toUpperCase());
-        mTrsrNameText.setText(mBarangayClearance.getTreasurerName().toUpperCase());
+        mChmName.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
+        mSecName.setText(mBarangayClearance.getSecName().toUpperCase());
+        mTrsrName.setText(mBarangayClearance.getTreasurerName().toUpperCase());
         mBrgyClearanceIDLabel.setText("131-" + mBarangayClearance.getID());
 
         if (mBarangayClearance.getKagawadName(0) != null) {
-            mKagawad1Text.setText(mBarangayClearance.getKagawadName(0).toUpperCase());
-            mKagawad1Text.setVisible(true);
-            mKagawad1Text.setManaged(true);
+            mKagawad1.setText(mBarangayClearance.getKagawadName(0).toUpperCase());
+            mKagawad1.setVisible(true);
+            mKagawad1.setManaged(true);
         } else {
-            mKagawad1Text.setVisible(false);
-            mKagawad1Text.setManaged(false);
+            mKagawad1.setVisible(false);
+            mKagawad1.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(1) != null) {
-            mKagawad2Text.setText(mBarangayClearance.getKagawadName(1).toUpperCase());
-            mKagawad2Text.setVisible(true);
-            mKagawad2Text.setManaged(true);
+            mKagawad2.setText(mBarangayClearance.getKagawadName(1).toUpperCase());
+            mKagawad2.setVisible(true);
+            mKagawad2.setManaged(true);
         } else {
-            mKagawad2Text.setVisible(false);
-            mKagawad2Text.setManaged(false);
+            mKagawad2.setVisible(false);
+            mKagawad2.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(2) != null) {
-            mKagawad3Text.setVisible(true);
-            mKagawad3Text.setManaged(true);
+            mKagawad3.setVisible(true);
+            mKagawad3.setManaged(true);
         } else {
-            mKagawad3Text.setVisible(false);
-            mKagawad3Text.setManaged(false);
+            mKagawad3.setVisible(false);
+            mKagawad3.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(3) != null) {
-            mKagawad4Text.setText(mBarangayClearance.getKagawadName(3).toUpperCase());
-            mKagawad4Text.setVisible(true);
-            mKagawad4Text.setManaged(true);
+            mKagawad4.setText(mBarangayClearance.getKagawadName(3).toUpperCase());
+            mKagawad4.setVisible(true);
+            mKagawad4.setManaged(true);
         } else {
-            mKagawad4Text.setVisible(false);
-            mKagawad4Text.setManaged(false);
+            mKagawad4.setVisible(false);
+            mKagawad4.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(4) != null) {
-            mKagawad5Text.setText(mBarangayClearance.getKagawadName(4).toUpperCase());
-            mKagawad5Text.setVisible(true);
-            mKagawad5Text.setManaged(true);
+            mKagawad5.setText(mBarangayClearance.getKagawadName(4).toUpperCase());
+            mKagawad5.setVisible(true);
+            mKagawad5.setManaged(true);
         } else {
-            mKagawad5Text.setVisible(false);
-            mKagawad5Text.setManaged(false);
+            mKagawad5.setVisible(false);
+            mKagawad5.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(5) != null) {
-            mKagawad6Text.setText(mBarangayClearance.getKagawadName(5).toUpperCase());
-            mKagawad6Text.setVisible(true);
-            mKagawad6Text.setManaged(true);
+            mKagawad6.setText(mBarangayClearance.getKagawadName(5).toUpperCase());
+            mKagawad6.setVisible(true);
+            mKagawad6.setManaged(true);
         } else {
-            mKagawad6Text.setVisible(false);
-            mKagawad6Text.setManaged(false);
+            mKagawad6.setVisible(false);
+            mKagawad6.setManaged(false);
         }
 
         if (mBarangayClearance.getKagawadName(6) != null) {
-            mKagawad7Text.setText(mBarangayClearance.getKagawadName(6).toUpperCase());
-            mKagawad7Text.setVisible(true);
-            mKagawad7Text.setManaged(true);
+            mKagawad7.setText(mBarangayClearance.getKagawadName(6).toUpperCase());
+            mKagawad7.setVisible(true);
+            mKagawad7.setManaged(true);
         } else {
-            mKagawad7Text.setVisible(false);
-            mKagawad7Text.setManaged(false);
+            mKagawad7.setVisible(false);
+            mKagawad7.setManaged(false);
         }
 
         mSecPrintedName.setText(mBarangayClearance.getSecName().toUpperCase());
