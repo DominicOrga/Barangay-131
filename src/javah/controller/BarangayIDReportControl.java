@@ -1,8 +1,6 @@
 package javah.controller;
 
 import com.jfoenix.controls.JFXCheckBox;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.PrinterJob;
@@ -28,58 +26,121 @@ import java.util.GregorianCalendar;
 
 /**
  * A class that handles the generation of the Barangay ID reports and
- * the viewing of already created reports. Has the functionality the
- * barangay ID reports.
+ * the viewing of already created reports.
  */
 public class BarangayIDReportControl {
 
+    /**
+     * An interface that serves as a listener to the BarangayIDReportControl.
+     *
+     * @see BarangayIDReportControl
+     */
     public interface OnBarangayIDReportListener {
+        /**
+         * Hide the Barangay ID report.
+         */
         void onCancelButtonClicked();
+
+        /**
+         * Pass the generated barangay ID to the Information Control to be permanently
+         * stored in the database.
+         *
+         * @param barangayID
+         *        The barangay ID to be saved.
+         *
+         * @see InformationControl
+         */
         void onSaveButtonClicked(BarangayID barangayID);
     }
+    /* Determines specified usage of the report. */
+    public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2, REQUEST_SNAPSHOT_REPORT = 3;
 
-    /**
-     * The Pane containing the barangay ID components.
-     */
-    @FXML private Pane mBarangayIDPane;
-
+    /* Disables the barangay ID report while printing initialization is in process. */
     @FXML private Pane mRootPane;
 
-    @FXML private Label mID;
-    @FXML private Text mAddress;
-    @FXML private Text mDateIssued, mDateValid;
+    /* The Pane containing the barangay ID. */
+    @FXML private Pane mBarangayIDPane;
 
     /**
-     * The views for the resident.
+     * NOTE: used for REQUEST_SNAPSHOT_REPORT
+     *
+     * A node of the mBarangayIDPane which takes hold of the front part of the
+     * barangay ID.
      */
+    @FXML private Pane mIDFront;
+
+    /* A label displaying the unique ID of the barangay ID. */
+    @FXML private Label mID;
+
+    /* A text displaying the address registered in the barangay ID. */
+    @FXML private Text mAddress;
+
+    /* Texts displaying the date issuance and date validity of the barangay ID. */
+    @FXML private Text mDateIssued, mDateValid;
+
+    /* A text representing the resident's name. */
     @FXML private Text mResName;
+
+    /* An image view holding the photo of the resident. */
     @FXML private ImageView mResPhoto;
+
+    /* An image view holding the signature of the resident, if any. */
     @FXML private ImageView mResSignature;
 
+    /* A text representing the chairman's name. */
+    @FXML private Text mChmName;
+
+    /* An image view holding the signature of the chairman. */
+    @FXML private ImageView mChmSignature;
+
+    /**
+     * A checkbox to mirror the barangay ID, since our client requested
+     * this feature.
+     */
     @FXML private JFXCheckBox mMirrorIDCheckBox;
 
     /**
-     * The views for the chairman.
+     * Note: used for REQUEST_DISPLAY_REPORT
+     *
+     * A button to print the report.
      */
-    @FXML private Text mChmName;
-    @FXML private ImageView mChmSignature;
-
-    @FXML private Button mPrintAndSaveButton, mPrintButton, mSaveButton;
-
-    public static byte REQUEST_CREATE_REPORT = 1, REQUEST_DISPLAY_REPORT = 2;
-
-    private PreferenceModel mPrefModel;
-
-    private BarangayID mBarangayID;
-
-    private OnBarangayIDReportListener mListener;
+    @FXML private Button mPrintButton;
 
     /**
-     * Modifies the Signature views into draggable views.
+     * Note: used for REQUEST_CREATE_REPORT
+     *
+     * A button to save the report.
      */
-    private DraggableSignature mChmDraggableSignature;
-    private DraggableSignature mResDraggableSignature;
+    @FXML private Button mSaveButton;
 
+    /**
+     * Note: used for REQUEST_CREATE_REPORT
+     *
+     * A button to print and save the report.
+     */
+    @FXML private Button mPrintAndSaveButton;
+
+    /**
+     * Note: used for REQUEST_CREATE_REPORT
+     *
+     * A reference to the universal Preference model. Acquires the information
+     * regarding the barangay official's data needed for populating the required data
+     * of the report.
+     */
+    private PreferenceModel mPrefModel;
+
+    /* A container for this barangay ID's data. */
+    private BarangayID mBarangayID;
+
+    /* A listener for this controller. */
+    private OnBarangayIDReportListener mListener;
+
+    /* Enhances the signature views into resizable and draggable views. */
+    private DraggableSignature mChmDraggableSignature, mResDraggableSignature;
+
+    /**
+     * A constructor that initializes the components of this controller.
+     */
     @FXML
     private void initialize() {
         mResDraggableSignature = new DraggableSignature(mResSignature);
@@ -88,64 +149,188 @@ public class BarangayIDReportControl {
         mResDraggableSignature.setStroke(Color.BLACK);
         mChmDraggableSignature.setStroke(Color.BLACK);
 
+        // Flip the image if the mMirrorIDCheckBox is selected.
         mMirrorIDCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
                 mBarangayIDPane.setRotate(newValue ? 180 : 0));
     }
 
+    /**
+     * Print and tell the information control to save the report. If the printing is
+     * successful, then try to save the report and close the report. Otherwise, nothing
+     * happens.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     *
+     * @see InformationControl
+     */
     @FXML
     public void onPrintAndSaveButtonClicked(ActionEvent actionEvent) {
         if (printReport()) {
             saveSignatureDimensions();
-            mListener.onSaveButtonClicked(mBarangayID);
             mMirrorIDCheckBox.setSelected(false);
+            mListener.onSaveButtonClicked(mBarangayID);
         }
     }
 
     /**
-     * Print the report.
+     * Print the and close the report. If printing is unsuccessful, the do nothing.
+     *
      * @param actionEvent
+     *        The action event. No usage.
      */
     @FXML
     public void onPrintButtonClicked(ActionEvent actionEvent) {
-        printReport();
-        mMirrorIDCheckBox.setSelected(false);
+        if (printReport()) {
+            mMirrorIDCheckBox.setSelected(false);
+            mListener.onCancelButtonClicked();
+        }
     }
 
+    /**
+     * Tell the information control to save the report.
+     *
+     * @param actionEvent
+     *        The action event. Never used.
+     *
+     * @see MainControl
+     */
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         saveSignatureDimensions();
-        mListener.onSaveButtonClicked(mBarangayID);
         mMirrorIDCheckBox.setSelected(false);
+        mListener.onSaveButtonClicked(mBarangayID);
     }
 
+    /**
+     * Close the report.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-        mListener.onCancelButtonClicked();
         mMirrorIDCheckBox.setSelected(false);
+        mListener.onCancelButtonClicked();
+
     }
 
+    /**
+     * Store the resident signature coordinates and dimension to the barangay ID and
+     * store the chairman signature coordinates and dimension to the preference model.
+     */
+    private void saveSignatureDimensions() {
+        // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
+        // dimension to mBarangayID.
+        double[] signatureDimension = new double[]{
+                mChmDraggableSignature.getX(),
+                mChmDraggableSignature.getY(),
+                mChmDraggableSignature.getWidth(),
+                mChmDraggableSignature.getHeight()};
+
+        mBarangayID.setChmSignatureDimension(signatureDimension);
+
+        // Save the dimension of the chairman signature to the preference model.
+        mPrefModel.put(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION,
+                String.format("%.5f %.5f %.5f %.5f",
+                        mChmDraggableSignature.getX(),
+                        mChmDraggableSignature.getY(),
+                        mChmDraggableSignature.getWidth(),
+                        mChmDraggableSignature.getHeight()
+                )
+        );
+
+        mPrefModel.save();
+
+        double[] resSignatureDimension = new double[] {
+                mResDraggableSignature.getX(),
+                mResDraggableSignature.getY(),
+                mResDraggableSignature.getWidth(),
+                mResDraggableSignature.getHeight()
+        };
+
+        mBarangayID.setResidentSignatureDimension(resSignatureDimension);
+
+    }
+
+    /**
+     * Try to print the report.
+     *
+     * @return true if printing was successful. Otherwise, return false.
+     */
+    private boolean printReport() {
+        // Hide the draggable rectangles to make sure that they're not printed.
+        mResDraggableSignature.setVisible(false);
+        mChmDraggableSignature.setVisible(false);
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+        // Start print setup if a printer is found.
+        if(job != null){
+            // Disable the report dialog when the print dialog is open.
+            mRootPane.setDisable(true);
+            boolean result = job.showPrintDialog(Main.PRIMARY_STAGE); // Window must be your main Stage
+            mRootPane.setDisable(false);
+
+            // If the client cancels the printing, then no printing will occur.
+            if (result) {
+                // Determine the scale value needed to fit mBarangayIDPane in the paper.
+                Scale tempScale = new Scale(0.5, 0.5);
+
+                // Temporarily apply the scale value to mDocumentPane. Reset scaleback to normal after printing.
+                mBarangayIDPane.getTransforms().add(tempScale);
+
+                job.printPage(mBarangayIDPane);
+                job.endJob();
+
+                mBarangayIDPane.getTransforms().remove(tempScale);
+            }
+
+            return result;
+        }
+
+        return false;
+    }
+
+    /**
+     * Pass the universal preference model to this controller. It will be used to
+     * gather barangay official data required for the report creation.
+     *
+     * @param prefModel
+     *        The universal preference model.
+     */
     public void setPreferenceModel(PreferenceModel prefModel) {
         mPrefModel = prefModel;
     }
 
     /**
-     * Pass the barangay ID to be displayed in the report.
-     * Determine the state of the scene, whether to create or to simply display the data.
-     * Update the user interface based on the type of report.
+     * Set the listener for this controller.
      *
-     * @param barangayID contains the data to be displayed in the report.
-     *                   If the barangayID does not have a unique ID, then state of scene is set to barangay ID creation.
-     *                   Else, barangayID is already created and the state is simply to display the barangay ID.
+     * @param listener
+     *        The listener for this controller.
      */
-    public void setBarangayID(BarangayID barangayID, byte request) {
+    public void setListener(OnBarangayIDReportListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Pass the barangay ID to be displayed in the report.
+     * Determine and update the state of the scene, whether to create or to simply
+     * display the data.
+     *
+     * @param barangayID
+     *        Contains the data to be displayed in the report.
+     * @param request
+     *        The request to whether create a report or display a created report.
+     */
+    public Image setBarangayID(BarangayID barangayID, byte request) {
         // Reset the UI, first.
         mResSignature.setImage(null);
         mChmSignature.setImage(null);
 
         mBarangayID = barangayID;
 
-
-        // If on report creation state, then display the 'print & save' and 'print' buttons.
+        // If on report creation, then update the UI and populate the barangay ID with
+        // the required data from the preference model before displaying the barangay ID.
         if (request == REQUEST_CREATE_REPORT) {
             mPrintButton.setVisible(false);
             mResDraggableSignature.setVisible(false);
@@ -191,7 +376,7 @@ public class BarangayIDReportControl {
             mBarangayID.setDateIssued(new Timestamp(calendar.getTimeInMillis()));
 
             // Set the date validity of the barangay ID.
-            // Date validity is equal to (date of creation) + (1 year)||(365 days) - (1 day).
+            // Date validity is equal to (date of creation) + 364 days || 365 day (leap year).
             calendar.add(Calendar.DATE, 364);
 
             // Add one more day to the calendar if it is a leap year.
@@ -199,7 +384,6 @@ public class BarangayIDReportControl {
                 calendar.add(Calendar.DATE, 1);
 
             mBarangayID.setDateValid(new Timestamp(calendar.getTimeInMillis()));
-
 
         } else {
             mResDraggableSignature.setVisible(false);
@@ -210,8 +394,9 @@ public class BarangayIDReportControl {
             mSaveButton.setVisible(false);
             mSaveButton.setManaged(false);
             mPrintButton.setVisible(true);
-
         }
+
+        // Start populating the report.
 
         // Set the image of the barangay ID, if any.
         mResPhoto.setImage(mBarangayID.getPhoto() != null ? new Image("file:" + mBarangayID.getPhoto()) : null);
@@ -263,80 +448,7 @@ public class BarangayIDReportControl {
             mChmDraggableSignature.setHeight(dimension[3]);
         }
 
-    }
-
-    public void setListener(OnBarangayIDReportListener listener) {
-        mListener = listener;
-    }
-
-    private void saveSignatureDimensions() {
-        // If the barangay IC contains a chairman signature (which always does), then store its coordinates and
-        // dimension to mBarangayID.
-        double[] signatureDimension = new double[]{
-                mChmDraggableSignature.getX(),
-                mChmDraggableSignature.getY(),
-                mChmDraggableSignature.getWidth(),
-                mChmDraggableSignature.getHeight()};
-
-        mBarangayID.setChmSignatureDimension(signatureDimension);
-
-        // Save the dimension of the chairman signature to the preference model.
-        mPrefModel.put(PreferenceContract.BRGY_ID_CHM_SIGNATURE_DIMENSION,
-                String.format("%.5f %.5f %.5f %.5f",
-                        mChmDraggableSignature.getX(),
-                        mChmDraggableSignature.getY(),
-                        mChmDraggableSignature.getWidth(),
-                        mChmDraggableSignature.getHeight()
-                )
-        );
-
-        mPrefModel.save();
-
-        double[] resSignatureDimension = new double[] {
-                mResDraggableSignature.getX(),
-                mResDraggableSignature.getY(),
-                mResDraggableSignature.getWidth(),
-                mResDraggableSignature.getHeight()
-        };
-
-        mBarangayID.setResidentSignatureDimension(resSignatureDimension);
-
-    }
-
-    /**
-     *
-     * @return true if printing is successful. Otherwise, return false.
-     */
-    private boolean printReport() {
-        // Hide the draggable rectangles to make sure that they're not printed.
-        mResDraggableSignature.setVisible(false);
-        mChmDraggableSignature.setVisible(false);
-
-        PrinterJob job = PrinterJob.createPrinterJob();
-        // Start print setup if a printer is found.
-        if(job != null){
-            // Disable the report dialog when the print dialog is open.
-            mRootPane.setDisable(true);
-            boolean result = job.showPrintDialog(Main.PRIMARY_STAGE); // Window must be your main Stage
-            mRootPane.setDisable(false);
-
-            // If the client cancels the printing, then no printing will occur.
-            if (result) {
-                // Determine the scale value needed to fit mBarangayIDPane in the paper.
-                Scale tempScale = new Scale(0.5, 0.5);
-
-                // Temporarily apply the scale value to mDocumentPane. Reset scaleback to normal after printing.
-                mBarangayIDPane.getTransforms().add(tempScale);
-
-                job.printPage(mBarangayIDPane);
-                job.endJob();
-
-                mBarangayIDPane.getTransforms().remove(tempScale);
-            }
-
-            return result;
-        }
-
-        return false;
+        // If the request is simply to take a snapshot of the report, then let them have it.
+        return request == REQUEST_SNAPSHOT_REPORT ? mIDFront.snapshot(null, null) : null;
     }
 }

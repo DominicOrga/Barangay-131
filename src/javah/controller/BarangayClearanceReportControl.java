@@ -225,7 +225,7 @@ public class BarangayClearanceReportControl {
         mBarangayClearance = barangayClearance;
 
         mChmPhoto.setImage(mBarangayClearance.getChmPhoto() != null ?
-                new Image("file:" + mBarangayClearance.getChmPhoto()) : BarangayUtils.getDefaultDisplayPhoto());
+                new Image("file:" + mBarangayClearance.getChmPhoto()) : null);
 
         mChmNameText.setText("Hon. " + mBarangayClearance.getChmName().toUpperCase());
         mSecNameText.setText(mBarangayClearance.getSecName().toUpperCase());

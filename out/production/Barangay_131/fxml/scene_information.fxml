@@ -88,113 +88,50 @@
             <children>
             <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <VBox fx:id="mBrgyIDDetailsPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
+                  <VBox fx:id="mBrgyIDDetailsPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                      <children>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
-                           <children>
-                              <ImageView fitHeight="510.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_barangay_id.png" />
-                                 </image>
-                              </ImageView>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="175.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="175.0" StackPane.alignment="TOP_CENTER">
-                                 <StackPane.margin>
-                                    <Insets top="95.0" />
-                                 </StackPane.margin>
-                              </Rectangle>
-                              <ImageView fx:id="mIDImageView" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                                 <StackPane.margin>
-                                    <Insets top="95.0" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@../res/ic_default_resident_white_bg.png" />
-                                 </image>
-                              </ImageView>
-                              <HBox alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="No.131 - ">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="mBarangayIDCode" text="16-001">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <StackPane.margin>
-                                    <Insets top="275.0" />
-                                 </StackPane.margin>
-                              </HBox>
-                              <Label fx:id="mIDNameLabel" text="DOMINIC R. ORGA" StackPane.alignment="TOP_CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                                 <StackPane.margin>
-                                    <Insets top="305.0" />
-                                 </StackPane.margin>
-                              </Label>
-                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="330.0">
-                                 <children>
-                                    <ImageView fx:id="mIDResSignatureView" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
-                                       <image>
-                                          <Image url="@../../../../../../Public/Barangay131/Photos/0fca17b9-0afe-40f8-9f32-fab57e66b2bc.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
-                           </children>
+                        <ImageView fx:id="mBrgyIDSnapshot" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_barangay_id.png" />
+                           </image>
                            <VBox.margin>
-                              <Insets bottom="50.0" />
+                              <Insets bottom="25.0" />
                            </VBox.margin>
-                        </StackPane>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                        </ImageView>
+                        <TextFlow textAlignment="CENTER">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="mIDDateIssued" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+                              </Text>
+                              <Text fx:id="mIDDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                              </Text>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                        </TextFlow>
+                        <TextFlow textAlignment="CENTER">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Valid until:">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valid Until:    ">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="mIDDateValid" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              </Text>
+                              <Text fx:id="mIDDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                              </Text>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
+                        </TextFlow>
                      </children>
                      <StackPane.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" />
                      </StackPane.margin>
                   </VBox>
-                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
+                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
                      <children>
                         <ImageView fx:id="mBrgyClearanceImage" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -371,7 +308,7 @@
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </Button>
-            <VBox fx:id="mNoReportSelectedPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" styleClass="agent-name" GridPane.columnIndex="1">
+            <VBox fx:id="mNoReportSelectedPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F4F4F4;" styleClass="agent-name" visible="false" GridPane.columnIndex="1">
                <children>
                   <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>

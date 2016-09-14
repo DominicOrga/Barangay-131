@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.BusinessClearance;
@@ -74,10 +75,10 @@ public class InformationControl {
         /**
          * todo: Update the method to cater for all report snap shot.
          *
-         * @param barangayClearance
+         * @param report
          * @return
          */
-        Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance);
+        Image onRequestReportSnapshot(Object report);
     }
 
     /**
@@ -120,9 +121,8 @@ public class InformationControl {
 
     /* Components of the barangay ID details. */
     @FXML Pane mBrgyIDDetailsPane;
-    @FXML ImageView mIDImageView, mIDResSignatureView;
-    @FXML Label mBarangayIDCode, mIDNameLabel;
-    @FXML Label mIDDateIssued, mIDDateValid;
+    @FXML ImageView mBrgyIDSnapshot;
+    @FXML Text mIDDateIssued, mIDDateValid;
 
     /* FXML components of the barangay clearance details. */
     @FXML Pane mBrgyClearanceDetailsPane;
@@ -385,25 +385,10 @@ public class InformationControl {
                         // Get the label selected.
                         mBarangayIDSelected = mDatabaseModel.getBarangayID(mReportIDToLabelLocation[newLabelSelectedIndex]);
 
-                        mIDImageView.setImage(mBarangayIDSelected.getPhoto() != null ?
-                                new Image("file:" + mBarangayIDSelected.getPhoto()) : BarangayUtils.getDefaultDisplayPhoto());
+                        Image image = mListener.onRequestReportSnapshot(mBarangayIDSelected);
+                        mBrgyIDSnapshot.setImage(image);
 
-                        mBarangayIDCode.setText(mBarangayIDSelected.getID());
-                        mIDNameLabel.setText(mBarangayIDSelected.getResidentName().toUpperCase());
-
-                        if (mBarangayIDSelected.getResidentSignature() != null) {
-                            mIDResSignatureView.setImage(new Image("file:" + mBarangayIDSelected.getResidentSignature()));
-
-                            double[] dimension = mBarangayIDSelected.getResidentSignatureDimension();
-
-                            mIDResSignatureView.setX(dimension[0]);
-                            mIDResSignatureView.setY(dimension[1]);
-                            mIDResSignatureView.setFitWidth(dimension[2]);
-                            mIDResSignatureView.setFitHeight(dimension[3]);
-                        } else
-                            mIDResSignatureView.setImage(null);
-
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd yyyy");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
                         mIDDateIssued.setText(dateFormat.format(mBarangayIDSelected.getDateIssued()));
                         mIDDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
 
@@ -411,7 +396,7 @@ public class InformationControl {
 
                     case INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
-                        Image image = mListener.OnRequestBarangayClearanceSnapshot(mBrgyClearanceSelected);
+                        image = mListener.onRequestReportSnapshot(mBrgyClearanceSelected);
                         mBrgyClearanceImage.setImage(image);
                         break;
                 }

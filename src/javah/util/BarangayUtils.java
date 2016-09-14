@@ -16,16 +16,6 @@ import java.util.List;
  */
 public class BarangayUtils {
 
-    /** The default display photo. */
-    private static Image mDefaultDisplayPhoto;
-
-    /**
-     * Initialize the default display photo.
-     */
-    static {
-        mDefaultDisplayPhoto = new Image("res/ic_default_resident_white_bg.png");
-    }
-
     /**
      * Filter the IDs list in descending order with the use of priority level.
      * Priority level is calculated by how many keywords exists in the given name.
@@ -197,15 +187,6 @@ public class BarangayUtils {
             case 10 : return "November";
             default : return "December";
         }
-    }
-
-    /**
-     * Fetch the default display photo.
-     *
-     * @return the default display photo.
-     */
-    public static Image getDefaultDisplayPhoto() {
-        return mDefaultDisplayPhoto;
     }
 
     /**

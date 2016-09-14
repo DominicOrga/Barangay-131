@@ -227,13 +227,30 @@ public class MainControl {
             }
 
             @Override
-            public Image OnRequestBarangayClearanceSnapshot(BarangayClearance barangayClearance) {
+            public Image onRequestReportSnapshot(Object report) {
                 // Image snap shot works only when the pane to be shot is visible.
-                showPopupScene(mBrgyClearanceReportScene, false);
-                Image image = mBrgyClearanceReportControl.setBarangayClearance(barangayClearance, BarangayClearanceReportControl.REQUEST_SNAPSHOT_REPORT);
-                hidePopupScene(mBrgyClearanceReportScene, false);
+                if (report instanceof BarangayID) {
+                    showPopupScene(mBarangayIDReportScene, false);
 
-                return image;
+                    Image image = mBarangayIDReportControl.setBarangayID(
+                            (BarangayID) report, BarangayIDReportControl.REQUEST_SNAPSHOT_REPORT);
+
+                    hidePopupScene(mBarangayIDReportScene, false);
+
+                    return image;
+
+                } else if (report instanceof BarangayClearance) {
+                    showPopupScene(mBrgyClearanceReportScene, false);
+
+                    Image image = mBrgyClearanceReportControl.setBarangayClearance(
+                            (BarangayClearance) report, BarangayClearanceReportControl.REQUEST_SNAPSHOT_REPORT);
+
+                    hidePopupScene(mBrgyClearanceReportScene, false);
+
+                    return image;
+                }
+
+                return null;
             }
 
 
