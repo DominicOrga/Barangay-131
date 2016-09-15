@@ -1,10 +1,10 @@
 package javah.controller;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -97,7 +97,7 @@ public class BarangayIDReportControl {
      * A checkbox to mirror the barangay ID, since our client requested
      * this feature.
      */
-    @FXML private JFXCheckBox mMirrorIDCheckBox;
+    @FXML private CheckBox mMirrorIDCheckBox;
 
     /**
      * Note: used for REQUEST_DISPLAY_REPORT

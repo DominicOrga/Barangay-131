@@ -1,7 +1,5 @@
 package javah.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -22,10 +20,8 @@ import javah.container.BarangayID;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.contract.DatabaseContract;
-import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
-import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 
 import javax.imageio.ImageIO;
@@ -33,7 +29,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -440,7 +435,7 @@ public class ResidentInformationFormControl {
     }
 
     /**
-     * Note: used for Barangay_ID FORM
+     * Note: used for Barangay_ID_FORM
      *
      * Call the photoshop control to capture a signature image for the barangay ID.
      *
