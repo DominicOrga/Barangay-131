@@ -57,7 +57,7 @@
       </HBox>
       <VBox fx:id="mListPagingPane" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="mNewBusinessButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNewBusinessButtonClicked" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Add New Business" textFill="WHITE">
+            <Button fx:id="mNewBusiButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNewBusiButtonClicked" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Add New Business" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -67,12 +67,12 @@
             </Button>
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <children>
-                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
+                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onSearchFieldKeyPressed" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
                      <font>
                         <Font name="Helvetica Neue Light" size="20.0" />
                      </font>
                   </TextField>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" onDragDetected="#onSearchButtonClicked" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../res/ic_search.png" />
                      </image>
@@ -178,14 +178,26 @@
          <content>
             <VBox fx:id="mBarangayIDPane" prefHeight="470.0" prefWidth="540.0" style="-fx-background-color: #F4F4F4;">
                <children>
-                  <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
-                     <image>
-                        <Image url="@../res/ic_edit.png" />
-                     </image>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                           <image>
+                              <Image url="@../res/ic_edit.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="mEditButton1" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                           <image>
+                              <Image url="@../res/ic_delete.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="550.0" top="20.0" />
+                        <Insets bottom="10.0" top="20.0" />
                      </VBox.margin>
-                  </ImageView>
+                  </HBox>
                   <Label contentDisplay="RIGHT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" prefWidth="500.0" text="Business Name:">
                      <font>
                         <Font size="18.0" />
