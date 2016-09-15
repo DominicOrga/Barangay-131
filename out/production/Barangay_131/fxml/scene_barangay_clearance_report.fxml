@@ -330,11 +330,20 @@
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=".">
+                                    <Text fx:id="mTextLineBreak3" strokeType="OUTSIDE" strokeWidth="0.0" text=".\n">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
+                                    <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="455.0">
+                                       <children>
+                                          <Text fx:id="mDateValid" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="(Valid until January 16, 2017)" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="Times New Roman" size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </TextFlow>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="220.0" styleClass="exception" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">

@@ -304,6 +304,8 @@ public class ResidentInformationFormControl {
         mBrgyClearanceAddress1RadioButton.setToggleGroup(brgyClearanceToggleGroup);
         mBrgyClearanceAddress2RadioButton.setToggleGroup(brgyClearanceToggleGroup);
 
+        BarangayUtils.addTextLimitListener(mBrgyClearancePurpose, 100);
+
         // Reset the scene if the root pane is turned visible again.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {

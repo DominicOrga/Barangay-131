@@ -127,6 +127,8 @@ public class InformationControl {
     /* FXML components of the barangay clearance details. */
     @FXML Pane mBrgyClearanceDetailsPane;
     @FXML ImageView mBrgyClearanceImage;
+    @FXML Text mBrgyClearanceDateIssued, mBrgyClearanceDateValid;
+    @FXML Text mBrgyClearancePurpose;
 
     /* The current type of information to be displayed. */
     private byte mInformation;
@@ -398,6 +400,11 @@ public class InformationControl {
                         mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
                         image = mListener.onRequestReportSnapshot(mBrgyClearanceSelected);
                         mBrgyClearanceImage.setImage(image);
+
+                        dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
+                        mBrgyClearanceDateIssued.setText(dateFormat.format(mBrgyClearanceSelected.getDateIssued()));
+                        mBrgyClearanceDateValid.setText(dateFormat.format(mBrgyClearanceSelected.getDateValid()));
+                        mBrgyClearancePurpose.setText(mBrgyClearanceSelected.getPurpose());
                         break;
                 }
 

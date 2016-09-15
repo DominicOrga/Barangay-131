@@ -114,7 +114,7 @@
                         </TextFlow>
                         <TextFlow textAlignment="CENTER">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valid Until:    ">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valid Until:  ">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
@@ -131,7 +131,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" />
                      </StackPane.margin>
                   </VBox>
-                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;" visible="false">
+                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                      <children>
                         <ImageView fx:id="mBrgyClearanceImage" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -141,72 +141,51 @@
                               <Insets bottom="50.0" />
                            </VBox.margin>
                         </ImageView>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                        <TextFlow textAlignment="CENTER">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Issued Date:">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Purpose:  " textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="mIDDateIssued1" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+                              </Text>
+                              <Text fx:id="mBrgyClearancePurpose" strokeType="OUTSIDE" strokeWidth="0.0" text="Local Employment" textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                              </Text>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets bottom="25.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                        </TextFlow>
+                        <TextFlow textAlignment="CENTER">
                            <children>
-                              <Label minWidth="-Infinity" prefWidth="150.0" text="Valid until:">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="mIDDateValid1" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              </Text>
+                              <Text fx:id="mBrgyClearanceDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                              </Text>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="200.0">
+                        </TextFlow>
+                        <TextFlow textAlignment="CENTER">
                            <children>
-                              <Label fx:id="mAddress1Label1" minWidth="-Infinity" prefWidth="150.0" text="Purpose:">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Valid:  " textAlignment="CENTER">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea fx:id="mPurpose" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="450.0" style="-fx-border-color: transparent;" styleClass="address" wrapText="true">
-                                 <cursor>
-                                    <Cursor fx:constant="MOVE" />
-                                 </cursor>
+                              </Text>
+                              <Text fx:id="mBrgyClearanceDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Light" size="20.0" />
+                                    <Font size="23.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </HBox.margin>
-                              </TextArea>
+                              </Text>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </HBox>
+                        </TextFlow>
                      </children>
                      <StackPane.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" />

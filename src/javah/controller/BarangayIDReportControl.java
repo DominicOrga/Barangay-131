@@ -193,7 +193,7 @@ public class BarangayIDReportControl {
      * @param actionEvent
      *        The action event. Never used.
      *
-     * @see MainControl
+     * @see InformationControl
      */
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
@@ -429,7 +429,7 @@ public class BarangayIDReportControl {
         mChmName.setText("Hon." + mBarangayID.getChmName().toUpperCase());
 
         // Display the date issuance and validity.
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
         mDateIssued.setText(dateFormat.format(mBarangayID.getDateIssued()));
         mDateValid.setText(dateFormat.format(mBarangayID.getDateValid()));
 
