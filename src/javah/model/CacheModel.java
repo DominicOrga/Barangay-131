@@ -195,6 +195,8 @@ public class CacheModel {
         mBusinessIDsCache = lists[0];
         mBusinessNamesCache = lists[1];
 
+        System.out.println("CacheModel - Business Names: " + mBusinessNamesCache);
+
         lists = databaseModel.getBusinessClearanceEssentials();
         mBusiClearanceIDsCache = lists[0];
         mBusiClearanceBusiIDsCache = lists[1];
@@ -330,8 +332,8 @@ public class CacheModel {
      *
      * @return the Business Names Cache.
      */
-    public List<String> getBusiNamesCaches() {
-        return mBusiClearanceBusiNamesCache;
+    public List<String> getBusiNamesCache() {
+        return mBusinessNamesCache;
     }
 
     /**

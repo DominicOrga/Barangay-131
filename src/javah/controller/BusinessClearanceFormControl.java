@@ -442,6 +442,8 @@ public class BusinessClearanceFormControl {
             } else
                 mBusinessLabels[i].setText("");
         }
+
+        System.out.println("BusinessClearanceFormControl - Business IDs: " + mBusinessIDs);
     }
 
     /**
@@ -508,7 +510,8 @@ public class BusinessClearanceFormControl {
      */
     public void setCacheModel(CacheModel cacheModel) {
         mCacheModel = cacheModel;
-        mBusinessNames = mCacheModel.getBusiNamesCaches();
+        mBusinessNames = mCacheModel.getBusiNamesCache();
+        System.out.println("BusinessClearanceFormControl - Business Names: " + mBusinessNames);
     }
 
     /**
