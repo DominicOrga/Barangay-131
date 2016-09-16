@@ -292,19 +292,6 @@ public class NodeNameHandler {
             });
             mNodeNames[i] = nodeName;
         }
-
-        switch (operation) {
-            case OPERATION_ONE_TO_MANY:
-                mNodeNameHighestPos = 1;
-
-                // At least one node name is visible by default.
-                box.getChildren().add(mNodeNames[0]);
-                mNodeNames[0].setRemoveButtonVisible(false);
-                mNodeNamePositions[0] = 1;
-                break;
-            default:
-                mNodeNameHighestPos = 0;
-        }
     }
 
     /**
@@ -390,9 +377,10 @@ public class NodeNameHandler {
      */
     public void addName(String firstName, String middleName, String lastName, String auxiliary) {
         NodeName nodeName = showNodeName();
-        nodeName.setStyle(null);
 
         if (nodeName == null) return;
+
+        nodeName.setStyle(null);
 
         nodeName.mFirstName.setText(firstName == null ? "" : firstName);
         nodeName.mMiddleName.setText(middleName == null ? "" : middleName);
@@ -484,5 +472,15 @@ public class NodeNameHandler {
             }
 
         return isValid;
+    }
+
+    /**
+     * Either hide or show the add and remove buttons.
+     */
+    public void setButtonsVisible(boolean bool) {
+        for (int i = 0; i < mSize; i++) {
+            mNodeNames[i].mRemoveButton.setVisible(bool);
+            mNodeNames[i].mAddButton.setVisible(bool);
+        }
     }
 }

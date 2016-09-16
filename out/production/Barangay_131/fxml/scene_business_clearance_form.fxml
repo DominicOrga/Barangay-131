@@ -27,7 +27,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1055.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="@../css/barangay_clearance_report.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ResidentInformationFormControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1140.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="@../css/barangay_clearance_report.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BusinessClearanceFormControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="420.0" prefWidth="420.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -72,14 +72,18 @@
                         <Font name="Helvetica Neue Light" size="20.0" />
                      </font>
                   </TextField>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" onDragDetected="#onSearchButtonClicked" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../res/ic_search.png" />
-                     </image>
+                  <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSearchButtonClicked" prefHeight="38.0" prefWidth="38.0" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="39.0" fitWidth="39.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                      <HBox.margin>
                         <Insets left="-40.0" />
                      </HBox.margin>
-                  </ImageView>
+                  </Button>
                </children>
                <opaqueInsets>
                   <Insets />
@@ -88,7 +92,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <GridPane fx:id="mResidentGridPane" alignment="TOP_CENTER" disable="true" style="-fx-background-color: #BEBEBE; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+            <GridPane fx:id="mBusinessGridPane" alignment="TOP_CENTER" style="-fx-background-color: #BEBEBE; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -159,12 +163,12 @@
       </HBox>
       <HBox fx:id="mSpecialButtonPane" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Create" textFill="WHITE">
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="125.0" style="-fx-background-color: ff861b; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Create" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="125.0" style="-fx-background-color: ff861b; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -174,69 +178,81 @@
             </Button>
          </children>
       </HBox>
-      <ScrollPane fx:id="mScrollPane" maxWidth="1.7976931348623157E308" prefWidth="200.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <ScrollPane fx:id="mScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="675.0" style="-fx-background-color: transparent; -fx-border-color: bebebe; -fx-border-width: 1 0 1 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <content>
-            <VBox fx:id="mBarangayIDPane" prefHeight="470.0" prefWidth="540.0" style="-fx-background-color: #F4F4F4;">
+            <VBox fx:id="mBarangayIDPane" maxWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <HBox>
                      <children>
-                        <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
-                           <image>
-                              <Image url="@../res/ic_edit.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mEditButton1" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
-                           <image>
-                              <Image url="@../res/ic_delete.png" />
-                           </image>
+                        <Label contentDisplay="RIGHT" graphicTextGap="15.0" text="Business Name:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                            <HBox.margin>
-                              <Insets />
+                              <Insets right="20.0" />
                            </HBox.margin>
-                        </ImageView>
+                        </Label>
+                        <Label fx:id="mBusiNameError" contentDisplay="RIGHT" graphicTextGap="15.0" text="Please enter a business name." textFill="#ff3f3f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="20.0" />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label contentDisplay="RIGHT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" prefWidth="500.0" text="Business Name:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <graphic>
-                        <TextField fx:id="mBusinessNameField" maxWidth="1.7976931348623157E308" prefWidth="453.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </TextField>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label contentDisplay="RIGHT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" prefWidth="500.0" text="Business Type:  ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <graphic>
-                        <TextField fx:id="mBusinessTypeField" maxWidth="1.7976931348623157E308" prefWidth="453.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </TextField>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Business Address:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
+                  <TextField fx:id="mBusiNameField" maxWidth="-Infinity" prefWidth="593.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </Label>
-                  <TextArea fx:id="mAddressField" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="100.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                  </TextField>
+                  <HBox>
+                     <children>
+                        <Label contentDisplay="RIGHT" graphicTextGap="15.0" text="Business Type:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="5.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mBusiTypeError" contentDisplay="RIGHT" graphicTextGap="15.0" text="Please specify business type." textFill="#ff3f3f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TextField fx:id="mBusiTypeField" maxWidth="-Infinity" prefWidth="593.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox>
+                     <children>
+                        <Label contentDisplay="RIGHT" graphicTextGap="15.0" text="Business Address:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="5.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mAddressError" contentDisplay="RIGHT" graphicTextGap="15.0" text="Please enter an address." textFill="#ff3f3f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="mAddressField" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="593.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                      <font>
                         <Font name="Microsoft YaHei UI Light" size="15.0" />
                      </font>
@@ -244,20 +260,32 @@
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                      <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <Label text="Client Owner:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </Label>
+                  </TextArea>
+                  <HBox>
+                     <children>
+                        <Label contentDisplay="RIGHT" graphicTextGap="15.0" text="Client Owner:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="mNameError" contentDisplay="RIGHT" graphicTextGap="15.0" text="Please enter name." textFill="#ff3f3f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </HBox>
                   <HBox prefHeight="29.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="mFirstName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
+                        <TextField fx:id="mClientFirstName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="First Name*">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -265,7 +293,7 @@
                               <Insets />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="mMiddleName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
+                        <TextField fx:id="mClientMiddleName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Middle Name*">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -273,7 +301,7 @@
                               <Insets left="20.0" right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="mLastName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
+                        <TextField fx:id="mClientLastName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Last Name*">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -281,7 +309,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="mAuxiliary" minWidth="-Infinity" prefWidth="83.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
+                        <ComboBox fx:id="mClientAuxiliary" minWidth="-Infinity" prefWidth="83.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" value="N/A">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="N/A" />
@@ -305,15 +333,18 @@
                         </ComboBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label fx:id="mAddOwnerButton" onMouseClicked="#onAddOwnerButtonClicked" text="Other Owners?" textFill="#ff2b00">
+                  <Label fx:id="mExtraOwner" onMouseClicked="#onExtraOwnerClicked" text="Other Owners?">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
-                  <VBox fx:id="mOwnersPane" prefHeight="200.0" prefWidth="100.0" />
+                  <VBox fx:id="mExtraOwnerBox" maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0" />
                </children>
                <stylesheets>
                   <URL value="@../css/main_stylesheet.css" />
@@ -322,8 +353,16 @@
             </VBox>
          </content>
          <GridPane.margin>
-            <Insets left="20.0" right="20.0" />
+            <Insets left="20.0" top="55.0" />
          </GridPane.margin>
       </ScrollPane>
+      <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <image>
+            <Image url="@../res/ic_edit.png" />
+         </image>
+         <GridPane.margin>
+            <Insets right="25.0" top="60.0" />
+         </GridPane.margin>
+      </ImageView>
    </children>
 </GridPane>

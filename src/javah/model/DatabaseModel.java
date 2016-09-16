@@ -939,10 +939,17 @@ public class DatabaseModel {
                 business.setType(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_TYPE));
                 business.setAddress(resultSet.getString(BusinessEntry.COLUMN_BUSINESS_ADDRESS));
 
+
+
                 String[][] owners = new String[5][4];
                 for (int i = 0; i < 5; i++)
-                    for (int j = 0; j < 4; j++)
+                    for (int j = 0; j < 4; j++) {
+                        System.out.printf(
+                                "\nDatabaseModel - owner names @ [%d][%d]: %s", i, j,
+                                resultSet.getString(BusinessEntry.OWNER_NAMES[i][j]));
+
                         owners[i][j] = resultSet.getString(BusinessEntry.OWNER_NAMES[i][j]);
+                    }
 
                 business.setOwners(owners);
 

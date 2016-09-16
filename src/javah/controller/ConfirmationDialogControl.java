@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
  *
  * @see PhotoshopControl
  * @see ResidentControl
- * @see BusinessFormControl
+ * @see BusinessClearanceFormControl
  */
 public class ConfirmationDialogControl {
 

@@ -51,7 +51,7 @@ public class InformationControl {
          *        INFORMATION_BUSINESS_CLEARANCE = 3
          *
          * @see ResidentInformationFormControl
-         * @see BusinessFormControl
+         * @see BusinessClearanceFormControl
          */
         void onCreateReportButtonClicked(byte information);
 

@@ -207,7 +207,7 @@ public class ResidentInformationFormControl {
      * The labels in the resident grid pane.
      * Takes hold of the resident with respect to the mCurrentPage.
      */
-    private Label[] mResidentLabels = new Label[10];
+    private Label[] mResidentLabels;
 
     /* Represents the current page of the resident list paging. */
     private int mCurrentPage;
@@ -275,6 +275,8 @@ public class ResidentInformationFormControl {
      */
     @FXML
     private void initialize() {
+        mResidentLabels = new Label[10];
+
         for (int i = 0; i < 10; i++) {
             Label label = new Label();
             label.setStyle(CSSContract.STYLE_LABEL_UNSELECTED_WHITE);

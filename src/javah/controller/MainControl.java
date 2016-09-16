@@ -79,6 +79,7 @@ public class MainControl {
     private Pane mPhotoshopScene, mBarangayAgentScene;
     private Pane mResidentFormScene;
     private Pane mResidentInfoFormScene;
+    private Pane mBusiClearanceFormScene;
 
     /**
      * The popup scenes. (REPORTS)
@@ -96,6 +97,7 @@ public class MainControl {
     private ResidentInformationFormControl mResidentInformationFormControl;
     private BarangayIDReportControl mBarangayIDReportControl;
     private BarangayClearanceReportControl mBrgyClearanceReportControl;
+    private BusinessClearanceFormControl mBusiClearanceFormControl;
 
 
     /**
@@ -193,17 +195,21 @@ public class MainControl {
             @Override
             public void onCreateReportButtonClicked(byte information) {
                 mInformationControl.setBlurListPaging(true);
-                showPopupScene(mResidentInfoFormScene, false);
 
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
+                        showPopupScene(mResidentInfoFormScene, false);
                         mResidentInformationFormControl.setFormType(ResidentInformationFormControl.FORM_BARANGAY_ID);
 
                         break;
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE :
+                        showPopupScene(mResidentInfoFormScene, false);
                         mResidentInformationFormControl.setFormType(ResidentInformationFormControl.FORM_BARANGAY_CLEARANCE);
+
                         break;
-                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE : break;
+                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE :
+                        showPopupScene(mBusiClearanceFormScene, false);
+                        break;
                 }
             }
 
@@ -573,6 +579,14 @@ public class MainControl {
             }
         });
 
+        // Initialize the business clearance form.
+        resetFXMLLoader.accept("fxml/scene_business_clearance_form.fxml");
+        mBusiClearanceFormScene = fxmlLoader.load();
+
+        mBusiClearanceFormControl = fxmlLoader.getController();
+        mBusiClearanceFormControl.setCacheModel(mCacheModel);
+        mBusiClearanceFormControl.setDatabaseModel(mDatabaseModel);
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
@@ -581,6 +595,7 @@ public class MainControl {
         addToPopupPane.accept(mResidentInfoFormScene);
         addToPopupPane.accept(mBarangayIDReportScene);
         addToPopupPane.accept(mBrgyClearanceReportScene);
+        addToPopupPane.accept(mBusiClearanceFormScene);
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
