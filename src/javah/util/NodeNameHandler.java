@@ -20,6 +20,22 @@ import java.util.Arrays;
 public class NodeNameHandler {
 
     /**
+     * An interface to listen to the Node name handler, such as the event of pressing
+     * a remove button from a node name.
+     *
+     * @see NodeNameHandler
+     */
+    public interface OnNodeNameHandlerListener {
+        /**
+         * Inform this listener that a remove button was clicked.
+         *
+         * @param visibleNodeCount
+         *        The total number of node names visible.
+         */
+        void onRemoveButtonClicked(int visibleNodeCount);
+    }
+
+    /**
      * A class that serves as a container for nodes regarding a Node Name, such as a
      * text field for the first, middle and last name, and buttons to fire an event
      * to the Node Name Event Handler.
@@ -223,6 +239,11 @@ public class NodeNameHandler {
      */
     private boolean mIsButtonsVisible;
 
+    /* Determines whether this Node name handler is one-to-many or zero-to-many. */
+    private byte mOperation;
+
+    private OnNodeNameHandlerListener mListener;
+
     /**
      * A constructor that takes hold of the mBox to be populated with a number of Node
      * names equal to the given Limit.
@@ -240,6 +261,7 @@ public class NodeNameHandler {
         mIsButtonsVisible = true;
         mBox = box;
         mSize = size;
+        mOperation = operation;
 
         mNodeNames = new NodeName[size];
         mNodeNamePositions = new int[size];
@@ -288,9 +310,8 @@ public class NodeNameHandler {
                     // button is pressed, that is.
                     mNodeNames[nodeNameHighPosIndex].setAddButtonVisible(true);
 
-
-                    System.out.println(Arrays.toString(mNodeNamePositions));
-                    System.out.println("Highest Position Index: " + nodeNameHighPosIndex);
+                    // Inform the node name handler listener that a node name was removed.
+                    mListener.onRemoveButtonClicked(mNodeNameHighestPos);
                 }
 
                 @Override
@@ -364,7 +385,8 @@ public class NodeNameHandler {
 
         // Buttons visibility should only be touched when authorized.
         if (mIsButtonsVisible) {
-            mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(mNodeNameHighestPos > 1);
+            mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(
+                    mNodeNameHighestPos > 1 || mOperation == OPERATION_ZERO_TO_MANY);
             mNodeNames[nodeNameInvisibleIndex].setAddButtonVisible(!(mNodeNameHighestPos == mSize));
         }
 
@@ -500,5 +522,15 @@ public class NodeNameHandler {
             mNodeNames[i].setRemoveButtonVisible(bool);
             mNodeNames[i].setAddButtonVisible(bool);
         }
+    }
+
+    /**
+     * Set a listener for this handler.
+     *
+     * @param listener
+     *        The listener for this handler.
+     */
+    public void setListener(OnNodeNameHandlerListener listener) {
+        mListener = listener;
     }
 }

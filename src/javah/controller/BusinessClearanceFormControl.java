@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javah.container.Business;
 import javah.container.BusinessClearance;
 import javah.contract.CSSContract;
@@ -184,6 +185,13 @@ public class BusinessClearanceFormControl {
     private OnBusinessClearanceFormListener mListener;
 
     /**
+     * A boolean to determine whether the extra owner nodes are already added,
+     * therefore, rendering mExtraOwner unclickable. Othewise, the mExtraOwner
+     * is clickable to allow the inclusion of extra owners.
+     */
+    private boolean mIsExtraOwnerLabelClickable;
+
+    /**
      * Initialize the components of the scene.
      */
     @FXML
@@ -215,6 +223,22 @@ public class BusinessClearanceFormControl {
                 setState(STATE_NO_SELECTION);
                 mBusinessIDs = mCacheModel.getBusiIDsCache();
                 updateListPaging(false);
+            }
+        });
+
+        // Every time the Extra Owner box adjusts in height due to addition or removal of node
+        // names, then always set the vertical scroll pane at the bottom.
+        mExtraOwnerBox.heightProperty().addListener(observable -> mScrollPane.setVvalue(1));
+
+        // Set a listener for the node name handler to detect whether a node name is visible
+        // or not. If no more node name is visible from the node name handler, then set the
+        // mExtraOwner label as clickable to allow insertion of another node names.
+        mNodeNameHandler.setListener((nodeNameVisibleCount) -> {
+            if (nodeNameVisibleCount == 0) {
+                mExtraOwner.setText("Other Owners?");
+                mExtraOwner.setTextFill(Color.valueOf("#FF3F3F"));
+                mExtraOwner.setVisible(true);
+                mIsExtraOwnerLabelClickable = true;
             }
         });
     }
@@ -294,9 +318,24 @@ public class BusinessClearanceFormControl {
             mNextPageButton.setDisable(true);
     }
 
+    /**
+     * Update the UI suitable for creating a new business.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
     @FXML
     public void onNewBusiButtonClicked(ActionEvent actionEvent) {
+        // Make sure that no resident is selected.
+        setResidentSelected(-1);
 
+        // Update the appearance of the buttons that signifies business creation.
+        mCreateButton.setText("Create Business");
+        mCreateButton.setStyle(CSSContract.STYLE_CHOCO_BUTTON);
+
+        mCancelButton.setStyle(CSSContract.STYLE_RED_BUTTON);
+
+        setState(STATE_CREATION);
     }
 
     @FXML
@@ -306,16 +345,63 @@ public class BusinessClearanceFormControl {
 
     @FXML
     public void onExtraOwnerClicked(Event event) {
+        if (mIsExtraOwnerLabelClickable) {
+            mExtraOwnerBox.setVisible(true);
+            mExtraOwnerBox.setManaged(true);
 
+            mExtraOwner.setText("Other Owners:");
+            mExtraOwner.setTextFill(Color.BLACK);
+
+            // Show at least one node name field.
+            mNodeNameHandler.removeNodeNames();
+            mNodeNameHandler.setIsButtonsVisible(true);
+            mNodeNameHandler.addName(null, null, null, null);
+
+            mIsExtraOwnerLabelClickable = false;
+        }
     }
 
+    /**
+     * If current state is STATE_CREATION, then check if the data inserted are valid.
+     * If all data are valid, then create the business and return to STATE_NO_SELECTION.
+     *
+     *
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
     @FXML
     public void onCreateButtonClicked(ActionEvent actionEvent) {
+
     }
 
+    /**
+     * If the current state is STATE_NO_SELECTION or STATE_SELECTION, then cancel
+     * close the form.
+     *
+     * If the current state is STATE_CREATION, then cancel STATE_CREATION and go to
+     * STATE_NO_SELECTION.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-        mListener.onCancelButtonClicked();
+
+        switch (mState) {
+            case STATE_NO_SELECTION: case STATE_SELECTION:
+                mListener.onCancelButtonClicked();
+                break;
+            case STATE_CREATION:
+                setResidentSelected(-1);
+
+                mCreateButton.setText("Create");
+                mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
+                mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
+                setState(STATE_NO_SELECTION);
+                break;
+            case STATE_UPDATE:
+        }
     }
 
     private void setState(byte state) {
@@ -394,7 +480,7 @@ public class BusinessClearanceFormControl {
 
                         mExtraOwner.setVisible(true);
                         mExtraOwner.setText("Other Owners:");
-                        mExtraOwner.setStyle(null);
+                        mExtraOwner.setTextFill(Color.BLACK);
 
                         mExtraOwnerBox.setVisible(true);
                         mExtraOwnerBox.setManaged(true);
@@ -415,6 +501,7 @@ public class BusinessClearanceFormControl {
                 break;
             case STATE_CREATION:
 
+                mCoverPane.toBack();
 
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);
@@ -423,8 +510,23 @@ public class BusinessClearanceFormControl {
 
                 mEditButton.setVisible(false);
 
+                mBusiNameField.setText(null);
+                mBusiTypeField.setText(null);
+                mAddressField.setText(null);
+                mClientFirstName.setText(null);
+                mClientMiddleName.setText(null);
+                mClientLastName.setText(null);
+                mClientAuxiliary.setValue("N/A");
+
+                mExtraOwner.setText("Other Owners?");
+                mExtraOwner.setTextFill(Color.valueOf("#FF3F3F"));
+                mExtraOwner.setVisible(true);
+                mIsExtraOwnerLabelClickable = true;
+
                 break;
             case STATE_UPDATE:
+
+                mCoverPane.toBack();
 
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);
