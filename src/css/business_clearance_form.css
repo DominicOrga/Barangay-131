@@ -1,0 +1,4 @@
+.busi-info:disabled .busi-info:disabled > * {
+	-fx-opacity:1.0;
+	-fx-background-color: red;	
+}

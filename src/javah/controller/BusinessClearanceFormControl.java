@@ -338,6 +338,8 @@ public class BusinessClearanceFormControl {
                 mClientAuxiliary.setValue(mBusinessSelected.getOwners()[0][3] == null ?
                         "N/A" : mBusinessSelected.getOwners()[0][3]);
 
+                mNodeNameHandler.removeNodeNames();
+
                 // Set the other clients name, if any.
                 loop:
                 for (int i = 1; i < 5; i++) {
@@ -359,7 +361,8 @@ public class BusinessClearanceFormControl {
 
                         mExtraOwnerBox.setVisible(true);
                         mExtraOwnerBox.setManaged(true);
-                        mNodeNameHandler.setButtonsVisible(false);
+                        mNodeNameHandler.setIsButtonsVisible(false);
+
                     }
 
                     if (firstName == null || firstName.isEmpty())
@@ -371,7 +374,6 @@ public class BusinessClearanceFormControl {
 
                     mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
                 }
-
 
 
                 break;
@@ -511,7 +513,6 @@ public class BusinessClearanceFormControl {
     public void setCacheModel(CacheModel cacheModel) {
         mCacheModel = cacheModel;
         mBusinessNames = mCacheModel.getBusiNamesCache();
-        System.out.println("BusinessClearanceFormControl - Business Names: " + mBusinessNames);
     }
 
     /**

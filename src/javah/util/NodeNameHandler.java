@@ -217,6 +217,13 @@ public class NodeNameHandler {
     private int mNodeNameHighestPos;
 
     /**
+     * Note: useful for operations ONE-TO-MANY.
+     *
+     * Determines whether to show or hide the remove and add buttons.
+     */
+    private boolean mIsButtonsVisible;
+
+    /**
      * A constructor that takes hold of the mBox to be populated with a number of Node
      * names equal to the given Limit.
      *
@@ -230,6 +237,7 @@ public class NodeNameHandler {
      * @see NodeName
      */
     public NodeNameHandler(VBox box, int size, byte operation) {
+        mIsButtonsVisible = true;
         mBox = box;
         mSize = size;
 
@@ -337,8 +345,11 @@ public class NodeNameHandler {
 
             // Node Name with the preceding Highest Position will only have the remove button.
             // Only used if a node name with preceding highest position exists.
-            mNodeNames[nodeNameHighestPosIndex].setAddButtonVisible(false);
-            mNodeNames[nodeNameHighestPosIndex].setRemoveButtonVisible(true);
+            // Note: Buttons visibility should only be touched when authorized.
+            if (mIsButtonsVisible) {
+                mNodeNames[nodeNameHighestPosIndex].setAddButtonVisible(false);
+                mNodeNames[nodeNameHighestPosIndex].setRemoveButtonVisible(true);
+            }
 
         }
 
@@ -351,8 +362,11 @@ public class NodeNameHandler {
         // show the add button if some of the Node Names are still invisible.
         mNodeNamePositions[nodeNameInvisibleIndex] = mNodeNameHighestPos;
 
-        mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(mNodeNameHighestPos > 1);
-        mNodeNames[nodeNameInvisibleIndex].setAddButtonVisible(!(mNodeNameHighestPos == mSize));
+        // Buttons visibility should only be touched when authorized.
+        if (mIsButtonsVisible) {
+            mNodeNames[nodeNameInvisibleIndex].setRemoveButtonVisible(mNodeNameHighestPos > 1);
+            mNodeNames[nodeNameInvisibleIndex].setAddButtonVisible(!(mNodeNameHighestPos == mSize));
+        }
 
         // Add the Node Name to the VBox to ensure that it is visible.
         mBox.getChildren().add(mNodeNames[nodeNameInvisibleIndex]);
@@ -477,10 +491,14 @@ public class NodeNameHandler {
     /**
      * Either hide or show the add and remove buttons.
      */
-    public void setButtonsVisible(boolean bool) {
+    public void setIsButtonsVisible(boolean bool) {
+        // This will know that the remove and add buttons should or should not be visible
+        // when showNodeName function is called.
+        mIsButtonsVisible = bool;
+
         for (int i = 0; i < mSize; i++) {
-            mNodeNames[i].mRemoveButton.setVisible(bool);
-            mNodeNames[i].mAddButton.setVisible(bool);
+            mNodeNames[i].setRemoveButtonVisible(bool);
+            mNodeNames[i].setAddButtonVisible(bool);
         }
     }
 }
