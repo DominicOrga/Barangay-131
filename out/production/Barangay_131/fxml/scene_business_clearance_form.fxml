@@ -241,7 +241,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TextArea fx:id="mAddressField" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="593.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+                        <TextArea fx:id="mAddressField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="593.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                            <font>
                               <Font name="Microsoft YaHei UI Light" size="15.0" />
                            </font>

@@ -1,6 +1,5 @@
 package javah.controller;
 
-
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -13,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javah.container.Business;
+import javah.container.BusinessClearance;
 import javah.contract.CSSContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
@@ -28,6 +28,36 @@ import java.util.function.Consumer;
  */
 public class BusinessClearanceFormControl {
 
+    /**
+     * An interface listener for the BusinessClearanceFormControl which detects
+     * whether a business clearance form is to be generated into a report or
+     * the report creation is cancelled with a click of some buttons.
+     *
+     * @see BusinessClearanceFormControl
+     */
+    public interface OnBusinessClearanceFormListener {
+
+        /**
+         * Tell the BusinessClearanceReportControl to try to create the business
+         * clearance.
+         *
+         * Called if the mCreateButton is pressed while the mState is equal to
+         * STATE_SELECTION.
+         *
+         * @param businessClearance
+         *        The business clearance to be sent to the BusinessClearanceReportControl.
+         *
+         * @see BusinessClearanceReportControl
+         */
+        void onCreateButtonClicked(BusinessClearance businessClearance);
+
+        /**
+         * Close the business clearance form.
+         */
+        void onCancelButtonClicked();
+    }
+
+    /* Possible states of the UI of the form. */
     private final byte STATE_NO_SELECTION = 1, STATE_SELECTION = 2, STATE_CREATION = 3, STATE_UPDATE = 4;
 
     /**
@@ -59,6 +89,9 @@ public class BusinessClearanceFormControl {
 
     /* A pane containing the input fields for the business clearance. */
     @FXML ScrollPane mScrollPane;
+
+    /* A pane used to cover the scroll pane to make its child nodes un-clickable. */
+    @FXML Pane mCoverPane;
 
     /* Nodes for inputting the data of the business. */
     @FXML TextField mBusiNameField, mBusiTypeField;
@@ -147,12 +180,15 @@ public class BusinessClearanceFormControl {
     /* Manages the names of the other clients, if any. */
     private NodeNameHandler mNodeNameHandler;
 
+    /* A listener for this controller. */
+    private OnBusinessClearanceFormListener mListener;
+
     /**
      * Initialize the components of the scene.
      */
     @FXML
     private void initialize() {
-        mNodeNameHandler = new NodeNameHandler(mExtraOwnerBox, 4, NodeNameHandler.OPERATION_ONE_TO_MANY);
+        mNodeNameHandler = new NodeNameHandler(mExtraOwnerBox, 4, NodeNameHandler.OPERATION_ZERO_TO_MANY);
 
         mBusinessLabels = new Label[10];
 
@@ -275,12 +311,11 @@ public class BusinessClearanceFormControl {
 
     @FXML
     public void onCreateButtonClicked(ActionEvent actionEvent) {
-
     }
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
-
+        mListener.onCancelButtonClicked();
     }
 
     private void setState(byte state) {
@@ -315,6 +350,8 @@ public class BusinessClearanceFormControl {
 
                 break;
             case STATE_SELECTION:
+
+                mCoverPane.toFront();
 
                 mListPagingPane.setDisable(false);
                 mMovePagePane.setDisable(false);
@@ -361,8 +398,8 @@ public class BusinessClearanceFormControl {
 
                         mExtraOwnerBox.setVisible(true);
                         mExtraOwnerBox.setManaged(true);
-                        mNodeNameHandler.setIsButtonsVisible(false);
 
+                        mNodeNameHandler.setIsButtonsVisible(false);
                     }
 
                     if (firstName == null || firstName.isEmpty())
@@ -375,9 +412,9 @@ public class BusinessClearanceFormControl {
                     mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
                 }
 
-
                 break;
             case STATE_CREATION:
+
 
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);
@@ -524,5 +561,15 @@ public class BusinessClearanceFormControl {
      */
     public void setDatabaseModel(DatabaseModel databaseModel) {
         mDatabaseModel = databaseModel;
+    }
+
+    /**
+     * Set the listener for this controller.
+     *
+     * @param listener
+     *        The listener for this controller.
+     */
+    public void setListener(OnBusinessClearanceFormListener listener) {
+        mListener = listener;
     }
 }

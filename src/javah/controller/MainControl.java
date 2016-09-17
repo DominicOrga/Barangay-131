@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
+import javah.container.BusinessClearance;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.contract.PreferenceContract;
@@ -586,6 +587,18 @@ public class MainControl {
         mBusiClearanceFormControl = fxmlLoader.getController();
         mBusiClearanceFormControl.setCacheModel(mCacheModel);
         mBusiClearanceFormControl.setDatabaseModel(mDatabaseModel);
+        mBusiClearanceFormControl.setListener(new BusinessClearanceFormControl.OnBusinessClearanceFormListener() {
+            @Override
+            public void onCreateButtonClicked(BusinessClearance businessClearance) {
+
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBusiClearanceFormScene, false);
+                mInformationControl.setBlurListPaging(false);
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
