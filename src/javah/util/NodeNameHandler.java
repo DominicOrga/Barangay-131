@@ -11,8 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javah.contract.CSSContract;
 
-import java.util.Arrays;
-
 /**
  * A class that handles the generation of name nodes within a certain
  * mBox container.

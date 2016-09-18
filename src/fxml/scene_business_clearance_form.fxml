@@ -344,13 +344,30 @@
             </StackPane>
          </content>
       </ScrollPane>
-      <ImageView fx:id="mEditButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-         <image>
-            <Image url="@../res/ic_edit.png" />
-         </image>
+      <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <children>
+            <Button fx:id="mDeleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="mEditButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
          <GridPane.margin>
-            <Insets right="25.0" top="60.0" />
+            <Insets right="50.0" top="65.0" />
          </GridPane.margin>
-      </ImageView>
+      </VBox>
    </children>
 </GridPane>

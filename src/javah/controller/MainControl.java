@@ -654,25 +654,25 @@ public class MainControl {
          */
         BiConsumer<Pane, Boolean> playMenuSlideAnimation = (menuPane, isSelected) -> {
             menuPane.setStyle(isSelected ? CSSContract.STYLE_MENU_SELECTED : CSSContract.STYLE_MENU_UNSELECTED);
-
-            menuPane.getChildren().remove(mRectAnimTransitioner);
-            menuPane.getChildren().add(mRectAnimTransitioner);
-            menuPane.getChildren().get(menuPane.getChildren().size() - 1).toBack();
-
-            Thread thread = new Thread(new Task() {
-                @Override
-                protected Object call() throws Exception {
-                    for (int i = 0; i < 10; i++) {
-                        final int j = i;
-                        Platform.runLater(() -> mMenuGridPane.setMargin(menuPane, new Insets(0, 0, 0, isSelected ? j : 9 - j)));
-                        Thread.sleep(10);
-                    }
-                    return null;
-                }
-            });
-
-            thread.setDaemon(true);
-            thread.start();
+            
+//            menuPane.getChildren().remove(mRectAnimTransitioner);
+//            menuPane.getChildren().add(mRectAnimTransitioner);
+//            menuPane.getChildren().get(menuPane.getChildren().size() - 1).toBack();
+//
+//            Thread thread = new Thread(new Task() {
+//                @Override
+//                protected Object call() throws Exception {
+//                    for (int i = 0; i < 10; i++) {
+//                        final int j = i;
+//                        Platform.runLater(() -> mMenuGridPane.setMargin(menuPane, new Insets(0, 0, 0, isSelected ? j : 9 - j)));
+//                        Thread.sleep(10);
+//                    }
+//                    return null;
+//                }
+//            });
+//
+//            thread.setDaemon(true);
+//            thread.start();
         };
 
         /**

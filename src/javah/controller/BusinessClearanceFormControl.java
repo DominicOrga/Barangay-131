@@ -85,8 +85,9 @@ public class BusinessClearanceFormControl {
     /* Buttons for the back page and next page. */
     @FXML Button mBackPageButton, mNextPageButton;
 
-    /* A button for editing the selected business' data. */
-    @FXML ImageView mEditButton;
+    /* A button for editing and deleting the selected business' data. */
+    @FXML Button mEditButton, mDeleteButton;
+
 
     /* A pane containing the input fields for the business clearance. */
     @FXML ScrollPane mScrollPane;
@@ -339,6 +340,11 @@ public class BusinessClearanceFormControl {
     }
 
     @FXML
+    public void onDeleteButtonClicked(Event event) {
+
+    }
+
+    @FXML
     public void onEditButtonClicked(Event event) {
 
     }
@@ -405,98 +411,104 @@ public class BusinessClearanceFormControl {
     }
 
     private void setState(byte state) {
-        mState = state;
+
 
         switch (state) {
             case STATE_NO_SELECTION:
+                if (state != mState) {
+                    mListPagingPane.setDisable(false);
+                    mMovePagePane.setDisable(false);
+                    mScrollPane.setDisable(true);
+                    mCreateButton.setDisable(true);
 
-                mListPagingPane.setDisable(false);
-                mMovePagePane.setDisable(false);
-                mScrollPane.setDisable(true);
-                mCreateButton.setDisable(true);
+                    mEditButton.setVisible(false);
+                    mDeleteButton.setVisible(false);
 
-                mEditButton.setVisible(false);
-                mExtraOwner.setVisible(false);
-                mExtraOwnerBox.setVisible(false);
-                mExtraOwnerBox.setManaged(false);
+                    mExtraOwner.setVisible(false);
+                    mExtraOwnerBox.setVisible(false);
+                    mExtraOwnerBox.setManaged(false);
 
-                mBusiNameError.setVisible(false);
-                mBusiTypeError.setVisible(false);
-                mAddressError.setVisible(false);
-                mNameError.setVisible(false);
+                    mBusiNameError.setVisible(false);
+                    mBusiTypeError.setVisible(false);
+                    mAddressError.setVisible(false);
+                    mNameError.setVisible(false);
 
-                mBusiNameField.setText(null);
-                mBusiTypeField.setText(null);
-                mAddressField.setText(null);
-                mClientFirstName.setText(null);
-                mClientMiddleName.setText(null);
-                mClientLastName.setText(null);
-                mClientAuxiliary.setValue("N/A");
-
+                    mBusiNameField.setText(null);
+                    mBusiTypeField.setText(null);
+                    mAddressField.setText(null);
+                    mClientFirstName.setText(null);
+                    mClientMiddleName.setText(null);
+                    mClientLastName.setText(null);
+                    mClientAuxiliary.setValue("N/A");
+                }
 
                 break;
             case STATE_SELECTION:
+                if (state != mState) {
+                    mCoverPane.toFront();
 
-                mCoverPane.toFront();
+                    mListPagingPane.setDisable(false);
+                    mMovePagePane.setDisable(false);
+                    mScrollPane.setDisable(false);
+                    mCreateButton.setDisable(false);
 
-                mListPagingPane.setDisable(false);
-                mMovePagePane.setDisable(false);
-                mScrollPane.setDisable(false);
-                mCreateButton.setDisable(false);
+                    mEditButton.setVisible(true);
+                    mDeleteButton.setVisible(true);
 
-                mBusiNameError.setVisible(false);
-                mBusiTypeError.setVisible(false);
-                mAddressError.setVisible(false);
-                mNameError.setVisible(false);
+                    mBusiNameError.setVisible(false);
+                    mBusiTypeError.setVisible(false);
+                    mAddressError.setVisible(false);
+                    mNameError.setVisible(false);
+                }
 
-                mBusiNameField.setText(mBusinessSelected.getName());
-                mBusiTypeField.setText(mBusinessSelected.getType());
-                mAddressField.setText(mBusinessSelected.getAddress());
+                    mBusiNameField.setText(mBusinessSelected.getName());
+                    mBusiTypeField.setText(mBusinessSelected.getType());
+                    mAddressField.setText(mBusinessSelected.getAddress());
 
-                // Set the client owner name.
-                mClientFirstName.setText(mBusinessSelected.getOwners()[0][0]);
-                mClientMiddleName.setText(mBusinessSelected.getOwners()[0][1]);
-                mClientLastName.setText(mBusinessSelected.getOwners()[0][2]);
+                    // Set the client owner name.
+                    mClientFirstName.setText(mBusinessSelected.getOwners()[0][0]);
+                    mClientMiddleName.setText(mBusinessSelected.getOwners()[0][1]);
+                    mClientLastName.setText(mBusinessSelected.getOwners()[0][2]);
 
-                mClientAuxiliary.setValue(mBusinessSelected.getOwners()[0][3] == null ?
-                        "N/A" : mBusinessSelected.getOwners()[0][3]);
+                    mClientAuxiliary.setValue(mBusinessSelected.getOwners()[0][3] == null ?
+                            "N/A" : mBusinessSelected.getOwners()[0][3]);
 
-                mNodeNameHandler.removeNodeNames();
+                    mNodeNameHandler.removeNodeNames();
 
-                // Set the other clients name, if any.
-                loop:
-                for (int i = 1; i < 5; i++) {
-                    String firstName = mBusinessSelected.getOwners()[i][0];
+                    // Set the other clients name, if any.
+                    loop:
+                    for (int i = 1; i < 5; i++) {
+                        String firstName = mBusinessSelected.getOwners()[i][0];
 
-                    // Test if at least one extra owner name exists.
-                    if (i == 1) {
-                        // No extra owner exists.
-                        if (firstName == null || firstName.isEmpty()) {
-                            mExtraOwner.setVisible(false);
-                            mExtraOwnerBox.setVisible(false);
-                            mExtraOwnerBox.setManaged(false);
-                            break loop;
+                        // Test if at least one extra owner name exists.
+                        if (i == 1) {
+                            // No extra owner exists.
+                            if (firstName == null || firstName.isEmpty()) {
+                                mExtraOwner.setVisible(false);
+                                mExtraOwnerBox.setVisible(false);
+                                mExtraOwnerBox.setManaged(false);
+                                break loop;
+                            }
+
+                            mExtraOwner.setVisible(true);
+                            mExtraOwner.setText("Other Owners:");
+                            mExtraOwner.setTextFill(Color.BLACK);
+
+                            mExtraOwnerBox.setVisible(true);
+                            mExtraOwnerBox.setManaged(true);
+
+                            mNodeNameHandler.setIsButtonsVisible(false);
                         }
 
-                        mExtraOwner.setVisible(true);
-                        mExtraOwner.setText("Other Owners:");
-                        mExtraOwner.setTextFill(Color.BLACK);
+                        if (firstName == null || firstName.isEmpty())
+                            break loop;
 
-                        mExtraOwnerBox.setVisible(true);
-                        mExtraOwnerBox.setManaged(true);
+                        String middleName = mBusinessSelected.getOwners()[i][1];
+                        String lastName = mBusinessSelected.getOwners()[i][2];
+                        String auxiliary = mBusinessSelected.getOwners()[i][3];
 
-                        mNodeNameHandler.setIsButtonsVisible(false);
+                        mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
                     }
-
-                    if (firstName == null || firstName.isEmpty())
-                        break loop;
-
-                    String middleName = mBusinessSelected.getOwners()[i][1];
-                    String lastName = mBusinessSelected.getOwners()[i][2];
-                    String auxiliary = mBusinessSelected.getOwners()[i][3];
-
-                    mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
-                }
 
                 break;
             case STATE_CREATION:
@@ -509,6 +521,7 @@ public class BusinessClearanceFormControl {
                 mCreateButton.setDisable(false);
 
                 mEditButton.setVisible(false);
+                mDeleteButton.setVisible(false);
 
                 mBusiNameField.setText(null);
                 mBusiTypeField.setText(null);
@@ -535,6 +548,8 @@ public class BusinessClearanceFormControl {
 
                 mEditButton.setVisible(false);
         }
+
+        mState = state;
     }
 
     /**
