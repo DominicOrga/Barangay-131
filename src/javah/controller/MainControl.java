@@ -654,7 +654,7 @@ public class MainControl {
          */
         BiConsumer<Pane, Boolean> playMenuSlideAnimation = (menuPane, isSelected) -> {
             menuPane.setStyle(isSelected ? CSSContract.STYLE_MENU_SELECTED : CSSContract.STYLE_MENU_UNSELECTED);
-            
+
 //            menuPane.getChildren().remove(mRectAnimTransitioner);
 //            menuPane.getChildren().add(mRectAnimTransitioner);
 //            menuPane.getChildren().get(menuPane.getChildren().size() - 1).toBack();

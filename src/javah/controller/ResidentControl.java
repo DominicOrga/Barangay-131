@@ -630,7 +630,7 @@ public class ResidentControl {
         // created resident is inserted and must be auto selected.
         mResidentCount = mResidentIDs.size();
         mPageCount = (int) Math.ceil(mResidentCount / 40.0);
-        mCurrentPage = (int) Math.ceil(index / 39.0);
+        mCurrentPage = index / 40 + 1;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
         mPageCountLabel.setText(mPageCount + "");

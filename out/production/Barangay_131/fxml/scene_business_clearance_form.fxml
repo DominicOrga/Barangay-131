@@ -50,7 +50,7 @@
             </Button>
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <children>
-                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onSearchFieldKeyPressed" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
+                  <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
                      <font>
                         <Font name="Helvetica Neue Light" size="20.0" />
                      </font>

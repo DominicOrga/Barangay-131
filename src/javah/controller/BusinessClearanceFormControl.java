@@ -5,7 +5,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -20,6 +19,7 @@ import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 import javah.util.NodeNameHandler;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -213,15 +213,27 @@ public class BusinessClearanceFormControl {
 
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setResidentSelected(labelIndex));
+            label.setOnMouseClicked(event -> setBusinessSelected(labelIndex));
         }
 
+        // The horizontal bar of the scroll pane should always be hidden.
         mScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        // Limit the text input length for each text input control.
+        BarangayUtils.addTextLimitListener(mBusiNameField, 100);
+        BarangayUtils.addTextLimitListener(mBusiTypeField, 100);
+        BarangayUtils.addTextLimitListener(mAddressField, 125);
+        BarangayUtils.addTextLimitListener(mClientFirstName, 30);
+        BarangayUtils.addTextLimitListener(mClientMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mClientMiddleName, 30);
+        BarangayUtils.addTextLimitListener(mSearchField, 100);
+
 
         // Reset the scene if the root pane is turned visible again.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 setState(STATE_NO_SELECTION);
+                mSearchField.setText(null);
                 mBusinessIDs = mCacheModel.getBusiIDsCache();
                 updateListPaging(false);
             }
@@ -255,7 +267,7 @@ public class BusinessClearanceFormControl {
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText();
 
-        if (keywords.trim().equals(""))
+        if (keywords == null || keywords.trim().isEmpty())
             mBusinessIDs = mCacheModel.getBusiIDsCache();
         else {
             String[] keywordsArray = keywords.split(" ");
@@ -328,7 +340,7 @@ public class BusinessClearanceFormControl {
     @FXML
     public void onNewBusiButtonClicked(ActionEvent actionEvent) {
         // Make sure that no resident is selected.
-        setResidentSelected(-1);
+        setBusinessSelected(-1);
 
         // Update the appearance of the buttons that signifies business creation.
         mCreateButton.setText("Create Business");
@@ -368,17 +380,167 @@ public class BusinessClearanceFormControl {
     }
 
     /**
+     * If current state is STATE_SELECTION, then send the information of the selected
+     * business to BusinessClearanceReportControl to generate a business clearanece.
+     * After that, close the form.
+     *
      * If current state is STATE_CREATION, then check if the data inserted are valid.
      * If all data are valid, then create the business and return to STATE_NO_SELECTION.
      *
-     *
+     * If current state is STATE_UPDATE, then check if the data inserted are valid.
+     * If all data are valid, then update the business information.
      *
      * @param actionEvent
      *        The action event. No usage.
+     *
+     * @see BarangayClearanceReportControl
      */
     @FXML
     public void onCreateButtonClicked(ActionEvent actionEvent) {
+        switch (mState) {
+            case STATE_SELECTION:
 
+                break;
+            case STATE_CREATION:
+                boolean isValid = true;
+
+                String businessName = mBusiNameField.getText();
+                String businessType = mBusiTypeField.getText();
+                String businessAddress = mAddressField.getText();
+                String clientFirstName = mClientFirstName.getText();
+                String clientMiddleName = mClientMiddleName.getText();
+                String clientLastName = mClientLastName.getText();
+
+                if (businessName == null || businessName.trim().isEmpty()) {
+                    isValid = false;
+                    mBusiNameField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                    mBusiNameError.setVisible(true);
+                } else {
+                    mBusiNameField.setStyle(null);
+                    mBusiNameError.setVisible(false);
+                }
+
+                if (businessType == null || businessType.trim().isEmpty()) {
+                    isValid = false;
+                    mBusiTypeField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                    mBusiTypeError.setVisible(true);
+                } else {
+                    mBusiTypeField.setStyle(null);
+                    mBusiTypeError.setVisible(false);
+                }
+
+                if (businessAddress == null || businessAddress.trim().isEmpty()) {
+                    isValid = false;
+                    mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
+                    mAddressError.setVisible(true);
+                } else {
+                    mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                    mAddressError.setVisible(false);
+                }
+
+
+                mClientFirstName.setStyle(clientFirstName == null || clientFirstName.trim().isEmpty() ?
+                        CSSContract.STYLE_TEXTFIELD_ERROR : null
+                );
+
+                mClientMiddleName.setStyle(clientMiddleName == null || clientMiddleName.trim().isEmpty() ?
+                        CSSContract.STYLE_TEXTFIELD_ERROR : null
+                );
+
+                mClientLastName.setStyle(clientLastName == null || clientLastName.trim().isEmpty() ?
+                        CSSContract.STYLE_TEXTFIELD_ERROR : null
+                );
+
+                // If the extra owner label is not clickable, then that means that an extra owner
+                // node name exists and therefore, needs to be validated.
+                boolean result = mIsExtraOwnerLabelClickable ? true : mNodeNameHandler.validateNodeNames();
+
+                if (clientFirstName == null || clientFirstName.trim().isEmpty() ||
+                        clientMiddleName == null || clientMiddleName.trim().isEmpty() ||
+                        clientLastName == null || clientLastName.trim().isEmpty() || !result) {
+
+                    isValid = false;
+                    mNameError.setVisible(true);
+                } else
+                    mNameError.setVisible(false);
+
+                if (isValid) {
+                    Business business = new Business();
+
+                    business.setName(businessName);
+                    business.setType(businessType);
+                    business.setAddress(businessAddress);
+
+                    String[][] owners =  new String[5][4];
+
+                    owners[0][0] = clientFirstName;
+                    owners[0][1] = clientMiddleName;
+                    owners[0][2] = clientLastName;
+
+                    String auxiliary = mClientAuxiliary.getValue().toString();
+                    owners[0][3] = auxiliary.equals("N/A") ? null : auxiliary;
+
+                    for (int i = 1; i < 5; i++) {
+                        String[] extraClientName = mNodeNameHandler.getName(i);
+
+                        if (extraClientName == null)
+                            break;
+
+                        owners[i][0] = extraClientName[0];
+                        owners[i][1] = extraClientName[1];
+                        owners[i][2] = extraClientName[2];
+                        owners[i][3] = extraClientName[3];
+                    }
+
+                    business.setOwners(owners);
+
+                    System.out.println("BusinessClearanceFormControl - Data Input Valid!");
+                    System.out.println("BusinessClearanceFormControl - Business Name: " + business.getName());
+                    System.out.println("BusinessClearanceFormControl - Business Type: " + business.getType());
+                    System.out.println("BusinessClearanceFormControl - Business Address: " + business.getAddress());
+                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[0]));
+                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[1]));
+                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[2]));
+                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[3]));
+                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[4]));
+
+                    // Save the business to the database and cache.
+                    business.setID(mDatabaseModel.createBusiness(business));
+                    int index = mCacheModel.cacheBusiness(business);
+
+                    // Reload the cached data.
+                    mBusinessIDs = mCacheModel.getBusiIDsCache();
+
+                    // Once the business is created, the current page must be placed where the newly
+                    // created business is inserted and must be auto selected.
+                    mBusinessCount = mBusinessIDs.size();
+                    mPageCount = (int) Math.ceil(mBusinessCount / 10.0);
+                    mCurrentPage = index / 10 + 1;
+
+                    System.out.println("BusinessClearanceFormControl - Business cached index = " + index);
+                    System.out.println("BusinessClearanceFormControl - Business count = " + mBusinessCount);
+                    System.out.println("BusinessClearanceFormControl - page count = " + mPageCount);
+                    System.out.println("BusinessClearanceFormControl - current page = " + mCurrentPage);
+
+                    mCurrentPageLabel.setText(mCurrentPage + "");
+                    mPageCountLabel.setText(mPageCount + "");
+
+                    // Disable the back page button if the current page is the first one.
+                    mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+                    // Disable the next page button if the current page is the last one.
+                    mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
+
+                    // Display the default data when no business is selected.
+                    updateCurrentPage();
+
+                    // Select the newly created business.
+                    setBusinessSelected(index % 10);
+                }
+
+                break;
+            case STATE_UPDATE:
+        }
     }
 
     /**
@@ -399,7 +561,7 @@ public class BusinessClearanceFormControl {
                 mListener.onCancelButtonClicked();
                 break;
             case STATE_CREATION:
-                setResidentSelected(-1);
+                setBusinessSelected(-1);
 
                 mCreateButton.setText("Create");
                 mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
@@ -582,7 +744,7 @@ public class BusinessClearanceFormControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setResidentSelected(-1);
+        setBusinessSelected(-1);
 
         int firstIndex = (mCurrentPage - 1) * 10;
         int lastIndex = mCurrentPage * 10 > mBusinessCount - 1 ? mBusinessCount - 1 : mCurrentPage * 10;
@@ -598,8 +760,6 @@ public class BusinessClearanceFormControl {
             } else
                 mBusinessLabels[i].setText("");
         }
-
-        System.out.println("BusinessClearanceFormControl - Business IDs: " + mBusinessIDs);
     }
 
     /**
@@ -609,7 +769,7 @@ public class BusinessClearanceFormControl {
      *        The index of the label containing the business to be displayed. If it is equal
      *        to -1, then the example data is displayed.
      */
-    private void setResidentSelected(int newLabelSelectedIndex) {
+    private void setBusinessSelected(int newLabelSelectedIndex) {
         // Determine the index of the business in place of the currently selected label.
         mBusinessSelectedIndex = newLabelSelectedIndex + 10 * (mCurrentPage - 1);
 
