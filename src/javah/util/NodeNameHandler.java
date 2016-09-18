@@ -511,7 +511,7 @@ public class NodeNameHandler {
     /**
      * Either hide or show the add and remove buttons.
      */
-    public void setIsButtonsVisible(boolean bool) {
+    public void setButtonsVisible(boolean bool) {
         // This will know that the remove and add buttons should or should not be visible
         // when showNodeName function is called.
         mIsButtonsVisible = bool;

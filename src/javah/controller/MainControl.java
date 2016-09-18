@@ -418,7 +418,8 @@ public class MainControl {
                         mResidentControl.setBlurListPaging(false);
                         break;
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
-                        // todo
+                        hidePopupScene(mConfirmationDialogScene, true);
+                        mBusiClearanceFormControl.deleteSelectedBusiness();
                         break;
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
                         hidePopupScene(mConfirmationDialogScene, true);
@@ -435,11 +436,10 @@ public class MainControl {
                         mResidentControl.setBlurListPaging(false);
                         break;
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
-                        // todo
+                        hidePopupScene(mConfirmationDialogScene, true);
                         break;
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
                         hidePopupScene(mConfirmationDialogScene, true);
-                        // todo
                 }
 
             }
@@ -597,6 +597,12 @@ public class MainControl {
             public void onCancelButtonClicked() {
                 hidePopupScene(mBusiClearanceFormScene, false);
                 mInformationControl.setBlurListPaging(false);
+            }
+
+            @Override
+            public void onDeleteButtonClicked() {
+                showPopupScene(mConfirmationDialogScene, true);
+                mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_BUSINESS_DELETION);
             }
         });
 

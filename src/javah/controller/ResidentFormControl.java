@@ -315,8 +315,8 @@ public class ResidentFormControl {
             if (mResident == null) mResident = new Resident();
 
             mResident.setFirstName(BarangayUtils.capitalizeString(firstName));
-            mResident.setLastName(BarangayUtils.capitalizeString(middleName));
-            mResident.setMiddleName(BarangayUtils.capitalizeString(lastName));
+            mResident.setMiddleName(BarangayUtils.capitalizeString(middleName));
+            mResident.setLastName(BarangayUtils.capitalizeString(lastName));
 
 
             String auxiliary = mAuxiliary.getValue().toString();

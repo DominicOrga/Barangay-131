@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * A class that caches the information data from the database to constant
@@ -194,8 +195,6 @@ public class CacheModel {
         lists = databaseModel.getBusinessEssentials();
         mBusinessIDsCache = lists[0];
         mBusinessNamesCache = lists[1];
-
-        System.out.println("CacheModel - Business Names: " + mBusinessNamesCache);
 
         lists = databaseModel.getBusinessClearanceEssentials();
         mBusiClearanceIDsCache = lists[0];
@@ -402,6 +401,18 @@ public class CacheModel {
             mResidentNamesCache.remove(index);
             mResidentNamesCache.add(index, name);
 
+            // Remove the resident ID from the cache first, since it needs to be sorted.
+            mResidentIDsCache.remove(index);
+
+            Collections.sort(mResidentNamesCache, String.CASE_INSENSITIVE_ORDER);
+
+            // Get the index of the resident name within the list after insertion.
+            index = mResidentNamesCache.indexOf(name);
+
+            // Use the acquired index to insert the resident ID to the resident IDs cache at
+            // the right place.
+            mResidentIDsCache.add(index, id);
+
             // Update the name within the mBarangayIDNamesCache.
             int barangayIDCount = mBarangayIDIDsCache.size();
             int barangayClearanceCount = mBrgyClearanceIDsCache.size();
@@ -467,6 +478,9 @@ public class CacheModel {
                 mBarangayIDResidentIDsCache.remove(index);
                 mBarangayIDNamesCache.remove(index);
                 mBarangayIDDateIssuedCache.remove(index);
+
+                barangayIDCount--;
+                i--;
             }
 
             if (i < barangayClearanceCount && mBrgyClearanceResidentIDsCache.get(i).equals(id)) {
@@ -476,6 +490,9 @@ public class CacheModel {
                 mBrgyClearanceResidentIDsCache.remove(index);
                 mBrgyClearanceResidentNamesCache.remove(index);
                 mBrgyClearanceDateIssuedCache.remove(index);
+
+                barangayClearanceCount--;
+                i--;
             }
         }
     }
@@ -531,8 +548,16 @@ public class CacheModel {
 
             // Update the name within the mBusinessNamesCache.
             int index = mBusinessIDsCache.indexOf(id);
-            mBusinessNamesCache.remove(index);
-            mBusinessNamesCache.add(index, name);
+            mBusinessNamesCache.set(index, name);
+            mBusinessIDsCache.remove(index);
+
+            Collections.sort(mBusinessNamesCache, String.CASE_INSENSITIVE_ORDER);
+
+            // Get the index of the business name within the list after insertion.
+            index = mBusinessNamesCache.indexOf(name);
+
+            // Use the acquired index to insert the business ID to the business IDs cache.
+            mBusinessIDsCache.add(index, id);
 
             // Update the name within the mBusiClearanceBusiNamesCache.
             int busiClearanceIDCount = mBusiClearanceIDsCache.size();
@@ -586,6 +611,9 @@ public class CacheModel {
                 mBusiClearanceBusiIDsCache.remove(index);
                 mBusiClearanceBusiNamesCache.remove(index);
                 mBusiClearanceDateIssuedCache.remove(index);
+
+                busiClearanceCount--;
+                i--;
             }
     }
 

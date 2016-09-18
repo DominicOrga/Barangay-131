@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -21,7 +22,9 @@ import javah.util.NodeNameHandler;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * A class controller for the business clearance form. It can fill out forms for
@@ -56,6 +59,14 @@ public class BusinessClearanceFormControl {
          * Close the business clearance form.
          */
         void onCancelButtonClicked();
+
+        /**
+         * Call the confirmation dialog to confirm whether or not delete the selected
+         * business.
+         *
+         * @see ConfirmationDialogControl
+         */
+        void onDeleteButtonClicked();
     }
 
     /* Possible states of the UI of the form. */
@@ -86,7 +97,7 @@ public class BusinessClearanceFormControl {
     @FXML Button mBackPageButton, mNextPageButton;
 
     /* A button for editing and deleting the selected business' data. */
-    @FXML Button mEditButton, mDeleteButton;
+    @FXML ImageView mEditButton, mDeleteButton;
 
 
     /* A pane containing the input fields for the business clearance. */
@@ -339,26 +350,31 @@ public class BusinessClearanceFormControl {
      */
     @FXML
     public void onNewBusiButtonClicked(ActionEvent actionEvent) {
-        // Make sure that no resident is selected.
-        setBusinessSelected(-1);
-
         // Update the appearance of the buttons that signifies business creation.
-        mCreateButton.setText("Create Business");
-        mCreateButton.setStyle(CSSContract.STYLE_CHOCO_BUTTON);
-
-        mCancelButton.setStyle(CSSContract.STYLE_RED_BUTTON);
-
         setState(STATE_CREATION);
     }
 
+    /**
+     * Call the Confirmation Dialog to confirm whether or not to delete the selected
+     * business.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onDeleteButtonClicked(Event event) {
-
+        mListener.onDeleteButtonClicked();
     }
 
+    /**
+     * Update the UI for updating the selected business.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onEditButtonClicked(Event event) {
-
+        setState(STATE_UPDATE);
     }
 
     @FXML
@@ -372,7 +388,6 @@ public class BusinessClearanceFormControl {
 
             // Show at least one node name field.
             mNodeNameHandler.removeNodeNames();
-            mNodeNameHandler.setIsButtonsVisible(true);
             mNodeNameHandler.addName(null, null, null, null);
 
             mIsExtraOwnerLabelClickable = false;
@@ -397,112 +412,121 @@ public class BusinessClearanceFormControl {
      */
     @FXML
     public void onCreateButtonClicked(ActionEvent actionEvent) {
+
+        /**
+         * Check if the inputted data are valid.
+         */
+        BooleanSupplier isDataValid = () -> {
+            boolean isValid = true;
+
+            String businessName = mBusiNameField.getText();
+            String businessType = mBusiTypeField.getText();
+            String businessAddress = mAddressField.getText();
+            String clientFirstName = mClientFirstName.getText();
+            String clientMiddleName = mClientMiddleName.getText();
+            String clientLastName = mClientLastName.getText();
+
+            if (businessName == null || businessName.trim().isEmpty()) {
+                isValid = false;
+                mBusiNameField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                mBusiNameError.setVisible(true);
+            } else {
+                mBusiNameField.setStyle(null);
+                mBusiNameError.setVisible(false);
+            }
+
+            if (businessType == null || businessType.trim().isEmpty()) {
+                isValid = false;
+                mBusiTypeField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
+                mBusiTypeError.setVisible(true);
+            } else {
+                mBusiTypeField.setStyle(null);
+                mBusiTypeError.setVisible(false);
+            }
+
+            if (businessAddress == null || businessAddress.trim().isEmpty()) {
+                isValid = false;
+                mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
+                mAddressError.setVisible(true);
+            } else {
+                mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+                mAddressError.setVisible(false);
+            }
+
+
+            mClientFirstName.setStyle(clientFirstName == null || clientFirstName.trim().isEmpty() ?
+                    CSSContract.STYLE_TEXTFIELD_ERROR : null
+            );
+
+            mClientMiddleName.setStyle(clientMiddleName == null || clientMiddleName.trim().isEmpty() ?
+                    CSSContract.STYLE_TEXTFIELD_ERROR : null
+            );
+
+            mClientLastName.setStyle(clientLastName == null || clientLastName.trim().isEmpty() ?
+                    CSSContract.STYLE_TEXTFIELD_ERROR : null
+            );
+
+            // If the extra owner label is not clickable, then that means that an extra owner
+            // node name exists and therefore, needs to be validated.
+            boolean result = mIsExtraOwnerLabelClickable ? true : mNodeNameHandler.validateNodeNames();
+
+            if (clientFirstName == null || clientFirstName.trim().isEmpty() ||
+                    clientMiddleName == null || clientMiddleName.trim().isEmpty() ||
+                    clientLastName == null || clientLastName.trim().isEmpty() || !result) {
+
+                isValid = false;
+                mNameError.setVisible(true);
+            } else
+                mNameError.setVisible(false);
+
+            return isValid;
+        };
+
+        /**
+         * Create a business populated with the data from the input nodes.
+         */
+        Supplier<Business> createBusiness = () -> {
+            Business business = new Business();
+            business.setName(mBusiNameField.getText().trim());
+            business.setType(mBusiTypeField.getText().trim());
+            business.setAddress(mAddressField.getText().trim());
+
+            String[][] owners =  new String[5][4];
+
+            owners[0][0] = BarangayUtils.capitalizeString(mClientFirstName.getText().trim());
+            owners[0][1] = BarangayUtils.capitalizeString(mClientMiddleName.getText().trim());;
+            owners[0][2] = BarangayUtils.capitalizeString(mClientLastName.getText().trim());;
+
+            String auxiliary = mClientAuxiliary.getValue().toString();
+            owners[0][3] = auxiliary.equals("N/A") ? null : auxiliary;
+
+            for (int i = 1; i < 5; i++) {
+                String[] extraClientName = mNodeNameHandler.getName(i);
+
+                if (extraClientName == null)
+                    break;
+
+                owners[i][0] = extraClientName[0];
+                owners[i][1] = extraClientName[1];
+                owners[i][2] = extraClientName[2];
+                owners[i][3] = extraClientName[3];
+            }
+
+            business.setOwners(owners);
+
+            return business;
+        };
+
+        // Take necessary action when the create button is clicked.
         switch (mState) {
             case STATE_SELECTION:
 
                 break;
             case STATE_CREATION:
-                boolean isValid = true;
 
-                String businessName = mBusiNameField.getText();
-                String businessType = mBusiTypeField.getText();
-                String businessAddress = mAddressField.getText();
-                String clientFirstName = mClientFirstName.getText();
-                String clientMiddleName = mClientMiddleName.getText();
-                String clientLastName = mClientLastName.getText();
-
-                if (businessName == null || businessName.trim().isEmpty()) {
-                    isValid = false;
-                    mBusiNameField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
-                    mBusiNameError.setVisible(true);
-                } else {
-                    mBusiNameField.setStyle(null);
-                    mBusiNameError.setVisible(false);
-                }
-
-                if (businessType == null || businessType.trim().isEmpty()) {
-                    isValid = false;
-                    mBusiTypeField.setStyle(CSSContract.STYLE_TEXTFIELD_ERROR);
-                    mBusiTypeError.setVisible(true);
-                } else {
-                    mBusiTypeField.setStyle(null);
-                    mBusiTypeError.setVisible(false);
-                }
-
-                if (businessAddress == null || businessAddress.trim().isEmpty()) {
-                    isValid = false;
-                    mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
-                    mAddressError.setVisible(true);
-                } else {
-                    mAddressField.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-                    mAddressError.setVisible(false);
-                }
-
-
-                mClientFirstName.setStyle(clientFirstName == null || clientFirstName.trim().isEmpty() ?
-                        CSSContract.STYLE_TEXTFIELD_ERROR : null
-                );
-
-                mClientMiddleName.setStyle(clientMiddleName == null || clientMiddleName.trim().isEmpty() ?
-                        CSSContract.STYLE_TEXTFIELD_ERROR : null
-                );
-
-                mClientLastName.setStyle(clientLastName == null || clientLastName.trim().isEmpty() ?
-                        CSSContract.STYLE_TEXTFIELD_ERROR : null
-                );
-
-                // If the extra owner label is not clickable, then that means that an extra owner
-                // node name exists and therefore, needs to be validated.
-                boolean result = mIsExtraOwnerLabelClickable ? true : mNodeNameHandler.validateNodeNames();
-
-                if (clientFirstName == null || clientFirstName.trim().isEmpty() ||
-                        clientMiddleName == null || clientMiddleName.trim().isEmpty() ||
-                        clientLastName == null || clientLastName.trim().isEmpty() || !result) {
-
-                    isValid = false;
-                    mNameError.setVisible(true);
-                } else
-                    mNameError.setVisible(false);
-
-                if (isValid) {
-                    Business business = new Business();
-
-                    business.setName(businessName);
-                    business.setType(businessType);
-                    business.setAddress(businessAddress);
-
-                    String[][] owners =  new String[5][4];
-
-                    owners[0][0] = clientFirstName;
-                    owners[0][1] = clientMiddleName;
-                    owners[0][2] = clientLastName;
-
-                    String auxiliary = mClientAuxiliary.getValue().toString();
-                    owners[0][3] = auxiliary.equals("N/A") ? null : auxiliary;
-
-                    for (int i = 1; i < 5; i++) {
-                        String[] extraClientName = mNodeNameHandler.getName(i);
-
-                        if (extraClientName == null)
-                            break;
-
-                        owners[i][0] = extraClientName[0];
-                        owners[i][1] = extraClientName[1];
-                        owners[i][2] = extraClientName[2];
-                        owners[i][3] = extraClientName[3];
-                    }
-
-                    business.setOwners(owners);
-
-                    System.out.println("BusinessClearanceFormControl - Data Input Valid!");
-                    System.out.println("BusinessClearanceFormControl - Business Name: " + business.getName());
-                    System.out.println("BusinessClearanceFormControl - Business Type: " + business.getType());
-                    System.out.println("BusinessClearanceFormControl - Business Address: " + business.getAddress());
-                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[0]));
-                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[1]));
-                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[2]));
-                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[3]));
-                    System.out.println("BusinessClearanceFormControl - Business Owners: " + Arrays.toString(business.getOwners()[4]));
+                if (isDataValid.getAsBoolean()) {
+                    // Create the business to be stored in the database.
+                    Business business = createBusiness.get();
 
                     // Save the business to the database and cache.
                     business.setID(mDatabaseModel.createBusiness(business));
@@ -516,11 +540,6 @@ public class BusinessClearanceFormControl {
                     mBusinessCount = mBusinessIDs.size();
                     mPageCount = (int) Math.ceil(mBusinessCount / 10.0);
                     mCurrentPage = index / 10 + 1;
-
-                    System.out.println("BusinessClearanceFormControl - Business cached index = " + index);
-                    System.out.println("BusinessClearanceFormControl - Business count = " + mBusinessCount);
-                    System.out.println("BusinessClearanceFormControl - page count = " + mPageCount);
-                    System.out.println("BusinessClearanceFormControl - current page = " + mCurrentPage);
 
                     mCurrentPageLabel.setText(mCurrentPage + "");
                     mPageCountLabel.setText(mPageCount + "");
@@ -540,6 +559,22 @@ public class BusinessClearanceFormControl {
 
                 break;
             case STATE_UPDATE:
+                Business business = createBusiness.get();
+                business.setID(mBusinessSelected.getID());
+
+                mDatabaseModel.updateBusiness(business);
+                mCacheModel.cacheBusiness(business);
+
+                mBusinessIDs = mCacheModel.getBusiIDsCache();
+
+                // Make a copy of the label selected index for reselecting.
+                int labelSelectedIndex = mLabelSelectedIndex;
+
+                updateCurrentPage();
+
+                // Unselect the resident and select it again to update its displayed data.
+                setBusinessSelected(mLabelSelectedIndex);
+                setBusinessSelected(labelSelectedIndex);
         }
     }
 
@@ -549,6 +584,9 @@ public class BusinessClearanceFormControl {
      *
      * If the current state is STATE_CREATION, then cancel STATE_CREATION and go to
      * STATE_NO_SELECTION.
+     *
+     * If the current state is STATE_UPDATE, then cancel STATE_UPDATE, reset the
+     * displayed data and go to STATE_SELECTION.
      *
      * @param actionEvent
      *        The action event. No usage.
@@ -562,39 +600,101 @@ public class BusinessClearanceFormControl {
                 break;
             case STATE_CREATION:
                 setBusinessSelected(-1);
-
-                mCreateButton.setText("Create");
-                mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
-                mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
                 setState(STATE_NO_SELECTION);
                 break;
             case STATE_UPDATE:
+                setState(STATE_SELECTION);
         }
     }
 
+    /**
+     * Update the user interface with regards to the given state.
+     *
+     * @param state
+     *        The state to be applied to this form.
+     */
     private void setState(byte state) {
 
+        /**
+         * Display the extra owners of the selected business to the mExtraOwnersBox with
+         * the use of the node name handler if extra owners exist.
+         *
+         * @param showButtons
+         *        A boolean to determine whether to show the remove and add buttons of the node
+         *        names or not.
+         */
+        Consumer<Boolean> displayExtraOwners = (showButtons) -> {
+
+            mNodeNameHandler.setButtonsVisible(showButtons);
+
+            mNodeNameHandler.removeNodeNames();
+
+            // Set the other clients name, if any.
+            loop:
+            for (int i = 1; i < 5; i++) {
+                String firstName = mBusinessSelected.getOwners()[i][0];
+
+                // Test if at least one extra owner name exists.
+                if (i == 1) {
+                    // No extra owner exists.
+                    if (firstName == null || firstName.isEmpty()) {
+                        mExtraOwner.setVisible(false);
+                        mExtraOwnerBox.setVisible(false);
+                        mExtraOwnerBox.setManaged(false);
+                        break loop;
+                    }
+
+                    mExtraOwner.setVisible(true);
+                    mExtraOwner.setText("Other Owners:");
+                    mExtraOwner.setTextFill(Color.BLACK);
+
+                    mExtraOwnerBox.setVisible(true);
+                    mExtraOwnerBox.setManaged(true);
+                }
+
+                if (firstName == null || firstName.isEmpty())
+                    break loop;
+
+                String middleName = mBusinessSelected.getOwners()[i][1];
+                String lastName = mBusinessSelected.getOwners()[i][2];
+                String auxiliary = mBusinessSelected.getOwners()[i][3];
+
+                mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
+            }
+        };
 
         switch (state) {
             case STATE_NO_SELECTION:
+                // Update the UI if only it is not set to STATE_NO_SELECTION.
                 if (state != mState) {
+                    // Disable the major node containers.
                     mListPagingPane.setDisable(false);
                     mMovePagePane.setDisable(false);
                     mScrollPane.setDisable(true);
-                    mCreateButton.setDisable(true);
 
+                    // Make sure that the create button is disabled when no business is selected
+                    // and the color of the create and cancel button are restored to default.
+                    mCreateButton.setDisable(true);
+                    mCreateButton.setText("Create Business");
+                    mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
+                    mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
+
+                    // Hide the edit and delete buttons.
                     mEditButton.setVisible(false);
                     mDeleteButton.setVisible(false);
 
+                    // Hide the extra owner components.
                     mExtraOwner.setVisible(false);
                     mExtraOwnerBox.setVisible(false);
                     mExtraOwnerBox.setManaged(false);
 
+                    // Hide the error labels.
                     mBusiNameError.setVisible(false);
                     mBusiTypeError.setVisible(false);
                     mAddressError.setVisible(false);
                     mNameError.setVisible(false);
 
+                    // Remove the date in the text input controls.
                     mBusiNameField.setText(null);
                     mBusiTypeField.setText(null);
                     mAddressField.setText(null);
@@ -607,12 +707,17 @@ public class BusinessClearanceFormControl {
                 break;
             case STATE_SELECTION:
                 if (state != mState) {
+                    // Put a cover on top of the data input components to prevent data input.
                     mCoverPane.toFront();
 
                     mListPagingPane.setDisable(false);
                     mMovePagePane.setDisable(false);
                     mScrollPane.setDisable(false);
+
                     mCreateButton.setDisable(false);
+                    mCreateButton.setText("Create Business");
+                    mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
+                    mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
 
                     mEditButton.setVisible(true);
                     mDeleteButton.setVisible(true);
@@ -637,50 +742,24 @@ public class BusinessClearanceFormControl {
 
                     mNodeNameHandler.removeNodeNames();
 
-                    // Set the other clients name, if any.
-                    loop:
-                    for (int i = 1; i < 5; i++) {
-                        String firstName = mBusinessSelected.getOwners()[i][0];
-
-                        // Test if at least one extra owner name exists.
-                        if (i == 1) {
-                            // No extra owner exists.
-                            if (firstName == null || firstName.isEmpty()) {
-                                mExtraOwner.setVisible(false);
-                                mExtraOwnerBox.setVisible(false);
-                                mExtraOwnerBox.setManaged(false);
-                                break loop;
-                            }
-
-                            mExtraOwner.setVisible(true);
-                            mExtraOwner.setText("Other Owners:");
-                            mExtraOwner.setTextFill(Color.BLACK);
-
-                            mExtraOwnerBox.setVisible(true);
-                            mExtraOwnerBox.setManaged(true);
-
-                            mNodeNameHandler.setIsButtonsVisible(false);
-                        }
-
-                        if (firstName == null || firstName.isEmpty())
-                            break loop;
-
-                        String middleName = mBusinessSelected.getOwners()[i][1];
-                        String lastName = mBusinessSelected.getOwners()[i][2];
-                        String auxiliary = mBusinessSelected.getOwners()[i][3];
-
-                        mNodeNameHandler.addName(firstName, middleName, lastName, auxiliary);
-                    }
+                    displayExtraOwners.accept(false);
 
                 break;
             case STATE_CREATION:
+                // Make sure that no resident is selected.
+                setBusinessSelected(-1);
 
+                // Remove the cover on top of the input nodes to allow data input.
                 mCoverPane.toBack();
 
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);
                 mScrollPane.setDisable(false);
+
                 mCreateButton.setDisable(false);
+                mCreateButton.setText("Create Business");
+                mCreateButton.setStyle(CSSContract.STYLE_CHOCO_BUTTON);
+                mCancelButton.setStyle(CSSContract.STYLE_RED_BUTTON);
 
                 mEditButton.setVisible(false);
                 mDeleteButton.setVisible(false);
@@ -698,6 +777,8 @@ public class BusinessClearanceFormControl {
                 mExtraOwner.setVisible(true);
                 mIsExtraOwnerLabelClickable = true;
 
+                mNodeNameHandler.setButtonsVisible(true);
+
                 break;
             case STATE_UPDATE:
 
@@ -706,9 +787,16 @@ public class BusinessClearanceFormControl {
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);
                 mScrollPane.setDisable(false);
+
                 mCreateButton.setDisable(false);
+                mCreateButton.setText("Save Changes");
+                mCreateButton.setStyle(CSSContract.STYLE_CHOCO_BUTTON);
+                mCancelButton.setStyle(CSSContract.STYLE_RED_BUTTON);
 
                 mEditButton.setVisible(false);
+                mDeleteButton.setVisible(false);
+
+                displayExtraOwners.accept(true);
         }
 
         mState = state;
@@ -780,9 +868,8 @@ public class BusinessClearanceFormControl {
             if (isDisplayed) {
                 mBusinessSelected = mDatabaseModel.getBusiness(mBusinessIDs.get(mBusinessSelectedIndex));
                 setState(STATE_SELECTION);
-            } else {
+            } else
                 setState(STATE_NO_SELECTION);
-            }
         };
 
         // This is where the code selection and unselection view update happens.
@@ -848,5 +935,19 @@ public class BusinessClearanceFormControl {
      */
     public void setListener(OnBusinessClearanceFormListener listener) {
         mListener = listener;
+    }
+
+    /**
+     * Delete the selected business fom the database and cache.
+     */
+    public void deleteSelectedBusiness() {
+        mDatabaseModel.deleteBusiness(mBusinessSelected.getID());
+        mCacheModel.uncacheBusiness(mBusinessSelected.getID());
+
+        mBusinessIDs = mCacheModel.getBusiIDsCache();
+
+        updateListPaging(true);
+
+        setState(STATE_NO_SELECTION);
     }
 }

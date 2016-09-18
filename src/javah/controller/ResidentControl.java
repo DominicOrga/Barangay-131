@@ -606,6 +606,8 @@ public class ResidentControl {
 
         mCacheModel.uncacheResident(mResidentSelected.getId());
 
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+
         updateListPaging(true);
     }
 
@@ -656,6 +658,10 @@ public class ResidentControl {
      *        The resident to be updated.
      */
     public void updateResident(Resident resident) {
+        System.out.println("ResidentControl - resident first name: " + resident.getFirstName());
+        System.out.println("ResidentControl - resident middle name: " + resident.getMiddleName());
+        System.out.println("ResidentControl - resident last name: " + resident.getLastName());
+
         mDatabaseModel.updateResident(resident);
 
         // Cache the resident to update.
