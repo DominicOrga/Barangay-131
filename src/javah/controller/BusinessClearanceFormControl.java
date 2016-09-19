@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javah.container.Business;
 import javah.container.BusinessClearance;
 import javah.contract.CSSContract;
+import javah.contract.DatabaseContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
@@ -377,6 +378,15 @@ public class BusinessClearanceFormControl {
         setState(STATE_UPDATE);
     }
 
+    /**
+     * Note: used for STATE_CREATION and STATE_UPDATE
+     *
+     * If the extra owner is clicked, then allow the insertion of additional owners
+     * with the help of mNodeNameHandler.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onExtraOwnerClicked(Event event) {
         if (mIsExtraOwnerLabelClickable) {
@@ -519,7 +529,64 @@ public class BusinessClearanceFormControl {
 
         // Take necessary action when the create button is clicked.
         switch (mState) {
+            // Create the business clearance container to be submitted to the report
+            // controller.
             case STATE_SELECTION:
+                // Populate the business clearance and send it to the business clearance report.
+                // After populating, send it to the business report control to generate a report.
+                BusinessClearance businessClearance = new BusinessClearance();
+
+                businessClearance.setID(mDatabaseModel.generateID(DatabaseContract.BusinessClearanceEntry.TABLE_NAME));
+
+                businessClearance.setBusinessID(mBusinessSelected.getID());
+                businessClearance.setBusinessName(mBusinessSelected.getName());
+                businessClearance.setBusinessType(mBusinessSelected.getType());
+                businessClearance.setBusinessAddress(mBusinessSelected.getAddress());
+
+                String[][] owners = mBusinessSelected.getOwners();
+
+                businessClearance.setClient(BarangayUtils.formatName(
+                        owners[0][0],
+                        owners[0][1],
+                        owners[0][2],
+                        owners[0][3]
+                ));
+
+                // Concatenate the owner names.
+                // e.g. DOMINIC R. ORGA, FATIMA R. ORGA, AND JEANELLE C. CATABAY
+                String ownersStr = "";
+                for (int i = 4; i >= 0; i--) {
+                    String firstName = owners[i][0];
+
+                    if (firstName != null) {
+                        String middleName = owners[i][1];
+                        String lastName = owners[i][2];
+                        String auxiliary = owners[i][3];
+
+                        String fullName = BarangayUtils.formatName(firstName, middleName, lastName, auxiliary);
+
+                        if (ownersStr.isEmpty() && i != 0)
+                            ownersStr = " AND " + fullName;
+
+                        else if (i != 0)
+                            ownersStr = ", " + fullName + ownersStr;
+
+                        else
+                            ownersStr = fullName + ownersStr;
+                    }
+                }
+
+                businessClearance.setOwners(ownersStr);
+
+                System.out.println("*****Populate Business Clearance (Level Form)*****");
+                System.out.println("BusinessClearanceFormControl - Business id: " + businessClearance.getBusinessID());
+                System.out.println("BusinessClearanceFormControl - Business name: " + businessClearance.getBusinessName());
+                System.out.println("BusinessClearanceFormControl - Business type: " + businessClearance.getBusinessType());
+                System.out.println("BusinessClearanceFormControl - Business address: " + businessClearance.getBusinessAddress());
+                System.out.println("BusinessClearanceFormControl - Business client: " + businessClearance.getClient());
+                System.out.println("BusinessClearanceFormControl - Business owners: " + businessClearance.getOwners());
+
+                mListener.onCreateButtonClicked(businessClearance);
 
                 break;
             case STATE_CREATION:
@@ -559,22 +626,32 @@ public class BusinessClearanceFormControl {
 
                 break;
             case STATE_UPDATE:
-                Business business = createBusiness.get();
-                business.setID(mBusinessSelected.getID());
+                if (isDataValid.getAsBoolean()) {
+                    Business business = createBusiness.get();
+                    business.setID(mBusinessSelected.getID());
 
-                mDatabaseModel.updateBusiness(business);
-                mCacheModel.cacheBusiness(business);
+                    mDatabaseModel.updateBusiness(business);
+                    int index = mCacheModel.cacheBusiness(business);
 
-                mBusinessIDs = mCacheModel.getBusiIDsCache();
+                    mBusinessIDs = mCacheModel.getBusiIDsCache();
 
-                // Make a copy of the label selected index for reselecting.
-                int labelSelectedIndex = mLabelSelectedIndex;
+                    // Make sure to auto select the same business after the update.
+                    mCurrentPage = index / 10 + 1;
 
-                updateCurrentPage();
+                    mCurrentPageLabel.setText(mCurrentPage + "");
 
-                // Unselect the resident and select it again to update its displayed data.
-                setBusinessSelected(mLabelSelectedIndex);
-                setBusinessSelected(labelSelectedIndex);
+                    // Disable the back page button if the current page is the first one.
+                    mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+                    // Disable the next page button if the current page is the last one.
+                    mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
+
+                    // Display the default data when no business is selected.
+                    updateCurrentPage();
+
+                    // Select the newly created business.
+                    setBusinessSelected(index % 10);
+                }
         }
     }
 
@@ -675,7 +752,7 @@ public class BusinessClearanceFormControl {
                     // Make sure that the create button is disabled when no business is selected
                     // and the color of the create and cancel button are restored to default.
                     mCreateButton.setDisable(true);
-                    mCreateButton.setText("Create Business");
+                    mCreateButton.setText("Create");
                     mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
                     mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
 
@@ -715,7 +792,7 @@ public class BusinessClearanceFormControl {
                     mScrollPane.setDisable(false);
 
                     mCreateButton.setDisable(false);
-                    mCreateButton.setText("Create Business");
+                    mCreateButton.setText("Create");
                     mCreateButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
                     mCancelButton.setStyle(CSSContract.STYLE_ORANGE_BUTTON);
 

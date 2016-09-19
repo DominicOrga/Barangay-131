@@ -665,16 +665,24 @@ public class ResidentControl {
         mDatabaseModel.updateResident(resident);
 
         // Cache the resident to update.
-        mCacheModel.cacheResident(resident);
+        int index = mCacheModel.cacheResident(resident);
 
-        // Make a copy of the label selected index for reselecting.
-        int labelSelectedIndex = mLabelSelectedIndex;
+        // Make sure that once the resident is update, auto select it.
+        mCurrentPage = index / 40 + 1;
 
+        mCurrentPageLabel.setText(mCurrentPage + "");
+
+        // Disable the back page button if the current page is the first one.
+        mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);
+
+        // Disable the next page button if the current page is the last one.
+        mNextPageButton.setDisable(mCurrentPage >= mPageCount ? true : false);
+
+        // Display the default data when no resident is selected.
         updateCurrentPage();
 
-        // Unselect the resident and select it again to update its displayed data.
-        setResidentToLabelSelected(mLabelSelectedIndex);
-        setResidentToLabelSelected(labelSelectedIndex);
+        // Select the newly created resident.
+        setResidentToLabelSelected(index % 40);
     }
 
     /**

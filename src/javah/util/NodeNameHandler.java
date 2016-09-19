@@ -119,7 +119,7 @@ public class NodeNameHandler {
             mAuxiliary = new ComboBox<>();
             mAuxiliary.setStyle(CSSContract.STYLE_COMBO_BOX);
             mAuxiliary.setMinWidth(85);
-            mAuxiliary.getItems().addAll("N/A", "Sr", "Jr", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X");
+            mAuxiliary.getItems().addAll("N/A", "Sr.", "Jr.", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X");
             mAuxiliary.setValue("N/A");
 
 

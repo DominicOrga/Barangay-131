@@ -1,11 +1,8 @@
 package javah.controller;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
@@ -26,6 +23,7 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -87,6 +85,7 @@ public class MainControl {
      */
     private Pane mBarangayIDReportScene;
     private Pane mBrgyClearanceReportScene;
+    private Pane mBusiClearanceReportScene;
 
     /**
      * The popup scene controllers.
@@ -99,7 +98,7 @@ public class MainControl {
     private BarangayIDReportControl mBarangayIDReportControl;
     private BarangayClearanceReportControl mBrgyClearanceReportControl;
     private BusinessClearanceFormControl mBusiClearanceFormControl;
-
+    private BusinessClearanceReportControl mBusiClearanceReportControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -441,7 +440,6 @@ public class MainControl {
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
                         hidePopupScene(mConfirmationDialogScene, true);
                 }
-
             }
         });
 
@@ -590,7 +588,10 @@ public class MainControl {
         mBusiClearanceFormControl.setListener(new BusinessClearanceFormControl.OnBusinessClearanceFormListener() {
             @Override
             public void onCreateButtonClicked(BusinessClearance businessClearance) {
-
+                hidePopupScene(mBusiClearanceFormScene, false);
+                showPopupScene(mBusiClearanceReportScene, false);
+                mBusiClearanceReportControl.setBusinessClearance(
+                        businessClearance, BusinessClearanceReportControl.REQUEST_CREATE_REPORT);
             }
 
             @Override
@@ -606,6 +607,40 @@ public class MainControl {
             }
         });
 
+        // Initialize the business clearance report.
+        resetFXMLLoader.accept("fxml/scene_business_clearance_report.fxml");
+        mBusiClearanceReportScene = fxmlLoader.load();
+
+        mBusiClearanceReportControl = fxmlLoader.getController();
+        mBusiClearanceReportControl.setPreferenceModel(mPreferenceModel);
+        mBusiClearanceReportControl.setListener(new BusinessClearanceReportControl.OnBusinessClearanceReportListener() {
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mBusiClearanceReportScene, false);
+                mInformationControl.setBlurListPaging(false);
+            }
+
+            @Override
+            public void onSaveButtonClicked(BusinessClearance businessClearance) {
+                System.out.println("*****MainControl - Business Clearance Creation Data****");
+                System.out.println("MainControl - Business name: " + businessClearance.getBusinessName());
+                System.out.println("MainControl - Business owners: " + businessClearance.getOwners());
+                System.out.println("MainControl - Business address: " + businessClearance.getBusinessAddress());
+                System.out.println("MainControl - Business type: " + businessClearance.getBusinessType());
+                System.out.println("MainControl - Business client: " + businessClearance.getClient());
+                System.out.println("MainControl - Business ID: " + businessClearance.getBusinessID());
+                System.out.println("MainControl - ID: " + businessClearance.getID());
+                System.out.println("MainControl - Date issued: " + businessClearance.getDateIssued());
+                System.out.println("MainControl - Date valid: " + businessClearance.getDateValid());
+                System.out.println("MainControl - Chairman name: " + businessClearance.getChmName());
+                System.out.println("MainControl - Chairman signature: " + businessClearance.getChmSignature());
+                System.out.println("MainControl - Chairman signature dimension: " + Arrays.toString(businessClearance.getChmSignatureDimension()));
+                System.out.println("MainControl - Secretary name: " + businessClearance.getSecName());
+                System.out.println("MainControl - Secretary signature: " + businessClearance.getSecSignature());
+                System.out.println("MainControl - Secretary signature dimension: " + Arrays.toString(businessClearance.getSecSignatureDimension()));
+            }
+        });
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
@@ -615,6 +650,7 @@ public class MainControl {
         addToPopupPane.accept(mBarangayIDReportScene);
         addToPopupPane.accept(mBrgyClearanceReportScene);
         addToPopupPane.accept(mBusiClearanceFormScene);
+        addToPopupPane.accept(mBusiClearanceReportScene);
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
