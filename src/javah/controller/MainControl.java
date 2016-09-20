@@ -215,20 +215,26 @@ public class MainControl {
 
             @Override
             public void onViewButtonClicked(byte information, Object reportData) {
+                mInformationControl.setBlurListPaging(true);
+
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
-                        mInformationControl.setBlurListPaging(true);
                         mBarangayIDReportControl.setBarangayID(
                                 (BarangayID) reportData, BarangayIDReportControl.REQUEST_DISPLAY_REPORT);
                         showPopupScene(mBarangayIDReportScene, false);
                         break;
+
                     case InformationControl.INFORMATION_BARANGAY_CLEARANCE:
-                        mInformationControl.setBlurListPaging(true);
                         mBrgyClearanceReportControl.setBarangayClearance(
                                 (BarangayClearance) reportData, BarangayClearanceReportControl.REQUEST_DISPLAY_REPORT);
                         showPopupScene(mBrgyClearanceReportScene, false);
                         break;
-                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE: break;
+
+                    case InformationControl.INFORMATION_BUSINESS_CLEARANCE:
+                        mBusiClearanceReportControl.setBusinessClearance(
+                                (BusinessClearance) reportData, BusinessClearanceReportControl.REQUEST_DISPLAY_REPORT);
+                        showPopupScene(mBusiClearanceReportScene, false);
+                        break;
                 }
             }
 
@@ -622,22 +628,10 @@ public class MainControl {
 
             @Override
             public void onSaveButtonClicked(BusinessClearance businessClearance) {
-                System.out.println("*****MainControl - Business Clearance Creation Data****");
-                System.out.println("MainControl - Business name: " + businessClearance.getBusinessName());
-                System.out.println("MainControl - Business owners: " + businessClearance.getOwners());
-                System.out.println("MainControl - Business address: " + businessClearance.getBusinessAddress());
-                System.out.println("MainControl - Business type: " + businessClearance.getBusinessType());
-                System.out.println("MainControl - Business client: " + businessClearance.getClient());
-                System.out.println("MainControl - Business ID: " + businessClearance.getBusinessID());
-                System.out.println("MainControl - ID: " + businessClearance.getID());
-                System.out.println("MainControl - Date issued: " + businessClearance.getDateIssued());
-                System.out.println("MainControl - Date valid: " + businessClearance.getDateValid());
-                System.out.println("MainControl - Chairman name: " + businessClearance.getChmName());
-                System.out.println("MainControl - Chairman signature: " + businessClearance.getChmSignature());
-                System.out.println("MainControl - Chairman signature dimension: " + Arrays.toString(businessClearance.getChmSignatureDimension()));
-                System.out.println("MainControl - Secretary name: " + businessClearance.getSecName());
-                System.out.println("MainControl - Secretary signature: " + businessClearance.getSecSignature());
-                System.out.println("MainControl - Secretary signature dimension: " + Arrays.toString(businessClearance.getSecSignatureDimension()));
+                hidePopupScene(mBusiClearanceReportScene, false);
+                mInformationControl.setBlurListPaging(false);
+
+                mInformationControl.createBusinessClearance(businessClearance);
             }
         });
 

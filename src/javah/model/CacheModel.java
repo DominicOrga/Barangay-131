@@ -624,11 +624,11 @@ public class CacheModel {
      *        The business clearance to be cached.
      */
     public void cacheBusinessClearance(BusinessClearance businessClearance) {
-        mBrgyClearanceIDsCache.add(0, businessClearance.getID());
-        mBrgyClearanceResidentIDsCache.add(0, businessClearance.getBusinessID());
-        mBrgyClearanceDateIssuedCache.add(0, businessClearance.getDateIssued());
+        mBusiClearanceIDsCache.add(0, businessClearance.getID());
+        mBusiClearanceBusiIDsCache.add(0, businessClearance.getBusinessID());
+        mBusiClearanceDateIssuedCache.add(0, businessClearance.getDateIssued());
 
-        int index = mResidentIDsCache.indexOf(businessClearance.getBusinessID());
-        mBarangayIDNamesCache.add(0, mResidentNamesCache.get(index));
+        int index = mBusinessIDsCache.indexOf(businessClearance.getBusinessID());
+        mBusiClearanceBusiNamesCache.add(0, mBusinessNamesCache.get(index));
     }
 }

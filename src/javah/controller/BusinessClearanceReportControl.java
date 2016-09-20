@@ -467,5 +467,4 @@ public class BusinessClearanceReportControl {
 
         return request == REQUEST_SNAPSHOT_REPORT ? mDocumentPane.snapshot(null, null) : null;
     }
-
 }

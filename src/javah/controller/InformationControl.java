@@ -119,16 +119,9 @@ public class InformationControl {
     /* A button to view the report. */
     @FXML private Button mViewButton;
 
-    /* Components of the barangay ID details. */
-    @FXML Pane mBrgyIDDetailsPane;
-    @FXML ImageView mBrgyIDSnapshot;
-    @FXML Text mIDDateIssued, mIDDateValid;
-
-    /* FXML components of the barangay clearance details. */
-    @FXML Pane mBrgyClearanceDetailsPane;
-    @FXML ImageView mBrgyClearanceImage;
-    @FXML Text mBrgyClearanceDateIssued, mBrgyClearanceDateValid;
-    @FXML Text mBrgyClearancePurpose;
+    /* The nodes within the details pane. */
+    @FXML ImageView mReportSnapshot;
+    @FXML Text mDateIssued, mDateValid;
 
     /* The current type of information to be displayed. */
     private byte mInformation;
@@ -257,11 +250,8 @@ public class InformationControl {
             mGridLabels[i] = label;
             // Add a label selected event listener to each label.
             final int labelIndex = i;
-            label.setOnMouseClicked(event -> setReportToLabelSelectedIndex(labelIndex));
+            label.setOnMouseClicked(event -> setLabelSelectedIndex(labelIndex));
         }
-
-        mBrgyIDDetailsPane.setVisible(false);
-        mBrgyClearanceDetailsPane.setVisible(false);
     }
 
     /**
@@ -279,7 +269,7 @@ public class InformationControl {
         mReportIDs = keywords.isEmpty() ?
                 mActualReportIDs : BarangayUtils.getFilteredIDs(mActualReportIDs, mReportNames, keywords.split(" "));
 
-        setReportToLabelSelectedIndex(mLabelSelectedIndex);
+        setLabelSelectedIndex(mLabelSelectedIndex);
         updateListPaging(false);
     }
 
@@ -358,8 +348,16 @@ public class InformationControl {
     @FXML
     public void onViewButtonClicked(ActionEvent actionEvent) {
         switch (mInformation) {
-            case INFORMATION_BARANGAY_ID : mListener.onViewButtonClicked(mInformation, mBarangayIDSelected); break;
-            case INFORMATION_BARANGAY_CLEARANCE : mListener.onViewButtonClicked(mInformation, mBrgyClearanceSelected); break;
+            case INFORMATION_BARANGAY_ID :
+                mListener.onViewButtonClicked(mInformation, mBarangayIDSelected);
+                break;
+
+            case INFORMATION_BARANGAY_CLEARANCE :
+                mListener.onViewButtonClicked(mInformation, mBrgyClearanceSelected);
+                break;
+
+            case INFORMATION_BUSINESS_CLEARANCE :
+                mListener.onViewButtonClicked(mInformation, mBusiClearanceSelected);
         }
     }
 
@@ -371,7 +369,7 @@ public class InformationControl {
      *        The index of the label containing the report to be displayed. If it is
      *        equal to -1, then the mNoReportSelectedPane is displayed.
      */
-    private void setReportToLabelSelectedIndex(int newLabelSelectedIndex) {
+    private void setLabelSelectedIndex(int newLabelSelectedIndex) {
 
         /**
          * Either show a report details pane or the mNoReportSelectedPane.
@@ -381,37 +379,39 @@ public class InformationControl {
 
             if (show) {
                 mNoReportSelectedPane.setVisible(false);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
+                Image image = null;
 
                 switch (mInformation) {
                     case INFORMATION_BARANGAY_ID:
-                        // Get the label selected.
                         mBarangayIDSelected = mDatabaseModel.getBarangayID(mReportIDToLabelLocation[newLabelSelectedIndex]);
+                        image = mListener.onRequestReportSnapshot(mBarangayIDSelected);
 
-                        Image image = mListener.onRequestReportSnapshot(mBarangayIDSelected);
-                        mBrgyIDSnapshot.setImage(image);
-
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
-                        mIDDateIssued.setText(dateFormat.format(mBarangayIDSelected.getDateIssued()));
-                        mIDDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
+                        mDateIssued.setText(dateFormat.format(mBarangayIDSelected.getDateIssued()));
+                        mDateValid.setText(dateFormat.format(mBarangayIDSelected.getDateValid()));
 
                         break;
 
                     case INFORMATION_BARANGAY_CLEARANCE:
                         mBrgyClearanceSelected = mDatabaseModel.getBarangayClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
                         image = mListener.onRequestReportSnapshot(mBrgyClearanceSelected);
-                        mBrgyClearanceImage.setImage(image);
 
-                        dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
-                        mBrgyClearanceDateIssued.setText(dateFormat.format(mBrgyClearanceSelected.getDateIssued()));
-                        mBrgyClearanceDateValid.setText(dateFormat.format(mBrgyClearanceSelected.getDateValid()));
-                        mBrgyClearancePurpose.setText(mBrgyClearanceSelected.getPurpose());
+                        mDateIssued.setText(dateFormat.format(mBrgyClearanceSelected.getDateIssued()));
+                        mDateValid.setText(dateFormat.format(mBrgyClearanceSelected.getDateValid()));
                         break;
+
+                    case INFORMATION_BUSINESS_CLEARANCE:
+                        mBusiClearanceSelected = mDatabaseModel.getBusinessClearance(mReportIDToLabelLocation[newLabelSelectedIndex]);
+                        image = mListener.onRequestReportSnapshot(mBusiClearanceSelected);
+
+                        mDateIssued.setText(dateFormat.format(mBusiClearanceSelected.getDateIssued()));
+                        mDateValid.setText(dateFormat.format(mBusiClearanceSelected.getDateValid()));
                 }
 
-            } else {
-                mNoReportSelectedPane.setVisible(true);
-            }
+                mReportSnapshot.setImage(image);
 
+            } else
+                mNoReportSelectedPane.setVisible(true);
         };
 
         // If newLabelSelectedIndex is equal to -1, then clear the details.
@@ -422,7 +422,7 @@ public class InformationControl {
         }
 
         // This is where the code selection and unselection view update happens.
-        // If a label is clicked without containing any resident, then ignore the event.
+        // If a label is clicked without containing any resident, then ignore the event.sc
         if (mReportIDToLabelLocation[newLabelSelectedIndex] != null) {
             // if no previous resident is selected, then simply make the new selection.
             if (mLabelSelectedIndex == -1) {
@@ -540,7 +540,7 @@ public class InformationControl {
      */
     private void updateCurrentPage() {
         // Make sure that no resident is selected when moving from one page to another.
-        setReportToLabelSelectedIndex(mLabelSelectedIndex);
+        setLabelSelectedIndex(mLabelSelectedIndex);
 
         // Reset to default the label placements within the list paging.
         mListGridPane.getChildren().removeAll(mGridLabels);
@@ -665,27 +665,11 @@ public class InformationControl {
      * @param information
      */
     public void setInformation(byte information){
-        // Reset the resident volatile cache.
-//        mResidentIDs = mCacheModel.getResidentIDsCache();
-//        mResidentNames = mCacheModel.getResidentNamesCache();
-
-        // Hide the previous Information details pane used.
-        switch (mInformation) {
-            case INFORMATION_BARANGAY_ID :
-                mBrgyIDDetailsPane.setVisible(false);
-                break;
-            case INFORMATION_BARANGAY_CLEARANCE :
-                mBrgyClearanceDetailsPane.setVisible(false);
-                break;
-            case INFORMATION_BUSINESS_CLEARANCE :
-                break;
-        }
 
         // Update the scene to match the information.
         switch (information) {
             case INFORMATION_BARANGAY_ID :
                 mCreateButton.setText("New Barangay ID");
-                mBrgyIDDetailsPane.setVisible(true);
 
                 // The volatile cache should hold the cached data pertaining to the barangay id.
                 mReportIDs = mCacheModel.getBrgyIDIDsCache();
@@ -697,7 +681,6 @@ public class InformationControl {
                 break;
             case INFORMATION_BARANGAY_CLEARANCE :
                 mCreateButton.setText("New Barangay Clearance");
-                mBrgyClearanceDetailsPane.setVisible(true);
 
                 // The volatile cache should hold the cached data pertaining to the barangay clearance.
                 mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
@@ -727,6 +710,12 @@ public class InformationControl {
 
     }
 
+    /**
+     * Store the specified barangay ID in the database and data cache.
+     *
+     * @param barangayID
+     *        The barangay ID to be stored.
+     */
     public void createBarangayID(BarangayID barangayID) {
         // Create the barangay id.
         mDatabaseModel.createBarangayID(barangayID);
@@ -738,13 +727,18 @@ public class InformationControl {
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);
-        setReportToLabelSelectedIndex(2);
+        setLabelSelectedIndex(2);
     }
 
+    /**
+     * Store the specified barangay clearance in the database and data cache.
+     *
+     * @param barangayClearance
+     *        The barangay clearance to be stored.
+     */
     public void createBarangayClearance(BarangayClearance barangayClearance) {
         mDatabaseModel.createBarangayClearance(barangayClearance);
 
-        // todo: before adding, make sure that the cache reference are pointing to the non-volatile cached data.
         // Place the new barangay id in the cached data.
         mCacheModel.cacheBarangayClearance(barangayClearance);
 
@@ -752,6 +746,25 @@ public class InformationControl {
 
         // Update the list paging and select the newly created barangay id.
         updateListPaging(false);
-        setReportToLabelSelectedIndex(2);
+        setLabelSelectedIndex(2);
+    }
+
+    /**
+     * Store the specified business clearance in the database and data cache.
+     *
+     * @param businessClearance
+     *        The business clearance to be stored.
+     */
+    public void createBusinessClearance(BusinessClearance businessClearance) {
+        mDatabaseModel.createBusinessClearance(businessClearance);
+
+        // Place the new barangay id in the cached data.
+        mCacheModel.cacheBusinessClearance(businessClearance);
+
+        mReportIDs = mCacheModel.getBusiClearanceIDsCache();
+
+        // Update the list paging and select the newly created barangay id.
+        updateListPaging(false);
+        setLabelSelectedIndex(2);
     }
 }

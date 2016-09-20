@@ -164,7 +164,7 @@ public class BarangayClearanceReportControl {
         // This is needed since \n only works programmatically.
         mTextLineBreak1.setText("\n\n");
         mTextLineBreak2.setText("\n\n");
-        mTextLineBreak3.setText(".\n");
+        mTextLineBreak3.setText(".\n\n");
 
         mKagawads = new Text[]{mKagawad1, mKagawad2, mKagawad3, mKagawad4, mKagawad5, mKagawad6, mKagawad7};
     }

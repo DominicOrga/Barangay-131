@@ -685,7 +685,7 @@ public class BusinessClearanceFormControl {
     }
 
     /**
-     * Update the user interface with regards to the given state.
+     * Update the user interface and its data with regards to the given state.
      *
      * @param state
      *        The state to be applied to this form.

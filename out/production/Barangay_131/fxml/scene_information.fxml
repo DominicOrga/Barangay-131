@@ -90,7 +90,7 @@
                <children>
                   <VBox fx:id="mBrgyIDDetailsPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                      <children>
-                        <ImageView fx:id="mBrgyIDSnapshot" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="mReportSnapshot" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../res/ic_barangay_id.png" />
                            </image>
@@ -105,7 +105,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="mIDDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
+                              <Text fx:id="mDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
@@ -119,67 +119,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="mIDDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </TextFlow>
-                     </children>
-                     <StackPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" />
-                     </StackPane.margin>
-                  </VBox>
-                  <VBox fx:id="mBrgyClearanceDetailsPane" alignment="CENTER" layoutX="11.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
-                     <children>
-                        <ImageView fx:id="mBrgyClearanceImage" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../res/ic_barangay_id.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets bottom="50.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <TextFlow textAlignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Purpose:  " textAlignment="CENTER">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="mBrgyClearancePurpose" strokeType="OUTSIDE" strokeWidth="0.0" text="Local Employment" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="25.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                        <TextFlow textAlignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " textAlignment="CENTER">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="mBrgyClearanceDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </TextFlow>
-                        <TextFlow textAlignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Valid:  " textAlignment="CENTER">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="mBrgyClearanceDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016" textAlignment="CENTER">
+                              <Text fx:id="mDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 19, 2016">
                                  <font>
                                     <Font size="23.0" />
                                  </font>

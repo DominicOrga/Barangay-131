@@ -581,6 +581,24 @@ public class DatabaseModel {
      */
     public String createBusinessClearance(BusinessClearance businessClearance) {
 
+        System.out.println("*****DatabaseModel - Business Clearance Creation Data****");
+        System.out.println("Business name: " + businessClearance.getBusinessName());
+        System.out.println("Business owners: " + businessClearance.getOwners());
+        System.out.println("Business address: " + businessClearance.getBusinessAddress());
+        System.out.println("Business type: " + businessClearance.getBusinessType());
+        System.out.println("Business client: " + businessClearance.getClient());
+        System.out.println("Business ID: " + businessClearance.getBusinessID());
+        System.out.println("ID: " + businessClearance.getID());
+        System.out.println("Date issued: " + businessClearance.getDateIssued());
+        System.out.println("Date valid: " + businessClearance.getDateValid());
+        System.out.println("Chairman name: " + businessClearance.getChmName());
+        System.out.println("Chairman signature: " + businessClearance.getChmSignature());
+        System.out.println("Chairman signature dimension: " + Arrays.toString(businessClearance.getChmSignatureDimension()));
+        System.out.println("Secretary name: " + businessClearance.getSecName());
+        System.out.println("Secretary signature: " + businessClearance.getSecSignature());
+        System.out.println("Secretary signature dimension: " + Arrays.toString(businessClearance.getSecSignatureDimension()));
+
+
         try {
             Connection dbConnection = mDataSource.getConnection();
 
@@ -612,7 +630,7 @@ public class DatabaseModel {
             statement.setString(5, businessClearance.getChmSignature());
             statement.setString(7, businessClearance.getSecName());
             statement.setString(8, businessClearance.getSecSignature());
-            statement.setString(10, businessClearance.getID());
+            statement.setString(10, businessClearance.getBusinessID());
             statement.setString(11, businessClearance.getBusinessName());
             statement.setString(12, businessClearance.getBusinessType());
             statement.setString(13, businessClearance.getBusinessAddress());
@@ -621,7 +639,7 @@ public class DatabaseModel {
 
             double[] signatureDimension = businessClearance.getChmSignatureDimension();
             statement.setString(6, signatureDimension != null ?
-                    String.format("%.5f %.5f %.5f %.5f",
+                    String.format("%.4f %.4f %.4f %.4f",
                             signatureDimension[0],
                             signatureDimension[1],
                             signatureDimension[2],
@@ -963,9 +981,9 @@ public class DatabaseModel {
      * Get a specific business ID from the database.
      *
      * @param id
-     *        The ID of the barangay ID to be fetched.
+     *        The ID of the business clearance to be fetched.
      *
-     * @return the barangay ID having the specified ID. Return null if no match is found.
+     * @return the business ID having the specified ID. Return null if no match is found.
      */
     public BusinessClearance getBusinessClearance(String id) {
         try {
@@ -973,23 +991,24 @@ public class DatabaseModel {
 
             // Use String.format as a workaround to the bug when using parameterized query.
             PreparedStatement preparedStatement = dbConnection.prepareStatement(
-                    String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s " +
+                     String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s " +
                                     "FROM %s WHERE %s = ?",
-                            BusinessClearanceEntry.COLUMN_ID,
-                            BusinessClearanceEntry.COLUMN_DATE_ISSUED,
-                            BusinessClearanceEntry.COLUMN_DATE_VALID,
-                            BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME,
-                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
-                            BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
-                            BusinessClearanceEntry.COLUMN_SECRETARY_NAME,
-                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
-                            BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
-                            BusinessClearanceEntry.COLUMN_BUSINESS_ID,
-                            BusinessClearanceEntry.COLUMN_BUSINESS_NAME,
-                            BusinessClearanceEntry.COLUMN_BUSINESS_TYPE,
-                            BusinessClearanceEntry.COLUMN_BUSINESS_ADDRESS,
-                            BusinessClearanceEntry.COLUMN_OWNERS,
-                            BusinessClearanceEntry.COLUMN_CLIENT
+                             BusinessClearanceEntry.COLUMN_DATE_ISSUED,
+                             BusinessClearanceEntry.COLUMN_DATE_VALID,
+                             BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME,
+                             BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE,
+                             BusinessClearanceEntry.COLUMN_CHAIRMAN_SIGNATURE_DIMENSION,
+                             BusinessClearanceEntry.COLUMN_SECRETARY_NAME,
+                             BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE,
+                             BusinessClearanceEntry.COLUMN_SECRETARY_SIGNATURE_DIMENSION,
+                             BusinessClearanceEntry.COLUMN_BUSINESS_ID,
+                             BusinessClearanceEntry.COLUMN_BUSINESS_NAME,
+                             BusinessClearanceEntry.COLUMN_BUSINESS_TYPE,
+                             BusinessClearanceEntry.COLUMN_BUSINESS_ADDRESS,
+                             BusinessClearanceEntry.COLUMN_OWNERS,
+                             BusinessClearanceEntry.COLUMN_CLIENT,
+                             BusinessClearanceEntry.TABLE_NAME,
+                             BusinessClearanceEntry.COLUMN_ID
                     )
             );
 
@@ -1000,7 +1019,7 @@ public class DatabaseModel {
             if (resultSet.next()) {
                 BusinessClearance businessClearance = new BusinessClearance();
 
-                businessClearance.setID(resultSet.getString(BusinessClearanceEntry.COLUMN_ID));
+                businessClearance.setID(id);
                 businessClearance.setDateIssued(resultSet.getTimestamp(BusinessClearanceEntry.COLUMN_DATE_ISSUED));
                 businessClearance.setDateValid(resultSet.getTimestamp(BusinessClearanceEntry.COLUMN_DATE_VALID));
                 businessClearance.setChmName(resultSet.getString(BusinessClearanceEntry.COLUMN_CHAIRMAN_NAME));
