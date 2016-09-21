@@ -27,6 +27,19 @@ import java.util.GregorianCalendar;
 /**
  * A class that handles the generation of the Barangay ID reports and
  * the viewing of already created reports.
+ *
+ * Note: Found a bug with JDK 1.8.
+ *       When trying to print the mPrintPane while the said node is rotated in the
+ *       x or y axis, a ClassCastException is thrown and the actual printed output
+ *       is not equivalent with the expected output. Furthermore, any node that is
+ *       rotated within the x or y axis and then printed will yield the same result.
+ *
+ *       A work around to the problem is taking rotating the mPrintPane by its y axis
+ *       and then taking a snapshot of the node. The captured snapshot is then plugged
+ *       in an image view to be printed.
+ *
+ *       The disadvantage of applying the workaround is that the printed output is not
+ *       as clear as it should be, particularly the texts.
  */
 public class BarangayIDReportControl {
 
@@ -58,8 +71,11 @@ public class BarangayIDReportControl {
     /* Disables the barangay ID report while printing initialization is in process. */
     @FXML private Pane mRootPane;
 
-    /* The Pane containing the barangay ID. */
+    /* The pane containing the barangay ID. */
     @FXML private Pane mBarangayIDPane;
+
+    /* The node to be printed. Contains the mBarangayID Pane. */
+    @FXML private Pane mPrintPane;
 
     /**
      * NOTE: used for REQUEST_SNAPSHOT_REPORT
@@ -151,7 +167,8 @@ public class BarangayIDReportControl {
 
         // Flip the image if the mMirrorIDCheckBox is selected.
         mMirrorIDCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
-                mBarangayIDPane.setRotate(newValue ? 180 : 0));
+            mBarangayIDPane.setRotate(newValue ? 180 : 0)
+        );
     }
 
     /**
@@ -276,13 +293,23 @@ public class BarangayIDReportControl {
                 // Determine the scale value needed to fit mBarangayIDPane in the paper.
                 Scale tempScale = new Scale(0.5, 0.5);
 
-                // Temporarily apply the scale value to mDocumentPane. Reset scaleback to normal after printing.
-                mBarangayIDPane.getTransforms().add(tempScale);
+                if (mMirrorIDCheckBox.isSelected()) {
+                    Image image = mPrintPane.snapshot(null, null);
+                    ImageView node = new ImageView(image);
+                    node.setSmooth(true);
+                    node.getTransforms().add(tempScale);
 
-                job.printPage(mBarangayIDPane);
+                    job.printPage(node);
+                } else {
+                    // Temporarily apply the scale value to mDocumentPane.
+                    // Reset scale back to normal after printing.
+                    mPrintPane.getTransforms().add(tempScale);
+
+                    job.printPage(mPrintPane);
+                    mPrintPane.getTransforms().remove(tempScale);
+                }
+
                 job.endJob();
-
-                mBarangayIDPane.getTransforms().remove(tempScale);
             }
 
             return result;
