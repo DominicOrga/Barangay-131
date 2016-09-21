@@ -260,9 +260,16 @@ public class MainControl {
                     hidePopupScene(mBrgyClearanceReportScene, false);
 
                     return image;
-                }
+                } else {
+                    showPopupScene(mBusiClearanceReportScene, false);
 
-                return null;
+                    Image image = mBusiClearanceReportControl.setBusinessClearance(
+                            (BusinessClearance) report, BusinessClearanceReportControl.REQUEST_SNAPSHOT_REPORT);
+
+                    hidePopupScene(mBusiClearanceReportScene, false);
+
+                    return image;
+                }
             }
 
 
