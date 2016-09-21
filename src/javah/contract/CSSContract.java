@@ -1,5 +1,8 @@
 package javah.contract;
 
+/**
+ * A class that contains a list of static CSS properties for the fxml components.
+ */
 public class CSSContract {
 
     private static String[] prop;

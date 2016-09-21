@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 
 <GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="690.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BarangayIDReportControl">
   <columnConstraints>
@@ -30,9 +30,14 @@
             <Insets left="10.0" right="10.0" />
          </GridPane.margin>
          <children>
-            <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0">
+            <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;">
                <children>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); -fx-background-color: white;">
+                  <ImageView fitHeight="300.0" fitWidth="300.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_mayor_logo.png" />
+                     </image>
+                  </ImageView>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
                      <top>
                         <StackPane maxHeight="75.0" prefHeight="100.0" style="-fx-background-color: #FF861b;" BorderPane.alignment="CENTER">
                            <children>
@@ -125,18 +130,9 @@
                         </VBox>
                      </bottom>
                   </BorderPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="300.0" fitWidth="300.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../res/ic_mayor_logo.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
                   <Pane prefHeight="510.0" prefWidth="330.0">
                      <children>
-                        <ImageView fx:id="mResSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
+                        <ImageView fx:id="mResSignature" fitHeight="90.0" fitWidth="210.0" layoutX="-1.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="350.0">
                            <image>
                               <Image url="@../../../../../../Public/Barangay131/Signatures/9a468cdc-452f-49e6-9a45-58e3f2a75f33.png" />
                            </image>
@@ -145,98 +141,98 @@
                   </Pane>
                </children>
             </StackPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);" GridPane.columnIndex="1">
-               <bottom>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <TextFlow style="-fx-border-width: 0 0 1 0; -fx-border-color: FF861B;" textAlignment="CENTER">
-                           <children>
-                              <Text fx:id="mChmName" strokeType="OUTSIDE" strokeWidth="0.0" text="Hon. JOEL L. LOPEZ">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <VBox.margin>
-                              <Insets left="50.0" right="50.0" top="25.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                        <Label text="Barangay Captain">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </bottom>
-               <center>
-                  <TextFlow maxWidth="-Infinity" prefHeight="200.0" prefWidth="275.0" textAlignment="JUSTIFY" BorderPane.alignment="CENTER">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    This is to certify that the bearer whose name, address and photo appears on this card is a bonafide resident of this Barangay. Bearer has no derogatory records as of the issuance of this card." textAlignment="JUSTIFY" />
-                        <Label prefWidth="275.0" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    Any courtesy and assistance extended to him/her is highly appreciated." />
-                     </children>
-                  </TextFlow>
-               </center>
-               <top>
-                  <VBox prefWidth="0.0" style="-fx-border-color: black;" BorderPane.alignment="TOP_CENTER">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
-                           <VBox.margin>
-                              <Insets left="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Text>
-                        <TextFlow maxHeight="-Infinity" prefHeight="90.0">
-                           <children>
-                              <Text fx:id="mAddress" strokeType="OUTSIDE" strokeWidth="0.0" text="484 M.H. Del Pilar Street, San rafael, Rodriguez, Rizal" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                        <TextFlow prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " />
-                              <Text fx:id="mDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                        <TextFlow prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Valid:    " />
-                              <Text fx:id="mDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </BorderPane.margin>
-                  </VBox>
-               </top>
-            </BorderPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" GridPane.columnIndex="1">
                <children>
                   <ImageView fitHeight="300.0" fitWidth="300.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../res/ic_mayor_logo.png" />
                      </image>
                   </ImageView>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
+                     <bottom>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextFlow style="-fx-border-width: 0 0 1 0; -fx-border-color: FF861B;" textAlignment="CENTER">
+                                 <children>
+                                    <Text fx:id="mChmName" strokeType="OUTSIDE" strokeWidth="0.0" text="Hon. JOEL L. LOPEZ">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="50.0" right="50.0" top="25.0" />
+                                 </VBox.margin>
+                              </TextFlow>
+                              <Label text="Barangay Captain">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </bottom>
+                     <center>
+                        <TextFlow maxWidth="-Infinity" prefHeight="200.0" prefWidth="275.0" textAlignment="JUSTIFY" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    This is to certify that the bearer whose name, address and photo appears on this card is a bonafide resident of this Barangay. Bearer has no derogatory records as of the issuance of this card." textAlignment="JUSTIFY" />
+                              <Label prefWidth="275.0" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    Any courtesy and assistance extended to him/her is highly appreciated." />
+                           </children>
+                        </TextFlow>
+                     </center>
+                     <top>
+                        <VBox prefWidth="0.0" style="-fx-border-color: black;" BorderPane.alignment="TOP_CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <TextFlow maxHeight="-Infinity" prefHeight="90.0">
+                                 <children>
+                                    <Text fx:id="mAddress" strokeType="OUTSIDE" strokeWidth="0.0" text="484 M.H. Del Pilar Street, San rafael, Rodriguez, Rizal" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </TextFlow>
+                              <TextFlow prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Issued:  " />
+                                    <Text fx:id="mDateIssued" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </TextFlow>
+                              <TextFlow prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Valid:    " />
+                                    <Text fx:id="mDateValid" strokeType="OUTSIDE" strokeWidth="0.0" text="January 21, 2016" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </TextFlow>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </BorderPane.margin>
+                        </VBox>
+                     </top>
+                  </BorderPane>
+                  <Pane prefHeight="510.0" prefWidth="330.0">
+                     <children>
+                        <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="385.0">
+                           <image>
+                              <Image url="@../../../../../../Public/Barangay131/Signatures/02c52184-ada2-4f3d-8c4d-d66bf20b016d.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
             </StackPane>
-            <Pane prefHeight="510.0" prefWidth="330.0" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fx:id="mChmSignature" fitHeight="90.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" x="60.0" y="385.0">
-                     <image>
-                        <Image url="@../../../../../../Public/Barangay131/Signatures/02c52184-ada2-4f3d-8c4d-d66bf20b016d.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
          </children>
          <rotationAxis>
             <Point3D y="1.0" />

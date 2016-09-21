@@ -62,14 +62,9 @@
                                     <Image url="@../res/ic_profile.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="67.0" layoutY="5.0" text="Welcome," textFill="WHITE">
+                              <Label layoutX="66.0" layoutY="12.0" text="Welcome" textFill="WHITE">
                                  <font>
-                                    <Font name="Helvetica Light" size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="mUserLabel" layoutX="67.0" layoutY="18.0" text="Chairman" textFill="WHITE">
-                                 <font>
-                                    <Font name="Helvetica Light" size="30.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
@@ -127,42 +122,14 @@
                    </Pane>
                   <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #FF861B;" GridPane.rowIndex="5">
                      <children>
-                        <HBox alignment="CENTER_RIGHT">
-                           <children>
-                              <ImageView fitHeight="75.0" fitWidth="75.0" onMouseClicked="#onSettingsButtonClicked" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_settings.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_logout.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
+                        <ImageView fitHeight="75.0" fitWidth="75.0" onMouseClicked="#onSettingsButtonClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/ic_settings.png" />
+                           </image>
                            <VBox.margin>
-                              <Insets right="20.0" />
+                              <Insets bottom="25.0" right="25.0" />
                            </VBox.margin>
-                        </HBox>
-                        <Label text="December 01, 2016" textFill="WHITE">
-                           <font>
-                              <Font name="Helvetica Neue Light" size="25.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets right="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label text="12:00 pm" textFill="WHITE">
-                           <font>
-                              <Font name="Helvetica Neue Light" size="25.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
-                           </VBox.margin>
-                        </Label>
+                        </ImageView>
                      </children>
                   </VBox>
                </children>
