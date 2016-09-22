@@ -247,7 +247,7 @@
                                     </Text>
                                     <Text fx:id="mBrgyClearanceName" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominic R. Orga" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" of legal age a resident of  ">
@@ -257,7 +257,7 @@
                                     </Text>
                                     <Text fx:id="mBrgyClearanceAddress" layoutX="65.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19 Tagaytay St. Barangay 131, Caloocan City" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="38.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=", for ">
@@ -267,7 +267,7 @@
                                     </Text>
                                     <Text fx:id="mTotalYearsOfResidency" layoutX="65.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="18 years" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="176.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" since ">
@@ -277,7 +277,7 @@
                                     </Text>
                                     <Text fx:id="mYearOfResidency" strokeType="OUTSIDE" strokeWidth="0.0" text="birth" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" is a member of the aformentioned barangay, and that he/she has no derogatory record as of this date.">
@@ -297,7 +297,7 @@
                                     </Text>
                                     <Text fx:id="mBrgyClearancePurpose" strokeType="OUTSIDE" strokeWidth="0.0" text="Local Employment" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" and valid for only (6) months upon the date of issuance.">
@@ -317,7 +317,7 @@
                                     </Text>
                                     <Text fx:id="mBrgyClearanceDay" strokeType="OUTSIDE" strokeWidth="0.0" text="24th" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" day of ">
@@ -327,7 +327,7 @@
                                     </Text>
                                     <Text fx:id="mBrgyClearanceDate" strokeType="OUTSIDE" strokeWidth="0.0" text="December, 2015" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="mTextLineBreak3" strokeType="OUTSIDE" strokeWidth="0.0" text=".\n">

@@ -10,6 +10,11 @@ package javah.contract;
  */
 public class PreferenceContract {
 
+    public static final String PASSWORD = "password";
+    public static final String MAX_IDLE_DURATION = "max_idle_duration";
+    public static final String LAST_LOGIN = "last_login";
+    public static final String LAST_PASSWORD_UPDATE = "last_password_update";
+
     /**
      * A key to make sure that the barangay agents are initialized during the first
      * installation of the application. The value can either be 0 or 1, where 0

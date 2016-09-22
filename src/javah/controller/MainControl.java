@@ -22,6 +22,7 @@ import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
+import javah.util.LogoutTimer;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
@@ -47,14 +48,9 @@ public class MainControl {
     @FXML private GridPane mMenuGridPane;
 
     /**
-     * The Welcome message at the first row and first column of mMenuGridPane.
-     */
-    @FXML private Label mUserLabel;
-
-    /**
      * The menu buttons.
      */
-    @FXML private Pane mResidentMenu, mBarangayClearanceMenu, mBarangayIdMenu, mBusinessClearanceMenu, mBlotterMenu;
+    @FXML private Pane mResidentMenu, mBarangayClearanceMenu, mBarangayIdMenu, mBusinessClearanceMenu;
 
     /**
      * The information scenes.
@@ -103,7 +99,7 @@ public class MainControl {
     /**
      * Key-value pairs to represent each menu.
      */
-    public final byte MENU_RESIDENT = 1,
+    private final byte MENU_RESIDENT = 1,
             MENU_BARANGAY_ID = 2,
             MENU_BARANGAY_CLEARANCE = 3,
             MENU_BUSINESS_CLEARANCE = 4;
@@ -121,6 +117,8 @@ public class MainControl {
     private CacheModel mCacheModel;
     private DatabaseModel mDatabaseModel;
     private PreferenceModel mPreferenceModel;
+
+    private LogoutTimer mLogoutTimer;
 
     /**
      * Initialize all the scenes.
@@ -684,6 +682,22 @@ public class MainControl {
     }
 
     /**
+     * Show the barangay agent setup form.
+     *
+     * @param mouseEvent
+     *        The action event. No usage.
+     */
+    @FXML
+    public void onSettingsButtonClicked(MouseEvent mouseEvent) {
+        showPopupScene(mBarangayAgentScene, false);
+
+        switch (mMenuSelected) {
+            case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
+            default : mInformationControl.setBlurListPaging(true); break;
+        }
+    }
+
+    /**
      * Update the current menu selected.
      * @param menu clicked.
      */
@@ -796,15 +810,12 @@ public class MainControl {
     }
 
     /**
-     * Show the barangay agent setup form.
-     * @param mouseEvent
+     * Logout the application, but maintain the last state.
+     *
+     *
      */
-    public void onSettingsButtonClicked(MouseEvent mouseEvent) {
-        showPopupScene(mBarangayAgentScene, false);
+    private void logout() {
 
-        switch (mMenuSelected) {
-            case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
-            default : mInformationControl.setBlurListPaging(true); break;
-        }
     }
+
 }

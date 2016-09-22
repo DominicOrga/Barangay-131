@@ -70,7 +70,7 @@
                                     </Text>
                                     <Text fx:id="mBusiName" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="IN THE CAB SALON FOR MEN AND WOMEN" textAlignment="JUSTIFY" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na pag-aari nina " textAlignment="JUSTIFY">
@@ -80,7 +80,7 @@
                                     </Text>
                                     <Text fx:id="mBusiOwners" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="FRITZ DI L. EUGENIO" textAlignment="JUSTIFY" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na matatagpuan sa " textAlignment="JUSTIFY">
@@ -90,7 +90,7 @@
                                     </Text>
                                     <Text fx:id="mBusiAddress" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="40-A&amp;B Cabatuan St. cor. Pag-Asa St.  Barangay. 131, Caloocan City" textAlignment="JUSTIFY" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" na nasasakupan ng Barangay na ito ay pinahihintulutan na magbukas/magpatuloy ng kanilang negosyong, " textAlignment="JUSTIFY">
@@ -100,7 +100,7 @@
                                     </Text>
                                     <Text fx:id="mBusiType" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="SALON" textAlignment="JUSTIFY" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" at pagkilos na nangangailangan ng pahintulot." textAlignment="JUSTIFY">
@@ -120,7 +120,7 @@
                                     </Text>
                                     <Text fx:id="mBusiClient" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="FRITZ DI L. EUGENIO" textAlignment="JUSTIFY" underline="true">
                                        <font>
-                                          <Font name="Times New Roman" size="20.0" />
+                                          <Font name="Times New Roman Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text=" upang magamit sa kanilang inilahad na negosyo/hanapbuhay, ayon sa itinadhana ng seksyon bilang 17 ng bagong kodigo ng pamahalaang lokal." textAlignment="JUSTIFY">

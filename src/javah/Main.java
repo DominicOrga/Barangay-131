@@ -1,15 +1,24 @@
 package javah;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.event.Event;
+import javafx.event.EventDispatcher;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends Application {
 
-    public static Stage PRIMARY_STAGE;
+    private static Stage PRIMARY_STAGE;
 
     public static String PHOTO_DIR_PATH, SIGNATURE_DIR_PATH;
 
@@ -27,6 +36,15 @@ public class Main extends Application {
 
         // Terminate the application when the x button is pressed.
         primaryStage.setOnCloseRequest(event -> System.exit(0));
+    }
+
+    /**
+     * Fetch the primary stage.
+     *
+     * @return the primary stage.
+     */
+    public static Stage getPrimaryStage() {
+        return PRIMARY_STAGE;
     }
 
     public static void main(String[] args) {

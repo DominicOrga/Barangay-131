@@ -287,7 +287,7 @@ public class BarangayClearanceReportControl {
 
             // Disable the report dialog when the print dialog is open.
             mRootPane.setDisable(true);
-            boolean result = job.showPrintDialog(Main.PRIMARY_STAGE); // Window must be your main Stage
+            boolean result = job.showPrintDialog(Main.getPrimaryStage()); // Window must be your main Stage
             mRootPane.setDisable(false);
 
             // If the client cancels the printing, then no printing will occur.

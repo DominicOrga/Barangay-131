@@ -566,7 +566,7 @@ public class BusinessClearanceFormControl {
                         String fullName = BarangayUtils.formatName(firstName, middleName, lastName, auxiliary);
 
                         if (ownersStr.isEmpty() && i != 0)
-                            ownersStr = " AND " + fullName;
+                            ownersStr = " AT " + fullName;
 
                         else if (i != 0)
                             ownersStr = ", " + fullName + ownersStr;
