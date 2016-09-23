@@ -35,7 +35,7 @@ public class NodeNameHandler {
 
     /**
      * A class that serves as a container for nodes regarding a Node Name, such as a
-     * text field for the first, middle and last name, and buttons to fire an event
+     * mUnmaskedText field for the first, middle and last name, and buttons to fire an event
      * to the Node Name Event Handler.
      *
      * @see NodeNameHandler
@@ -100,7 +100,7 @@ public class NodeNameHandler {
             mMiddleName = new TextField();
             mLastName = new TextField();
 
-            // Limit the text allowed within the text fields to 30.
+            // Limit the mUnmaskedText allowed within the mUnmaskedText fields to 30.
             BarangayUtils.addTextLimitListener(mFirstName, 30);
             BarangayUtils.addTextLimitListener(mMiddleName, 30);
             BarangayUtils.addTextLimitListener(mLastName, 30);
@@ -185,7 +185,7 @@ public class NodeNameHandler {
         }
 
         /**
-         * Clear all the string within this Node Name's text fields. Also, resetScene the
+         * Clear all the string within this Node Name's mUnmaskedText fields. Also, resetScene the
          * Auxiliary to N/A.
          */
         public void clear() {
@@ -470,7 +470,7 @@ public class NodeNameHandler {
 
     /**
      * Validate whether the data within the Node Names are allowed or not. If a Node
-     * Name text field contains an illegal input, then change the style of the text
+     * Name mUnmaskedText field contains an illegal input, then change the style of the mUnmaskedText
      * field to the unselected style.
      *
      * @return true if all Node Name inputs are legal. Otherwise, return false.

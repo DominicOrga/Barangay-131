@@ -223,12 +223,12 @@ public class BarangayUtils {
 
 
     /**
-     * Limit the text within a any TextInputControl child classes to a certain length.
+     * Limit the mUnmaskedText within a any TextInputControl child classes to a certain length.
      *
      * @param textField
-     *        The text field to be handled.
+     *        The mUnmaskedText field to be handled.
      * @param length
-     *        The maximum length of text allowed within the specified text field.
+     *        The maximum length of mUnmaskedText allowed within the specified mUnmaskedText field.
      */
     public static void addTextLimitListener(TextInputControl textField, double length) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {

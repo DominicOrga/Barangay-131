@@ -1,13 +1,13 @@
 package javah.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -31,10 +31,10 @@ public class PasswordController {
     @FXML private Pane mRootPane;
 
     /* An input field for the new password. */
-    @FXML private PasswordField mNewPassword;
+    @FXML private TextField mNewPassword;
 
     /* Another input field to verify the new password. */
-    @FXML private PasswordField mConfirmPassword;
+    @FXML private TextField mConfirmPassword;
 
     /* Displays the rule violated by the new password input. */
     @FXML private Text mError;
@@ -45,6 +45,9 @@ public class PasswordController {
     /* Buttons to either save or cancel the password update process. */
     @FXML private Button mSaveButton, mCancelButton;
 
+    /* Buttons that either mask or unmask their specified text fields. */
+    @FXML private ImageView mNewPasswordPeekButton, mConfirmPasswordPeekButton;
+
     /* Determines whether to show the text within the password fields. */
     private boolean mIsNewPasswordPeekEnabled, mIsConfirmPasswordPeekEnabled;
 
@@ -53,17 +56,19 @@ public class PasswordController {
     public void initialize() {
 
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            // Clear the text fields.
             mNewPassword.setText(null);
             mConfirmPassword.setText(null);
 
-
+            // Hide the error and disable the save button, since the passwords are empty.
             mError.setVisible(false);
-
-            mPasswordStrength.setText("Weak");
-            mPasswordStrength.setTextFill(Color.valueOf("#FF3F3F"));
-
             mSaveButton.setDisable(true);
+
+            // Remove text field masks.
+            mIsNewPasswordPeekEnabled = true;
+            mIsConfirmPasswordPeekEnabled = true;
         });
     }
+
 
 }
