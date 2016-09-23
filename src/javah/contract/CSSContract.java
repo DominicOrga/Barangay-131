@@ -36,24 +36,24 @@ public class CSSContract {
         prop[17] = "-fx-padding: 1;";
     }
 
-    public static String STYLE_LABEL_SELECTED = prop[0] + prop[12] + prop[14];
-    public static String STYLE_LABEL_UNSELECTED = prop[1] + prop[12];
-    public static String STYLE_LABEL_UNSELECTED_WHITE = prop[6] + prop[12];
-    public static String STYLE_GRID_BORDERED = prop[4] + prop[15] + prop[16] + prop[17];
-    public static String STYLE_GRID_UNBORDERED = prop[1];
-    public static String STYLE_TEXTFIELD_ERROR = prop[8];
+    public static final String STYLE_LABEL_SELECTED = prop[0] + prop[12] + prop[14];
+    public static final String STYLE_LABEL_UNSELECTED = prop[1] + prop[12];
+    public static final String STYLE_LABEL_UNSELECTED_WHITE = prop[6] + prop[12];
+    public static final String STYLE_GRID_BORDERED = prop[4] + prop[15] + prop[16] + prop[17];
+    public static final String STYLE_GRID_UNBORDERED = prop[1];
+    public static final String STYLE_TEXTFIELD_ERROR = prop[8];
 
-    public static String STYLE_TEXTAREA_NO_ERROR = prop[6] + prop[7];
-    public static String STYLE_TEXTAREA_ERROR = prop[6] + prop[8];
+    public static final String STYLE_TEXTAREA_NO_ERROR = prop[6] + prop[7];
+    public static final String STYLE_TEXTAREA_ERROR = prop[6] + prop[8];
 
-    public static String STYLE_MENU_SELECTED = prop[5] + prop[9] + prop[10];
-    public static String STYLE_MENU_UNSELECTED = prop[3] + prop[9] + prop[10];
+    public static final String STYLE_MENU_SELECTED = prop[5] + prop[9] + prop[10];
+    public static final String STYLE_MENU_UNSELECTED = prop[3] + prop[9] + prop[10];
 
-    public static String STYLE_DATE_HEADER = prop[1] + prop[13] + prop[12];
+    public static final String STYLE_DATE_HEADER = prop[1] + prop[13] + prop[12];
 
-    public static String STYLE_COMBO_BOX = prop[6] + prop[7];
+    public static final String STYLE_COMBO_BOX = prop[6] + prop[7];
 
-    public static String STYLE_RED_BUTTON = prop[2] + prop[11];
-    public static String STYLE_CHOCO_BUTTON = prop[5] + prop[11];
-    public static String STYLE_ORANGE_BUTTON = prop[3] + prop[11];
+    public static final String STYLE_RED_BUTTON = prop[2] + prop[11];
+    public static final String STYLE_CHOCO_BUTTON = prop[5] + prop[11];
+    public static final String STYLE_ORANGE_BUTTON = prop[3] + prop[11];
 }
