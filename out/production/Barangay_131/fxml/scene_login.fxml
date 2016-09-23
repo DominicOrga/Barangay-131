@@ -33,14 +33,17 @@
          </children>
       </Pane>
 
-      <Pane fx:id="mPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF;">
+      <Pane fx:id="mPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <PasswordField fx:id="mPasswordField" layoutX="29.0" layoutY="53.0" onKeyPressed="#onPasswordFieldKeyPressed" prefHeight="27.0" prefWidth="300.0" promptText="Password" />
-            <Button fx:id="mConfirmButton" layoutX="118.0" layoutY="129.0" mnemonicParsing="false" onAction="#onConfirmButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Login" textFill="WHITE">
+            <PasswordField fx:id="mPasswordField" layoutX="25.0" layoutY="53.0" onKeyPressed="#onPasswordFieldKeyPressed" prefHeight="27.0" prefWidth="300.0" promptText="Password">
+               <font>
+                  <Font size="20.0" />
+               </font></PasswordField>
+            <Button fx:id="mConfirmButton" layoutX="115.0" layoutY="140.0" mnemonicParsing="false" onAction="#onConfirmButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Login" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font></Button>
-            <Button fx:id="mCancelButton" layoutX="228.0" layoutY="129.0" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Exit" textFill="WHITE">
+            <Button fx:id="mCancelButton" layoutX="225.0" layoutY="140.0" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Exit" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font></Button>
@@ -48,7 +51,7 @@
                <font>
                   <Font size="20.0" />
                </font></Label>
-            <Label layoutX="29.0" layoutY="91.0" text="Invalid input" textFill="#ff3f3f">
+            <Label layoutX="29.0" layoutY="97.0" text="Password did not match." textFill="#ff3f3f">
                <font>
                   <Font size="20.0" />
                </font></Label>

@@ -1,6 +1,7 @@
 package javah.controller;
 
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,13 +9,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javah.Main;
 import javah.container.Resident;
 import javah.contract.CSSContract;
 import javah.util.BarangayUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A controller class for managing the resident form, either for update or
@@ -256,9 +264,7 @@ public class ResidentFormControl {
      */
     @FXML
     public void onCancelButtonClicked(ActionEvent event) {
-
-        TextFieldMaskHandler.removeMask(mFirstName);
-//        mListener.onCancelButtonClicked();
+        mListener.onCancelButtonClicked();
     }
 
     /**
@@ -270,102 +276,100 @@ public class ResidentFormControl {
      */
     @FXML
     public void onCreateButtonClicked(ActionEvent event) {
-        TextFieldMaskHandler.addMask(mFirstName);
-//
-//        boolean isDataValid = true;
-//
-//        String firstName = mFirstName.getText();
-//        String middleName = mMiddleName.getText();
-//        String lastName = mLastName.getText();
-//
-//        // Check name input.
-//        mFirstName.setStyle(firstName != null && !firstName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-//        mMiddleName.setStyle(middleName != null && !middleName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-//        mLastName.setStyle(lastName != null && !lastName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
-//
-//        if (firstName != null && middleName != null && lastName != null &&
-//                !firstName.trim().isEmpty() && !middleName.trim().isEmpty() &&
-//                !lastName.trim().isEmpty()) {
-//
-//            mNameError.setVisible(false);
-//        } else {
-//            mNameError.setVisible(true);
-//            isDataValid = false;
-//        }
-//
-//        // Check address 1 input.
-//        if(mAddress1.getText() != null && !mAddress1.getText().trim().isEmpty()) {
-//            mAddress1Error.setVisible(false);
-//            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
-//        } else {
-//            mAddress1Error.setVisible(true);
-//            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
-//            isDataValid = false;
-//        }
-//
-//        // If all the data are all valid, then create a Resident object and pass the data to it, then send it to the
-//        // main control.
-//        if(isDataValid) {
-//            if (mResident == null) mResident = new Resident();
-//
-//            mResident.setFirstName(BarangayUtils.capitalizeString(firstName));
-//            mResident.setMiddleName(BarangayUtils.capitalizeString(middleName));
-//            mResident.setLastName(BarangayUtils.capitalizeString(lastName));
-//
-//
-//            String auxiliary = mAuxiliary.getValue().toString();
-//            mResident.setAuxiliary(auxiliary.equals("N/A") ? null : auxiliary);
-//
-//            mResident.setAddress1(mAddress1.getText());
-//            mResident.setAddress2(mAddress2.getText());
-//
-//            // Store the birthdate of the resident.
-//            Calendar birthdate = Calendar.getInstance();
-//            birthdate.set(
-//                    (int) mBirthYear.getValue(),
-//                    BarangayUtils.convertMonthStringToInt(mBirthMonth.getValue().toString()),
-//                    (int) mBirthDay.getValue()
-//            );
-//
-//            mResident.setBirthDate(new Date(birthdate.getTime().getTime()));
-//
-//            // Store the value of the year of residency of the resident.
-//            String yearOfResidency = mYearOfResidency.getValue().toString();
-//
-//            // Store the year and month of residency of the resident.
-//            if (yearOfResidency.equals("Birth"))
-//                mResident.setYearOfResidency((short) -1);
-//            else {
-//                mResident.setYearOfResidency(Short.parseShort(yearOfResidency));
-//                mResident.setMonthOfResidency(
-//                        (short) BarangayUtils.convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
-//            }
-//
-//            // Store the image permanently in Barangay131/Photos and return the path.
-//            if (mResidentPhoto != null) {
-//                try {
-//                    // Save the photo in the approriate directory with a unique uuid name.
-//                    String targetImage = Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
-//
-//                    File file = new File(targetImage);
-//                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(mResidentPhoto, null);
-//                    ImageIO.write(
-//                            renderedImage,
-//                            "png",
-//                            file);
-//
-//                    // Store the path of the photo to the resident to be saved in the database.
-//                    mResident.setPhotoPath(targetImage);
-//
-//                    mResidentPhoto = null;
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            mListener.onSaveButtonClicked(mResident);
-//        }
+        boolean isDataValid = true;
+
+        String firstName = mFirstName.getText();
+        String middleName = mMiddleName.getText();
+        String lastName = mLastName.getText();
+
+        // Check name input.
+        mFirstName.setStyle(firstName != null && !firstName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mMiddleName.setStyle(middleName != null && !middleName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+        mLastName.setStyle(lastName != null && !lastName.trim().isEmpty() ? null : CSSContract.STYLE_TEXTFIELD_ERROR);
+
+        if (firstName != null && middleName != null && lastName != null &&
+                !firstName.trim().isEmpty() && !middleName.trim().isEmpty() &&
+                !lastName.trim().isEmpty()) {
+
+            mNameError.setVisible(false);
+        } else {
+            mNameError.setVisible(true);
+            isDataValid = false;
+        }
+
+        // Check address 1 input.
+        if(mAddress1.getText() != null && !mAddress1.getText().trim().isEmpty()) {
+            mAddress1Error.setVisible(false);
+            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
+        } else {
+            mAddress1Error.setVisible(true);
+            mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_ERROR);
+            isDataValid = false;
+        }
+
+        // If all the data are all valid, then create a Resident object and pass the data to it, then send it to the
+        // main control.
+        if(isDataValid) {
+            if (mResident == null) mResident = new Resident();
+
+            mResident.setFirstName(BarangayUtils.capitalizeString(firstName));
+            mResident.setMiddleName(BarangayUtils.capitalizeString(middleName));
+            mResident.setLastName(BarangayUtils.capitalizeString(lastName));
+
+
+            String auxiliary = mAuxiliary.getValue().toString();
+            mResident.setAuxiliary(auxiliary.equals("N/A") ? null : auxiliary);
+
+            mResident.setAddress1(mAddress1.getText());
+            mResident.setAddress2(mAddress2.getText());
+
+            // Store the birthdate of the resident.
+            Calendar birthdate = Calendar.getInstance();
+            birthdate.set(
+                    (int) mBirthYear.getValue(),
+                    BarangayUtils.convertMonthStringToInt(mBirthMonth.getValue().toString()),
+                    (int) mBirthDay.getValue()
+            );
+
+            mResident.setBirthDate(new Date(birthdate.getTime().getTime()));
+
+            // Store the value of the year of residency of the resident.
+            String yearOfResidency = mYearOfResidency.getValue().toString();
+
+            // Store the year and month of residency of the resident.
+            if (yearOfResidency.equals("Birth"))
+                mResident.setYearOfResidency((short) -1);
+            else {
+                mResident.setYearOfResidency(Short.parseShort(yearOfResidency));
+                mResident.setMonthOfResidency(
+                        (short) BarangayUtils.convertMonthStringToInt(mMonthOfResidency.getValue().toString()));
+            }
+
+            // Store the image permanently in Barangay131/Photos and return the path.
+            if (mResidentPhoto != null) {
+                try {
+                    // Save the photo in the approriate directory with a unique uuid name.
+                    String targetImage = Main.PHOTO_DIR_PATH + "/" + UUID.randomUUID() + ".png";
+
+                    File file = new File(targetImage);
+                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(mResidentPhoto, null);
+                    ImageIO.write(
+                            renderedImage,
+                            "png",
+                            file);
+
+                    // Store the path of the photo to the resident to be saved in the database.
+                    mResident.setPhotoPath(targetImage);
+
+                    mResidentPhoto = null;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            mListener.onSaveButtonClicked(mResident);
+        }
     }
 
     /**
