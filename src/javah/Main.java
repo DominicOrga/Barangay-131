@@ -25,7 +25,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         PRIMARY_STAGE = primaryStage;
-//        // Initialize the javah window.
+        // Initialize the javah window.
 //        FXMLLoader mainFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_main.fxml"));
 //        Scene mainScene = new Scene(mainFxmlLoader.load());
 //

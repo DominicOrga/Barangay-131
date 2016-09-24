@@ -45,7 +45,8 @@ public class ConfirmationDialogControl {
     public static final byte
             CLIENT_RESIDENT_DELETION = 1,
             CLIENT_BUSINESS_DELETION = 2,
-            CLIENT_WEBCAM_FAILURE = 3;
+            CLIENT_WEBCAM_FAILURE = 3,
+            CLIENT_CHANGE_PASSWORD = 4;
 
     /* The message of the dialog. */
     @FXML private Text mMessage;
@@ -117,10 +118,11 @@ public class ConfirmationDialogControl {
                 mActionLabel.setText(client == CLIENT_RESIDENT_DELETION ? "Delete Resident" : "Delete Business");
                 mActionIcon.setImage(new Image("res/ic_trash_bin.png"));
 
+                mMessage.setText("Are you sure?");
+
                 mWarningText.setText("\nDeleted " + (client == CLIENT_RESIDENT_DELETION ? "resident" : "business") +
                         " cannot be recovered.");
 
-                mMessage.setText("Are you sure?");
                 mWarningText.setVisible(true);
                 mWarningText.setManaged(true);
 
@@ -141,6 +143,21 @@ public class ConfirmationDialogControl {
 
                 mCancelButton.setVisible(false);
                 mCancelButton.setManaged(false);
+
+                break;
+
+            case CLIENT_CHANGE_PASSWORD:
+                mActionLabel.setText("Change Password");
+                mActionIcon.setImage(new Image("res/ic_lock.png"));
+
+                mMessage.setText("Change password?");
+
+                mWarningText.setText("Password cannot be changed within 3 days.");
+                mWarningText.setVisible(true);
+                mWarningText.setManaged(true);
+
+                mCancelButton.setVisible(true);
+                mCancelButton.setManaged(true);
         }
     }
 }

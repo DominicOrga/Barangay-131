@@ -1,10 +1,7 @@
 package javah.controller;
 
 import edu.vt.middleware.password.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,15 +9,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javah.contract.CSSContract;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
+
+import java.util.Calendar;
 
 /**
  * A class that handles the password manipulation of the application.
@@ -37,7 +34,12 @@ public class ChangePasswordController {
          * Tell the Account control that the password has been updated and take necessary
          * actions.
          */
-        void onPasswordChanged();
+        void onSaveButtonClicked();
+
+        /**
+         * Close the Change password scene from the main control.
+         */
+        void onCancelButtonClicked();
     }
 
     /* The root node of this view. Disabled when the confirmation dialog is visible. */
@@ -63,14 +65,16 @@ public class ChangePasswordController {
     /* A button to save the new password if all the rules are followed. */
     @FXML private Button mSaveButton;
 
-    /* Determines whether the new password is masked or not. */
-    private boolean mIsNewPasswordMasked = true;
-
     /**
      * A reference to the universal preference model. Used to acquire the current
      * password of the system or update the current password.
      */
     private PreferenceModel mPrefModel;
+
+    /* Determines whether the new password is masked or not. */
+    private boolean mIsNewPasswordMasked = true;
+
+    private OnPasswordControlListener mListener;
 
     private String mCurrentPassword;
 
@@ -234,6 +238,7 @@ public class ChangePasswordController {
 
         // Take action when this is visible again.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            mRootPane.setDisable(false);
             // Clear the text fields.
             mNewPassword.setText(null);
             mConfirmPasswordMasked.setText(null);
@@ -242,7 +247,8 @@ public class ChangePasswordController {
             setNewPasswordMaskedVisible(true);
 
             // Always get the current password when this view is shown.
-            mCurrentPassword = mPrefModel.get(PreferenceContract.PASSWORD, null);
+            if (mPrefModel != null)
+                mCurrentPassword = mPrefModel.get(PreferenceContract.PASSWORD, null);
         });
     }
 
@@ -260,18 +266,23 @@ public class ChangePasswordController {
 
     @FXML
     public void onCancelButtonClicked(ActionEvent actionEvent) {
+        mListener.onCancelButtonClicked();
     }
 
     /**
-     * Save the new password as a preference.
+     * Call the ConfirmationDialogControl to inform the client about the consequences
+     * of changing the password.
      *
      * @param actionEvent
      *        The action event. No usage.
+     *
+     * @see ConfirmationDialogControl
      */
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         // Save the password as a preference.
-        mPrefModel.put(PreferenceContract.PASSWORD, mNewPassword.getText());
+        mRootPane.setDisable(true);
+        mListener.onSaveButtonClicked();
     }
 
     /**
@@ -302,5 +313,28 @@ public class ChangePasswordController {
      */
     public void setPreferenceModel(PreferenceModel prefModel) {
         mPrefModel = prefModel;
+    }
+
+    /**
+     * Set the listener for this controller.
+     *
+     * @param listener
+     *        The listener for this controller.
+     */
+    public void setListener(OnPasswordControlListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Tell this controller to save the password stored in the input fields.
+     * Close this controller after the saving process.
+     */
+    public void savePassword() {
+        mPrefModel.put(PreferenceContract.PASSWORD, mNewPassword.getText());
+
+        Calendar calendar = Calendar.getInstance();
+        mPrefModel.put(PreferenceContract.LAST_PASSWORD_UPDATE, calendar.getTime().getTime() + "");
+
+        mPrefModel.save();
     }
 }

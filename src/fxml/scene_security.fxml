@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="366.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.ChangePasswordController">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="366.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+         <children>
+            <Label layoutX="216.0" layoutY="3.0" text="Security" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="321.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/ic_lock.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="23.0" layoutY="75.0" text="Current Password:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="mPassword" focusTraversable="false" layoutX="23.0" layoutY="105.0" prefHeight="44.0" prefWidth="318.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label fx:id="mChangePasswordButton" layoutX="224.0" layoutY="155.0" onDragOver="#onChangePasswordButtonOver" onMouseClicked="#onChangePasswordButtonClicked" text="Change password" textFill="#0080ff" underline="true" />
+      <TextFlow fx:id="mWarning" layoutX="25.0" layoutY="184.0" prefHeight="20.0" prefWidth="300.0">
+         <children>
+            <Text fx:id="mRequirements" fill="#ff3f3f" strokeType="OUTSIDE" strokeWidth="0.0" text="Password can only be changed after 3 days from the last update. Last update was on " wrappingWidth="275.4375" />
+            <Text fx:id="mLastUpdate" fill="#ff3f3f" strokeType="OUTSIDE" strokeWidth="0.0" text="December 3, 2016 11:45AM." wrappingWidth="275.4375" />
+         </children>
+      </TextFlow>
+      <Button fx:id="mDoneButton" layoutX="242.0" layoutY="300.0" mnemonicParsing="false" onAction="#onDoneButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Done" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="24.0" layoutY="250.0" text="Auto logout after idle:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="mIdleComboBox" layoutX="224.0" layoutY="249.0" prefHeight="33.0" prefWidth="118.0" promptText="15 mins" style="-fx-background-color: transparent; -fx-border-color: BEBEBE;" stylesheets="@../css/main_stylesheet.css" />
+   </children>
+</Pane>

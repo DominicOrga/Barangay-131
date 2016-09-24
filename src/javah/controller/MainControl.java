@@ -1,5 +1,6 @@
 package javah.controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,6 +76,7 @@ public class MainControl {
     private Pane mResidentFormScene;
     private Pane mResidentInfoFormScene;
     private Pane mBusiClearanceFormScene;
+    private Pane mChangePasswordScene;
 
     /**
      * The popup scenes. (REPORTS)
@@ -95,6 +97,7 @@ public class MainControl {
     private BarangayClearanceReportControl mBrgyClearanceReportControl;
     private BusinessClearanceFormControl mBusiClearanceFormControl;
     private BusinessClearanceReportControl mBusiClearanceReportControl;
+    private ChangePasswordController mChangePasswordControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -117,8 +120,6 @@ public class MainControl {
     private CacheModel mCacheModel;
     private DatabaseModel mDatabaseModel;
     private PreferenceModel mPreferenceModel;
-
-    private LogoutTimer mLogoutTimer;
 
     /**
      * Initialize all the scenes.
@@ -427,13 +428,23 @@ public class MainControl {
                         mResidentControl.deleteSelectedResident();
                         mResidentControl.setBlurListPaging(false);
                         break;
+
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
                         hidePopupScene(mConfirmationDialogScene, true);
                         mBusiClearanceFormControl.deleteSelectedBusiness();
                         break;
+
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
                         hidePopupScene(mConfirmationDialogScene, true);
                         mPhotoshopControl.onCancelButtonClicked(null);
+                        break;
+
+                    case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
+                        hidePopupScene(mConfirmationDialogScene, true);
+                        hidePopupScene(mChangePasswordScene, false);
+                        mChangePasswordControl.savePassword();
+
+                        // todo : Update the label indicating the last password update.
                 }
 
             }
@@ -445,10 +456,16 @@ public class MainControl {
                         hidePopupScene(mConfirmationDialogScene, false);
                         mResidentControl.setBlurListPaging(false);
                         break;
+
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
                         hidePopupScene(mConfirmationDialogScene, true);
                         break;
+
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
+                        hidePopupScene(mConfirmationDialogScene, true);
+                        break;
+
+                    case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
                         hidePopupScene(mConfirmationDialogScene, true);
                 }
             }
@@ -640,6 +657,29 @@ public class MainControl {
             }
         });
 
+        // Initialize the change password scene.
+        resetFXMLLoader.accept("fxml/scene_change_password.fxml");
+        mChangePasswordScene = fxmlLoader.load();
+
+        mChangePasswordControl = fxmlLoader.getController();
+        mChangePasswordControl.setPreferenceModel(mPreferenceModel);
+        mChangePasswordControl.setListener(new ChangePasswordController.OnPasswordControlListener() {
+            @Override
+            public void onSaveButtonClicked() {
+                showPopupScene(mConfirmationDialogScene, true);
+                mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD);
+            }
+
+            @Override
+            public void onCancelButtonClicked() {
+                hidePopupScene(mChangePasswordScene, false);
+            }
+        });
+
+        // Initialize the security scene.
+
+
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
@@ -684,17 +724,27 @@ public class MainControl {
     /**
      * Show the barangay agent setup form.
      *
-     * @param mouseEvent
+     * @param actionEvent
      *        The action event. No usage.
      */
     @FXML
-    public void onSettingsButtonClicked(MouseEvent mouseEvent) {
+    public void onSettingsButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mBarangayAgentScene, false);
 
         switch (mMenuSelected) {
             case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
             default : mInformationControl.setBlurListPaging(true); break;
         }
+    }
+
+    /**
+     * Show the security scene.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
+    public void onSecurityButtonClicked(ActionEvent actionEvent) {
+
     }
 
     /**
@@ -817,5 +867,6 @@ public class MainControl {
     private void logout() {
 
     }
+
 
 }
