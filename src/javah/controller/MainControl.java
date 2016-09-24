@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -23,9 +22,9 @@ import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
-import javah.util.LogoutTimer;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -53,6 +52,8 @@ public class MainControl {
      */
     @FXML private Pane mResidentMenu, mBarangayClearanceMenu, mBarangayIdMenu, mBusinessClearanceMenu;
 
+    @FXML private Label mLastLoginDate, mLastLoginTime;
+
     /**
      * The information scenes.
      */
@@ -77,6 +78,7 @@ public class MainControl {
     private Pane mResidentInfoFormScene;
     private Pane mBusiClearanceFormScene;
     private Pane mChangePasswordScene;
+    private Pane mSecurityScene;
 
     /**
      * The popup scenes. (REPORTS)
@@ -97,7 +99,8 @@ public class MainControl {
     private BarangayClearanceReportControl mBrgyClearanceReportControl;
     private BusinessClearanceFormControl mBusiClearanceFormControl;
     private BusinessClearanceReportControl mBusiClearanceReportControl;
-    private ChangePasswordController mChangePasswordControl;
+    private ChangePasswordControl mChangePasswordControl;
+    private SecurityControl mSecurityControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -432,6 +435,7 @@ public class MainControl {
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
                         hidePopupScene(mConfirmationDialogScene, true);
                         mBusiClearanceFormControl.deleteSelectedBusiness();
+                        mBusiClearanceFormControl.setDisable(false);
                         break;
 
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
@@ -441,10 +445,18 @@ public class MainControl {
 
                     case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
                         hidePopupScene(mConfirmationDialogScene, true);
-                        hidePopupScene(mChangePasswordScene, false);
-                        mChangePasswordControl.savePassword();
+                        hidePopupScene(mChangePasswordScene, true);
 
-                        // todo : Update the label indicating the last password update.
+                        Calendar calendar = mChangePasswordControl.savePassword();
+
+                        mSecurityControl.setDisable(false);
+                        mSecurityControl.updateDisplayedPassword();
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+                        mLastLoginDate.setText(dateFormat.format(calendar));
+
+                        dateFormat = new SimpleDateFormat("hh:mm aaa");
+                        mLastLoginTime.setText(dateFormat.format(calendar));
                 }
 
             }
@@ -459,6 +471,7 @@ public class MainControl {
 
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
                         hidePopupScene(mConfirmationDialogScene, true);
+                        mBusiClearanceFormControl.setDisable(false);
                         break;
 
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
@@ -467,6 +480,7 @@ public class MainControl {
 
                     case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
                         hidePopupScene(mConfirmationDialogScene, true);
+
                 }
             }
         });
@@ -626,12 +640,14 @@ public class MainControl {
             public void onCancelButtonClicked() {
                 hidePopupScene(mBusiClearanceFormScene, false);
                 mInformationControl.setBlurListPaging(false);
+                mInformationControl.updateListPaging();
             }
 
             @Override
             public void onDeleteButtonClicked() {
                 showPopupScene(mConfirmationDialogScene, true);
                 mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_BUSINESS_DELETION);
+                mBusiClearanceFormControl.setDisable(true);
             }
         });
 
@@ -663,7 +679,7 @@ public class MainControl {
 
         mChangePasswordControl = fxmlLoader.getController();
         mChangePasswordControl.setPreferenceModel(mPreferenceModel);
-        mChangePasswordControl.setListener(new ChangePasswordController.OnPasswordControlListener() {
+        mChangePasswordControl.setListener(new ChangePasswordControl.OnPasswordControlListener() {
             @Override
             public void onSaveButtonClicked() {
                 showPopupScene(mConfirmationDialogScene, true);
@@ -672,13 +688,38 @@ public class MainControl {
 
             @Override
             public void onCancelButtonClicked() {
-                hidePopupScene(mChangePasswordScene, false);
+                hidePopupScene(mChangePasswordScene, true);
+                mSecurityControl.setDisable(false);
             }
         });
 
         // Initialize the security scene.
+        resetFXMLLoader.accept("fxml/scene_security.fxml");
+        mSecurityScene = fxmlLoader.load();
 
+        mSecurityControl = fxmlLoader.getController();
+        mSecurityControl.setPreferenceModel(mPreferenceModel);
+        mSecurityControl.updateDisplayedPassword();
 
+        mSecurityControl.setListener(new SecurityControl.OnSecurityControlListener() {
+            @Override
+            public void onDoneButtonClicked() {
+                hidePopupScene(mSecurityScene, false);
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT:
+                        mResidentControl.setBlurListPaging(false);
+                        break;
+                    default:
+                        mInformationControl.setBlurListPaging(false);
+                }
+            }
+
+            @Override
+            public void onChangePasswordButtonClicked() {
+                showPopupScene(mChangePasswordScene, true);
+                mSecurityControl.setDisable(true);
+            }
+        });
 
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
@@ -690,6 +731,8 @@ public class MainControl {
         addToPopupPane.accept(mBrgyClearanceReportScene);
         addToPopupPane.accept(mBusiClearanceFormScene);
         addToPopupPane.accept(mBusiClearanceReportScene);
+        addToPopupPane.accept(mChangePasswordScene);
+        addToPopupPane.accept(mSecurityScene);
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
@@ -744,7 +787,15 @@ public class MainControl {
      *        The action event. No usage.
      */
     public void onSecurityButtonClicked(ActionEvent actionEvent) {
+        showPopupScene(mSecurityScene, false);
 
+        switch (mMenuSelected) {
+            case MENU_RESIDENT:
+                mResidentControl.setBlurListPaging(true);
+                break;
+            default:
+                mInformationControl.setBlurListPaging(true);
+        }
     }
 
     /**

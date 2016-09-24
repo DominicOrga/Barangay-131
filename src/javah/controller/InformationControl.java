@@ -767,4 +767,24 @@ public class InformationControl {
         updateListPaging(false);
         setLabelSelectedIndex(2);
     }
+
+    /**
+     * Update the list paging from the MainControl if a new business was deleted or updated.
+     */
+    public void updateListPaging() {
+        switch (mInformation) {
+            case INFORMATION_BARANGAY_ID:
+                mReportIDs = mCacheModel.getBrgyIDIDsCache();
+                break;
+
+            case INFORMATION_BARANGAY_CLEARANCE:
+                mReportIDs = mCacheModel.getBrgyClearanceIDsCache();
+                break;
+
+            case INFORMATION_BUSINESS_CLEARANCE:
+                mReportIDs = mCacheModel.getBusiClearanceIDsCache();
+        }
+
+        updateListPaging(false);
+    }
 }

@@ -26,18 +26,18 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         PRIMARY_STAGE = primaryStage;
         // Initialize the javah window.
-//        FXMLLoader mainFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_main.fxml"));
-//        Scene mainScene = new Scene(mainFxmlLoader.load());
-//
-//        // Initialize the primary stage containing the javah scene.
-//        primaryStage.setScene(mainScene);
-//        primaryStage.setMaximized(true);
-//        primaryStage.show();
+        FXMLLoader mainFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_main.fxml"));
+        Scene mainScene = new Scene(mainFxmlLoader.load());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_change_password.fxml"));
-        Scene scene = new Scene(loader.load());
-        primaryStage.setScene(scene);
+        // Initialize the primary stage containing the javah scene.
+        primaryStage.setScene(mainScene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
+
+//        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_change_password.fxml"));
+//        Scene scene = new Scene(loader.load());
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
 
         // Terminate the application when the x button is pressed.
         primaryStage.setOnCloseRequest(event -> System.exit(0));

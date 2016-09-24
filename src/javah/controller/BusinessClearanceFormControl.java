@@ -1027,4 +1027,14 @@ public class BusinessClearanceFormControl {
 
         setState(STATE_NO_SELECTION);
     }
+
+    /**
+     * Disable the root pane when the confirmation dialog is displayed.
+     *
+     * @param bool
+     *        Determines whether to disable or enabled this scene.
+     */
+    public void setDisable(boolean bool) {
+        mRootPane.setDisable(bool);
+    }
 }

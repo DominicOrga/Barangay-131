@@ -543,7 +543,7 @@ public class CacheModel {
         String id = business.getID();
         String name = business.getName();
 
-        // Update the caches related to the Business.
+        // If the business is already part of the cached data, then simply update it.
         if (mBusinessIDsCache.contains(id)) {
 
             // Update the name within the mBusinessNamesCache.
@@ -562,12 +562,18 @@ public class CacheModel {
             // Update the name within the mBusiClearanceBusiNamesCache.
             int busiClearanceIDCount = mBusiClearanceIDsCache.size();
 
-            // Check if the updated resident has a barangay ID or a barangay clearance. If
-            // there is, then update the mBarangayIDNamesCache or mBrgyClearanceNamesCache.
+            // Check if the updated business has a business clearance. If there is, then update
+            // its cache.
             for (int i = 0; i < busiClearanceIDCount; i++) {
-                if (mBusiClearanceBusiNamesCache.get(i).equals(id))
+                if (mBusiClearanceBusiIDsCache.get(i).equals(id)) {
                     mBusiClearanceBusiNamesCache.set(i, name);
+                    System.out.println("CacheModel - Busi Clearance ID index Updated: " + i);
+                }
             }
+
+            System.out.println("CacheModel - ID updated: " + id);
+            System.out.println("CacheModel - Busi clearance IDs: " + mBusiClearanceIDsCache);
+            System.out.println("CacheModel - Update complete.");
 
             return index;
 

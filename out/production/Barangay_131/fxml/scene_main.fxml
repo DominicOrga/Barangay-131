@@ -62,14 +62,9 @@
                                     <Image url="@../res/ic_profile.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="67.0" layoutY="5.0" text="Welcome," textFill="WHITE">
+                              <Label layoutX="68.0" layoutY="15.0" text="Barangay 131" textFill="WHITE">
                                  <font>
-                                    <Font name="Helvetica Light" size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="mUserLabel" layoutX="67.0" layoutY="18.0" text="Chairman" textFill="WHITE">
-                                 <font>
-                                    <Font name="Helvetica Light" size="30.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Label>
                            </children>
@@ -134,8 +129,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label text="December 30, 2016" textFill="WHITE" />
-                              <Label text="11:45 AM" textFill="WHITE" />
+                              <Label fx:id="mLastLoginDate" text="Wednesday, December 30, 2016" textFill="WHITE" />
+                              <Label fx:id="mLastLoginTime" text="11:45 AM" textFill="WHITE" />
                            </children>
                            <VBox.margin>
                               <Insets left="10.0" right="10.0" />
@@ -148,7 +143,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label text="December 30, 2016" textFill="WHITE" />
+                              <Label text="Friday, December 30, 2016" textFill="WHITE" />
                               <Label text="11:45 AM" textFill="WHITE" />
                            </children>
                            <VBox.margin>
@@ -157,7 +152,7 @@
                         </VBox>
                         <HBox alignment="CENTER" spacing="20.0">
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSettingsButtonClicked" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettingsButtonClicked" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                                  <graphic>
                                     <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="60.0">
                                        <children>
@@ -181,7 +176,7 @@
                                     </VBox>
                                  </graphic>
                               </Button>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSecurityButtonClicked" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                                  <graphic>
                                     <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="60.0">
                                        <children>

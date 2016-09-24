@@ -22,7 +22,7 @@ import java.util.Calendar;
 /**
  * A class that handles the password manipulation of the application.
  */
-public class ChangePasswordController {
+public class ChangePasswordControl {
 
 
     /**
@@ -124,6 +124,8 @@ public class ChangePasswordController {
         mNewPasswordMasked.textProperty().addListener((observable, oldValue, newValue) -> {
             int passwordStrength = 4;
 
+            if (newValue == null) newValue = "";
+
             PasswordData passwordData = new PasswordData(new Password(newValue));
 
             // Test Gain Level 1. For every rule violated, subtract 1.
@@ -185,7 +187,7 @@ public class ChangePasswordController {
             }
 
             // New password must have a length greater than 8 but less than 16.
-            if (newValue == null || newValue.length() < 8 || newValue.length() > 16) {
+            if (newValue.length() < 8 || newValue.length() > 16) {
                 mRequirements.setVisible(true);
                 mRequirements.setText(requirements[0]);
                 mSaveButton.setDisable(true);
@@ -224,8 +226,10 @@ public class ChangePasswordController {
         // Check if the Confirm Password field matches that of the new password field at every
         // character input at confirm password field.
         mConfirmPasswordMasked.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (mConfirmPasswordMasked == null ||
-                    !mNewPasswordMasked.getText().equals(mConfirmPasswordMasked.getText())) {
+            if (newValue == null) newValue = "";
+
+            if (mConfirmPasswordMasked == null || mNewPasswordMasked == null ||
+                    !newValue.equals(mConfirmPasswordMasked.getText())) {
                 mRequirements.setVisible(true);
                 mRequirements.setText(requirements[3]);
                 mSaveButton.setDisable(true);
@@ -328,13 +332,17 @@ public class ChangePasswordController {
     /**
      * Tell this controller to save the password stored in the input fields.
      * Close this controller after the saving process.
+     *
+     * @return the datetime which the password was updated.
      */
-    public void savePassword() {
+    public Calendar savePassword() {
         mPrefModel.put(PreferenceContract.PASSWORD, mNewPassword.getText());
 
         Calendar calendar = Calendar.getInstance();
         mPrefModel.put(PreferenceContract.LAST_PASSWORD_UPDATE, calendar.getTime().getTime() + "");
 
         mPrefModel.save();
+
+        return calendar;
     }
 }
