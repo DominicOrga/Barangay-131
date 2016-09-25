@@ -152,7 +152,7 @@ public class ConfirmationDialogControl {
 
                 mMessage.setText("Change password?");
 
-                mWarningText.setText("Password cannot be changed within 3 days.");
+                mWarningText.setText("\nPassword cannot be changed within 3 days from the latest update.");
                 mWarningText.setVisible(true);
                 mWarningText.setManaged(true);
 

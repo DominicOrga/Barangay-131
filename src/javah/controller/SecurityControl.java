@@ -85,27 +85,31 @@ public class SecurityControl {
     public void onChangePasswordButtonClicked(MouseEvent mouseEvent) {
         String datetime = mPrefModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
 
+        datetime = null; // todo : for debugging purposes.
+
         if (datetime == null)
             mListener.onChangePasswordButtonClicked();
         else {
-            Calendar lastPasswordUpdate = Calendar.getInstance();
-            lastPasswordUpdate.setTime(new Date(Long.valueOf(datetime)));
+            Date lastPasswordUpdate = new Date(Long.valueOf(datetime));
+
+            Calendar allowPasswordUpdate = Calendar.getInstance();
+            allowPasswordUpdate.setTime(new Date(Long.valueOf(datetime)));
 
             // Add 3 days to the last password update.
-            lastPasswordUpdate.add(Calendar.DAY_OF_MONTH, 3);
+            allowPasswordUpdate.add(Calendar.DAY_OF_MONTH, 3);
 
             Calendar currentDay = Calendar.getInstance();
 
             // If the last password update added by 3 days is less than the current day, then
             // allow password update process.
-            if (lastPasswordUpdate.compareTo(currentDay) < 0) {
+            if (allowPasswordUpdate.compareTo(currentDay) < 0) {
                 mListener.onChangePasswordButtonClicked();
             } else {
                 if (!mWarning.isVisible()) {
                     mWarning.setVisible(true);
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, YYYY at hh:mm aaa");
-                    mLastUpdate.setText(simpleDateFormat.format(currentDay));
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, YYYY hh:mm aaa");
+                    mLastUpdate.setText(simpleDateFormat.format(lastPasswordUpdate.getTime()));
                 }
             }
         }
@@ -141,6 +145,8 @@ public class SecurityControl {
         if (password != null)
             mPassword.setText(password.substring(0, 3) +
                     "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022");
+
+        System.out.println("SecurityControl - Password updated to: " + password);
     }
 
     /**

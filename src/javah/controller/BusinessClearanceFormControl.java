@@ -43,14 +43,17 @@ public class BusinessClearanceFormControl {
     public interface OnBusinessClearanceFormListener {
 
         /**
-         * Tell the BusinessClearanceReportControl to try to create the business
-         * clearance.
+         * Called if the mCreateButton is pressed while the mState is equal to
+         * STATE_SELECTION. Tell the BusinessClearanceReportControl to try to
+         * create the business clearance.
          *
          * Called if the mCreateButton is pressed while the mState is equal to
-         * STATE_SELECTION.
+         * STATE_UPDATE. Tell the InformationControl to reload the list paging,
+         * since an update was issued
          *
          * @param businessClearance
          *        The business clearance to be sent to the BusinessClearanceReportControl.
+         *        Can be null if a business was updated.
          *
          * @see BusinessClearanceReportControl
          */
@@ -651,6 +654,8 @@ public class BusinessClearanceFormControl {
 
                     // Select the newly created business.
                     setBusinessSelected(index % 10);
+
+                    mListener.onCreateButtonClicked(null);
                 }
         }
     }
@@ -820,7 +825,6 @@ public class BusinessClearanceFormControl {
                     mNodeNameHandler.removeNodeNames();
 
                     displayExtraOwners.accept(false);
-
                 break;
             case STATE_CREATION:
                 // Make sure that no resident is selected.

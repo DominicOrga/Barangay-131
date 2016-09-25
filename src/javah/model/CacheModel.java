@@ -564,16 +564,9 @@ public class CacheModel {
 
             // Check if the updated business has a business clearance. If there is, then update
             // its cache.
-            for (int i = 0; i < busiClearanceIDCount; i++) {
-                if (mBusiClearanceBusiIDsCache.get(i).equals(id)) {
+            for (int i = 0; i < busiClearanceIDCount; i++)
+                if (mBusiClearanceBusiIDsCache.get(i).equals(id))
                     mBusiClearanceBusiNamesCache.set(i, name);
-                    System.out.println("CacheModel - Busi Clearance ID index Updated: " + i);
-                }
-            }
-
-            System.out.println("CacheModel - ID updated: " + id);
-            System.out.println("CacheModel - Busi clearance IDs: " + mBusiClearanceIDsCache);
-            System.out.println("CacheModel - Update complete.");
 
             return index;
 

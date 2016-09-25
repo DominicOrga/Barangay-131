@@ -436,6 +436,8 @@ public class MainControl {
                         hidePopupScene(mConfirmationDialogScene, true);
                         mBusiClearanceFormControl.deleteSelectedBusiness();
                         mBusiClearanceFormControl.setDisable(false);
+
+                        mInformationControl.updateListPaging();
                         break;
 
                     case ConfirmationDialogControl.CLIENT_WEBCAM_FAILURE:
@@ -444,21 +446,22 @@ public class MainControl {
                         break;
 
                     case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
+                        // This must come before hiding the change password scene. Else, the password will
+                        // be turned to null.
+                        Calendar calendar = mChangePasswordControl.savePassword();
+
                         hidePopupScene(mConfirmationDialogScene, true);
                         hidePopupScene(mChangePasswordScene, true);
-
-                        Calendar calendar = mChangePasswordControl.savePassword();
 
                         mSecurityControl.setDisable(false);
                         mSecurityControl.updateDisplayedPassword();
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
-                        mLastLoginDate.setText(dateFormat.format(calendar));
+                        mLastLoginDate.setText(dateFormat.format(calendar.getTime()));
 
                         dateFormat = new SimpleDateFormat("hh:mm aaa");
-                        mLastLoginTime.setText(dateFormat.format(calendar));
+                        mLastLoginTime.setText(dateFormat.format(calendar.getTime()));
                 }
-
             }
 
             @Override
@@ -480,6 +483,7 @@ public class MainControl {
 
                     case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
                         hidePopupScene(mConfirmationDialogScene, true);
+                        mChangePasswordControl.setDisable(false);
 
                 }
             }
@@ -630,17 +634,20 @@ public class MainControl {
         mBusiClearanceFormControl.setListener(new BusinessClearanceFormControl.OnBusinessClearanceFormListener() {
             @Override
             public void onCreateButtonClicked(BusinessClearance businessClearance) {
-                hidePopupScene(mBusiClearanceFormScene, false);
-                showPopupScene(mBusiClearanceReportScene, false);
-                mBusiClearanceReportControl.setBusinessClearance(
-                        businessClearance, BusinessClearanceReportControl.REQUEST_CREATE_REPORT);
+                if (businessClearance == null)
+                    mInformationControl.updateListPaging();
+                else {
+                    hidePopupScene(mBusiClearanceFormScene, false);
+                    showPopupScene(mBusiClearanceReportScene, false);
+                    mBusiClearanceReportControl.setBusinessClearance(
+                            businessClearance, BusinessClearanceReportControl.REQUEST_CREATE_REPORT);
+                }
             }
 
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBusiClearanceFormScene, false);
                 mInformationControl.setBlurListPaging(false);
-                mInformationControl.updateListPaging();
             }
 
             @Override
@@ -684,6 +691,7 @@ public class MainControl {
             public void onSaveButtonClicked() {
                 showPopupScene(mConfirmationDialogScene, true);
                 mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD);
+                mChangePasswordControl.setDisable(true);
             }
 
             @Override
@@ -918,6 +926,8 @@ public class MainControl {
     private void logout() {
 
     }
+
+
 
 
 }
