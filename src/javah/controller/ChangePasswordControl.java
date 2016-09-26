@@ -1,6 +1,7 @@
 package javah.controller;
 
-import edu.vt.middleware.password.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,6 +19,8 @@ import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class that handles the password manipulation of the application.
@@ -62,9 +65,6 @@ public class ChangePasswordControl {
     /* Displays the strength of the input from the mNewPassword. */
     @FXML private Label mPasswordStrengthLabel;
 
-    /* A button to save the new password if all the rules are followed. */
-    @FXML private Button mSaveButton;
-
     /**
      * A reference to the universal preference model. Used to acquire the current
      * password of the system or update the current password.
@@ -76,8 +76,6 @@ public class ChangePasswordControl {
 
     private OnPasswordControlListener mListener;
 
-    private String mCurrentPassword;
-
     /* The strength of the newly inputted password. */
     private int mPasswordStrength;
 
@@ -85,206 +83,200 @@ public class ChangePasswordControl {
     public void initialize() {
         // Bind bi-directionally together the mNewPassword and mNewPasswordMasked.
         mNewPassword.textProperty().bindBidirectional(mNewPasswordMasked.textProperty());
+        mNewPassword.setText("");
+        mConfirmPasswordMasked.setText("");
 
-        // Limit all the text input controls to 17.
-        BarangayUtils.addTextLimitListener(mNewPassword, 17);
-        BarangayUtils.addTextLimitListener(mNewPasswordMasked, 17);
-        BarangayUtils.addTextLimitListener(mConfirmPasswordMasked, 17);
+        mRequirements.setVisible(false);
 
-        String[] requirements = new String[]{
-                "Length must be between 8 to 16 characters long.",
-                "New password must not be equal to the previous one.",
-                "New Password must not be weak.",
-                "New password must match with the confirm password."
-        };
+        // Limit all the text input controls to 16.
+        BarangayUtils.addTextLimitListener(mNewPassword, 16);
+        BarangayUtils.addTextLimitListener(mNewPasswordMasked, 16);
+        BarangayUtils.addTextLimitListener(mConfirmPasswordMasked, 16);
 
-        // Gain Level 1 (+1)
-        CharacterCharacteristicsRule charRule = new CharacterCharacteristicsRule();
-        charRule.getRules().add(new DigitCharacterRule(1));
-        charRule.getRules().add(new UppercaseCharacterRule(1));
-        charRule.getRules().add(new LowercaseCharacterRule(1));
-        charRule.getRules().add(new NonAlphanumericCharacterRule(1));
+        // Additions:
+        Pattern aPattern = Pattern.compile("\\d");
+        Pattern bPattern = Pattern.compile("[a-z]");
+        Pattern cPattern = Pattern.compile("[A-Z]");
+        Pattern dPattern = Pattern.compile("[^(a-z)(A-Z)(\\d)]");
+        Pattern ePattern = Pattern.compile("(.)(\\d)(.)");
+        Pattern fPattern = Pattern.compile("(.)[^(a-z)(A-Z)(\\d)](.)");
 
-        // Gain Level 2 (+4)
-        LengthRule lengthRule1 = new LengthRule(8, 17);
-        LengthRule lengthRule2 = new LengthRule(11, 17);
-        LengthRule lengthRule3 = new LengthRule(14, 17);
+        // Deductions:
+        Pattern jPattern = Pattern.compile("[A-Z]{2}");
+        Pattern kPattern = Pattern.compile("[a-z]{2}");
+        Pattern lPattern = Pattern.compile("\\d{2}");
 
-        // Lose Level 1 (-2)
-        NumericalSequenceRule numSeqRule1 = new NumericalSequenceRule(3, false);
-        AlphabeticalSequenceRule alphaSeqRule1 = new AlphabeticalSequenceRule(3, false);
-        RepeatCharacterRegexRule repCharRule1 = new RepeatCharacterRegexRule(3);
+        String[] letters = new String[]{"abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk",
+                "jkl", "klm", "lmn", "mno", "nop", "opq", "pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"};
+        String[] lettersRev = new String[]{"cba", "dcb", "edc", "fed", "gfe", "hgf", "ihg", "jih", "kji",
+                "lkj", "mlk", "nml", "onm", "pon", "qpo", "rqp", "srq", "tsr", "uts", "vut", "wvu", "xwv", "yxw", "zyx"};
 
-        // Lose Level 2 (-4)
-        NumericalSequenceRule numSeqRule2 = new NumericalSequenceRule(5, false);
-        AlphabeticalSequenceRule alphaSeqRule2 = new AlphabeticalSequenceRule(5, false);
-        RepeatCharacterRegexRule repCharRule2 = new RepeatCharacterRegexRule(5);
+        String[] numbers = new String[]{"012", "123", "234", "345", "456", "567", "678", "789", "890"};
+        String[] numbersRev = new String[]{"210", "321", "432", "543", "654", "765", "876", "987", "098"};
 
-        // Lose Level 3 (-8)
-        NumericalSequenceRule numSeqRule3 = new NumericalSequenceRule(7, false);
-        AlphabeticalSequenceRule alphaSeqRule3 = new AlphabeticalSequenceRule(7, false);
-        RepeatCharacterRegexRule repCharRule3 = new RepeatCharacterRegexRule(7);
+        String[] symbols = new String[]{")!@", "!@#", "@#$", "#$%", "$%^", "%^&", "^&*", "&*(", "*()"};
+        String[] symbolsRev = new String[]{"@!)", "#@!", "$#@", "%$#", "^%$", "&^%", "*&^", "(*&", ")(*"};
 
-        // Add a listener to the new password input field and determine the password strength
-        // and rule violations (if any) of the inputted password at every inputted character.
+        String[] passwordStrength = new String[]{"Too Short", "Very Weak", "Weak", "Good", "Strong", "Very Strong"};
+
         mNewPasswordMasked.textProperty().addListener((observable, oldValue, newValue) -> {
-            mPasswordStrength = 4;
+            mRequirements.setVisible(false);
 
-            if (newValue == null) newValue = "";
+            if (newValue == null || newValue.isEmpty()) {
+                mPasswordStrengthLabel.setText(passwordStrength[0]);
+                mPasswordStrengthLabel.setTextFill(Color.RED);
+                return;
+            }
 
-            PasswordData passwordData = new PasswordData(new Password(newValue));
+            mPasswordStrength = 0;
+            int passwordLength = newValue.length();
 
-            // Test Gain Level 1. For every rule violated, subtract 1.
-            RuleResult result = charRule.validate(passwordData);
-            mPasswordStrength -= result.getDetails().size();
+            //---------------- Additions --------------//
+            // Numbers:
+            Matcher aMatcher = aPattern.matcher(newValue);
+            int a = 0;
+            while (aMatcher.find()) a++;
 
-            // Test Gain Level 2.
-            result = lengthRule1.validate(passwordData);
-            if (result.isValid())
-                mPasswordStrength += 4;
+            // Lowercase letters:
+            Matcher bMatcher = bPattern.matcher(newValue);
+            int b = 0;
+            while (bMatcher.find()) b++;
 
-            result = lengthRule2.validate(passwordData);
-            if (result.isValid())
-                mPasswordStrength += 4;
+            // Uppercase letters:
+            Matcher cMatcher = cPattern.matcher(newValue);
+            int c = 0;
+            while (cMatcher.find()) c++;
 
-            result = lengthRule3.validate(passwordData);
-            if (result.isValid())
-                mPasswordStrength += 4;
+            // Symbols:
+            Matcher dMatcher = dPattern.matcher(newValue);
+            int d = 0;
+            while (dMatcher.find()) d++;
 
-            // Test Lose Level 1.
-            result = numSeqRule1.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 5;
+            // Middle numbers:
+            Matcher eMatcher = ePattern.matcher(newValue);
+            int e = 0;
+            int start = 0;
+            while (eMatcher.find(start)) {
+                e++;
+                start = eMatcher.end() - 2;
+                if (eMatcher.hitEnd()) break;
+            }
 
-            result = alphaSeqRule1.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 5;
+            // Middle symbols:
+            Matcher fMatcher = fPattern.matcher(newValue);
+            int f = 0;
+            start = 0;
+            while (fMatcher.find(start)) {
+                f++;
+                start = fMatcher.end() - 2;
+                if (fMatcher.hitEnd()) break;
+            }
 
-            result = repCharRule1.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 5;
+            // Requirements:
+            int g = a > 0 ? 1 : 0;
+            g += b > 0 ? 1 : 0;
+            g += c > 0 ? 1 : 0;
+            g += d > 0 ? 1 : 0;
+            g += passwordLength > 7 ? 1 : 0;
 
-            // Test Lose Level 2.
-            result = numSeqRule2.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 10;
+            //------------- Deductions ----------------//
+            // Letters only:
+            int h = (a == 0 && d == 0) ? b + c : 0;
 
-            result = alphaSeqRule2.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 10;
+            // Numbers only:
+            int i = (b == 0 && c == 0 && d == 0) ? a : 0;
 
-            result = repCharRule2.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 10;
+            // Consecutive uppercase letters:
+            Matcher jMatcher = jPattern.matcher(newValue);
+            int j = 0;
+            start = 0;
+            while (jMatcher.find(start)) {
+                j++;
+                start = jMatcher.end() - 1;
+                if (jMatcher.hitEnd()) break;
+            }
 
-            // Test Lose Level 3.
-            result = numSeqRule3.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 15;
+            // Consecutive lowercase letters:
+            Matcher kMatcher = kPattern.matcher(newValue);
+            int k = 0;
+            start = 0;
+            while (kMatcher.find(start)) {
+                k++;
+                start = kMatcher.end() - 1;
+                if (kMatcher.hitEnd()) break;
+            }
 
-            result = alphaSeqRule3.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 15;
+            // Consecutive numbers:
+            Matcher lMatcher = lPattern.matcher(newValue);
+            int l = 0;
+            start = 0;
+            while (lMatcher.find(start)) {
+                l++;
+                start = lMatcher.end() - 1;
+                if (lMatcher.hitEnd()) break;
+            }
 
-            result = repCharRule3.validate(passwordData);
-            if (!result.isValid())
-                mPasswordStrength -= 15;
+            double m = 0;
+            int repChar = 0;
+            int n = 0, o = 0, p = 0;
+            for (int x = 0; x < 24; x++) {
+                // Repeat character (Case insensitive):
+                if (x < passwordLength) {
+                    boolean bool = false;
 
-            if (mPasswordStrength >= 15) {
-                mPasswordStrengthLabel.setText("Very Strong");
-                mPasswordStrengthLabel.setTextFill(Color.GREEN);
-            } else if (mPasswordStrength >= 10) {
-                mPasswordStrengthLabel.setText("Strong");
+                    for (int y = 0; y < passwordLength; y++)
+                        if (newValue.charAt(x) == newValue.charAt(y) && x != y) {
+                            bool = true;
+                            m += Math.abs(passwordLength * 1.0 / (y - x));
+                        }
+
+                    if (bool) {
+                        repChar++;
+                        int unqChar = passwordLength - repChar;
+                        m = (unqChar != 0 ) ? Math.ceil(m / unqChar) : Math.ceil(m);
+                    }
+                }
+
+                // Sequential letters:
+                if (newValue.contains(letters[x]) || newValue.contains(lettersRev[x]))
+                    n++;
+
+                // Sequential numbers:
+                if (x < 9 && (newValue.contains(numbers[x]) || newValue.contains(numbersRev[x])))
+                    o++;
+
+                // Sequential symbols:
+                if (x < 9 && (newValue.contains(symbols[x]) || newValue.contains(symbolsRev[x])))
+                    p++;
+            }
+
+            mPasswordStrength += passwordLength * 4;
+            mPasswordStrength += (b == 0) ? 0 : (passwordLength - b) * 2;
+            mPasswordStrength += (c == 0) ? 0 : (passwordLength - c) * 2;
+            mPasswordStrength += (a * 4) + (d * 6) + (e * 2) + (f * 2);
+            mPasswordStrength += a == 0 || b == 0 || c == 0 || d == 0 || passwordLength < 8 ? 0 : g * 2;
+
+            mPasswordStrength -= h + i + m + (j * 2) + (k * 2) + (l * 2) + (n * 3) + (o * 3) + (p * 3);
+
+            if (mPasswordStrength >= 80) {
+                mPasswordStrengthLabel.setText(passwordStrength[5]);
                 mPasswordStrengthLabel.setTextFill(Color.BLUE);
-            } else if (mPasswordStrength >= 5) {
-                mPasswordStrengthLabel.setText("Fair");
-                mPasswordStrengthLabel.setTextFill(Color.DARKORANGE);
+            } else if (mPasswordStrength >= 60) {
+                mPasswordStrengthLabel.setText(passwordStrength[4]);
+                mPasswordStrengthLabel.setTextFill(Color.GREEN);
+            } else if (mPasswordStrength >= 40) {
+                mPasswordStrengthLabel.setText(passwordStrength[3]);
+                mPasswordStrengthLabel.setTextFill(Color.YELLOW);
+            } else if (mPasswordStrength >= 20) {
+                mPasswordStrengthLabel.setText(passwordStrength[2]);
+                mPasswordStrengthLabel.setTextFill(Color.ORANGE);
             } else {
-                mPasswordStrengthLabel.setText("Weak");
+                mPasswordStrengthLabel.setText(passwordStrength[1]);
                 mPasswordStrengthLabel.setTextFill(Color.RED);
             }
-
-            // New password must have a length greater than 8 but less than 16.
-            if (newValue.length() < 8 || newValue.length() > 16) {
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[0]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            // New password must not be equal to the previous one.
-            if (mCurrentPassword != null)
-                if (newValue.matches(mCurrentPassword)) {
-                    mRequirements.setVisible(true);
-                    mRequirements.setText(requirements[1]);
-                    mSaveButton.setDisable(true);
-                    return;
-                }
-
-            // Weak password not allowed.
-            if (mPasswordStrength < 5) {
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[2]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            // Check if the new password matches the confirm password.
-            if (mConfirmPasswordMasked.getText() == null ||
-                    !mNewPasswordMasked.getText().equals(mConfirmPasswordMasked.getText())) {
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[3]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            mRequirements.setVisible(false);
-            mSaveButton.setDisable(false);
         });
 
-        // Check if the Confirm Password field matches that of the new password field at every
-        // character input at confirm password field.
-        mConfirmPasswordMasked.textProperty().addListener((observable, oldValue, newValue) -> {
-            // New password must have a length greater than 8 but less than 16.
-            if (mNewPasswordMasked.getText() == null ||
-                    mNewPasswordMasked.getText().length() < 8 ||
-                    mNewPasswordMasked.getText().length() > 16) {
-
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[0]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            // New password must not be equal to the previous one.
-            if (mCurrentPassword != null)
-                if (newValue.matches(mCurrentPassword)) {
-                    mRequirements.setVisible(true);
-                    mRequirements.setText(requirements[1]);
-                    mSaveButton.setDisable(true);
-                    return;
-                }
-
-            // Weak password not allowed.
-            if (mPasswordStrength < 5) {
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[2]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            // Check if the new password matches the confirm password.
-            if (mConfirmPasswordMasked.getText() == null ||
-                    !mNewPasswordMasked.getText().equals(mConfirmPasswordMasked.getText())) {
-                mRequirements.setVisible(true);
-                mRequirements.setText(requirements[3]);
-                mSaveButton.setDisable(true);
-                return;
-            }
-
-            mRequirements.setVisible(false);
-            mSaveButton.setDisable(false);
-        });
+        mConfirmPasswordMasked.textProperty().addListener((observable, oldValue, newValue) -> mRequirements.setVisible(false));
 
         // Take action when this is visible again.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
@@ -293,12 +285,10 @@ public class ChangePasswordControl {
             mNewPassword.setText(null);
             mConfirmPasswordMasked.setText(null);
 
+            mRequirements.setVisible(false);
+
             // Set the new password masked visible.
             setNewPasswordMaskedVisible(true);
-
-            // Always get the current password when this view is shown.
-            if (mPrefModel != null)
-                mCurrentPassword = mPrefModel.get(PreferenceContract.PASSWORD, null);
         });
     }
 
@@ -331,6 +321,30 @@ public class ChangePasswordControl {
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         // Save the password as a preference.
+        if (mNewPassword.getText().length() < 8) {
+            mRequirements.setText("Password must have at least a length of 8.");
+            mRequirements.setVisible(true);
+            return;
+        }
+        if (mPasswordStrength < 40) {
+            mRequirements.setText("Password must not be weak.");
+            mRequirements.setVisible(true);
+            return;
+        }
+
+        String currentPassword = mPrefModel.get(PreferenceContract.PASSWORD, "");
+        if (mNewPassword.getText().equals(currentPassword)) {
+            mRequirements.setText("New password must not be equal to the current password.");
+            mRequirements.setVisible(true);
+            return;
+        }
+
+        if (!mNewPassword.getText().equals(mConfirmPasswordMasked.getText())) {
+            mRequirements.setText("New password must match with the confirm password.");
+            mRequirements.setVisible(true);
+            return;
+        }
+
         mListener.onSaveButtonClicked();
     }
 
@@ -382,7 +396,6 @@ public class ChangePasswordControl {
      */
     public Calendar savePassword() {
         mPrefModel.put(PreferenceContract.PASSWORD, mNewPassword.getText());
-
 
         Calendar calendar = Calendar.getInstance();
         mPrefModel.put(PreferenceContract.LAST_PASSWORD_UPDATE, calendar.getTime().getTime() + "");
