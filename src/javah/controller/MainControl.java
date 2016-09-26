@@ -150,8 +150,7 @@ public class MainControl {
         mCacheModel.startCache(mDatabaseModel);
         mPreferenceModel = new PreferenceModel();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+
 
         // Update the last password update date time labels.
         String pwdDateTime = mPreferenceModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
@@ -159,6 +158,9 @@ public class MainControl {
         if (pwdDateTime != null) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date(Long.valueOf(pwdDateTime)));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
 
             mLastPwdUpdateDate.setText(dateFormat.format(calendar.getTime()));
             mLastPwdUpdateTime.setText(timeFormat.format(calendar.getTime()));
@@ -429,6 +431,9 @@ public class MainControl {
             @Override
             public void onFinished() {
                 hidePopupScene(mBarangayAgentScene, false);
+
+                if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
+                    setLogout(true);
             }
         });
 
@@ -755,23 +760,6 @@ public class MainControl {
             @Override
             public void onLoginButtonClicked() {
                 setLogout(false);
-
-                String datetime = mPreferenceModel.get(PreferenceContract.LAST_LOGIN, null);
-
-                if (datetime != null) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(new Date(Long.valueOf(datetime)));
-
-                    mLastLoginDate.setText(dateFormat.format(calendar.getTime()));
-                    mLastLoginTime.setText(timeFormat.format(calendar.getTime()));
-                } else {
-                    mLastLoginDate.setText(null);
-                    mLastLoginTime.setText(null);
-                }
-
-                Calendar calendar = Calendar.getInstance();
-                mPreferenceModel.put(PreferenceContract.LAST_LOGIN, calendar.getTime().getTime() + "");
-                mPreferenceModel.save(false);
             }
         });
 
@@ -976,6 +964,7 @@ public class MainControl {
 
     private void setLogout(boolean bool) {
         if (bool) {
+            mLogoutTimer.stop();
             mPopupLoginPane.setVisible(true);
 
             if (mPopupStackPane.isVisible()) {
@@ -1008,6 +997,26 @@ public class MainControl {
                     default : mInformationControl.setBlurListPaging(false); break;
                 }
             }
+
+            String datetime = mPreferenceModel.get(PreferenceContract.LAST_LOGIN, null);
+
+            if (datetime != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date(Long.valueOf(datetime)));
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+                SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+
+                mLastLoginDate.setText(dateFormat.format(calendar.getTime()));
+                mLastLoginTime.setText(timeFormat.format(calendar.getTime()));
+            } else {
+                mLastLoginDate.setText(null);
+                mLastLoginTime.setText(null);
+            }
+
+            Calendar calendar = Calendar.getInstance();
+            mPreferenceModel.put(PreferenceContract.LAST_LOGIN, calendar.getTime().getTime() + "");
+            mPreferenceModel.save(false);
         }
     }
 }
