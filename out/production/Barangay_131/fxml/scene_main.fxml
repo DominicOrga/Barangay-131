@@ -143,8 +143,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label text="Friday, December 30, 2016" textFill="WHITE" />
-                              <Label text="11:45 AM" textFill="WHITE" />
+                              <Label fx:id="mLastPwdUpdateDate" text="Friday, December 30, 2016" textFill="WHITE" />
+                              <Label fx:id="mLastPwdUpdateTime" text="11:45 AM" textFill="WHITE" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="10.0" right="10.0" />

@@ -257,7 +257,7 @@ public class BarangayIDReportControl {
                 )
         );
 
-        mPrefModel.save();
+        mPrefModel.save(false);
 
         double[] resSignatureDimension = new double[] {
                 mResDraggableSignature.getX(),

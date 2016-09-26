@@ -596,7 +596,7 @@ public class BarangayAgentControl {
 
                 mSecSignature = null;
             }
-            mPreferences.save();
+            mPreferences.save(true);
 
             mListener.onFinished();
         }

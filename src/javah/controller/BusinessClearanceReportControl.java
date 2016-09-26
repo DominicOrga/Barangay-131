@@ -252,7 +252,7 @@ public class BusinessClearanceReportControl {
                 )
         );
 
-        mPrefModel.save();
+        mPrefModel.save(false);
     }
 
     /**

@@ -267,7 +267,7 @@ public class BarangayClearanceReportControl {
                 )
         );
 
-        mPrefModel.save();
+        mPrefModel.save(false);
     }
 
     /**

@@ -97,9 +97,14 @@ public class PreferenceModel {
     /**
      * Save the changes made with the Json file. Called after clicking the save button
      * at mBarangayAgentScene.
+     *
+     * @param isBrgyAgentCalling
+     *        Determines if the save function is called from the barangay clearance, since it
+     *        is the last stage of the initialization process of the system.
      */
-    public void save() {
-        mJson.put(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "1");
+    public void save(boolean isBrgyAgentCalling) {
+        if(isBrgyAgentCalling)
+            mJson.put(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "1");
 
         try {
             FileWriter fileWriter = new FileWriter(mJsonPath);

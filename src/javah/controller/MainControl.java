@@ -23,6 +23,7 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.function.BiConsumer;
@@ -53,6 +54,7 @@ public class MainControl {
     @FXML private Pane mResidentMenu, mBarangayClearanceMenu, mBarangayIdMenu, mBusinessClearanceMenu;
 
     @FXML private Label mLastLoginDate, mLastLoginTime;
+    @FXML private Label mLastPwdUpdateDate, mLastPwdUpdateTime;
 
     /**
      * The information scenes.
@@ -131,11 +133,25 @@ public class MainControl {
     @FXML
     private void initialize() throws Exception {
 
+        // Initialize the models.
         mDatabaseModel = new DatabaseModel();
         mCacheModel = new CacheModel();
         mCacheModel.startCache(mDatabaseModel);
         mPreferenceModel = new PreferenceModel();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+
+        // Update the last password update date time labels.
+        String pwdDateTime = mPreferenceModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
+
+        if (pwdDateTime != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date(Long.valueOf(pwdDateTime)));
+
+            mLastPwdUpdateDate.setText(dateFormat.format(calendar.getTime()));
+            mLastPwdUpdateTime.setText(timeFormat.format(calendar.getTime()));
+        }
 
         // Initialize the mRectAnimTransitioner.
         // *Used in updateMenuSelected() to aid in animation.
@@ -167,20 +183,17 @@ public class MainControl {
             @Override
             public void onNewResidentButtonClicked() {
                 showPopupScene(mResidentFormScene, false);
-                mResidentControl.setBlurListPaging(true);
             }
 
             @Override
             public void onEditResidentButtonClicked(Resident resident) {
                 showPopupScene(mResidentFormScene, false);
-                mResidentControl.setBlurListPaging(true);
                 mResidentFormControl.setResident(resident);
             }
 
             @Override
             public void onDeleteResidentButtonClicked() {
                 showPopupScene(mConfirmationDialogScene, false);
-                mResidentControl.setBlurListPaging(true);
                 mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_RESIDENT_DELETION);
             }
         });
@@ -196,7 +209,6 @@ public class MainControl {
         mInformationControl.setListener(new InformationControl.OnInformationControlListener() {
             @Override
             public void onCreateReportButtonClicked(byte information) {
-                mInformationControl.setBlurListPaging(true);
 
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
@@ -217,7 +229,6 @@ public class MainControl {
 
             @Override
             public void onViewButtonClicked(byte information, Object reportData) {
-                mInformationControl.setBlurListPaging(true);
 
                 switch (information) {
                     case InformationControl.INFORMATION_BARANGAY_ID :
@@ -407,13 +418,6 @@ public class MainControl {
             @Override
             public void onFinished() {
                 hidePopupScene(mBarangayAgentScene, false);
-
-                // When the barangay agent form scene is displayed, then blur the list paging of the
-                // current menu selected.
-                switch (mMenuSelected) {
-                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
-                    default : mInformationControl.setBlurListPaging(false); break;
-                }
             }
         });
 
@@ -429,7 +433,6 @@ public class MainControl {
                     case ConfirmationDialogControl.CLIENT_RESIDENT_DELETION:
                         hidePopupScene(mConfirmationDialogScene, false);
                         mResidentControl.deleteSelectedResident();
-                        mResidentControl.setBlurListPaging(false);
                         break;
 
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
@@ -457,10 +460,10 @@ public class MainControl {
                         mSecurityControl.updateDisplayedPassword();
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
-                        mLastLoginDate.setText(dateFormat.format(calendar.getTime()));
+                        mLastPwdUpdateDate.setText(dateFormat.format(calendar.getTime()));
 
                         dateFormat = new SimpleDateFormat("hh:mm aaa");
-                        mLastLoginTime.setText(dateFormat.format(calendar.getTime()));
+                        mLastPwdUpdateTime.setText(dateFormat.format(calendar.getTime()));
                 }
             }
 
@@ -469,7 +472,6 @@ public class MainControl {
                 switch (client) {
                     case ConfirmationDialogControl.CLIENT_RESIDENT_DELETION:
                         hidePopupScene(mConfirmationDialogScene, false);
-                        mResidentControl.setBlurListPaging(false);
                         break;
 
                     case ConfirmationDialogControl.CLIENT_BUSINESS_DELETION:
@@ -504,15 +506,11 @@ public class MainControl {
                     mResidentControl.updateResident(resident);
                 else
                     mResidentControl.createResident(resident);
-
-                mResidentControl.setBlurListPaging(false);
-
             }
 
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mResidentFormScene, false);
-                mResidentControl.setBlurListPaging(false);
             }
 
             @Override
@@ -556,7 +554,6 @@ public class MainControl {
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mResidentInfoFormScene, false);
-                mInformationControl.setBlurListPaging(false);
             }
 
             @Override
@@ -589,13 +586,11 @@ public class MainControl {
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBarangayIDReportScene, false);
-                mInformationControl.setBlurListPaging(false);
             }
 
             @Override
             public void onSaveButtonClicked(BarangayID barangayID) {
                 hidePopupScene(mBarangayIDReportScene, false);
-                mInformationControl.setBlurListPaging(false);
 
                 mInformationControl.createBarangayID(barangayID);
             }
@@ -612,13 +607,11 @@ public class MainControl {
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBrgyClearanceReportScene, false);
-                mInformationControl.setBlurListPaging(false);
             }
 
             @Override
             public void onSaveButtonClicked(BarangayClearance barangayClearance) {
                 hidePopupScene(mBrgyClearanceReportScene, false);
-                mInformationControl.setBlurListPaging(false);
 
                 mInformationControl.createBarangayClearance(barangayClearance);
             }
@@ -647,7 +640,6 @@ public class MainControl {
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBusiClearanceFormScene, false);
-                mInformationControl.setBlurListPaging(false);
             }
 
             @Override
@@ -668,13 +660,11 @@ public class MainControl {
             @Override
             public void onCancelButtonClicked() {
                 hidePopupScene(mBusiClearanceReportScene, false);
-                mInformationControl.setBlurListPaging(false);
             }
 
             @Override
             public void onSaveButtonClicked(BusinessClearance businessClearance) {
                 hidePopupScene(mBusiClearanceReportScene, false);
-                mInformationControl.setBlurListPaging(false);
 
                 mInformationControl.createBusinessClearance(businessClearance);
             }
@@ -688,7 +678,14 @@ public class MainControl {
         mChangePasswordControl.setPreferenceModel(mPreferenceModel);
         mChangePasswordControl.setListener(new ChangePasswordControl.OnPasswordControlListener() {
             @Override
-            public void onSaveButtonClicked() {
+            public void onSaveButtonClicked(boolean isFirstPassword) {
+                if (isFirstPassword) {
+                    hidePopupScene(mChangePasswordScene, false);
+                    mSecurityControl.updateDisplayedPassword();
+                    onSettingsButtonClicked(null);
+                    return;
+                }
+
                 showPopupScene(mConfirmationDialogScene, true);
                 mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD);
                 mChangePasswordControl.setDisable(true);
@@ -713,13 +710,6 @@ public class MainControl {
             @Override
             public void onDoneButtonClicked() {
                 hidePopupScene(mSecurityScene, false);
-                switch (mMenuSelected) {
-                    case MENU_RESIDENT:
-                        mResidentControl.setBlurListPaging(false);
-                        break;
-                    default:
-                        mInformationControl.setBlurListPaging(false);
-                }
             }
 
             @Override
@@ -745,7 +735,7 @@ public class MainControl {
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
-            onSettingsButtonClicked(null);
+            showPopupScene(mChangePasswordScene, false);
     }
 
     @FXML
@@ -782,10 +772,7 @@ public class MainControl {
     public void onSettingsButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mBarangayAgentScene, false);
 
-        switch (mMenuSelected) {
-            case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
-            default : mInformationControl.setBlurListPaging(true); break;
-        }
+
     }
 
     /**
@@ -796,14 +783,6 @@ public class MainControl {
      */
     public void onSecurityButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mSecurityScene, false);
-
-        switch (mMenuSelected) {
-            case MENU_RESIDENT:
-                mResidentControl.setBlurListPaging(true);
-                break;
-            default:
-                mInformationControl.setBlurListPaging(true);
-        }
     }
 
     /**
@@ -904,6 +883,10 @@ public class MainControl {
             mPopupStackPane.setVisible(false);
         }
 
+        switch (mMenuSelected) {
+            case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+            default : mInformationControl.setBlurListPaging(false); break;
+        }
     }
 
     private void showPopupScene(Pane popupScene, boolean isOtherPopupVisible) {
@@ -916,6 +899,11 @@ public class MainControl {
         popupScene.setVisible(true);
         popupScene.toFront();
         mPopupStackPane.setVisible(true);
+
+        switch (mMenuSelected) {
+            case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
+            default : mInformationControl.setBlurListPaging(true); break;
+        }
     }
 
     /**

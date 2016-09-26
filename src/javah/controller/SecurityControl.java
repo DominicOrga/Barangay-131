@@ -129,7 +129,7 @@ public class SecurityControl {
 
         if (idleTimeNew != idleTimeOld) {
             mPrefModel.put(PreferenceContract.MAX_IDLE_DURATION, idleTimeNew + "");
-            mPrefModel.save();
+            mPrefModel.save(false);
         }
 
         mListener.onDoneButtonClicked();
@@ -142,7 +142,7 @@ public class SecurityControl {
     public void updateDisplayedPassword() {
         String password = mPrefModel.get(PreferenceContract.PASSWORD, null);
 
-        if (password != null)
+        if (password != null && !password.isEmpty())
             mPassword.setText(password.substring(0, 3) +
                     "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022");
 

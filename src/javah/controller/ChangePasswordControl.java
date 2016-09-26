@@ -1,7 +1,5 @@
 package javah.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,8 +34,11 @@ public class ChangePasswordControl {
         /**
          * Tell the Account control that the password has been updated and take necessary
          * actions.
+         *
+         * @param isFirstPassword
+         *        Determines whether the password is being set for the first time.
          */
-        void onSaveButtonClicked();
+        void onSaveButtonClicked(boolean isFirstPassword);
 
         /**
          * Close the Change password scene from the main control.
@@ -65,6 +66,9 @@ public class ChangePasswordControl {
     /* Displays the strength of the input from the mNewPassword. */
     @FXML private Label mPasswordStrengthLabel;
 
+    /* Hide the cancel button if the client is inputting a password for the first time. */
+    @FXML private Button mCancelButton;
+
     /**
      * A reference to the universal preference model. Used to acquire the current
      * password of the system or update the current password.
@@ -74,10 +78,17 @@ public class ChangePasswordControl {
     /* Determines whether the new password is masked or not. */
     private boolean mIsNewPasswordMasked = true;
 
+    /* A listener for this controller. */
     private OnPasswordControlListener mListener;
 
     /* The strength of the newly inputted password. */
     private int mPasswordStrength;
+
+    /**
+     * A boolean that determines the state of this scene, in which whether the password
+     * is being initialized for the first time or not.
+     */
+    private boolean mOnFirstPasswordInitialization;
 
     @FXML
     public void initialize() {
@@ -289,6 +300,12 @@ public class ChangePasswordControl {
 
             // Set the new password masked visible.
             setNewPasswordMaskedVisible(true);
+
+            // Check if no password is set yet. If none, then hide the cancel button.
+            String currentPassword = mPrefModel.get(PreferenceContract.PASSWORD, "");
+
+            mCancelButton.setVisible(!currentPassword.isEmpty());
+            mCancelButton.setManaged(!currentPassword.isEmpty());
         });
     }
 
@@ -345,7 +362,10 @@ public class ChangePasswordControl {
             return;
         }
 
-        mListener.onSaveButtonClicked();
+        if (currentPassword.isEmpty()) {
+            savePassword();
+            mListener.onSaveButtonClicked(currentPassword.isEmpty());
+        }
     }
 
     /**
@@ -400,7 +420,7 @@ public class ChangePasswordControl {
         Calendar calendar = Calendar.getInstance();
         mPrefModel.put(PreferenceContract.LAST_PASSWORD_UPDATE, calendar.getTime().getTime() + "");
 
-        mPrefModel.save();
+        mPrefModel.save(false);
 
         System.out.println("ChangePasswordControl - Password Saved. " + mNewPassword.getText());
 
@@ -416,4 +436,5 @@ public class ChangePasswordControl {
     public void setDisable(boolean bool) {
         mRootPane.setDisable(bool);
     }
+
 }
