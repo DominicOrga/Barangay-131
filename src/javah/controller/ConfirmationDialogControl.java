@@ -46,7 +46,8 @@ public class ConfirmationDialogControl {
             CLIENT_RESIDENT_DELETION = 1,
             CLIENT_BUSINESS_DELETION = 2,
             CLIENT_WEBCAM_FAILURE = 3,
-            CLIENT_CHANGE_PASSWORD = 4;
+            CLIENT_CHANGE_PASSWORD = 4,
+            CLIENT_LOGOUT = 5;
 
     /* The message of the dialog. */
     @FXML private Text mMessage;
@@ -155,6 +156,20 @@ public class ConfirmationDialogControl {
                 mWarningText.setText("\nPassword cannot be changed within 3 days from the latest update.");
                 mWarningText.setVisible(true);
                 mWarningText.setManaged(true);
+
+                mCancelButton.setVisible(true);
+                mCancelButton.setManaged(true);
+
+                break;
+
+            case CLIENT_LOGOUT:
+                mActionLabel.setText("Logout");
+                mActionIcon.setImage(new Image("res/ic_logout.png"));
+
+                mMessage.setText("Are you sure?");
+
+                mWarningText.setVisible(false);
+                mWarningText.setManaged(false);
 
                 mCancelButton.setVisible(true);
                 mCancelButton.setManaged(true);

@@ -23,6 +23,7 @@ import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 
+import java.awt.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -81,6 +82,7 @@ public class MainControl {
     private Pane mBusiClearanceFormScene;
     private Pane mChangePasswordScene;
     private Pane mSecurityScene;
+    private Pane mLoginScene;
 
     /**
      * The popup scenes. (REPORTS)
@@ -103,6 +105,7 @@ public class MainControl {
     private BusinessClearanceReportControl mBusiClearanceReportControl;
     private ChangePasswordControl mChangePasswordControl;
     private SecurityControl mSecurityControl;
+    private LoginControl mLoginControl;
 
     /**
      * Key-value pairs to represent each menu.
@@ -464,6 +467,11 @@ public class MainControl {
 
                         dateFormat = new SimpleDateFormat("hh:mm aaa");
                         mLastPwdUpdateTime.setText(dateFormat.format(calendar.getTime()));
+                        break;
+
+                    case ConfirmationDialogControl.CLIENT_LOGOUT:
+                        hidePopupScene(mConfirmationDialogScene, false);
+                        showPopupScene(mLoginScene, false);
                 }
             }
 
@@ -487,6 +495,8 @@ public class MainControl {
                         hidePopupScene(mConfirmationDialogScene, true);
                         mChangePasswordControl.setDisable(false);
 
+                    case ConfirmationDialogControl.CLIENT_LOGOUT:
+                        hidePopupScene(mConfirmationDialogScene, false);
                 }
             }
         });
@@ -719,6 +729,24 @@ public class MainControl {
             }
         });
 
+        // Initialize the login scene.
+        resetFXMLLoader.accept("fxml/scene_login.fxml");
+        mLoginScene = fxmlLoader.load();
+
+        mLoginControl = fxmlLoader.getController();
+        mLoginControl.setPreferenceModel(mPreferenceModel);
+        mLoginControl.setListener(new LoginControl.OnLoginControlListener() {
+            @Override
+            public void onExitButtonClicked() {
+                System.exit(0);
+            }
+
+            @Override
+            public void onLoginButtonClicked() {
+                hidePopupScene(mLoginScene, false);
+            }
+        });
+
         // Add the dialog scenes to mPopupStackPane.
         addToPopupPane.accept(mPhotoshopScene);
         addToPopupPane.accept(mBarangayAgentScene);
@@ -731,11 +759,14 @@ public class MainControl {
         addToPopupPane.accept(mBusiClearanceReportScene);
         addToPopupPane.accept(mChangePasswordScene);
         addToPopupPane.accept(mSecurityScene);
+        addToPopupPane.accept(mLoginScene);
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
             showPopupScene(mChangePasswordScene, false);
+        else
+            showPopupScene(mLoginScene, false);
     }
 
     @FXML
@@ -771,8 +802,6 @@ public class MainControl {
     @FXML
     public void onSettingsButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mBarangayAgentScene, false);
-
-
     }
 
     /**
@@ -781,10 +810,22 @@ public class MainControl {
      * @param actionEvent
      *        The action event. No usage.
      */
+    @FXML
     public void onSecurityButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mSecurityScene, false);
     }
 
+    /**
+     * Logout the application.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
+    @FXML
+    public void onLogoutButtonClicked(ActionEvent actionEvent) {
+        showPopupScene(mConfirmationDialogScene, false);
+        mConfirmationDialogControl.setClient(ConfirmationDialogControl.CLIENT_LOGOUT);
+    }
     /**
      * Update the current menu selected.
      * @param menu clicked.
@@ -881,11 +922,11 @@ public class MainControl {
             popupScene.setVisible(false);
 
             mPopupStackPane.setVisible(false);
-        }
 
-        switch (mMenuSelected) {
-            case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
-            default : mInformationControl.setBlurListPaging(false); break;
+            switch (mMenuSelected) {
+                case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                default : mInformationControl.setBlurListPaging(false); break;
+            }
         }
     }
 
@@ -905,17 +946,4 @@ public class MainControl {
             default : mInformationControl.setBlurListPaging(true); break;
         }
     }
-
-    /**
-     * Logout the application, but maintain the last state.
-     *
-     *
-     */
-    private void logout() {
-
-    }
-
-
-
-
 }

@@ -85,8 +85,6 @@ public class SecurityControl {
     public void onChangePasswordButtonClicked(MouseEvent mouseEvent) {
         String datetime = mPrefModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
 
-        datetime = null; // todo : for debugging purposes.
-
         if (datetime == null)
             mListener.onChangePasswordButtonClicked();
         else {
