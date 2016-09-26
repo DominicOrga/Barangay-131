@@ -6,9 +6,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0.0, 0.0);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.LoginControl">
-
-    <children>
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.LoginControl">
+   <children>
+      <Pane fx:id="mPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <PasswordField fx:id="mPasswordField" layoutX="25.0" layoutY="53.0" onKeyPressed="#onPasswordFieldKeyPressed" prefHeight="27.0" prefWidth="300.0" promptText="Password">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="mConfirmButton" layoutX="115.0" layoutY="140.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Login" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="mCancelButton" layoutX="225.0" layoutY="140.0" mnemonicParsing="false" onAction="#onExitButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Exit" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="29.0" layoutY="23.0" text="Enter Password:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="mError" layoutX="29.0" layoutY="97.0" text="Password did not match." textFill="#ff3f3f" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="350.0" style="-fx-background-color: #FF8600;">
          <children>
             <Label layoutX="231.0" layoutY="3.0" text="Login" textFill="WHITE">
@@ -23,32 +51,52 @@
             </ImageView>
          </children>
       </Pane>
-
-      <Pane fx:id="mPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF;">
+      <VBox fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0.0, 0.0);">
          <children>
-            <PasswordField fx:id="mPasswordField" layoutX="25.0" layoutY="53.0" onKeyPressed="#onPasswordFieldKeyPressed" prefHeight="27.0" prefWidth="300.0" promptText="Password">
-               <font>
-                  <Font size="20.0" />
-               </font></PasswordField>
-            <Button fx:id="mConfirmButton" layoutX="115.0" layoutY="140.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Login" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font></Button>
-            <Button fx:id="mCancelButton" layoutX="225.0" layoutY="140.0" mnemonicParsing="false" onAction="#onExitButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Exit" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font></Button>
-            <Label layoutX="29.0" layoutY="23.0" text="Enter Password:">
-               <font>
-                  <Font size="20.0" />
-               </font></Label>
-            <Label fx:id="mError" layoutX="29.0" layoutY="97.0" text="Password did not match." textFill="#ff3f3f" visible="false">
-               <font>
-                  <Font size="20.0" />
-               </font></Label>
-
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="350.0" style="-fx-background-color: #FF8600;">
+               <children>
+                  <Label layoutX="231.0" layoutY="3.0" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Light" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="305.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/ic_lock.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="mPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <PasswordField fx:id="mPasswordField" layoutX="25.0" layoutY="53.0" onKeyPressed="#onPasswordFieldKeyPressed" prefHeight="27.0" prefWidth="300.0" promptText="Password">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </PasswordField>
+                  <Button fx:id="mConfirmButton" layoutX="115.0" layoutY="140.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Login" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="mCancelButton" layoutX="225.0" layoutY="140.0" mnemonicParsing="false" onAction="#onExitButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Exit" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="29.0" layoutY="23.0" text="Enter Password:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mError" layoutX="29.0" layoutY="97.0" text="Password did not match." textFill="#ff3f3f" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
-      </Pane>
-       
+      </VBox>
    </children>
-</VBox>
+</StackPane>

@@ -236,5 +236,6 @@
          </children>
       </GridPane>
       <StackPane fx:id="mPopupStackPane" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647" />
+      <StackPane fx:id="mPopupLoginPane" prefHeight="150.0" prefWidth="200.0" visible="false" />
    </children>
 </GridPane>

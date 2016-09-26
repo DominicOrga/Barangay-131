@@ -1,9 +1,12 @@
 package javah.controller;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
@@ -22,8 +25,8 @@ import javah.contract.PreferenceContract;
 import javah.model.CacheModel;
 import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
+import javah.util.LogoutTimer;
 
-import java.awt.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +40,8 @@ public class MainControl {
      */
     @FXML private StackPane mPopupStackPane;
 
+    @FXML private StackPane mPopupLoginPane;
+
     /**
      * The designated root view of the main scene at the back of the mPopupStackPane.
      * Loaded in order to apply gaussian blur to the background when a pop up dialog is displayed.
@@ -44,7 +49,7 @@ public class MainControl {
     @FXML private GridPane mMainGridPane;
 
     /**
-     * The container for the menu buttons, settings, time, welcome message and logout button.
+     * The container for the menu buttons, settings, time, welcome message and setLogout button.
      * Loaded to edit the display of the menu buttons to determine which one is currently selected.
      */
     @FXML private GridPane mMenuGridPane;
@@ -129,12 +134,15 @@ public class MainControl {
     private DatabaseModel mDatabaseModel;
     private PreferenceModel mPreferenceModel;
 
+    private LogoutTimer mLogoutTimer;
     /**
      * Initialize all the scenes.
      * @throws Exception
      */
     @FXML
     private void initialize() throws Exception {
+        mLogoutTimer = new LogoutTimer();
+        mLogoutTimer.setListener(() -> setLogout(true));
 
         // Initialize the models.
         mDatabaseModel = new DatabaseModel();
@@ -471,7 +479,7 @@ public class MainControl {
 
                     case ConfirmationDialogControl.CLIENT_LOGOUT:
                         hidePopupScene(mConfirmationDialogScene, false);
-                        showPopupScene(mLoginScene, false);
+                        setLogout(true);
                 }
             }
 
@@ -733,6 +741,9 @@ public class MainControl {
         resetFXMLLoader.accept("fxml/scene_login.fxml");
         mLoginScene = fxmlLoader.load();
 
+        mPopupLoginPane.getChildren().add(mLoginScene);
+        mPopupLoginPane.setAlignment(mLoginScene, Pos.CENTER);
+
         mLoginControl = fxmlLoader.getController();
         mLoginControl.setPreferenceModel(mPreferenceModel);
         mLoginControl.setListener(new LoginControl.OnLoginControlListener() {
@@ -743,7 +754,24 @@ public class MainControl {
 
             @Override
             public void onLoginButtonClicked() {
-                hidePopupScene(mLoginScene, false);
+                setLogout(false);
+
+                String datetime = mPreferenceModel.get(PreferenceContract.LAST_LOGIN, null);
+
+                if (datetime != null) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(new Date(Long.valueOf(datetime)));
+
+                    mLastLoginDate.setText(dateFormat.format(calendar.getTime()));
+                    mLastLoginTime.setText(timeFormat.format(calendar.getTime()));
+                } else {
+                    mLastLoginDate.setText(null);
+                    mLastLoginTime.setText(null);
+                }
+
+                Calendar calendar = Calendar.getInstance();
+                mPreferenceModel.put(PreferenceContract.LAST_LOGIN, calendar.getTime().getTime() + "");
+                mPreferenceModel.save(false);
             }
         });
 
@@ -759,14 +787,13 @@ public class MainControl {
         addToPopupPane.accept(mBusiClearanceReportScene);
         addToPopupPane.accept(mChangePasswordScene);
         addToPopupPane.accept(mSecurityScene);
-        addToPopupPane.accept(mLoginScene);
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
             showPopupScene(mChangePasswordScene, false);
         else
-            showPopupScene(mLoginScene, false);
+            setLogout(true);
     }
 
     @FXML
@@ -841,24 +868,24 @@ public class MainControl {
         BiConsumer<Pane, Boolean> playMenuSlideAnimation = (menuPane, isSelected) -> {
             menuPane.setStyle(isSelected ? CSSContract.STYLE_MENU_SELECTED : CSSContract.STYLE_MENU_UNSELECTED);
 
-//            menuPane.getChildren().remove(mRectAnimTransitioner);
-//            menuPane.getChildren().add(mRectAnimTransitioner);
-//            menuPane.getChildren().get(menuPane.getChildren().size() - 1).toBack();
-//
-//            Thread thread = new Thread(new Task() {
-//                @Override
-//                protected Object call() throws Exception {
-//                    for (int i = 0; i < 10; i++) {
-//                        final int j = i;
-//                        Platform.runLater(() -> mMenuGridPane.setMargin(menuPane, new Insets(0, 0, 0, isSelected ? j : 9 - j)));
-//                        Thread.sleep(10);
-//                    }
-//                    return null;
-//                }
-//            });
-//
-//            thread.setDaemon(true);
-//            thread.start();
+            menuPane.getChildren().remove(mRectAnimTransitioner);
+            menuPane.getChildren().add(mRectAnimTransitioner);
+            menuPane.getChildren().get(menuPane.getChildren().size() - 1).toBack();
+
+            Thread thread = new Thread(new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    for (int i = 0; i < 10; i++) {
+                        final int j = i;
+                        Platform.runLater(() -> mMenuGridPane.setMargin(menuPane, new Insets(0, 0, 0, isSelected ? j : 9 - j)));
+                        Thread.sleep(10);
+                    }
+                    return null;
+                }
+            });
+
+            thread.setDaemon(true);
+            thread.start();
         };
 
         /**
@@ -944,6 +971,43 @@ public class MainControl {
         switch (mMenuSelected) {
             case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
             default : mInformationControl.setBlurListPaging(true); break;
+        }
+    }
+
+    private void setLogout(boolean bool) {
+        if (bool) {
+            mPopupLoginPane.setVisible(true);
+
+            if (mPopupStackPane.isVisible()) {
+                mPopupStackPane.setEffect(new GaussianBlur());
+                mPopupStackPane.setDisable(true);
+            } else {
+                mMainGridPane.setEffect(new GaussianBlur());
+                mMainGridPane.setDisable(true);
+
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(true); break;
+                    default : mInformationControl.setBlurListPaging(true); break;
+                }
+            }
+
+
+        } else {
+            mLogoutTimer.start(5);
+            mPopupLoginPane.setVisible(false);
+
+            if (mPopupStackPane.isVisible()) {
+                mPopupStackPane.setEffect(null);
+                mPopupStackPane.setDisable(false);
+            } else {
+                mMainGridPane.setEffect(null);
+                mMainGridPane.setDisable(false);
+
+                switch (mMenuSelected) {
+                    case MENU_RESIDENT : mResidentControl.setBlurListPaging(false); break;
+                    default : mInformationControl.setBlurListPaging(false); break;
+                }
+            }
         }
     }
 }
