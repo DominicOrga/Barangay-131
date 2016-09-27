@@ -706,6 +706,19 @@ public class MainControl {
                     hidePopupScene(mChangePasswordScene, false);
                     mSecurityControl.updateDisplayedPassword();
                     onSettingsButtonClicked(null);
+
+                    String datetime = mPreferenceModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
+
+                    if (datetime != null) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(new Date(Long.valueOf(datetime)));
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+                        mLastPwdUpdateDate.setText(dateFormat.format(calendar.getTime()));
+
+                        dateFormat = new SimpleDateFormat("hh:mm aaa");
+                        mLastPwdUpdateTime.setText(dateFormat.format(calendar.getTime()));
+                    }
                     return;
                 }
 
@@ -733,12 +746,18 @@ public class MainControl {
             @Override
             public void onDoneButtonClicked() {
                 hidePopupScene(mSecurityScene, false);
+
             }
 
             @Override
             public void onChangePasswordButtonClicked() {
                 showPopupScene(mChangePasswordScene, true);
                 mSecurityControl.setDisable(true);
+            }
+
+            @Override
+            public void onIdleComboBoxValueChanged(int newValue) {
+                mLogoutTimer.start(newValue * 60);
             }
         });
 
@@ -758,8 +777,17 @@ public class MainControl {
             }
 
             @Override
-            public void onLoginButtonClicked() {
-                setLogout(false);
+            public void onLoginButtonClicked(byte action) {
+                switch (action) {
+                    case LoginControl.ACTION_LOGIN:
+                        setLogout(false);
+                        break;
+
+                    case LoginControl.ACTION_RESET:
+                        mPreferenceModel.delete();
+                        System.exit(0);
+                }
+
             }
         });
 
@@ -982,7 +1010,9 @@ public class MainControl {
 
 
         } else {
-            mLogoutTimer.start(5);
+            String value = mPreferenceModel.get(PreferenceContract.MAX_IDLE_DURATION, "5");
+            mLogoutTimer.start(Integer.valueOf(value) * 60);
+
             mPopupLoginPane.setVisible(false);
 
             if (mPopupStackPane.isVisible()) {

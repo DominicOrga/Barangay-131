@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * This class will handle the create, read and update of values with regards to
@@ -110,6 +111,19 @@ public class PreferenceModel {
             FileWriter fileWriter = new FileWriter(mJsonPath);
             fileWriter.write(mJson.toJSONString());
             fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete the preferences. Used when the application will be reset.
+     */
+    public void delete() {
+        File file = new File(mJsonPath);
+
+        try {
+            Files.deleteIfExists(file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }

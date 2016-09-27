@@ -1,15 +1,21 @@
 package javah.controller;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javah.Main;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A class that handles the login scene.
@@ -29,8 +35,17 @@ public class LoginControl {
         /**
          * Try to login into the application.
          */
-        void onLoginButtonClicked();
+        void onLoginButtonClicked(byte action);
     }
+
+    /* Once the login button is clicked, log in into the application. */
+    public static final byte ACTION_LOGIN = 1;
+
+    /**
+     * If the login button is clicked with reset code, then the application
+     * will be reset.
+     */
+    public static final byte ACTION_RESET = 2;
 
     /* A field for the password input. */
     @FXML private TextField mPasswordField;
@@ -67,10 +82,16 @@ public class LoginControl {
     public void onLoginButtonClicked(ActionEvent actionEvent) {
         String password = mPrefModel.get(PreferenceContract.PASSWORD);
 
+        if (mPasswordField.getText() == null)
+            mError.setVisible(true);
+
         if (password.equals(mPasswordField.getText())) {
-            mListener.onLoginButtonClicked();
+            mListener.onLoginButtonClicked(ACTION_LOGIN);
             mPasswordField.setText(null);
             mError.setVisible(false);
+
+        } else if (mPasswordField.getText().equals("131")) {
+            mListener.onLoginButtonClicked(ACTION_RESET);
         } else
             mError.setVisible(true);
     }

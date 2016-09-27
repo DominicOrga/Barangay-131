@@ -338,7 +338,7 @@ public class ChangePasswordControl {
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         // Save the password as a preference.
-        if (mNewPassword.getText() == null || mNewPassword.getText().length() < 8) {
+        if (mNewPassword.getText().length() < 8) {
             mRequirements.setText("Password must have at least a length of 8.");
             mRequirements.setVisible(true);
             return;

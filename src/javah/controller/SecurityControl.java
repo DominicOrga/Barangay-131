@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
+import javah.util.LogoutTimer;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,14 @@ public class SecurityControl {
          * Tell the MainControl to launch the change password scene.
          */
         void onChangePasswordButtonClicked();
+
+        /**
+         * Update the LogoutTimer in the MainControl when the idle combo box value has
+         * changed.
+         *
+         * @see LogoutTimer
+         */
+        void onIdleComboBoxValueChanged(int newValue);
     }
 
     /* Disables the scene when the change password scene is displayed. */
@@ -60,7 +69,7 @@ public class SecurityControl {
      * A Combo box for picking the max idle duration to which the application can be
      * idle before being automatically logged out.
      */
-    @FXML private ComboBox mIdleComboBox;
+    @FXML private ComboBox<String> mIdleComboBox;
 
     /* A reference to the universal preference model. */
     private PreferenceModel mPrefModel;
@@ -77,7 +86,17 @@ public class SecurityControl {
 
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> mWarning.setVisible(false));
 
-        mIdleComboBox.setValue("5 mins");
+        mIdleComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
+                String value = newValue.split(" ")[0];
+
+                mPrefModel.put(PreferenceContract.MAX_IDLE_DURATION, value);
+                mPrefModel.save(false);
+
+                if (mListener != null)
+                    mListener.onIdleComboBoxValueChanged(Integer.valueOf(value));
+            }
+        });
     }
 
 
@@ -165,6 +184,10 @@ public class SecurityControl {
      */
     public void setPreferenceModel(PreferenceModel prefModel) {
         mPrefModel = prefModel;
+
+        String value = mPrefModel.get(PreferenceContract.MAX_IDLE_DURATION, "5");
+        value += value.equals("1") ? " min" : " mins";
+        mIdleComboBox.setValue(value);
     }
 
     /**

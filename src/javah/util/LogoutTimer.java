@@ -67,6 +67,7 @@ public class LogoutTimer {
      * @see javah.model.PreferenceModel
      */
     public void start(int idleDuration) {
+        stop();
         // Reset the time back to 0 every time the timer is started.
         mSec = 0;
 
