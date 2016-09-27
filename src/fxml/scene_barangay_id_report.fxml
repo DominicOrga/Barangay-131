@@ -18,7 +18,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnSpan="2">
          <children>
             <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -37,7 +37,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" styleClass="#FFB51F" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Print" textFill="WHITE">
+            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Print" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -45,7 +45,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Print &amp; Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -53,7 +53,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -61,7 +61,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -94,7 +94,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;">
+                  <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <children>
                         <ImageView fitHeight="300.0" fitWidth="300.0" nodeOrientation="INHERIT" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -150,11 +150,7 @@
                                  <children>
                                     <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: black;">
                                        <children>
-                                          <ImageView fx:id="mResPhoto" fitHeight="150.0" fitWidth="175.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);">
-                                             <image>
-                                                <Image url="@../../../../../../Public/Barangay131/Photos/1b1654b6-12ca-457b-b51b-462738f97028.png" />
-                                             </image>
-                                          </ImageView>
+                                          <ImageView fx:id="mResPhoto" fitHeight="150.0" fitWidth="150.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);" />
                                        </children>
                                        <VBox.margin>
                                           <Insets top="25.0" />
@@ -218,7 +214,7 @@
                         <Point3D x="1.0" />
                      </rotationAxis>
                   </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" GridPane.columnIndex="1">
+                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnIndex="1">
                      <children>
                         <ImageView fitHeight="300.0" fitWidth="300.0" nodeOrientation="INHERIT" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                            <image>

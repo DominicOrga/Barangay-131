@@ -32,19 +32,19 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" style="-fx-background-color: #FFB51F;" GridPane.rowIndex="2">
          <children>
-            <ImageView fx:id="mAcceptButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onAcceptButtonClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mAcceptButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onAcceptButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <image>
                   <Image url="@../res/ic_thumbs_up.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="mCaptureButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onCaptureButtonClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mCaptureButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onCaptureButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <image>
                   <Image url="@../res/ic_take_photo.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
-      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #FF861B;">
+      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
          <children>
             <Label fx:id="mActionLabel" text="Photo Capture" textFill="WHITE">
                <font>
@@ -64,7 +64,7 @@
             </ImageView>
          </children>
       </HBox>
-      <Button fx:id="mCancelButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <Button fx:id="mCancelButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <font>
             <Font name="Helvetica Neue Light" size="15.0" />
          </font>

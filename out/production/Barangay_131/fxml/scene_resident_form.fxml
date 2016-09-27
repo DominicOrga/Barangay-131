@@ -34,7 +34,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" spacing="10.0" style="-fx-background-color: #FF861B;">
+      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" spacing="10.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
          <children>
             <Label fx:id="mActionLabel" text="New Resident" textFill="WHITE">
                <font>
@@ -58,21 +58,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0); -fx-border-color: black;">
                      <HBox.margin>
                         <Insets top="-30.0" />
                      </HBox.margin>
                      <children>
-                        <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../res/ic_default_resident.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="mResidentPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../res/ic_default_resident.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="mResidentPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </StackPane>
                   <Label text="Attach Picture:">
@@ -83,14 +74,14 @@
                         <Insets left="25.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="mUploadPhotoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadPhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                  <Button fx:id="mUploadPhotoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadPhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Upload" textFill="WHITE">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="mTakePhotoButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTakePhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                  <Button fx:id="mTakePhotoButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTakePhotoButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Take Photo" textFill="WHITE">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
@@ -306,12 +297,12 @@
             </TextArea>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0">
                <children>
-                  <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Save" textFill="WHITE">
+                  <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Save" textFill="WHITE">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE">
+                  <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>

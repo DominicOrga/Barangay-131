@@ -36,7 +36,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnSpan="2">
          <children>
             <Label fx:id="mActionLabel" text="Barangay ID Form" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -55,14 +55,14 @@
       </HBox>
       <VBox minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" GridPane.rowIndex="1">
          <children>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0">
                <children>
                   <TextField fx:id="mSearchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onSearchFieldKeyPressed" prefHeight="40.0" prefWidth="400.0" promptText="e.g. Rodrigo Duterte">
                      <font>
                         <Font name="Helvetica Neue Light" size="20.0" />
                      </font>
                   </TextField>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <image>
                         <Image url="@../res/ic_search.png" />
                      </image>
@@ -248,7 +248,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Button fx:id="mSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                        <Button fx:id="mSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Upload" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -256,7 +256,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="mSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                        <Button fx:id="mSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Take Photo" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>

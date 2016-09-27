@@ -49,11 +49,7 @@
                            <children>
                               <StackPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color: black;">
                                  <children>
-                                    <ImageView fx:id="mChmPhoto" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../res/ic_default_resident_white_bg.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="mChmPhoto" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </StackPane>
                               <TextFlow textAlignment="CENTER">
@@ -467,7 +463,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;">
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
          <children>
             <Label text="Barangay Clearance Report" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -486,7 +482,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0; -fx-background-color: #FFB51F;" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Print" textFill="WHITE">
+            <Button fx:id="mPrintButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Print" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -494,7 +490,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800;" text="Print &amp; Save" textFill="WHITE">
+            <Button fx:id="mPrintAndSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPrintAndSaveButtonClicked" prefWidth="105.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Print &amp; Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -502,7 +498,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Save" textFill="WHITE">
+            <Button fx:id="mSaveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -510,7 +506,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800;" text="Cancel" textFill="WHITE">
+            <Button fx:id="mCancelButton" layoutX="430.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF4800; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>

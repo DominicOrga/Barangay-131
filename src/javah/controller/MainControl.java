@@ -806,9 +806,10 @@ public class MainControl {
 
         // Automatically tart the Barangay Agent form when the barangay agents have not
         // been set yet.
-        if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0"))
+        if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0")) {
+            mPreferenceModel.delete();
             showPopupScene(mChangePasswordScene, false);
-        else
+        } else
             setLogout(true);
     }
 

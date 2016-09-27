@@ -32,7 +32,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B;">
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
          <children>
             <Label text="Barangay Official" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -53,7 +53,7 @@
          <content>
             <VBox alignment="CENTER" minWidth="-Infinity" prefWidth="700.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #FFB51F;">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #FFB51F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <children>
                         <Label text="Chairman" textFill="WHITE">
                            <font>
@@ -67,18 +67,9 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0">
                      <children>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, -2.0, 2.0);">
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                            <children>
-                              <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_default_resident_white_bg.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="mChmPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../res/ic_default_resident.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="mChmPhotoView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -95,7 +86,7 @@
                               <Insets left="25.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="mChmUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                        <Button fx:id="mChmUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Upload" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -103,7 +94,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="mChmCaptureButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                        <Button fx:id="mChmCaptureButton" layoutX="281.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Take Photo" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Neue Light" size="15.0" />
                            </font>
@@ -214,7 +205,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button fx:id="mChmSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmSignatureUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                              <Button fx:id="mChmSignatureUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmSignatureUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Upload" textFill="WHITE">
                                  <font>
                                     <Font name="Helvetica Neue Light" size="15.0" />
                                  </font>
@@ -222,7 +213,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="mChmSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmSignatureCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                              <Button fx:id="mChmSignatureCaptureButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChmSignatureCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Take Photo" textFill="WHITE">
                                  <font>
                                     <Font name="Helvetica Neue Light" size="15.0" />
                                  </font>
@@ -240,7 +231,7 @@
                         <Insets right="65.0" top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <children>
                         <Label text="Secretary" textFill="WHITE">
                            <font>
@@ -354,7 +345,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button fx:id="mSecUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSecSignatureUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Upload" textFill="WHITE">
+                              <Button fx:id="mSecUploadButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSecSignatureUploadButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Upload" textFill="WHITE">
                                  <font>
                                     <Font name="Helvetica Neue Light" size="15.0" />
                                  </font>
@@ -362,7 +353,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="mTakePhotoButton11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSecSignatureCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Take Photo" textFill="WHITE">
+                              <Button fx:id="mTakePhotoButton11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSecSignatureCaptureButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Take Photo" textFill="WHITE">
                                  <font>
                                     <Font name="Helvetica Neue Light" size="15.0" />
                                  </font>
@@ -380,7 +371,7 @@
                         <Insets right="65.0" top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <children>
                         <Label text="Treasurer" textFill="WHITE">
                            <font>
@@ -468,7 +459,7 @@
                         <Insets right="65.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F;">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #FFB51F; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                      <children>
                         <Label text="Kagawads" textFill="WHITE">
                            <font>
@@ -517,7 +508,7 @@
       </ScrollPane>
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0" style="-fx-border-color: c0c0c0; -fx-background-color: #F4F4F4; -fx-border-width: 1 0 0 0;" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Save" textFill="WHITE">
+            <Button fx:id="mCreateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Save" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>
@@ -525,7 +516,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B;" text="Cancel" textFill="WHITE">
+            <Button fx:id="mCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefWidth="100.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Helvetica Neue Light" size="15.0" />
                </font>

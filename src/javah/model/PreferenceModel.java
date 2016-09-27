@@ -30,6 +30,13 @@ public class PreferenceModel {
      * created if it hasn't been yet.
      */
     public PreferenceModel() {
+        initialize();
+    }
+
+    /**
+     * Initialize or reinitialize the JSON file.
+     */
+    private void initialize() {
         // Initially, try to create the mJson file if it is not yet created.
         try {
             File jsonFile = new File(mJsonPath);
@@ -46,8 +53,6 @@ public class PreferenceModel {
 
         // Parse the file and store it to mJson.
         try {
-
-
             JSONParser parser = new JSONParser();
             mJson = (JSONObject) parser.parse(new FileReader(mJsonPath));
         } catch (Exception e) {
@@ -127,5 +132,7 @@ public class PreferenceModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        initialize();
     }
 }

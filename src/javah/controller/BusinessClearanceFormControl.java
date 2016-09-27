@@ -101,8 +101,7 @@ public class BusinessClearanceFormControl {
     @FXML Button mBackPageButton, mNextPageButton;
 
     /* A button for editing and deleting the selected business' data. */
-    @FXML ImageView mEditButton, mDeleteButton;
-
+    @FXML Button mEditButton, mDeleteButton;
 
     /* A pane containing the input fields for the business clearance. */
     @FXML ScrollPane mScrollPane;
