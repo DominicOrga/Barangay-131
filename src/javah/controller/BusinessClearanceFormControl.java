@@ -365,7 +365,7 @@ public class BusinessClearanceFormControl {
      *        The action event. No usage.
      */
     @FXML
-    public void onDeleteButtonClicked(Event event) {
+    public void onDeleteButtonClicked(ActionEvent event) {
         mListener.onDeleteButtonClicked();
     }
 
@@ -376,7 +376,7 @@ public class BusinessClearanceFormControl {
      *        The action event. No usage.
      */
     @FXML
-    public void onEditButtonClicked(Event event) {
+    public void onEditButtonClicked(ActionEvent event) {
         setState(STATE_UPDATE);
     }
 

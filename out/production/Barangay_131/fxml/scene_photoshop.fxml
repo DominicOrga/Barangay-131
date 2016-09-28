@@ -44,7 +44,7 @@
             </ImageView>
          </children>
       </HBox>
-      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #FF861B;">
          <children>
             <Label fx:id="mActionLabel" text="Photo Capture" textFill="WHITE">
                <font>

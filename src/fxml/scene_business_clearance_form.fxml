@@ -21,7 +21,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
             <Label fx:id="mActionLabel" text="Business Clearance Form" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -75,7 +75,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <GridPane fx:id="mBusinessGridPane" alignment="TOP_CENTER" style="-fx-background-color: #BEBEBE; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+            <GridPane fx:id="mBusinessGridPane" alignment="TOP_CENTER" style="-fx-background-color: #BEBEBE; -fx-hgap: 1; -fx-vgap: 1; -fx-padding: 1;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -346,18 +346,18 @@
       </ScrollPane>
       <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <children>
-            <Button fx:id="mDeleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent;">
+            <Button fx:id="mDeleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <graphic>
-                  <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#onDeleteButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../res/ic_delete.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="mEditButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent;">
+            <Button fx:id="mEditButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onEditButtonClicked" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: transparent; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onEditButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../res/ic_edit.png" />
                      </image>

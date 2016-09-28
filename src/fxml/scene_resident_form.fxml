@@ -34,7 +34,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" spacing="10.0" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+      <HBox fx:id="mHeader" alignment="BOTTOM_RIGHT" spacing="10.0" style="-fx-background-color: #FF861B;">
          <children>
             <Label fx:id="mActionLabel" text="New Resident" textFill="WHITE">
                <font>
@@ -58,7 +58,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0); -fx-border-color: black;">
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #F4F4F4; -fx-border-color: black;">
                      <HBox.margin>
                         <Insets top="-30.0" />
                      </HBox.margin>
@@ -101,7 +101,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="mNameError" text="Is this really your name?" textFill="#ff3f3f" visible="false">
+                  <Label fx:id="mNameError" text="Invalid Name" textFill="#ff3f3f" visible="false">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
@@ -252,7 +252,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="mAddress1Error" text="What kind of address is this?" textFill="#ff3f3f" visible="false">
+                  <Label fx:id="mAddress1Error" text="Invalid Address" textFill="#ff3f3f" visible="false">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>
@@ -280,7 +280,7 @@
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="mAddress2Error" text="Is this address for real?" textFill="#ff3f3f" visible="false">
+                  <Label fx:id="mAddress2Error" text="Invalid Address" textFill="#ff3f3f" visible="false">
                      <font>
                         <Font name="Helvetica Neue Light" size="15.0" />
                      </font>

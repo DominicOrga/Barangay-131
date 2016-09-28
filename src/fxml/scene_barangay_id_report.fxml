@@ -18,7 +18,7 @@
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnSpan="2">
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;" GridPane.columnSpan="2">
          <children>
             <Label text="Barangay ID Report" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -94,7 +94,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                  <StackPane fx:id="mIDFront" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;">
                      <children>
                         <ImageView fitHeight="300.0" fitWidth="300.0" nodeOrientation="INHERIT" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -214,7 +214,7 @@
                         <Point3D x="1.0" />
                      </rotationAxis>
                   </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" GridPane.columnIndex="1">
+                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" GridPane.columnIndex="1">
                      <children>
                         <ImageView fitHeight="300.0" fitWidth="300.0" nodeOrientation="INHERIT" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                            <image>

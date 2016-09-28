@@ -271,7 +271,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #FF861B;">
          <children>
             <Label text="Business Clearance Report" textAlignment="CENTER" textFill="WHITE">
                <font>
