@@ -1,26 +1,17 @@
 package javah;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
-import javafx.event.Event;
-import javafx.event.EventDispatcher;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main extends Application {
 
     private static Stage PRIMARY_STAGE;
 
-    public static String PHOTO_DIR_PATH, SIGNATURE_DIR_PATH;
+    public static String PHOTO_DIR_PATH, SIGNATURE_DIR_PATH, APP_DATA_PATH;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -33,11 +24,6 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.setMaximized(true);
         primaryStage.show();
-
-//        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scene_change_password.fxml"));
-//        Scene scene = new Scene(loader.load());
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
 
         // Terminate the application when the x button is pressed.
         primaryStage.setOnCloseRequest(event -> System.exit(0));
@@ -58,6 +44,7 @@ public class Main extends Application {
         // 'Signature'.
         String dataDirectoryPath = System.getenv("PUBLIC") + "/Barangay131";
 
+        APP_DATA_PATH = dataDirectoryPath;
         PHOTO_DIR_PATH = dataDirectoryPath + "/Photos";
         SIGNATURE_DIR_PATH = dataDirectoryPath + "/Signatures";
 

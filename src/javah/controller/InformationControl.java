@@ -522,7 +522,7 @@ public class InformationControl {
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount + "");
+        mPageCountLabel.setText(mPageCount == 0 ? "1" : mPageCount + "");
 
         // Disable the back page button if the current page is the first one.
         mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);

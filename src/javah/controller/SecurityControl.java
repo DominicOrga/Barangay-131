@@ -99,7 +99,6 @@ public class SecurityControl {
         });
     }
 
-
     @FXML
     public void onChangePasswordButtonClicked(MouseEvent mouseEvent) {
         String datetime = mPrefModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);

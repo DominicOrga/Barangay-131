@@ -262,7 +262,7 @@
                   </Label>
                </children>
             </HBox>
-            <TextArea fx:id="mAddress1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" promptText="Your Address*" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+            <TextArea fx:id="mAddress1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" onKeyPressed="#onAddress1KeyPressed" prefHeight="75.0" promptText="Your Address*" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
@@ -287,7 +287,7 @@
                   </Label>
                </children>
             </HBox>
-            <TextArea fx:id="mAddress2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" promptText="Other Address (Optional)" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
+            <TextArea fx:id="mAddress2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" onKeyPressed="#onAddress2KeyPressed" prefHeight="75.0" promptText="Other Address (Optional)" style="-fx-background-color: white; -fx-border-color: #BEBEBE;" wrapText="true">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>

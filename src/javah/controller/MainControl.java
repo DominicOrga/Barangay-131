@@ -16,6 +16,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javah.Main;
 import javah.container.BarangayClearance;
 import javah.container.BarangayID;
 import javah.container.BusinessClearance;
@@ -27,6 +29,10 @@ import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 import javah.util.LogoutTimer;
 
+import java.io.File;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -857,6 +863,76 @@ public class MainControl {
     @FXML
     public void onSecurityButtonClicked(ActionEvent actionEvent) {
         showPopupScene(mSecurityScene, false);
+    }
+
+    /**
+     * Backup the database and the whole application data folder.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
+    @FXML
+    public void onBackupButtonClicked(ActionEvent actionEvent) {
+        // Setup the save file chooser dialog.
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Backup File");
+        fileChooser.setInitialFileName("Brgy131-bak");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Zip Files", "*.zip"));
+
+        File targetFile = fileChooser.showSaveDialog(Main.getPrimaryStage());
+
+        // If a target file is chosen, then start backup process.
+        if (targetFile != null)
+            try {
+                // Generate a compressed backup file and place it in the application data directory.
+                // Backup file is named 'brgy131_bak.rar'.
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\backup.bat");
+                p.waitFor();
+
+                // Once the back up file is generated, transfer it to the target path specified by
+                // the user.
+                File sourceFile = new File(System.getenv("PUBLIC") + "/brgy131-bak.rar");
+                Files.move(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+
+    /**
+     * Restore a specified backup file.
+     *
+     * @param actionEvent
+     *        The action event. No usage.
+     */
+    @FXML
+    public void onRestoreButtonClicked(ActionEvent actionEvent) {
+        // Setup the file chooser dialog.
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Restore Backup file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Zip Files", "*.zip"));
+
+        // Get the source file.
+        File sourceFile = fileChooser.showOpenDialog(Main.getPrimaryStage());
+
+        if (sourceFile != null)
+            try {
+                // Create the target file.
+                File targetFile = new File(System.getenv("PUBLIC") + "/brgy131-bak.rar");
+
+                // Copy the source file to the target file.
+                Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Run recovery batch file.
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\recover.bat");
+                p.waitFor();
+
+                // Close the application once the recovery is done.
+                System.exit(0);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
     }
 
     /**

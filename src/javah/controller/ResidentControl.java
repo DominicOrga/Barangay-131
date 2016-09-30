@@ -78,8 +78,6 @@ public class ResidentControl {
          * then the parameter resident will be deleted. Otherwise, cancel the
          * resident deletion.
          *
-         * @param resident
-         *        The resident to be deleted.
          * @see MainControl
          * @see ConfirmationDialogControl
          */
@@ -457,10 +455,11 @@ public class ResidentControl {
                 mAddress1.setText(mResidentSelected.getAddress1());
 
                 // Set the displayed address 2, if any.
-                if(mResidentSelected.getAddress2() != null) {
+                if(mResidentSelected.getAddress2() != null && !mResidentSelected.getAddress2().isEmpty()) {
                     mAddress2.setVisible(true);
                     mAddress2Label.setVisible(true);
                     mAddress2.setText(mResidentSelected.getAddress2());
+                    System.out.println("ResidentControl - 2nd address: " + mResidentSelected.getAddress2());
                 } else {
                     mAddress2.setVisible(false);
                     mAddress2Label.setVisible(false);
@@ -541,7 +540,7 @@ public class ResidentControl {
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
-        mPageCountLabel.setText(mPageCount == 0 ? 1 + "" : mPageCount + "");
+        mPageCountLabel.setText(mPageCount == 0 ? "1" : mPageCount + "");
 
         // Disable the back page button if the current page is the first one.
         mBackPageButton.setDisable(mCurrentPage == 1 ? true : false);

@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javah.Main;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
+import javah.util.BarangayUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public class LoginControl {
 
     /* A listener for this controller. */
     private OnLoginControlListener mListener;
+
+    @FXML
+    private void initialize() {
+        BarangayUtils.addTextLimitListener(mPasswordField, 16);
+    }
 
     /**
      * If the enter key is pressed from the Password field, then auto click the

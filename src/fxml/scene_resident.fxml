@@ -323,7 +323,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextFlow prefWidth="450.0" visible="false">
+                              <TextFlow prefWidth="450.0">
                                  <children>
                                     <Text fx:id="mAddress2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                                        <font>

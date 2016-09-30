@@ -1,13 +1,18 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javah.Main;
 import javah.container.Resident;
@@ -29,6 +34,7 @@ import java.util.UUID;
  * creation purposes.
  */
 public class ResidentFormControl {
+
 
     /**
      * An interface listener for the Resident form control.
@@ -236,6 +242,10 @@ public class ResidentFormControl {
                 mAddress1.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
                 mAddress2.setStyle(CSSContract.STYLE_TEXTAREA_NO_ERROR);
 
+                mNameError.setVisible(false);
+                mAddress1Error.setVisible(false);
+                mAddress2Error.setVisible(false);
+
                 mFirstName.setText(null);
                 mMiddleName.setText(null);
                 mLastName.setText(null);
@@ -397,6 +407,35 @@ public class ResidentFormControl {
     public void onTakePhotoButtonClicked(ActionEvent actionEvent) {
         mListener.onTakePhotoButtonClicked();
     }
+
+    /**
+     * Do not allow key enter to address 1.
+     *
+     * @param keyEvent
+     *        The key event to listen if the enter button is pressed.
+     */
+    @FXML
+    public void onAddress1KeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            mRootPane.requestFocus();
+            keyEvent.consume();
+        }
+    }
+
+    /**
+     * Do not allow key enter to address 2.
+     *
+     * @param keyEvent
+     *        The key event to listen if the enter button is pressed.
+     */
+    @FXML
+    public void onAddress2KeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            mRootPane.requestFocus();
+            keyEvent.consume();
+        }
+    }
+
 
     /**
      * When setResident() is used, we assume that we are editing the resident.
