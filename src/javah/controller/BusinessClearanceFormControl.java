@@ -283,9 +283,9 @@ public class BusinessClearanceFormControl {
      */
     @FXML
     public void onSearchButtonClicked(Event event) {
-        String keywords = mSearchField.getText();
+        String keywords = mSearchField.getText().trim();
 
-        if (keywords == null || keywords.trim().isEmpty())
+        if (keywords == null || keywords.isEmpty())
             mBusinessIDs = mCacheModel.getBusiIDsCache();
         else {
             String[] keywordsArray = keywords.split(" ");
@@ -640,6 +640,8 @@ public class BusinessClearanceFormControl {
                     int index = mCacheModel.cacheBusiness(business);
 
                     mBusinessIDs = mCacheModel.getBusiIDsCache();
+
+                    updateListPaging(false);
 
                     // Make sure to auto select the same business after the update.
                     mCurrentPage = index / 10 + 1;

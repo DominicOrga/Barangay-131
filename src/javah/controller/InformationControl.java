@@ -266,7 +266,7 @@ public class InformationControl {
     public void onSearchButtonClicked(Event event) {
         String keywords = mSearchField.getText().trim();
 
-        mReportIDs = keywords.isEmpty() ?
+        mReportIDs = keywords == null || keywords.isEmpty() ?
                 mActualReportIDs : BarangayUtils.getFilteredIDs(mActualReportIDs, mReportNames, keywords.split(" "));
 
         setLabelSelectedIndex(mLabelSelectedIndex);

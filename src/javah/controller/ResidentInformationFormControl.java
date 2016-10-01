@@ -357,9 +357,9 @@ public class ResidentInformationFormControl {
      */
     @FXML
     public void onSearchButtonClicked(Event event) {
-        String keywords = mSearchField.getText();
+        String keywords = mSearchField.getText().trim();
 
-        if (keywords.trim().equals(""))
+        if (keywords == null || keywords.isEmpty())
             mResidentIDs = mCacheModel.getResidentIDsCache();
         else {
             String[] keywordsArray = keywords.split(" ");
