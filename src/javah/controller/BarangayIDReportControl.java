@@ -442,6 +442,8 @@ public class BarangayIDReportControl {
         if (mBarangayID.getResidentSignature() != null) {
             mResSignature.setImage(new Image("file:" + mBarangayID.getResidentSignature()));
 
+            mResDraggableSignature.setVisible(!mResSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
+
             double[] dimension = mBarangayID.getResidentSignatureDimension();
 
             mResDraggableSignature.setX(dimension[0]);
@@ -462,6 +464,8 @@ public class BarangayIDReportControl {
 
         if (mBarangayID.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBarangayID.getChmSignature()));
+
+            mChmDraggableSignature.setVisible(!mChmSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
 
             double[] dimension = mBarangayID.getChmSignatureDimension();
 

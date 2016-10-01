@@ -440,6 +440,8 @@ public class BusinessClearanceReportControl {
         if (mBusinessClearance.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBusinessClearance.getChmSignature()));
 
+            mChmDraggableSignature.setVisible(!mChmSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
+
             double[] dimension = mBusinessClearance.getChmSignatureDimension();
 
             mChmDraggableSignature.setX(dimension[0]);
@@ -451,6 +453,8 @@ public class BusinessClearanceReportControl {
         // Show the secretary signature, if any.
         if (mBusinessClearance.getSecSignature() != null) {
             mSecSignature.setImage(new Image("file:" + mBusinessClearance.getSecSignature()));
+
+            mSecDraggableSignature.setVisible(!mSecSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
 
             double[] dimension = mBusinessClearance.getSecSignatureDimension();
 

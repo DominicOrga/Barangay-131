@@ -478,6 +478,8 @@ public class BarangayClearanceReportControl {
         if (mBarangayClearance.getChmSignature() != null) {
             mChmSignature.setImage(new Image("file:" + mBarangayClearance.getChmSignature()));
 
+            mChmDraggableSignature.setVisible(!mChmSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
+
             double[] dimension = mBarangayClearance.getChmSignatureDimension();
 
             mChmDraggableSignature.setX(dimension[0]);
@@ -489,6 +491,8 @@ public class BarangayClearanceReportControl {
         // Show the secretary signature, if any.
         if (mBarangayClearance.getSecSignature() != null) {
             mSecSignature.setImage(new Image("file:" + mBarangayClearance.getSecSignature()));
+
+            mSecDraggableSignature.setVisible(!mSecSignature.getImage().isError() && request == REQUEST_CREATE_REPORT);
 
             double[] dimension = mBarangayClearance.getSecSignatureDimension();
 

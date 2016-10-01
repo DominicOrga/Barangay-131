@@ -584,14 +584,6 @@ public class BusinessClearanceFormControl {
 
                 businessClearance.setOwners(ownersStr);
 
-                System.out.println("*****Populate Business Clearance (Level Form)*****");
-                System.out.println("BusinessClearanceFormControl - Business id: " + businessClearance.getBusinessID());
-                System.out.println("BusinessClearanceFormControl - Business name: " + businessClearance.getBusinessName());
-                System.out.println("BusinessClearanceFormControl - Business type: " + businessClearance.getBusinessType());
-                System.out.println("BusinessClearanceFormControl - Business address: " + businessClearance.getBusinessAddress());
-                System.out.println("BusinessClearanceFormControl - Business client: " + businessClearance.getClient());
-                System.out.println("BusinessClearanceFormControl - Business owners: " + businessClearance.getOwners());
-
                 mListener.onCreateButtonClicked(businessClearance);
 
                 break;

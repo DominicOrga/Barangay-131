@@ -48,6 +48,10 @@ public class Main extends Application {
         PHOTO_DIR_PATH = dataDirectoryPath + "/Photos";
         SIGNATURE_DIR_PATH = dataDirectoryPath + "/Signatures";
 
+        File appDataDirectory = new File(APP_DATA_PATH);
+        if(!appDataDirectory.exists())
+            appDataDirectory.mkdir();
+
         // Create the directories if not yet created.
         File photoDirectory = new File(PHOTO_DIR_PATH);
         if(!photoDirectory.exists())
@@ -56,6 +60,7 @@ public class Main extends Application {
         File signatureDirectory = new File(SIGNATURE_DIR_PATH);
         if(!signatureDirectory.exists())
             signatureDirectory.mkdir();
+
 
         launch(args);
     }
