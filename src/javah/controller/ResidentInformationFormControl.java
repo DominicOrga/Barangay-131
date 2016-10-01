@@ -550,29 +550,34 @@ public class ResidentInformationFormControl {
 
                 mBarangayClearance.setYearOfResidency(mResidentSelected.getYearOfResidency());
 
+                Calendar dateOfResidency = Calendar.getInstance();
+                if(mResidentSelected.getYearOfResidency() == -1)
+                    // Compute the total years of residency of the resident.
+                    dateOfResidency.setTime(mResidentSelected.getBirthDate());
+                 else
+                    dateOfResidency.set(mResidentSelected.getYearOfResidency(), mResidentSelected.getMonthOfResidency(), 1);
+
+
                 // Compute the total years of residency of the resident.
-                Calendar birthdate = Calendar.getInstance();
-                birthdate.setTime(mResidentSelected.getBirthDate());
 
                 Calendar currentDate = Calendar.getInstance();
 
-                int totalYears = currentDate.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
+                int totalYears = currentDate.get(Calendar.YEAR) - dateOfResidency.get(Calendar.YEAR);
 
                 // If year of residency is equal to -1, then that means that the resident is a resident since birth.
                 if (mResidentSelected.getYearOfResidency() == -1)
                     // Date Subtraction Algorithm.
-                    totalYears -= currentDate.get(Calendar.YEAR) > birthdate.get(Calendar.YEAR) &&
-                                    currentDate.get(Calendar.MONTH) == birthdate.get(Calendar.MONTH) &&
-                                    currentDate.get(Calendar.DAY_OF_MONTH) < birthdate.get(Calendar.DAY_OF_MONTH) ||
-                                    currentDate.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH) ?
+                    totalYears -= currentDate.get(Calendar.YEAR) > dateOfResidency.get(Calendar.YEAR) &&
+                                    currentDate.get(Calendar.MONTH) == dateOfResidency.get(Calendar.MONTH) &&
+                                    currentDate.get(Calendar.DAY_OF_MONTH) < dateOfResidency.get(Calendar.DAY_OF_MONTH) ||
+                                    currentDate.get(Calendar.MONTH) < dateOfResidency.get(Calendar.MONTH) ?
                                     1 : 0;
 
                 else
-                    totalYears -= currentDate.get(Calendar.YEAR) > birthdate.get(Calendar.YEAR) &&
-                            currentDate.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH) ? 1 : 0;
+                    totalYears -= currentDate.get(Calendar.YEAR) > dateOfResidency.get(Calendar.YEAR) &&
+                            currentDate.get(Calendar.MONTH) < dateOfResidency.get(Calendar.MONTH) ? 1 : 0;
 
                 mBarangayClearance.setTotalYearsResidency(totalYears);
-
                 mBarangayClearance.setPurpose(mBrgyClearancePurpose.getText().trim());
 
                 // Pass the generated barangay clearance to the Main Control in order to be processed into a report.

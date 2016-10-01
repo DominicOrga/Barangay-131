@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -22,7 +21,6 @@ import javah.model.DatabaseModel;
 import javah.util.BarangayUtils;
 import javah.util.NodeNameHandler;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -33,8 +31,6 @@ import java.util.function.Supplier;
  * report generation with the saved data.
  */
 public class BusinessClearanceFormControl {
-
-
 
     /**
      * An interface listener for the BusinessClearanceFormControl which detects
