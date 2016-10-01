@@ -275,6 +275,8 @@ public class ResidentInformationFormControl {
      */
     @FXML
     private void initialize() {
+        BarangayUtils.addTextLimitListener(mSearchField, 90);
+
         mResidentLabels = new Label[10];
 
         for (int i = 0; i < 10; i++) {

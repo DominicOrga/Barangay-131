@@ -258,6 +258,8 @@ public class ResidentControl {
      */
     @FXML
     private void initialize() {
+        BarangayUtils.addTextLimitListener(mSearchField, 90);
+
         mResidentLabels = new Label[40];
 
         for (int i = 0; i < 40; i++) {
@@ -657,14 +659,14 @@ public class ResidentControl {
      *        The resident to be updated.
      */
     public void updateResident(Resident resident) {
-        System.out.println("ResidentControl - resident first name: " + resident.getFirstName());
-        System.out.println("ResidentControl - resident middle name: " + resident.getMiddleName());
-        System.out.println("ResidentControl - resident last name: " + resident.getLastName());
-
         mDatabaseModel.updateResident(resident);
 
         // Cache the resident to update.
         int index = mCacheModel.cacheResident(resident);
+
+        mResidentIDs = mCacheModel.getResidentIDsCache();
+
+        updateListPaging(false);
 
         // Make sure that once the resident is update, auto select it.
         mCurrentPage = index / 40 + 1;

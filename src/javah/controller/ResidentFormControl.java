@@ -436,7 +436,6 @@ public class ResidentFormControl {
         }
     }
 
-
     /**
      * When setResident() is used, we assume that we are editing the resident.
      * Thus, populate the form with the resident's data and update the scene.
@@ -512,5 +511,4 @@ public class ResidentFormControl {
         mResidentPhoto = residentPhoto;
         mResidentPhotoView.setImage(residentPhoto);
     }
-
 }

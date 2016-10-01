@@ -33,6 +33,8 @@ import java.util.function.Supplier;
  */
 public class BusinessClearanceFormControl {
 
+
+
     /**
      * An interface listener for the BusinessClearanceFormControl which detects
      * whether a business clearance form is to be generated into a report or
@@ -211,6 +213,8 @@ public class BusinessClearanceFormControl {
      */
     @FXML
     private void initialize() {
+        BarangayUtils.addTextLimitListener(mSearchField, 100);
+
         mNodeNameHandler = new NodeNameHandler(mExtraOwnerBox, 4, NodeNameHandler.OPERATION_ZERO_TO_MANY);
 
         mBusinessLabels = new Label[10];
@@ -656,6 +660,14 @@ public class BusinessClearanceFormControl {
 
                     mListener.onCreateButtonClicked(null);
                 }
+        }
+    }
+
+    @FXML
+    public void onAddressKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            mRootPane.requestFocus();
+            keyEvent.consume();
         }
     }
 
