@@ -234,6 +234,7 @@ public class InformationControl {
      */
     @FXML
     private void initialize() {
+        BarangayUtils.addTextLimitListener(mSearchField, 90);
         // Initialize mGridLabels with storage for 40 labels.
         mGridLabels = new Label[40];
 

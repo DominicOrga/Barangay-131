@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -267,7 +268,9 @@ public class BusinessClearanceFormControl {
         mNodeNameHandler.setListener((nodeNameVisibleCount) -> {
             if (nodeNameVisibleCount == 0) {
                 mExtraOwner.setText("Other Owners?");
-                mExtraOwner.setTextFill(Color.valueOf("#FF3F3F"));
+                mExtraOwner.setTextFill(Color.BLUE);
+                mExtraOwner.setUnderline(true);
+                mExtraOwner.setCursor(Cursor.HAND);
                 mExtraOwner.setVisible(true);
                 mIsExtraOwnerLabelClickable = true;
             }
@@ -398,6 +401,9 @@ public class BusinessClearanceFormControl {
         if (mIsExtraOwnerLabelClickable) {
             mExtraOwnerBox.setVisible(true);
             mExtraOwnerBox.setManaged(true);
+
+            mExtraOwner.setCursor(Cursor.DEFAULT);
+            mExtraOwner.setUnderline(false);
 
             mExtraOwner.setText("Other Owners:");
             mExtraOwner.setTextFill(Color.BLACK);
@@ -725,9 +731,20 @@ public class BusinessClearanceFormControl {
                 if (i == 1) {
                     // No extra owner exists.
                     if (firstName == null || firstName.isEmpty()) {
-                        mExtraOwner.setVisible(false);
-                        mExtraOwnerBox.setVisible(false);
-                        mExtraOwnerBox.setManaged(false);
+                        if (state == STATE_UPDATE) {
+                            mExtraOwner.setText("Other Owners?");
+                            mExtraOwner.setTextFill(Color.BLUE);
+                            mExtraOwner.setUnderline(true);
+                            mExtraOwner.setCursor(Cursor.HAND);
+                            mExtraOwner.setVisible(true);
+                            mIsExtraOwnerLabelClickable = true;
+                        } else {
+                            mExtraOwner.setVisible(false);
+                            mExtraOwner.setUnderline(false);
+                            mExtraOwner.setCursor(Cursor.DEFAULT);
+                            mExtraOwnerBox.setVisible(false);
+                            mExtraOwnerBox.setManaged(false);
+                        }
                         break loop;
                     }
 
@@ -869,6 +886,8 @@ public class BusinessClearanceFormControl {
             case STATE_UPDATE:
 
                 mCoverPane.toBack();
+
+                mExtraOwner.setVisible(true);
 
                 mListPagingPane.setDisable(true);
                 mMovePagePane.setDisable(true);

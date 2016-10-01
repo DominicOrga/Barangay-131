@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javah.contract.PreferenceContract;
 import javah.model.PreferenceModel;
+import javah.util.BarangayUtils;
 import javah.util.LogoutTimer;
 
 import java.sql.Date;
@@ -82,6 +83,8 @@ public class SecurityControl {
      */
     @FXML
     private void initialize() {
+        BarangayUtils.addTextLimitListener(mPassword, 16);
+
         mPassword.focusedProperty().addListener((observable, oldValue, newValue) -> mRootPane.requestFocus());
 
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> mWarning.setVisible(false));

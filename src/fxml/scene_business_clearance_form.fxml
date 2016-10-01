@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.collections.FXCollections?>
@@ -22,7 +31,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1140.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="@../css/barangay_clearance_report.css" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BusinessClearanceFormControl">
+<GridPane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1140.0" style="-fx-background-color: #F4F4F4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);" stylesheets="@../css/barangay_clearance_report.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.BusinessClearanceFormControl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="420.0" prefWidth="420.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -337,13 +346,16 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <Label fx:id="mExtraOwner" onMouseClicked="#onExtraOwnerClicked" text="Other Owners?">
+                        <Label fx:id="mExtraOwner" onMouseClicked="#onExtraOwnerClicked" text="Other Owners?" textFill="BLUE" underline="true">
                            <font>
                               <Font size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                         <VBox fx:id="mExtraOwnerBox" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0" />
                      </children>
