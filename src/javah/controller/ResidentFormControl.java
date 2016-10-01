@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -163,6 +162,19 @@ public class ResidentFormControl {
         // Initialize birth year elements, which include the current year up to 1900.
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
+        mBirthYear.valueProperty().addListener((observable, oldValue, newValue) -> {
+            List<String> newYearOfResidencyList = new ArrayList<>();
+            newYearOfResidencyList.add("Birth");
+
+            int minYear = (int) newValue;
+
+            for (int i = year; i >= minYear; i--)
+                newYearOfResidencyList.add(i + "");
+
+            mYearOfResidency.setItems(FXCollections.observableArrayList(newYearOfResidencyList));
+            mYearOfResidency.setValue("Birth");
+        });
+
         List<Integer> yearList = new ArrayList<>();
         for (int i = year; i >= 1900; i--)
             yearList.add(i);
@@ -213,16 +225,6 @@ public class ResidentFormControl {
             mBirthDay.setValue(1);
         });
 
-        // Initialize the year of residency elements.
-        List<String> yearOfResidencyList = new ArrayList<>();
-        yearOfResidencyList.add("Birth");
-        for (int i = year; i >= 1900; i--)
-            yearOfResidencyList.add(i + "");
-
-        mYearOfResidency.setItems(FXCollections.observableArrayList(yearOfResidencyList));
-        // Set the year of residency to 'Birth' as the default value.
-        mYearOfResidency.setValue("Birth");
-
         // Set a year of residency listener to determine whether its value is 'Birth' or not. If not, then display
         // the mMonthOfResidency.
         mYearOfResidency.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -264,6 +266,8 @@ public class ResidentFormControl {
                 mActionIcon.setImage(new Image("res/ic_new_resident.png"));
             }
         });
+
+
     }
 
     /**
