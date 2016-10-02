@@ -586,7 +586,7 @@ public class InformationControl {
                     // null and break the loop.
                     if (i >= 37) {
                         for (int j = i; j < 40; j++) {
-//                            mReportIDToLabelLocation[j] = null;
+                            mReportIDToLabelLocation[j] = null;
                             currentLabel = mGridLabels[j];
                             currentLabel.setText(null);
                             mListGridPane.add(currentLabel, j % 2 == 0 ? 0 : 1, j / 2, 1, 1);
