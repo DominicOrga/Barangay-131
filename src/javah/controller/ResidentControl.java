@@ -307,8 +307,10 @@ public class ResidentControl {
      */
     @FXML
     public void onSearchFieldKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER)
+        if (event.getCode() == KeyCode.ENTER) {
+            mResidentListPaging.requestFocus();
             onSearchButtonClicked(null);
+        }
     }
 
     /**
@@ -460,7 +462,6 @@ public class ResidentControl {
                     mAddress2.setVisible(true);
                     mAddress2Label.setVisible(true);
                     mAddress2.setText(mResidentSelected.getAddress2());
-                    System.out.println("ResidentControl - 2nd address: " + mResidentSelected.getAddress2());
                 } else {
                     mAddress2.setVisible(false);
                     mAddress2Label.setVisible(false);

@@ -422,8 +422,6 @@ public class ChangePasswordControl {
 
         mPrefModel.save(false);
 
-        System.out.println("ChangePasswordControl - Password Saved. " + mNewPassword.getText());
-
         return calendar;
     }
 

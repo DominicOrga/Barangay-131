@@ -164,8 +164,6 @@ public class SecurityControl {
         if (password != null && !password.isEmpty())
             mPassword.setText(password.substring(0, 3) +
                     "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022");
-
-        System.out.println("SecurityControl - Password updated to: " + password);
     }
 
     /**

@@ -518,8 +518,6 @@ public class InformationControl {
             mLabelUseCount++;
         }
 
-//        System.out.println("InformationControl - Label Used Count = " + mLabelUseCount);
-
         mCurrentPage = stayOnPage ? (mPageCount < mCurrentPage) ? mCurrentPage-- : mCurrentPage : 1;
 
         mCurrentPageLabel.setText(mCurrentPage + "");
