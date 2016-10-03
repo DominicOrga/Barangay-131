@@ -4,11 +4,12 @@ import javah.contract.PreferenceContract;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.nio.file.Files;
+import java.security.Key;
+import java.util.Base64;
 
 /**
  * This class will handle the create, read and update of values with regards to
@@ -18,6 +19,12 @@ import java.nio.file.Files;
  * All information stored in the JSON file are related to the Barangay Officials.
  */
 public class PreferenceModel {
+
+    // The encryption algorithm for encrypting or decrypting the JSON file.
+    private final String ENCRYTION_ALGORITHM = "AES";
+
+    // A key used for AES encrypting and decrypting the text from the JSON file.
+    private final String KEY = "W4mkgo31nslG43Ks";
 
     /* Its Json himself! Wait, did I just assume its gender? */
     private JSONObject mJson;
@@ -45,7 +52,7 @@ public class PreferenceModel {
                 // When the file is created, add '{}' as initial strings so that it can be parsed
                 // by the JSON parser.
                 FileWriter writer = new FileWriter(jsonFile);
-                writer.write("{}");
+                writer.write("+rstZ2DltG5LlhC1mk0lcQ==");
                 writer.close();
             }
 
@@ -53,13 +60,24 @@ public class PreferenceModel {
             e.printStackTrace();
         }
 
-        // Parse the file and store it to mJson.
+        // Decrypt the JSON file, then parse and store it to mJson.
         try {
+            FileReader fileReader = new FileReader(mJsonPath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            Cipher decipher = Cipher.getInstance(ENCRYTION_ALGORITHM);
+            Key secretKey = new SecretKeySpec(KEY.getBytes(), ENCRYTION_ALGORITHM);
+            decipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+            String cipherText = bufferedReader.readLine();
+
+            String decipherText = new String(decipher.doFinal(Base64.getDecoder().decode(cipherText.getBytes())));
+
             JSONParser parser = new JSONParser();
-            mJson = (JSONObject) parser.parse(new FileReader(mJsonPath));
+            mJson = (JSONObject) parser.parse(decipherText);
         } catch (Exception e) {
-            // If the parser cannot read the json file, then delete it,
-            // After that, re-initialize the preference model.
+            // If the json file cannot be deciphered (if someone meddled with it manually),
+            // then delete it. After that, re-initialize the preference model.
             e.printStackTrace();
             delete();
         }
@@ -106,8 +124,8 @@ public class PreferenceModel {
     }
 
     /**
-     * Save the changes made with the Json file. Called after clicking the save button
-     * at mBarangayAgentScene.
+     * Encrypt the Json string then save the changes made within the Json file.
+     * Called after clicking the save buttonat mBarangayAgentScene.
      *
      * @param isBrgyAgentCalling
      *        Determines if the save function is called from the barangay clearance, since it
@@ -118,10 +136,18 @@ public class PreferenceModel {
             mJson.put(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "1");
 
         try {
+            String jsonString = mJson.toJSONString();
+
+            Cipher cipher = Cipher.getInstance(ENCRYTION_ALGORITHM);
+            Key secretKey = new SecretKeySpec(KEY.getBytes(), ENCRYTION_ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+            String cipherText = Base64.getEncoder().encodeToString(cipher.doFinal(jsonString.getBytes()));
+
             FileWriter fileWriter = new FileWriter(mJsonPath);
-            fileWriter.write(mJson.toJSONString());
+            fileWriter.write(cipherText);
             fileWriter.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
