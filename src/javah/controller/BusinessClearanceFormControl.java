@@ -872,7 +872,7 @@ public class BusinessClearanceFormControl {
                 mClientAuxiliary.setValue("N/A");
 
                 mExtraOwner.setText("Other Owners?");
-                mExtraOwner.setTextFill(Color.valueOf("#FF3F3F"));
+                mExtraOwner.setTextFill(Color.BLUE);
                 mExtraOwner.setVisible(true);
                 mIsExtraOwnerLabelClickable = true;
 

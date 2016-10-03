@@ -36,17 +36,19 @@ public class PreferenceModel {
     /**
      * Initialize or reinitialize the JSON file.
      */
-    private void initialize() {
+    public void initialize() {
         // Initially, try to create the mJson file if it is not yet created.
         try {
             File jsonFile = new File(mJsonPath);
 
             if(jsonFile.createNewFile()) {
-                // When the file is created, add '{}' as initial strings so that it can be parsed by the JSON parser.
+                // When the file is created, add '{}' as initial strings so that it can be parsed
+                // by the JSON parser.
                 FileWriter writer = new FileWriter(jsonFile);
                 writer.write("{}");
                 writer.close();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +58,10 @@ public class PreferenceModel {
             JSONParser parser = new JSONParser();
             mJson = (JSONObject) parser.parse(new FileReader(mJsonPath));
         } catch (Exception e) {
+            // If the parser cannot read the json file, then delete it,
+            // After that, re-initialize the preference model.
             e.printStackTrace();
+            delete();
         }
     }
 
@@ -122,14 +127,14 @@ public class PreferenceModel {
     }
 
     /**
-     * Delete the preferences. Used when the application will be reset.
+     * Delete the preferences. Used when the application preferences will be reset.
      */
     public void delete() {
-        File file = new File(mJsonPath);
-
         try {
-            Files.deleteIfExists(file.toPath());
-        } catch (IOException e) {
+            // Fucking bug! Deleting a file needs System.gc() called before deletion.
+            System.gc();
+            Files.deleteIfExists(new File(mJsonPath).toPath());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

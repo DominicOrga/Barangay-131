@@ -84,12 +84,6 @@ public class ChangePasswordControl {
     /* The strength of the newly inputted password. */
     private int mPasswordStrength;
 
-    /**
-     * A boolean that determines the state of this scene, in which whether the password
-     * is being initialized for the first time or not.
-     */
-    private boolean mOnFirstPasswordInitialization;
-
     @FXML
     public void initialize() {
         // Bind bi-directionally together the mNewPassword and mNewPasswordMasked.
@@ -338,7 +332,7 @@ public class ChangePasswordControl {
     @FXML
     public void onSaveButtonClicked(ActionEvent actionEvent) {
         // Save the password as a preference.
-        if (mNewPassword.getText().length() < 8) {
+        if (mNewPassword == null || mNewPassword.getText().length() < 8) {
             mRequirements.setText("Password must have at least a length of 8.");
             mRequirements.setVisible(true);
             return;
@@ -356,16 +350,13 @@ public class ChangePasswordControl {
             return;
         }
 
-        if (!mNewPassword.getText().equals(mConfirmPasswordMasked.getText())) {
+        if (mConfirmPasswordMasked == null || !mNewPassword.getText().equals(mConfirmPasswordMasked.getText())) {
             mRequirements.setText("New password must match with the confirm password.");
             mRequirements.setVisible(true);
             return;
         }
 
-        if (currentPassword.isEmpty()) {
-            savePassword();
-            mListener.onSaveButtonClicked(currentPassword.isEmpty());
-        }
+        mListener.onSaveButtonClicked(currentPassword.isEmpty());
     }
 
     /**

@@ -709,8 +709,11 @@ public class MainControl {
             @Override
             public void onSaveButtonClicked(boolean isFirstPassword) {
                 if (isFirstPassword) {
+                    mChangePasswordControl.savePassword();
+
                     hidePopupScene(mChangePasswordScene, false);
                     mSecurityControl.updateDisplayedPassword();
+
                     onSettingsButtonClicked(null);
 
                     String datetime = mPreferenceModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
@@ -810,10 +813,9 @@ public class MainControl {
         addToPopupPane.accept(mChangePasswordScene);
         addToPopupPane.accept(mSecurityScene);
 
-        // Automatically tart the Barangay Agent form when the barangay agents have not
+        // Automatically start the Barangay Agent form when the barangay agents have not
         // been set yet.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0")) {
-            mPreferenceModel.delete();
             showPopupScene(mChangePasswordScene, false);
         } else
             setLogout(true);
