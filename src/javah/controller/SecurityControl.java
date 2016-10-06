@@ -55,18 +55,6 @@ public class SecurityControl {
     @FXML private TextField mPassword;
 
     /**
-     * A label which is shown when the user wants to update the password even when
-     * 3 days have not passed yet since the recent update.
-     */
-    @FXML private TextFlow mWarning;
-
-    /**
-     * A part of the mWarning, used to inform the user about the previous datetime in
-     * which the password was updated.
-     */
-    @FXML private Text mLastUpdate;
-
-    /**
      * A Combo box for picking the max idle duration to which the application can be
      * idle before being automatically logged out.
      */
@@ -87,8 +75,6 @@ public class SecurityControl {
 
         mPassword.focusedProperty().addListener((observable, oldValue, newValue) -> mRootPane.requestFocus());
 
-        mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> mWarning.setVisible(false));
-
         mIdleComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.equals(oldValue)) {
                 String value = newValue.split(" ")[0];
@@ -104,34 +90,7 @@ public class SecurityControl {
 
     @FXML
     public void onChangePasswordButtonClicked(MouseEvent mouseEvent) {
-        String datetime = mPrefModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
-
-        if (datetime == null)
-            mListener.onChangePasswordButtonClicked();
-        else {
-            Date lastPasswordUpdate = new Date(Long.valueOf(datetime));
-
-            Calendar allowPasswordUpdate = Calendar.getInstance();
-            allowPasswordUpdate.setTime(new Date(Long.valueOf(datetime)));
-
-            // Add 3 days to the last password update.
-            allowPasswordUpdate.add(Calendar.DAY_OF_MONTH, 3);
-
-            Calendar currentDay = Calendar.getInstance();
-
-            // If the last password update added by 3 days is less than the current day, then
-            // allow password update process.
-            if (allowPasswordUpdate.compareTo(currentDay) < 0) {
-                mListener.onChangePasswordButtonClicked();
-            } else {
-                if (!mWarning.isVisible()) {
-                    mWarning.setVisible(true);
-
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, YYYY hh:mm aaa");
-                    mLastUpdate.setText(simpleDateFormat.format(lastPasswordUpdate.getTime()));
-                }
-            }
-        }
+        mListener.onChangePasswordButtonClicked();
     }
 
     /**
@@ -142,7 +101,7 @@ public class SecurityControl {
      */
     @FXML
     public void onDoneButtonClicked(ActionEvent actionEvent) {
-        int idleTimeNew = Integer.valueOf(((String) mIdleComboBox.getValue()).split(" ")[0]);
+        int idleTimeNew = Integer.valueOf((mIdleComboBox.getValue()).split(" ")[0]);
 
         int idleTimeOld = Integer.valueOf(mPrefModel.get(PreferenceContract.MAX_IDLE_DURATION, "0"));
 
@@ -199,5 +158,4 @@ public class SecurityControl {
     public void setDisable(boolean bool) {
         mRootPane.setDisable(bool);
     }
-
 }

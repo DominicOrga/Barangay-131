@@ -11,7 +11,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 
-<Pane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="366.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.SecurityControl">
+<Pane fx:id="mRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="366.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javah.controller.SecurityControl">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="366.0" style="-fx-background-color: #FF8600;">
          <children>
@@ -38,23 +38,17 @@
          </font>
       </TextField>
       <Label fx:id="mChangePasswordButton" layoutX="224.0" layoutY="155.0" onMouseClicked="#onChangePasswordButtonClicked" text="Change password" textFill="#0080ff" underline="true" />
-      <TextFlow fx:id="mWarning" layoutX="25.0" layoutY="184.0" prefHeight="20.0" prefWidth="300.0" visible="false">
-         <children>
-            <Text fx:id="mRequirements" fill="#ff3f3f" strokeType="OUTSIDE" strokeWidth="0.0" text="Password can only be changed after 3 days from the last update. Last update was on " wrappingWidth="275.4375" />
-            <Text fx:id="mLastUpdate" fill="#ff3f3f" strokeType="OUTSIDE" strokeWidth="0.0" text="Wednesday, September 3, 2016 at 11:45 AM." wrappingWidth="275.4375" />
-         </children>
-      </TextFlow>
-      <Button fx:id="mDoneButton" layoutX="242.0" layoutY="300.0" mnemonicParsing="false" onAction="#onDoneButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Done" textFill="WHITE">
+      <Button fx:id="mDoneButton" layoutX="241.0" layoutY="258.0" mnemonicParsing="false" onAction="#onDoneButtonClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: #FF8600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);" text="Done" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="24.0" layoutY="250.0" text="Auto logout after idle:">
+      <Label layoutX="23.0" layoutY="208.0" text="Auto logout after idle:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="mIdleComboBox" layoutX="224.0" layoutY="249.0" prefHeight="33.0" prefWidth="118.0" promptText="15 mins" style="-fx-background-color: transparent; -fx-border-color: BEBEBE;" stylesheets="@../css/main_stylesheet.css">
+      <ComboBox fx:id="mIdleComboBox" layoutX="223.0" layoutY="207.0" prefHeight="33.0" prefWidth="118.0" promptText="15 mins" style="-fx-background-color: transparent; -fx-border-color: BEBEBE;" stylesheets="@../css/main_stylesheet.css">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="1 min" />

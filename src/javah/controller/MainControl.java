@@ -30,7 +30,6 @@ import javah.model.PreferenceModel;
 import javah.util.LogoutTimer;
 
 import java.io.File;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
@@ -513,7 +512,7 @@ public class MainControl {
                     case ConfirmationDialogControl.CLIENT_CHANGE_PASSWORD:
                         hidePopupScene(mConfirmationDialogScene, true);
                         mChangePasswordControl.setDisable(false);
-
+                        break;
                     case ConfirmationDialogControl.CLIENT_LOGOUT:
                         hidePopupScene(mConfirmationDialogScene, false);
                 }
