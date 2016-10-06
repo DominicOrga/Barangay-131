@@ -30,6 +30,7 @@ import javah.model.PreferenceModel;
 import javah.util.LogoutTimer;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
@@ -38,72 +39,80 @@ import java.util.Calendar;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * A controller that serves as the brain of the application. All existing scenes
+ * within ths system are pre-loaded and managed by this controller. Furthermore,
+ * this controller acts as a communication bridge for scenes to communicate.
+ */
 public class MainControl {
 
-    /**
-     * The container for the pop up dialogs or forms.
-     */
+    /* A pane containing all the pop-up dialogs of the system. */
     @FXML private StackPane mPopupStackPane;
 
+    /**
+     * A pane created specifically for the pop-up login pane. The pop-up login pane is
+     * displayed when the max idle time is reached. Due to its volatile nature, a
+     * unique pane is provided for the pop-up login pane to be appear above all other
+     * scenes.
+     */
     @FXML private StackPane mPopupLoginPane;
 
-    /**
-     * The designated root view of the main scene at the back of the mPopupStackPane.
-     * Loaded in order to apply gaussian blur to the background when a pop up dialog is displayed.
-     */
+    /* A pane that serves as the root node of this controller's view. */
     @FXML private GridPane mMainGridPane;
 
     /**
-     * The container for the menu buttons, settings, time, welcome message and setLogout button.
-     * Loaded to edit the display of the menu buttons to determine which one is currently selected.
+     * A container for the menu buttons, settings, time, welcome message, etc. Loaded to
+     * edit the display of the menu buttons to determine which one is currently selected.
      */
     @FXML private GridPane mMenuGridPane;
 
-    /**
-     * The menu buttons.
-     */
+    /* Menu buttons for selecting what information to display. */
     @FXML private Pane mResidentMenu, mBarangayClearanceMenu, mBarangayIdMenu, mBusinessClearanceMenu;
 
+    /* Labels to display the last login datetime.*/
     @FXML private Label mLastLoginDate, mLastLoginTime;
+
+    /* Labels to display the last password update datetime. */
     @FXML private Label mLastPwdUpdateDate, mLastPwdUpdateTime;
 
-    /**
-     * The information scenes.
-     */
-    private Pane mResidentScene, mInformationScene;
+    /*  scene to display the residents. */
+    private Pane mResidentScene;
 
     /**
-     * The information scene controllers
+     * A scene to display the information. Information instances are the Barangay ID,
+     * Barangay Clearance and Business clearance.
+     */
+    private Pane mInformationScene;
+
+    /**
+     * A controller for the resident scene and handles the CRUD operations regarding
+     * resident records.
      */
     private ResidentControl mResidentControl;
+
+    /**
+     * A controller for the information scene and handles the CRUD operations regarding
+     * the Barangay IDs, Barangay Clearances and Business Clearances.
+     */
     private InformationControl mInformationControl;
 
-    /**
-     * The popup scenes. (CONFIRMATION)
-     */
+    //------------- POP-UP SCENES ----------------//
     private Pane mConfirmationDialogScene;
-
-    /**
-     * The popup scenes. (FORMS)
-     */
-    private Pane mPhotoshopScene, mBarangayAgentScene;
-    private Pane mResidentFormScene;
-    private Pane mResidentInfoFormScene;
-    private Pane mBusiClearanceFormScene;
+    private Pane mPhotoshopScene;
+    private Pane mBarangayAgentScene;
     private Pane mChangePasswordScene;
     private Pane mSecurityScene;
     private Pane mLoginScene;
 
-    /**
-     * The popup scenes. (REPORTS)
-     */
+    private Pane mResidentFormScene;
+    private Pane mResidentInfoFormScene;
+    private Pane mBusiClearanceFormScene;
+
     private Pane mBarangayIDReportScene;
     private Pane mBrgyClearanceReportScene;
     private Pane mBusiClearanceReportScene;
 
-    /**
-     * The popup scene controllers.
-     */
+    //------------- POP-UP SCENES CONTROLLERS ----------------//
     private ConfirmationDialogControl mConfirmationDialogControl;
     private ResidentFormControl mResidentFormControl;
     private PhotoshopControl mPhotoshopControl;
@@ -117,35 +126,42 @@ public class MainControl {
     private SecurityControl mSecurityControl;
     private LoginControl mLoginControl;
 
-    /**
-     * Key-value pairs to represent each menu.
-     */
+    /* Represent each menu used to navigate which information to display. */
     private final byte MENU_RESIDENT = 1,
             MENU_BARANGAY_ID = 2,
             MENU_BARANGAY_CLEARANCE = 3,
             MENU_BUSINESS_CLEARANCE = 4;
 
-    /**
-     * Holds the value of the currently selected menu.
-     */
+    /* Holds the value of the currently selected menu. */
     private byte mMenuSelected;
 
-    /**
-     * The rectangle object used to assist menu animation.
-     */
+    /* The rectangle object used to assist menu animation. */
     private Rectangle mRectAnimTransitioner;
 
+    /**
+     * Universal references to the data storages of the application.
+     * This variables are shared to the different controllers.
+     */
     private CacheModel mCacheModel;
     private DatabaseModel mDatabaseModel;
     private PreferenceModel mPreferenceModel;
 
-    private LogoutTimer mLogoutTimer;
     /**
-     * Initialize all the scenes.
-     * @throws Exception
+     * A class that logouts the application if the user is idle for a specified amount
+     * of time. Max idle time can be modified at the security control.
+     *
+     * @see SecurityControl
+     */
+    private LogoutTimer mLogoutTimer;
+
+    /**
+     * Initialize all the scenes and controllers.
+     *
+     * @throws IOException
+     *         An exception that may occur during the fxml loading of the views.
      */
     @FXML
-    private void initialize() throws Exception {
+    private void initialize() throws IOException {
         mLogoutTimer = new LogoutTimer();
         mLogoutTimer.setListener(() -> setLogout(true));
 
@@ -154,8 +170,6 @@ public class MainControl {
         mCacheModel = new CacheModel();
         mCacheModel.startCache(mDatabaseModel);
         mPreferenceModel = new PreferenceModel();
-
-
 
         // Update the last password update date time labels.
         String pwdDateTime = mPreferenceModel.get(PreferenceContract.LAST_PASSWORD_UPDATE, null);
@@ -795,7 +809,6 @@ public class MainControl {
                         mPreferenceModel.delete();
                         System.exit(0);
                 }
-
             }
         });
 
@@ -815,6 +828,7 @@ public class MainControl {
         // Automatically start the Barangay Agent form when the barangay agents have not
         // been set yet.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0")) {
+            mPreferenceModel.delete();
             showPopupScene(mChangePasswordScene, false);
         } else
             setLogout(true);

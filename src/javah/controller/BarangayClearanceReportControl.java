@@ -15,6 +15,7 @@ import javafx.scene.transform.Scale;
 import javah.Main;
 import javah.container.BarangayClearance;
 import javah.contract.PreferenceContract;
+import javah.model.DatabaseModel;
 import javah.model.PreferenceModel;
 import javah.util.BarangayUtils;
 import javah.util.DraggableSignature;

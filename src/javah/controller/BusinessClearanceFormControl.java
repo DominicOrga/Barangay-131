@@ -505,6 +505,7 @@ public class BusinessClearanceFormControl {
          */
         Supplier<Business> createBusiness = () -> {
             Business business = new Business();
+
             business.setName(mBusiNameField.getText().trim());
             business.setType(mBusiTypeField.getText().trim());
             business.setAddress(mAddressField.getText().trim());

@@ -1,13 +1,6 @@
 package javah.util;
 
-import com.sun.javafx.tk.FontLoader;
-import com.sun.javafx.tk.Toolkit;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +133,7 @@ public class BarangayUtils {
         lastName = capitalizeString(lastName);
 
         String formattedName = firstName + " " + middleName.charAt(0) + ". " + lastName;
-        formattedName += auxiliary == null ? "" : " " + auxiliary;
+        formattedName += auxiliary == null ? "" : " " + auxiliary.toUpperCase();
 
         return formattedName;
     }
@@ -220,7 +213,6 @@ public class BarangayUtils {
 
         return dimension;
     }
-
 
     /**
      * Limit the mUnmaskedText within a any TextInputControl child classes to a certain length.

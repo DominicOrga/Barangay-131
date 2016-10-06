@@ -581,24 +581,6 @@ public class DatabaseModel {
      */
     public String createBusinessClearance(BusinessClearance businessClearance) {
 
-        System.out.println("*****DatabaseModel - Business Clearance Creation Data****");
-        System.out.println("Business name: " + businessClearance.getBusinessName());
-        System.out.println("Business owners: " + businessClearance.getOwners());
-        System.out.println("Business address: " + businessClearance.getBusinessAddress());
-        System.out.println("Business type: " + businessClearance.getBusinessType());
-        System.out.println("Business client: " + businessClearance.getClient());
-        System.out.println("Business ID: " + businessClearance.getBusinessID());
-        System.out.println("ID: " + businessClearance.getID());
-        System.out.println("Date issued: " + businessClearance.getDateIssued());
-        System.out.println("Date valid: " + businessClearance.getDateValid());
-        System.out.println("Chairman name: " + businessClearance.getChmName());
-        System.out.println("Chairman signature: " + businessClearance.getChmSignature());
-        System.out.println("Chairman signature dimension: " + Arrays.toString(businessClearance.getChmSignatureDimension()));
-        System.out.println("Secretary name: " + businessClearance.getSecName());
-        System.out.println("Secretary signature: " + businessClearance.getSecSignature());
-        System.out.println("Secretary signature dimension: " + Arrays.toString(businessClearance.getSecSignatureDimension()));
-
-
         try {
             Connection dbConnection = mDataSource.getConnection();
 
