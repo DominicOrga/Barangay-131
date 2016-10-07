@@ -470,8 +470,8 @@ public class CacheModel {
 
         // Check if the resident to be deleted has a barangay ID or a barangay clearance. If
         // there is, then delete it from the mBarangayIDNamesCache or mBrgyClearanceNamesCache.
-        for (int i = 0; i < count; i++) {
-            if (i < barangayIDCount && mBarangayIDResidentIDsCache.get(i).equals(id)) {
+        for (int i = 0, j = 0, k = 0; i < count; i++, j++, k++) {
+            if (j < barangayIDCount && mBarangayIDResidentIDsCache.get(j).equals(id)) {
                 index = mBarangayIDResidentIDsCache.indexOf(id);
 
                 mBarangayIDIDsCache.remove(index);
@@ -480,10 +480,10 @@ public class CacheModel {
                 mBarangayIDDateIssuedCache.remove(index);
 
                 barangayIDCount--;
-                i--;
+                j--;
             }
 
-            if (i < barangayClearanceCount && mBrgyClearanceResidentIDsCache.get(i).equals(id)) {
+            if (k < barangayClearanceCount && mBrgyClearanceResidentIDsCache.get(k).equals(id)) {
                 index = mBrgyClearanceResidentIDsCache.indexOf(id);
 
                 mBrgyClearanceIDsCache.remove(index);
@@ -492,7 +492,7 @@ public class CacheModel {
                 mBrgyClearanceDateIssuedCache.remove(index);
 
                 barangayClearanceCount--;
-                i--;
+                k--;
             }
         }
     }

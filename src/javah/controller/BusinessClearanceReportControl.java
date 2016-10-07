@@ -1,5 +1,7 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.PageLayout;
@@ -152,6 +154,8 @@ public class BusinessClearanceReportControl {
         // This is needed since \n only works programmatically.
         mLineBreak1.setText("\n\n");
         mLineBreak2.setText("\n\n");
+
+        mScrollPane.focusedProperty().addListener((observable, oldValue, newValue) -> mRootPane.requestFocus());
     }
 
     /**

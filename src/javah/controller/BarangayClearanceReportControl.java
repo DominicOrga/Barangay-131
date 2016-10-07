@@ -1,5 +1,7 @@
 package javah.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.*;
@@ -168,6 +170,8 @@ public class BarangayClearanceReportControl {
         mTextLineBreak3.setText(".\n\n");
 
         mKagawads = new Text[]{mKagawad1, mKagawad2, mKagawad3, mKagawad4, mKagawad5, mKagawad6, mKagawad7};
+
+        mScrollPane.focusedProperty().addListener((observable, oldValue, newValue) -> mRootPane.requestFocus());
     }
 
     /**

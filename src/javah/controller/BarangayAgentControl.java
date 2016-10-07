@@ -342,6 +342,8 @@ public class BarangayAgentControl {
                 mCancelButton.setManaged(true);
             }
         });
+
+        mScrollPane.focusedProperty().addListener((observable, oldValue, newValue) -> mRootPane.requestFocus());
     }
 
     /**

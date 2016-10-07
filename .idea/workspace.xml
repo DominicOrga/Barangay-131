@@ -7,17 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_barangay_agent.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_barangay_agent.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_barangay_clearance_report.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_barangay_clearance_report.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_business_clearance_form.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_business_clearance_form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_business_clearance_report.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_business_clearance_report.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_resident_information_form.fxml" afterPath="$PROJECT_DIR$/out/production/Barangay_131/fxml/scene_resident_information_form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_barangay_agent.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_barangay_agent.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_barangay_clearance_report.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_business_clearance_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_business_clearance_form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_business_clearance_report.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_business_clearance_report.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fxml/scene_resident_information_form.fxml" afterPath="$PROJECT_DIR$/src/fxml/scene_resident_information_form.fxml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Barangay_131/javah/controller/BarangayClearanceReportControl.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/controller/MainControl.java" afterPath="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javah/model/CacheModel.java" afterPath="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,76 +71,226 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="814" column="52" selection-start-line="814" selection-start-column="52" selection-end-line="814" selection-end-column="52" />
+            <state relative-caret-position="206">
+              <caret line="916" column="63" selection-start-line="916" selection-start-column="63" selection-end-line="916" selection-end-column="63" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mPopupLoginPane#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mInformationScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mInformationControl#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mCacheModel#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;field#mLogoutTimer#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
+                <element signature="method#initialize#0;class#MainControl#0" expanded="false" />
                 <element signature="e#6884#6924#0" expanded="false" />
-                <element signature="class#8043:8743" expanded="false" />
-                <element signature="method#onEditResidentButtonClicked#0;class#8043:8743" expanded="false" />
-                <element signature="method#onDeleteResidentButtonClicked#0;class#8043:8743" expanded="false" />
-                <element signature="class#9124:12841" expanded="false" />
-                <element signature="method#onCreateReportButtonClicked#0;class#9124:12841" expanded="false" />
-                <element signature="method#onViewButtonClicked#0;class#9124:12841" expanded="false" />
-                <element signature="method#onRequestReportSnapshot#0;class#9124:12841" expanded="false" />
-                <element signature="class#13710:16395" expanded="false" />
-                <element signature="method#onAcceptButtonClicked#0;class#13710:16395" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#13710:16395" expanded="false" />
-                <element signature="method#onWebcamInitializeError#0;class#13710:16395" expanded="false" />
-                <element signature="class#16744:19092" expanded="false" />
-                <element signature="method#onChmUploadButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onChmCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onChmSignatureUploadButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onChmSignatureCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onSecSignatureUploadButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onSecSignatureCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-                <element signature="method#onFinished#0;class#16744:19092" expanded="false" />
-                <element signature="method#onConfirmButtonClicked#0;class#19403:22800" expanded="false" />
-                <element signature="e#20568#20650#0" expanded="false" />
-                <element signature="class#23070:24424" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#23070:24424" expanded="false" />
-                <element signature="e#23279#23373#0" expanded="false" />
-                <element signature="method#onTakePhotoButtonClicked#0;class#23070:24424" expanded="false" />
-                <element signature="method#onUploadButtonClicked#0;class#23070:24424" expanded="false" />
-                <element signature="class#24880:26674" expanded="false" />
-                <element signature="method#onUploadButtonClicked#0;class#24880:26674" expanded="false" />
-                <element signature="method#onCaptureButtonClicked#0;class#24880:26674" expanded="false" />
-                <element signature="method#onCreateButtonClicked#0;class#24880:26674" expanded="false" />
-                <element signature="class#27030:27479" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#27030:27479" expanded="false" />
-                <element signature="class#27862:28359" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#27862:28359" expanded="false" />
-                <element signature="class#28787:29908" expanded="false" />
-                <element signature="method#onCreateButtonClicked#0;class#28787:29908" expanded="false" />
-                <element signature="method#onDeleteButtonClicked#0;class#28787:29908" expanded="false" />
-                <element signature="class#30290:30787" expanded="false" />
-                <element signature="method#onSaveButtonClicked#0;class#30290:30787" expanded="false" />
-                <element signature="method#onCancelButtonClicked#0;class#31135:32727" expanded="false" />
-                <element signature="class#33090:33646" expanded="false" />
-                <element signature="method#onDoneButtonClicked#0;class#33090:33646" expanded="false" />
-                <element signature="method#onChangePasswordButtonClicked#0;class#33090:33646" expanded="false" />
+                <element signature="class#8042:8742" expanded="false" />
+                <element signature="method#onEditResidentButtonClicked#0;class#8042:8742" expanded="false" />
+                <element signature="method#onDeleteResidentButtonClicked#0;class#8042:8742" expanded="false" />
+                <element signature="class#9123:12840" expanded="false" />
+                <element signature="method#onCreateReportButtonClicked#0;class#9123:12840" expanded="false" />
+                <element signature="method#onViewButtonClicked#0;class#9123:12840" expanded="false" />
+                <element signature="method#onRequestReportSnapshot#0;class#9123:12840" expanded="false" />
+                <element signature="class#13709:16394" expanded="false" />
+                <element signature="method#onAcceptButtonClicked#0;class#13709:16394" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#13709:16394" expanded="false" />
+                <element signature="method#onWebcamInitializeError#0;class#13709:16394" expanded="false" />
+                <element signature="class#16743:19091" expanded="false" />
+                <element signature="method#onChmUploadButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onChmCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onChmSignatureUploadButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onChmSignatureCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onSecSignatureUploadButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onSecSignatureCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+                <element signature="method#onFinished#0;class#16743:19091" expanded="false" />
+                <element signature="class#19402:22799" expanded="false" />
+                <element signature="method#onConfirmButtonClicked#0;class#19402:22799" expanded="false" />
+                <element signature="e#20567#20649#0" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#19402:22799" expanded="false" />
+                <element signature="class#23069:24423" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#23069:24423" expanded="false" />
+                <element signature="e#23278#23372#0" expanded="false" />
+                <element signature="method#onTakePhotoButtonClicked#0;class#23069:24423" expanded="false" />
+                <element signature="method#onUploadButtonClicked#0;class#23069:24423" expanded="false" />
+                <element signature="class#24879:26673" expanded="false" />
+                <element signature="method#onUploadButtonClicked#0;class#24879:26673" expanded="false" />
+                <element signature="method#onCaptureButtonClicked#0;class#24879:26673" expanded="false" />
+                <element signature="method#onCreateButtonClicked#0;class#24879:26673" expanded="false" />
+                <element signature="class#27029:27478" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#27029:27478" expanded="false" />
+                <element signature="class#27861:28358" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#27861:28358" expanded="false" />
+                <element signature="class#28786:29907" expanded="false" />
+                <element signature="method#onCreateButtonClicked#0;class#28786:29907" expanded="false" />
+                <element signature="method#onDeleteButtonClicked#0;class#28786:29907" expanded="false" />
+                <element signature="class#30289:30786" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#30289:30786" expanded="false" />
+                <element signature="class#31134:32726" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#31134:32726" expanded="false" />
+                <element signature="method#onCancelButtonClicked#0;class#31134:32726" expanded="false" />
+                <element signature="class#33089:33645" expanded="false" />
+                <element signature="method#onDoneButtonClicked#0;class#33089:33645" expanded="false" />
+                <element signature="method#onChangePasswordButtonClicked#0;class#33089:33645" expanded="false" />
+                <element signature="class#34581:35164" expanded="false" />
+                <element signature="method#onLoginButtonClicked#0;class#34581:35164" expanded="false" />
+                <element signature="e#35176#35254#0" expanded="false" />
+                <element signature="e#35510#35588#0" expanded="false" />
+                <element signature="docComment;method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#onSecurityButtonClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#onBackupButtonClicked#0;class#MainControl#0" expanded="false" />
-                <element signature="method#onBackupButtonClicked#0;class#MainControl#0" expanded="false" />
-                <element signature="e#37632#37716#0" expanded="false" />
-                <element signature="e#37925#38007#0" expanded="false" />
+                <element signature="e#38354#38438#0" expanded="false" />
+                <element signature="e#38647#38729#0" expanded="false" />
                 <element signature="docComment;method#onRestoreButtonClicked#0;class#MainControl#0" expanded="false" />
+                <element signature="method#onRestoreButtonClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#onLogoutButtonClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="method#onLogoutButtonClicked#0;class#MainControl#0" expanded="false" />
                 <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
                 <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-                <element signature="e#43368#43472#0" expanded="false" />
+                <element signature="class#41556:41999" expanded="false" />
+                <element signature="method#call#0;class#41556:41999" expanded="false" />
+                <element signature="e#44090#44194#0" expanded="false" />
+                <element signature="docComment;method#hidePopupScene#0;class#MainControl#0" expanded="false" />
                 <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#showPopupScene#0;class#MainControl#0" expanded="false" />
                 <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+                <element signature="docComment;method#setLogout#0;class#MainControl#0" expanded="false" />
                 <element signature="method#setLogout#0;class#MainControl#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CacheModel.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="479" column="18" selection-start-line="479" selection-start-column="18" selection-end-line="479" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BarangayClearanceReportControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="166" column="44" selection-start-line="166" selection-start-column="44" selection-end-line="166" selection-end-column="44" />
+              <folding>
+                <element signature="docComment;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onCancelButtonClicked#0;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onSaveButtonClicked#0;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mRootPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mDocumentPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mTextLineBreak1#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mChmSignature#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mPrintButton#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mPrintAndSaveButton#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mScrollPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mPrefModel#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;field#mKagawads#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#initialize#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onPrintAndSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#onPrintAndSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onPrintButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#onPrintButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#saveSignatureDimensions#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#saveSignatureDimensions#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="e#7671#7750#0" expanded="false" />
+                <element signature="docComment;method#printReport#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#printReport#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#setListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#setPreferenceModel#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="docComment;method#setBarangayClearance#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="method#setBarangayClearance#0;class#BarangayClearanceReportControl#0" expanded="false" />
+                <element signature="e#12422#12515#0" expanded="false" />
+                <element signature="e#13030#13081#0" expanded="false" />
+                <element signature="e#13331#13382#0" expanded="false" />
+                <element signature="e#17782#17823#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessClearanceReportControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="164" column="6" selection-start-line="164" selection-start-column="6" selection-end-line="164" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BarangayAgentControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="343">
+              <caret line="345" column="23" selection-start-line="345" selection-start-column="23" selection-end-line="345" selection-end-column="23" />
+              <folding>
+                <element signature="docComment;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onFinished#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mRootPane#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mScrollPane#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mKagawadPane#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mChmNameError#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mSecNameError#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mTrsrNameError#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mKagawadNameError#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mListener#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;field#mPreferences#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#initialize#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="e#8546#8628#0" expanded="false" />
+                <element signature="e#9450#9529#0" expanded="false" />
+                <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onChmUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="e#20881#20919#0" expanded="false" />
+                <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#setDisable#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+                <element signature="docComment;method#setPreferenceModel#0;class#BarangayAgentControl#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -213,10 +358,8 @@
         <option value="$PROJECT_DIR$/src/javah/controller/ChangePasswordController.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_change_password.fxml" />
         <option value="$PROJECT_DIR$/src/fxml/scene_security.fxml" />
-        <option value="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/LoginController.java" />
         <option value="$PROJECT_DIR$/src/fxml/scene_login.fxml" />
-        <option value="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
         <option value="$PROJECT_DIR$/src/javah/util/LogoutTimer.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/LoginControl.java" />
         <option value="$PROJECT_DIR$/src/javah/contract/CSSContract.java" />
@@ -231,13 +374,15 @@
         <option value="$PROJECT_DIR$/src/javah/model/PreferenceModel.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/SecurityControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ConfirmationDialogControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java" />
-        <option value="$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/BusinessClearanceFormControl.java" />
         <option value="$PROJECT_DIR$/src/javah/model/DatabaseModel.java" />
         <option value="$PROJECT_DIR$/src/javah/util/BarangayUtils.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/ChangePasswordControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java" />
         <option value="$PROJECT_DIR$/src/javah/controller/MainControl.java" />
+        <option value="$PROJECT_DIR$/src/javah/model/CacheModel.java" />
       </list>
     </option>
   </component>
@@ -911,13 +1056,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/javah/model/PreferenceModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2706">
-          <caret line="135" column="21" selection-start-line="135" selection-start-column="21" selection-end-line="135" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/ChangePasswordControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7524">
@@ -1021,13 +1159,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="598" column="0" selection-start-line="598" selection-start-column="0" selection-end-line="598" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fxml/scene_login.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -1084,13 +1215,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9834">
           <caret line="470" column="0" selection-start-line="470" selection-start-column="0" selection-end-line="470" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9416">
-          <caret line="460" column="0" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1211,26 +1335,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="407" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/BusinessClearanceFormControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="554" column="16" selection-start-line="554" selection-start-column="16" selection-end-line="585" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="433" column="15" selection-start-line="433" selection-start-column="12" selection-end-line="433" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1294,6 +1402,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#getFilteredIDs#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="e#1129#1210#0" expanded="false" />
+            <element signature="e#1322#1405#0" expanded="false" />
+            <element signature="e#1644#1723#0" expanded="false" />
+            <element signature="e#2311#2400#0" expanded="false" />
+            <element signature="docComment;method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#capitalizeString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#formatName#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#formatName#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#convertMonthStringToInt#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#convertMonthIntToString#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#parseSignatureDimension#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="docComment;method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+            <element signature="method#addTextLimitListener#0;class#BarangayUtils#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1301,6 +1430,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-598">
           <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1312,76 +1444,226 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayClearanceReportControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="166" column="44" selection-start-line="166" selection-start-column="44" selection-end-line="166" selection-end-column="44" />
+          <folding>
+            <element signature="docComment;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onCancelButtonClicked#0;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onSaveButtonClicked#0;class#OnBarangayClearanceReportListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mRootPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mDocumentPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mTextLineBreak1#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mChmSignature#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mPrintButton#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mPrintAndSaveButton#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mScrollPane#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mPrefModel#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;field#mKagawads#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onPrintAndSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#onPrintAndSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onPrintButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#onPrintButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#saveSignatureDimensions#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#saveSignatureDimensions#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="e#7671#7750#0" expanded="false" />
+            <element signature="docComment;method#printReport#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#printReport#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#setListener#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#setPreferenceModel#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="docComment;method#setBarangayClearance#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="method#setBarangayClearance#0;class#BarangayClearanceReportControl#0" expanded="false" />
+            <element signature="e#12422#12515#0" expanded="false" />
+            <element signature="e#13030#13081#0" expanded="false" />
+            <element signature="e#13331#13382#0" expanded="false" />
+            <element signature="e#17782#17823#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/BusinessClearanceReportControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="164" column="6" selection-start-line="164" selection-start-column="6" selection-end-line="164" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/controller/BarangayAgentControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="345" column="23" selection-start-line="345" selection-start-column="23" selection-end-line="345" selection-end-column="23" />
+          <folding>
+            <element signature="docComment;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onFinished#0;class#OnBarangayAgentListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mRootPane#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mScrollPane#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mKagawadPane#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mChmNameError#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mSecNameError#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mTrsrNameError#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mKagawadNameError#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mListener#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;field#mPreferences#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="e#8546#8628#0" expanded="false" />
+            <element signature="e#9450#9529#0" expanded="false" />
+            <element signature="docComment;method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onChmSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onChmSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onChmUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onSecSignatureCaptureButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onSecSignatureUploadButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="e#20881#20919#0" expanded="false" />
+            <element signature="docComment;method#onCancelButtonClicked#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#setDisable#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#setChmPhoto#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#setChmSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="method#setSecSignature#0;class#BarangayAgentControl#0" expanded="false" />
+            <element signature="docComment;method#setPreferenceModel#0;class#BarangayAgentControl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/javah/controller/MainControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="814" column="52" selection-start-line="814" selection-start-column="52" selection-end-line="814" selection-end-column="52" />
+        <state relative-caret-position="206">
+          <caret line="916" column="63" selection-start-line="916" selection-start-column="63" selection-end-line="916" selection-end-column="63" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mPopupLoginPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mMenuGridPane#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mInformationScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mResidentControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mInformationControl#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mCacheModel#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;field#mLogoutTimer#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#initialize#0;class#MainControl#0" expanded="false" />
+            <element signature="method#initialize#0;class#MainControl#0" expanded="false" />
             <element signature="e#6884#6924#0" expanded="false" />
-            <element signature="class#8043:8743" expanded="false" />
-            <element signature="method#onEditResidentButtonClicked#0;class#8043:8743" expanded="false" />
-            <element signature="method#onDeleteResidentButtonClicked#0;class#8043:8743" expanded="false" />
-            <element signature="class#9124:12841" expanded="false" />
-            <element signature="method#onCreateReportButtonClicked#0;class#9124:12841" expanded="false" />
-            <element signature="method#onViewButtonClicked#0;class#9124:12841" expanded="false" />
-            <element signature="method#onRequestReportSnapshot#0;class#9124:12841" expanded="false" />
-            <element signature="class#13710:16395" expanded="false" />
-            <element signature="method#onAcceptButtonClicked#0;class#13710:16395" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#13710:16395" expanded="false" />
-            <element signature="method#onWebcamInitializeError#0;class#13710:16395" expanded="false" />
-            <element signature="class#16744:19092" expanded="false" />
-            <element signature="method#onChmUploadButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onChmCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onChmSignatureUploadButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onChmSignatureCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onSecSignatureUploadButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onSecSignatureCaptureButtonClicked#0;class#16744:19092" expanded="false" />
-            <element signature="method#onFinished#0;class#16744:19092" expanded="false" />
-            <element signature="method#onConfirmButtonClicked#0;class#19403:22800" expanded="false" />
-            <element signature="e#20568#20650#0" expanded="false" />
-            <element signature="class#23070:24424" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#23070:24424" expanded="false" />
-            <element signature="e#23279#23373#0" expanded="false" />
-            <element signature="method#onTakePhotoButtonClicked#0;class#23070:24424" expanded="false" />
-            <element signature="method#onUploadButtonClicked#0;class#23070:24424" expanded="false" />
-            <element signature="class#24880:26674" expanded="false" />
-            <element signature="method#onUploadButtonClicked#0;class#24880:26674" expanded="false" />
-            <element signature="method#onCaptureButtonClicked#0;class#24880:26674" expanded="false" />
-            <element signature="method#onCreateButtonClicked#0;class#24880:26674" expanded="false" />
-            <element signature="class#27030:27479" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#27030:27479" expanded="false" />
-            <element signature="class#27862:28359" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#27862:28359" expanded="false" />
-            <element signature="class#28787:29908" expanded="false" />
-            <element signature="method#onCreateButtonClicked#0;class#28787:29908" expanded="false" />
-            <element signature="method#onDeleteButtonClicked#0;class#28787:29908" expanded="false" />
-            <element signature="class#30290:30787" expanded="false" />
-            <element signature="method#onSaveButtonClicked#0;class#30290:30787" expanded="false" />
-            <element signature="method#onCancelButtonClicked#0;class#31135:32727" expanded="false" />
-            <element signature="class#33090:33646" expanded="false" />
-            <element signature="method#onDoneButtonClicked#0;class#33090:33646" expanded="false" />
-            <element signature="method#onChangePasswordButtonClicked#0;class#33090:33646" expanded="false" />
+            <element signature="class#8042:8742" expanded="false" />
+            <element signature="method#onEditResidentButtonClicked#0;class#8042:8742" expanded="false" />
+            <element signature="method#onDeleteResidentButtonClicked#0;class#8042:8742" expanded="false" />
+            <element signature="class#9123:12840" expanded="false" />
+            <element signature="method#onCreateReportButtonClicked#0;class#9123:12840" expanded="false" />
+            <element signature="method#onViewButtonClicked#0;class#9123:12840" expanded="false" />
+            <element signature="method#onRequestReportSnapshot#0;class#9123:12840" expanded="false" />
+            <element signature="class#13709:16394" expanded="false" />
+            <element signature="method#onAcceptButtonClicked#0;class#13709:16394" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#13709:16394" expanded="false" />
+            <element signature="method#onWebcamInitializeError#0;class#13709:16394" expanded="false" />
+            <element signature="class#16743:19091" expanded="false" />
+            <element signature="method#onChmUploadButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onChmCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onChmSignatureUploadButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onChmSignatureCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onSecSignatureUploadButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onSecSignatureCaptureButtonClicked#0;class#16743:19091" expanded="false" />
+            <element signature="method#onFinished#0;class#16743:19091" expanded="false" />
+            <element signature="class#19402:22799" expanded="false" />
+            <element signature="method#onConfirmButtonClicked#0;class#19402:22799" expanded="false" />
+            <element signature="e#20567#20649#0" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#19402:22799" expanded="false" />
+            <element signature="class#23069:24423" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#23069:24423" expanded="false" />
+            <element signature="e#23278#23372#0" expanded="false" />
+            <element signature="method#onTakePhotoButtonClicked#0;class#23069:24423" expanded="false" />
+            <element signature="method#onUploadButtonClicked#0;class#23069:24423" expanded="false" />
+            <element signature="class#24879:26673" expanded="false" />
+            <element signature="method#onUploadButtonClicked#0;class#24879:26673" expanded="false" />
+            <element signature="method#onCaptureButtonClicked#0;class#24879:26673" expanded="false" />
+            <element signature="method#onCreateButtonClicked#0;class#24879:26673" expanded="false" />
+            <element signature="class#27029:27478" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#27029:27478" expanded="false" />
+            <element signature="class#27861:28358" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#27861:28358" expanded="false" />
+            <element signature="class#28786:29907" expanded="false" />
+            <element signature="method#onCreateButtonClicked#0;class#28786:29907" expanded="false" />
+            <element signature="method#onDeleteButtonClicked#0;class#28786:29907" expanded="false" />
+            <element signature="class#30289:30786" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#30289:30786" expanded="false" />
+            <element signature="class#31134:32726" expanded="false" />
+            <element signature="method#onSaveButtonClicked#0;class#31134:32726" expanded="false" />
+            <element signature="method#onCancelButtonClicked#0;class#31134:32726" expanded="false" />
+            <element signature="class#33089:33645" expanded="false" />
+            <element signature="method#onDoneButtonClicked#0;class#33089:33645" expanded="false" />
+            <element signature="method#onChangePasswordButtonClicked#0;class#33089:33645" expanded="false" />
+            <element signature="class#34581:35164" expanded="false" />
+            <element signature="method#onLoginButtonClicked#0;class#34581:35164" expanded="false" />
+            <element signature="e#35176#35254#0" expanded="false" />
+            <element signature="e#35510#35588#0" expanded="false" />
+            <element signature="docComment;method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
             <element signature="method#onResidentMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
             <element signature="method#onBarangayClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
             <element signature="method#onBarangayIdMenuClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
             <element signature="method#onBusinessClearanceMenuClicked#0;class#MainControl#0" expanded="false" />
             <element signature="docComment;method#onSettingsButtonClicked#0;class#MainControl#0" expanded="false" />
             <element signature="docComment;method#onSecurityButtonClicked#0;class#MainControl#0" expanded="false" />
             <element signature="docComment;method#onBackupButtonClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="method#onBackupButtonClicked#0;class#MainControl#0" expanded="false" />
-            <element signature="e#37632#37716#0" expanded="false" />
-            <element signature="e#37925#38007#0" expanded="false" />
+            <element signature="e#38354#38438#0" expanded="false" />
+            <element signature="e#38647#38729#0" expanded="false" />
             <element signature="docComment;method#onRestoreButtonClicked#0;class#MainControl#0" expanded="false" />
+            <element signature="method#onRestoreButtonClicked#0;class#MainControl#0" expanded="false" />
             <element signature="docComment;method#onLogoutButtonClicked#0;class#MainControl#0" expanded="false" />
             <element signature="method#onLogoutButtonClicked#0;class#MainControl#0" expanded="false" />
             <element signature="docComment;method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
             <element signature="method#updateMenuSelected#0;class#MainControl#0" expanded="false" />
-            <element signature="e#43368#43472#0" expanded="false" />
+            <element signature="class#41556:41999" expanded="false" />
+            <element signature="method#call#0;class#41556:41999" expanded="false" />
+            <element signature="e#44090#44194#0" expanded="false" />
+            <element signature="docComment;method#hidePopupScene#0;class#MainControl#0" expanded="false" />
             <element signature="method#hidePopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#showPopupScene#0;class#MainControl#0" expanded="false" />
             <element signature="method#showPopupScene#0;class#MainControl#0" expanded="false" />
+            <element signature="docComment;method#setLogout#0;class#MainControl#0" expanded="false" />
             <element signature="method#setLogout#0;class#MainControl#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="430" column="0" selection-start-line="430" selection-start-column="0" selection-end-line="430" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javah/model/CacheModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="479" column="18" selection-start-line="479" selection-start-column="18" selection-end-line="479" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

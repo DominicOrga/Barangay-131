@@ -186,7 +186,7 @@ public class MainControl {
         }
 
         // Initialize the mRectAnimTransitioner.
-        // *Used in updateMenuSelected() to aid in animation.
+        // Used in updateMenuSelected() to aid in animation.
         mRectAnimTransitioner = new Rectangle();
         mRectAnimTransitioner.setWidth(mMenuGridPane.getWidth());
         mRectAnimTransitioner.setHeight(mResidentMenu.getHeight() - 1);
@@ -783,12 +783,22 @@ public class MainControl {
             }
         });
 
+        // Add the dialog scenes to mPopupStackPane.
+        addToPopupPane.accept(mPhotoshopScene);
+        addToPopupPane.accept(mBarangayAgentScene);
+        addToPopupPane.accept(mConfirmationDialogScene);
+        addToPopupPane.accept(mResidentFormScene);
+        addToPopupPane.accept(mResidentInfoFormScene);
+        addToPopupPane.accept(mBarangayIDReportScene);
+        addToPopupPane.accept(mBrgyClearanceReportScene);
+        addToPopupPane.accept(mBusiClearanceFormScene);
+        addToPopupPane.accept(mBusiClearanceReportScene);
+        addToPopupPane.accept(mChangePasswordScene);
+        addToPopupPane.accept(mSecurityScene);
+
         // Initialize the login scene.
         resetFXMLLoader.accept("fxml/scene_login.fxml");
         mLoginScene = fxmlLoader.load();
-
-        mPopupLoginPane.getChildren().add(mLoginScene);
-        mPopupLoginPane.setAlignment(mLoginScene, Pos.CENTER);
 
         mLoginControl = fxmlLoader.getController();
         mLoginControl.setPreferenceModel(mPreferenceModel);
@@ -812,21 +822,14 @@ public class MainControl {
             }
         });
 
-        // Add the dialog scenes to mPopupStackPane.
-        addToPopupPane.accept(mPhotoshopScene);
-        addToPopupPane.accept(mBarangayAgentScene);
-        addToPopupPane.accept(mConfirmationDialogScene);
-        addToPopupPane.accept(mResidentFormScene);
-        addToPopupPane.accept(mResidentInfoFormScene);
-        addToPopupPane.accept(mBarangayIDReportScene);
-        addToPopupPane.accept(mBrgyClearanceReportScene);
-        addToPopupPane.accept(mBusiClearanceFormScene);
-        addToPopupPane.accept(mBusiClearanceReportScene);
-        addToPopupPane.accept(mChangePasswordScene);
-        addToPopupPane.accept(mSecurityScene);
+        // The Login scene is a unique pop-up dialog due to its volatility of suddenly
+        // appearing on top of everything when the max idle time is reached. Thus,
+        // it is given its own pop-up pane.
+        mPopupLoginPane.getChildren().add(mLoginScene);
+        mPopupLoginPane.setAlignment(mLoginScene, Pos.CENTER);
 
-        // Automatically start the Barangay Agent form when the barangay agents have not
-        // been set yet.
+        // When the application hasn't been initialized yet. Then initialize the first
+        // data of the preference model.
         if (mPreferenceModel.get(PreferenceContract.BARANGAY_AGENTS_INITIALIZED, "0").equals("0")) {
             mPreferenceModel.delete();
             showPopupScene(mChangePasswordScene, false);
@@ -834,24 +837,48 @@ public class MainControl {
             setLogout(true);
     }
 
+    /**
+     * Select the resident menu.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onResidentMenuClicked(Event event) {
         if(mMenuSelected != MENU_RESIDENT)
             updateMenuSelected(MENU_RESIDENT);
     }
 
+    /**
+     * Select the barangay clearance menu.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onBarangayClearanceMenuClicked(Event event) {
         if(mMenuSelected != MENU_BARANGAY_CLEARANCE)
             updateMenuSelected(MENU_BARANGAY_CLEARANCE);
     }
 
+    /**
+     * Select the barangay ID menu.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onBarangayIdMenuClicked(Event event) {
         if(mMenuSelected != MENU_BARANGAY_ID)
             updateMenuSelected(MENU_BARANGAY_ID);
     }
 
+    /**
+     * Select the business clearance menu.
+     *
+     * @param event
+     *        The action event. No usage.
+     */
     @FXML
     public void onBusinessClearanceMenuClicked(Event event) {
         if(mMenuSelected != MENU_BUSINESS_CLEARANCE)
@@ -1048,6 +1075,15 @@ public class MainControl {
         // to 'selected'.
     }
 
+    /**
+     * Hide the specified pop-up.
+     *
+     * @param popupScene
+     *        The pop-up scene to be hidden.
+     * @param isOtherPopupVisible
+     *        Determines whether other pop-ups are still visible within the pop-up stack pane.
+     *        If yes, then do not hide the pop-up stack pane. Otherwise, hide it.
+     */
     private void hidePopupScene(Pane popupScene, boolean isOtherPopupVisible) {
         if (isOtherPopupVisible)
             popupScene.setVisible(false);
@@ -1065,6 +1101,16 @@ public class MainControl {
         }
     }
 
+    /**
+     * Show the specified pop-up.
+     *
+     * @param popupScene
+     *        The pop-up scene to be show.
+     * @param isOtherPopupVisible
+     *        Determines whether other pop-ups are already visible within the pop-up stack pane.
+     *        If yes, then do not show pop-up stack pane, since it is already visible. Otherwise,
+     *        show it.
+     */
     private void showPopupScene(Pane popupScene, boolean isOtherPopupVisible) {
         // If a pop-up is visible aside from the popupScene, then no need to re-blur the mMainGridPane.
         if (!isOtherPopupVisible) {
@@ -1082,6 +1128,12 @@ public class MainControl {
         }
     }
 
+    /**
+     * Login or logout the application.
+     *
+     * @param bool
+     *        Determines whether to login or logout the application.
+     */
     private void setLogout(boolean bool) {
         if (bool) {
             mLogoutTimer.stop();
