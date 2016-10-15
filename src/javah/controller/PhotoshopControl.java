@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javah.Main;
@@ -172,6 +173,8 @@ public class PhotoshopControl {
                 (int) mImagePane.getPrefWidth(),
                 (int) mImagePane.getPrefHeight());
 
+        mDraggableRectangle.setStroke(Paint.valueOf("#FF0114"));
+
         mImagePane.getChildren().add(mDraggableRectangle);
     }
 
@@ -269,7 +272,6 @@ public class PhotoshopControl {
             mMirrorCamBox.setVisible(true);
             mFilterSignatureBox.setVisible(false);
 
-            mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
             mFilterSignatureCheckbox.setSelected(false);
 
             // Send the mPhotoView and mDraggableRectangle to the back to show the web cam
@@ -405,13 +407,10 @@ public class PhotoshopControl {
      */
     @FXML
     public void onFilterSignatureCheckboxClicked(ActionEvent actionEvent) {
-        if (mFilterSignatureCheckbox.isSelected()) {
-            mDraggableRectangle.setStroke(javafx.scene.paint.Color.BLACK);
+        if (mFilterSignatureCheckbox.isSelected())
             mPhotoView.setImage(mModifiedImage);
-        } else {
-            mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
+        else
             mPhotoView.setImage(mRequest == REQUEST_PHOTO_UPLOAD ? mUploadedImage : mCapturedImage);
-        }
     }
 
     /**
@@ -442,9 +441,6 @@ public class PhotoshopControl {
 
         mFilterSignatureBox.setVisible(false);
         mMirrorCamBox.setVisible(false);
-
-        // By default, the mDraggableRectangle should be white.
-        mDraggableRectangle.setStroke(javafx.scene.paint.Color.WHITE);
 
         if (request == REQUEST_PHOTO_UPLOAD) {
             // Open the dialog for photo uploading. . .

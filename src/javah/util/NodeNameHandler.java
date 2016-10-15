@@ -143,12 +143,14 @@ public class NodeNameHandler {
             // Tell the Node Name Handler to remove this node if this' remove button is
             // clicked.
             mRemoveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                mListener.onRemoveButtonClicked(this);
+                if (mListener != null)
+                    mListener.onRemoveButtonClicked(this);
             });
 
             // Tell the Node Name Handler to add another Node Name if possible.
             mAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                mListener.onAddButtonClicked();
+                if (mListener != null)
+                    mListener.onAddButtonClicked();
             });
         }
 
@@ -240,6 +242,7 @@ public class NodeNameHandler {
     /* Determines whether this Node name handler is one-to-many or zero-to-many. */
     private byte mOperation;
 
+    /* A listener when removing node names. */
     private OnNodeNameHandlerListener mListener;
 
     /**
@@ -309,7 +312,8 @@ public class NodeNameHandler {
                     mNodeNames[nodeNameHighPosIndex].setAddButtonVisible(true);
 
                     // Inform the node name handler listener that a node name was removed.
-                    mListener.onRemoveButtonClicked(mNodeNameHighestPos);
+                    if (mListener != null)
+                        mListener.onRemoveButtonClicked(mNodeNameHighestPos);
                 }
 
                 @Override

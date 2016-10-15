@@ -248,7 +248,7 @@ public class BusinessClearanceFormControl {
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 setState(STATE_NO_SELECTION);
-                mSearchField.setText(null);
+                mSearchField.setText("");
                 mBusinessIDs = mCacheModel.getBusiIDsCache();
                 updateListPaging(false);
             }
@@ -747,6 +747,7 @@ public class BusinessClearanceFormControl {
 
                     mExtraOwner.setVisible(true);
                     mExtraOwner.setText("Other Owners:");
+                    mExtraOwner.setUnderline(false);
                     mExtraOwner.setTextFill(Color.BLACK);
 
                     mExtraOwnerBox.setVisible(true);

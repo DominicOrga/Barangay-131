@@ -310,7 +310,7 @@ public class ResidentInformationFormControl {
             if (newValue) {
                 mSignatureImage = null;
 
-                mSearchField.setText(null);
+                mSearchField.setText("");
 
                 // Disable the address buttons.
                 mAddress1RadioButton.setSelected(true);

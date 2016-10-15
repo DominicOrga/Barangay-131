@@ -90,7 +90,7 @@
                <children>
                   <VBox fx:id="mBrgyIDDetailsPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4F4F4;">
                      <children>
-                        <ImageView fx:id="mReportSnapshot" fitHeight="510.0" fitWidth="394.09" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
+                        <ImageView fx:id="mReportSnapshot" fitHeight="510.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);">
                            <image>
                               <Image url="@../res/ic_barangay_id.png" />
                            </image>

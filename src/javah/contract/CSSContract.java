@@ -26,7 +26,7 @@ public class CSSContract {
 
         prop[11] = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2.0);";
 
-        prop[12] = "-fx-font-size: 20;";
+        prop[12] = "-fx-font-size: 16;";
 
         prop[13] = "-fx-text-fill: chocolate;";
         prop[14] = "-fx-text-fill: white;";

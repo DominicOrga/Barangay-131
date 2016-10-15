@@ -376,7 +376,7 @@ public class BarangayClearanceReportControl {
 
                 // Set the date validity of the barangay clearance.
                 // Date validity is equal to (date of creation) + 364 days || 365 day (leap year).
-                calendar.add(Calendar.DATE, 364);
+                calendar.add(Calendar.DATE, 181);
 
                 // Add one more day to the calendar if it is a leap year.
                 if (calendar.isLeapYear(calendar.get(Calendar.YEAR)))

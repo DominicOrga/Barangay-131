@@ -928,7 +928,7 @@ public class MainControl {
             try {
                 // Generate a compressed backup file and place it in the application data directory.
                 // Backup file is named 'brgy131_bak.rar'.
-                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\backup.bat");
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\backup.exe");
                 p.waitFor();
 
                 // Once the back up file is generated, transfer it to the target path specified by
@@ -965,7 +965,7 @@ public class MainControl {
                 Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 // Run recovery batch file.
-                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\recover.bat");
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\recover.exe");
                 p.waitFor();
 
                 // Close the application once the recovery is done.

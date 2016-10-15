@@ -235,6 +235,7 @@ public class BarangayAgentControl {
      */
     @FXML
     private void initialize() {
+
         mNodeNameHandler = new NodeNameHandler(mKagawadPane, 7, NodeNameHandler.OPERATION_ONE_TO_MANY);
 
         // Everytime the Kagawad Pane adjusts in height due to addition or removal of node
@@ -255,6 +256,8 @@ public class BarangayAgentControl {
         // Add listener to the root pane visibility properties. If the root pane is set
         // to visible, then resetScene the data.
         mRootPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+
+
             if (newValue) {
                 // Reset chairman data.
                 mChmFirstName.setText(mPreferences.get(PreferenceContract.CHAIRMAN_FIRST_NAME, null));
