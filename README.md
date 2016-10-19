@@ -17,6 +17,7 @@ Requirements: Make sure that MySQL is not installed within the application befor
 Once all the requirements are satisfied, then you can freely execute the installer.exe.
 
 The installer will accomplish the following:
+	  
 	  i. Install MySQL in C:\
 	 ii. Install Bullzip PDF Printer
 	iii. Install Java JDK
