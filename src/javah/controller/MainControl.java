@@ -928,7 +928,7 @@ public class MainControl {
             try {
                 // Generate a compressed backup file and place it in the application data directory.
                 // Backup file is named 'brgy131_bak.rar'.
-                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\backup.exe");
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\Backup.bat");
                 p.waitFor();
 
                 // Once the back up file is generated, transfer it to the target path specified by
@@ -951,7 +951,7 @@ public class MainControl {
         // Setup the file chooser dialog.
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Restore Backup file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Zip Files", "*.zip"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Backup Rar File", "*.rar"));
 
         // Get the source file.
         File sourceFile = fileChooser.showOpenDialog(Main.getPrimaryStage());
@@ -965,7 +965,7 @@ public class MainControl {
                 Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 // Run recovery batch file.
-                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\recover.exe");
+                Process p = Runtime.getRuntime().exec("cmd.exe /c start /wait c:\\mysql\\Recover.bat");
                 p.waitFor();
 
                 // Close the application once the recovery is done.
